@@ -1,0 +1,51 @@
+site_name: Introduction to RNA-Seq - From quality control to pathway analysis
+
+nav:
+    - Home: index.md
+    - Precourse preparations: precourse.md
+    - Course schedule: course_schedule.md
+    - Day1 :
+#        - Welcome: day1/welcome.md
+        - RNAseq - technologies and design : day1/design.md
+        - Server login + unix fresh up : day1/server_login.md
+        - Quality control : day1/quality_control.md
+        - Sequence trimming : day1/trimming.md
+        - Reads mapping : day1/mapping.md
+    - Day2 :
+        - Read counting : day2/counting.md
+        - Differential Expression Inference : day2/DE.md
+
+
+
+# Repository
+repo_name: sib-swiss/RNAseq-introduction-training
+repo_url: https://github.com/sib-swiss/RNAseq-introduction-training
+site_url: 
+
+theme:
+  name: material
+  logo: assets/images/SIB_logo.svg
+  favicon: assets/images/SIB_logo.svg
+
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  - abbr
+  - def_list
+  - footnotes
+  - tables
+  - admonition
+  - codehilite:
+      guess_lang: false
+  - sane_lists
+  - smarty
+  - toc
+  - pymdownx.superfences
+  - attr_list
+  - pymdownx.tabbed
+  - pymdownx.keys
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
