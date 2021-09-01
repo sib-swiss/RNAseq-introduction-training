@@ -94,7 +94,7 @@ FastQC is reasonnably intelligent and will try to recognise the file format and 
 
 **Task:** 
 
- * run FastQC analysis on the two datasets at: `/shared/home/SHARED/DATA/Liu2015/` and `/shared/home/SHARED/DATA/Ruhland2016`. 
+ * run FastQC analysis on the two datasets at: `/shared/data/DATA/Liu2015/` and `/shared/data/DATA/Ruhland2016`. 
  * Look at **one** of the QC report. What are your conclusions ? Would you want to perform some operations on the reads such as low-quality bases trimming, removal of adapters ?
 
 
@@ -122,7 +122,7 @@ Important points:
 	#SBATCH -o fastqc_Liu2015.o
 	#SBATCH -e fastqc_Liu2015.e
 	
-	dataDir=/shared/home/SHARED/DATA/Liu2015
+	dataDir=/shared/data/DATA/Liu2015
 	
 	ml fastqc
 
@@ -152,7 +152,7 @@ Important points:
 	#SBATCH -o fastqc_Ruhland2016.o
 	#SBATCH -e fastqc_Ruhland2016.e
 	
-	dataDir=/shared/home/SHARED/DATA/Ruhland2016
+	dataDir=/shared/data/DATA/Ruhland2016
 	
 	ml fastqc
 
@@ -196,7 +196,7 @@ Important points:
 
 	ml fastqc
 
-	dataDir=/shared/home/SHARED/DATA/Ruhland2016
+	dataDir=/shared/data/DATA/Ruhland2016
 	
 	sourceFILE=Ruhland2016.fastqFiles.txt
 	

@@ -471,7 +471,7 @@ The proposed correction will concern the results obtained with DESeq2 on the Ruh
 	```
 	
 	```R
-	genes_DE <- bitr(rownames(res[res$sig==T,]), fromType = "ENSEMBL",
+	genes_DE <- bitr(rownames(res)[which( res$sig==T )], fromType = "ENSEMBL",
 	                 toType = c("ENTREZID", "SYMBOL"),
 	                 OrgDb = "org.Mm.eg.db")
 	dim(genes_DE)

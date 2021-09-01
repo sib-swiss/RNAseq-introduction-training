@@ -96,18 +96,18 @@ Move to that directory
     cd day1
     ```
 
-The directory `/shared/home/SHARED/` contains data and solutions for most practicals. Check the content of that directory.
+The directory `/shared/data/` contains data and solutions for most practicals. Check the content of that directory.
 
 ??? done "Answer"
     ```sh
-    ls /shared/home/SHARED/
+    ls /shared/data/
     ```
 
-Copy the script `fastqc_Liu2015_SRR1272187_1.sh` from  `/shared/home/SHARED/Solutions/Liu2015` into your current directory.
+Copy the script `fastqc_Liu2015_SRR1272187_1.sh` from  `/shared/data/Solutions/Liu2015` into your current directory.
 
 ??? done "Answer"
     ```sh
-    cp /shared/home/SHARED/Solutions/Liu2015/fastqc_Liu2015_SRR1272187_1.sh .
+    cp /shared/data/Solutions/Liu2015/fastqc_Liu2015_SRR1272187_1.sh .
     ```
 
 Print the content of this script to the screen.
@@ -118,7 +118,22 @@ Print the content of this script to the screen.
     ```
     output:
     ```
-    PLACEHOLDER
+    #!/usr/bin/bash
+	#SBATCH --job-name=fastqc
+	#SBATCH --time=00:30:00
+	#SBATCH --cpus-per-task=1
+	#SBATCH --mem=1G
+	#SBATCH -o fastqc_Liu2015.o
+	#SBATCH -e fastqc_Liu2015.e
+
+	ml fastqc
+
+	dataDir=/shared/data/DATA/Liu2015
+
+	mkdir -p FASTQC_Liu2015/
+	fastqc -o FASTQC_Liu2015/ $dataDir/SRR1272187_1.fastq.gz
+
+
     ```
 
 
@@ -224,10 +239,10 @@ But an example is worth a thousand words :
 #SBATCH -o test_log.o
 
 
-echo "looking at the size of the elements of /shared/home/SHARED/"
+echo "looking at the size of the elements of /shared/data/"
 sleep 10 # making the script wait for 10 seconds - this is just so we can see it later on. 
 # `du` is a command that returns the size of a folder structure.
-du -h -d 2 /shared/home/SHARED/
+du -h -d 2 /shared/data/
 
 ```
 

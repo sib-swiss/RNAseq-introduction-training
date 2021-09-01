@@ -39,8 +39,8 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
 
 Important notes :
 
- * Adapter sequences can be found in `/home/SHARED/DATA/adapters/`
- * Trimmomatic RAM requirements : 
+ * Adapter sequences can be found in `/shared/data/DATA/adapters/`
+ * Trimmomatic RAM requirements : ~0.5G / cpu
  * Trimmomatic time requirements : ~ 10 min/ read file 
 
 
@@ -73,9 +73,9 @@ Important notes :
 	
 	ml 	trimmomatic
 	
-	dataDIR=/shared/home/SHARED/DATA/Liu2015
+	dataDIR=/shared/data/DATA/Liu2015
 	
-	trimmomatic="/easybuild/apps/Trimmomatic/0.36-Java-1.7.0_80/trimmomatic-0.36.jar"
+	trimmomatic="java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar"
 	
 	outDIR=Liu2015_trimmed_reads
 	

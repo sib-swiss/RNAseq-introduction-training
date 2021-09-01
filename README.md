@@ -2,9 +2,9 @@
 
 Webpage of the "Introduction to RNA-Seq: From quality control to pathway analysis - streamed" SIB course.
 
-```
--- in contruction --
-```
+[Go to the built webpage](https://sib-swiss.github.io/RNAseq-introduction-training/)
+
+
 
 
 # Course website template
@@ -38,5 +38,4 @@ mkdocs gh-deploy
 ```
 
 This will generate a webpage at:
-
-https://yourname.github.io/reponame
+https://sib-swiss.github.io/RNAseq-introduction-training

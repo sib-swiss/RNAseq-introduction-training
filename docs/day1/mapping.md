@@ -31,7 +31,7 @@ We will be using the Ensembl versions of iGenome references, with their accompan
 
 Important notes :
 
- * .fasta and .gtf files are in : `/shared/home/SHARED/DATA/Mouse_chr19/`
+ * .fasta and .gtf files are in : `/shared/data/DATA/Mouse_chr19/`
  * refer to the [manual](https://raw.githubusercontent.com/alexdobin/STAR/master/doc/STARmanual.pdf) to determine which options to use.
  * the `--genomeDir` parameter is the output folder
  * this job should require less than 4Gb and 30min to run.
@@ -52,10 +52,10 @@ Important notes :
 	#SBATCH -o star-build.o
 	#SBATCH -e star-build.e
 		
-	G_FASTA=/home/SHARED/DATA/Mouse_chr19/Mus_musculus.GRCm38.dna.chromosome.19.fa
-	G_GTF=/home/SHARED/DATA/Mouse_chr19/Mus_musculus.GRCm38.101.chr19.gtf
+	G_FASTA=/shared/data/DATA/Mouse_chr19/Mus_musculus.GRCm38.dna.chromosome.19.fa
+	G_GTF=/shared/data/DATA/Mouse_chr19/Mus_musculus.GRCm38.101.chr19.gtf
 	
-	ml STAR
+	ml star
 
 	mkdir -p STAR_references
 	
@@ -80,9 +80,9 @@ Important notes :
 
 ## Mapping reads onto the reference
 
-**Task :** Using STAR, align one of the FASTQ files from the Ruhland2016 study against the mouse genome.
+**Task :** Using STAR, align ONE of the FASTQ files from the Ruhland2016 study against the mouse genome.
 
- * Use the full indexed genome at `/shared/home/SHARED/DATA/Mouse_STAR_index/`
+ * Use the full indexed genome at `/shared/data/DATA/Mouse_STAR_index/`
  * **IMPORTANT**: on the server use the following option in your STAR commands: `--outTmpDir /tmp/${SLURM_JOB_USER}_${SLURM_JOB_ID}/`
  * Generate a BAM file sorted by coordinate
  * Generate a geneCounts file
@@ -122,21 +122,21 @@ Important notes :
 	#SBATCH --mem=30G
 	#SBATCH -o star-aln.%a.o
 	#SBATCH -e star-aln.%a.e
-	#SBATCH --array 1-6%6
+	#SBATCH --array 1-1%1
 
 
-	ml STAR
+	ml star
 	outDIR=STAR_Ruhland2016
 
 	mkdir -p $outDIR
 
-	dataDIR=/home/SHARED/DATA/Ruhland2016
+	dataDIR=/shared/data/DATA/Ruhland2016
 
 	sourceFILE=Ruhland2016.fastqFiles.txt
 
 	fastqFILE=`sed -n ${SLURM_ARRAY_TASK_ID}p $sourceFILE`
 
-	genomeDIR=/home/SHARED/DATA/Mouse_STAR_index
+	genomeDIR=/shared/data/Mouse_STAR_index
 
 	STAR --runThreadN 8 --genomeDir $genomeDIR \
                   --outSAMtype BAM SortedByCoordinate --outReadsUnmapped Fastx \
@@ -147,6 +147,7 @@ Important notes :
 	```
 
 	The options of STAR are :
+
 	 * **--runThreadN 8 ** : 8 threads to go faster
 	 * **--genomeDir $genomeDIR** : path of the genome to map to
      * **--outSAMtype BAM SortedByCoordinate ** : output a sorted BAM file
@@ -188,7 +189,9 @@ Here this concern a single sample but usually this would cover all your samples.
 	multiqc -o STAR_MULTIQC_Ruhland2016/ STAR_Ruhland2016/
 	```
 
-	answers : TBD...
+	result : 
+
+	[ Download the report ](../assets/html/multiqc_report.SRR3180535_EtOH1_1.html){: .md-button }
 
 ## ADDITIONNAL : STAR 2-Pass
 
@@ -214,21 +217,21 @@ STAR <1st round options> --sjdbFileChrStartEnd sample_SJ.out.tab
 	#SBATCH --mem=30G
 	#SBATCH -o star-aln-2pass.%a.o
 	#SBATCH -e star-aln-2pass.%a.e
-	#SBATCH --array 1-6%6
+	#SBATCH --array 1-1%1
 
-	ml STAR
+	ml star
 
 	outDIR=STAR_Ruhland2016
 	
 	mkdir -p $outDIR
 	
-	dataDIR=/home/SHARED/DATA/Ruhland2016
+	dataDIR=/shared/data/DATA/Ruhland2016
 	
 	sourceFILE=Ruhland2016.fastqFiles.txt
 	
 	fastqFILE=`sed -n ${SLURM_ARRAY_TASK_ID}p $sourceFILE`
 
-	genomeDIR=/home/SHARED/DATA/Mouse_STAR_index
+	genomeDIR=/shared/data/DATA/Mouse_STAR_index
 	
 	$singularity_exec STAR --runThreadN 8 --genomeDir $genomeDIR \
 	                  --outSAMtype BAM SortedByCoordinate \
@@ -239,7 +242,7 @@ STAR <1st round options> --sjdbFileChrStartEnd sample_SJ.out.tab
 	                  --outTmpDir /tmp/${SLURM_JOB_USER}_${SLURM_JOB_ID}
 	```
 
-
+<!--
 ## ADDITIONNAL : Assessing read coverage for biases
 
 The [RSeQC](http://rseqc.sourceforge.net/) package includes a function for evaluating [“gene body coverage”](http://rseqc.sourceforge.net/#genebody-coverage-py), which
@@ -265,4 +268,5 @@ geneBody_coverage.py -r /data/GRCm38/Mus_musculus.GRCm38.89.bed12 \
 
 ??? done "geneBody_coverage script"
 
-	TBD
+	TBD	
+-->

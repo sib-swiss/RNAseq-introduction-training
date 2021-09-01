@@ -25,41 +25,61 @@ For more details on the algorithm behavior (with multi/overlapping reads for ins
  * Count the reads from one of your BAM files using featureCount
  * How do the count compare to the counts from STAR ?
 
- * featureCount : xxx RAM / bam
- * featureCount : xxx cpu time / bam
+ * featureCount : 400M RAM / bam
+ * featureCount : 2 min cpu time / bam
 
 
 ??? done "featureCounts script"
 
 	```
 	#!/usr/bin/bash
-	#SBATCH --job-name=htseq
+	#SBATCH --job-name=featurecount
 	#SBATCH --time=00:30:00
 	#SBATCH --cpus-per-task=1
 	#SBATCH --mem=4G
-	#SBATCH -o htseq-count.%a.o
-	#SBATCH -e htseq-count.%a.e
+	#SBATCH -o count.o
+	#SBATCH -e count.e
 
 	
-	G_GTF=/home/SHARED/DATA/Mus_musculus.GRCm38.99.gtf
+	G_GTF=/shared/data/DATA/Mus_musculus.GRCm39.103.gtf
 	
-	inFOLDER=${HOME}/Ruhland2016/STAR_Ruhland2016
-	outFOLDER=${HOME}/Ruhland2016/HTSQCOUNT_Ruhland2016
+	inFOLDER=~/Ruhland2016/STAR_Ruhland2016
+	outFOLDER=~/Ruhland2016/HTSQCOUNT_Ruhland2016
 	
-	ml featureCounts
+	ml subread
 
 	mkdir -p $outFOLDER
 
-	featureCounts -T 8 -a /home/SHARED/DATA/Mus_musculus.GRCm38.99.gtf -t exon -g gene_id -o featureCounts_Ruhland2016.counts.txt \
-										inFOLDER/EtOH1_Aligned.sortedByCoord.out.bam \
-										inFOLDER/EtOH2_Aligned.sortedByCoord.out.bam \
-										inFOLDER/EtOH3_Aligned.sortedByCoord.out.bam \
-										inFOLDER/TAM1_Aligned.sortedByCoord.out.bam \
-										inFOLDER/TAM2_Aligned.sortedByCoord.out.bam \
-										inFOLDER/TAM3_Aligned.sortedByCoord.out.bam
+	featureCounts -T 8 -a $G_GTF -t exon -g gene_id -o featureCounts_Ruhland2016.counts.txt \
+										$inFOLDER/EtOH1_Aligned.sortedByCoord.out.bam \
+										$inFOLDER/EtOH2_Aligned.sortedByCoord.out.bam \
+										$inFOLDER/EtOH3_Aligned.sortedByCoord.out.bam \
+										$inFOLDER/TAM1_Aligned.sortedByCoord.out.bam \
+										$inFOLDER/TAM2_Aligned.sortedByCoord.out.bam \
+										$inFOLDER/TAM3_Aligned.sortedByCoord.out.bam
 
 	```
 
 ??? done "comparison with STAR counts"
 
-	...
+	You can use this little R script to check they are the same :
+
+	```
+	fc = read.table( "featureCounts_SRR3180535_EtOH1_1.counts.txt" , header =T)
+	rownames( fc ) = fc$Geneid
+	head( fc )
+
+	star = read.table( "SRR3180535_EtOH1_1.fastq.gzReadsPerGene.out.tab")
+	rownames( star ) = star$V1
+	head( star )
+
+
+	star_count = star[ rownames( fc ) , 'V2' ]
+	fC_count = fc$STAR_Ruhland2016.SRR3180535_EtOH1_1.fastq.gzAligned.sortedByCoord.out.bam
+	plot(log10( star_count + 1),
+    	log10(fC_count+1) )
+
+	quantile( star_count  - fC_count)
+
+	```
+	
