@@ -634,19 +634,32 @@ we will also use this as a short introduction/reminder on UNIX command line.</p>
 <details class="done"><summary>Answer</summary><div class="highlight"><pre><span></span><code><span class="nb">cd</span> day1
 </code></pre></div>
 </details>
-<p>The directory <code>/shared/home/SHARED/</code> contains data and solutions for most practicals. Check the content of that directory.</p>
-<details class="done"><summary>Answer</summary><div class="highlight"><pre><span></span><code>ls /shared/home/SHARED/
+<p>The directory <code>/shared/data/</code> contains data and solutions for most practicals. Check the content of that directory.</p>
+<details class="done"><summary>Answer</summary><div class="highlight"><pre><span></span><code>ls /shared/data/
 </code></pre></div>
 </details>
-<p>Copy the script <code>fastqc_Liu2015_SRR1272187_1.sh</code> from  <code>/shared/home/SHARED/Solutions/Liu2015</code> into your current directory.</p>
-<details class="done"><summary>Answer</summary><div class="highlight"><pre><span></span><code>cp /shared/home/SHARED/Solutions/Liu2015/fastqc_Liu2015_SRR1272187_1.sh .
+<p>Copy the script <code>fastqc_Liu2015_SRR1272187_1.sh</code> from  <code>/shared/data/Solutions/Liu2015</code> into your current directory.</p>
+<details class="done"><summary>Answer</summary><div class="highlight"><pre><span></span><code>cp /shared/data/Solutions/Liu2015/fastqc_Liu2015_SRR1272187_1.sh .
 </code></pre></div>
 </details>
 <p>Print the content of this script to the screen.</p>
 <details class="done"><summary>Answer</summary><p><div class="highlight"><pre><span></span><code>more fastqc_Liu2015_SRR1272187_1.sh
 </code></pre></div>
 output:
-<div class="highlight"><pre><span></span><code>PLACEHOLDER
+<div class="highlight"><pre><span></span><code>#!/usr/bin/bash
+#SBATCH --job-name=fastqc
+#SBATCH --time=00:30:00
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=1G
+#SBATCH -o fastqc_Liu2015.o
+#SBATCH -e fastqc_Liu2015.e
+
+ml fastqc
+
+dataDir=/shared/data/DATA/Liu2015
+
+mkdir -p FASTQC_Liu2015/
+fastqc -o FASTQC_Liu2015/ $dataDir/SRR1272187_1.fastq.gz
 </code></pre></div></p>
 </details>
 <h3 id="creating-and-editing-a-file">creating and editing a file</h3>
@@ -722,10 +735,10 @@ The job scheduler role is to manage where and how to run the jobs of all users, 
 <span class="c1">#SBATCH -o test_log.o</span>
 
 
-<span class="nb">echo</span> <span class="s2">&quot;looking at the size of the elements of /shared/home/SHARED/&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;looking at the size of the elements of /shared/data/&quot;</span>
 sleep <span class="m">10</span> <span class="c1"># making the script wait for 10 seconds - this is just so we can see it later on. </span>
 <span class="c1"># `du` is a command that returns the size of a folder structure.</span>
-du -h -d <span class="m">2</span> /shared/home/SHARED/
+du -h -d <span class="m">2</span> /shared/data/
 </code></pre></div>
 <p>The lines beginning by <code>#SBATCH</code> specify options to the job scheduler:</p>
 <ul>

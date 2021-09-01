@@ -514,8 +514,8 @@ If possible, we recommend to perform the mapping for both the raw data and the t
 <p><strong>Extra (if you have the time) :</strong> run a QC analysis on your trimmmed reads and compare with the raw ones.</p>
 <p>Important notes :</p>
 <ul>
-<li>Adapter sequences can be found in <code>/home/SHARED/DATA/adapters/</code></li>
-<li>Trimmomatic RAM requirements : </li>
+<li>Adapter sequences can be found in <code>/shared/data/DATA/adapters/</code></li>
+<li>Trimmomatic RAM requirements : ~0.5G / cpu</li>
 <li>Trimmomatic time requirements : ~ 10 min/ read file </li>
 </ul>
 <details class="done"><summary>Trimmomatic script</summary><p>The Liu2015 dataset has paired-end reads and we have to take that into account during trimming.
@@ -545,9 +545,9 @@ For a soft-trimming, we chose the following options :</p>
 
 ml  trimmomatic
 
-<span class="nv">dataDIR</span><span class="o">=</span>/shared/home/SHARED/DATA/Liu2015
+<span class="nv">dataDIR</span><span class="o">=</span>/shared/data/DATA/Liu2015
 
-<span class="nv">trimmomatic</span><span class="o">=</span><span class="s2">&quot;/easybuild/apps/Trimmomatic/0.36-Java-1.7.0_80/trimmomatic-0.36.jar&quot;</span>
+<span class="nv">trimmomatic</span><span class="o">=</span><span class="s2">&quot;java -jar </span><span class="nv">$EBROOTTRIMMOMATIC</span><span class="s2">/trimmomatic-0.39.jar&quot;</span>
 
 <span class="nv">outDIR</span><span class="o">=</span>Liu2015_trimmed_reads
 

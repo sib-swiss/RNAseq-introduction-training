@@ -601,7 +601,7 @@ To this end we provide links to each tool website. </p>
 <p>FastQC is reasonnably intelligent and will try to recognise the file format and uncompress it if necessary (so no need to decompress).</p>
 <p><strong>Task:</strong> </p>
 <ul>
-<li>run FastQC analysis on the two datasets at: <code>/shared/home/SHARED/DATA/Liu2015/</code> and <code>/shared/home/SHARED/DATA/Ruhland2016</code>. </li>
+<li>run FastQC analysis on the two datasets at: <code>/shared/data/DATA/Liu2015/</code> and <code>/shared/data/DATA/Ruhland2016</code>. </li>
 <li>Look at <strong>one</strong> of the QC report. What are your conclusions ? Would you want to perform some operations on the reads such as low-quality bases trimming, removal of adapters ?</li>
 </ul>
 <p>Important points:</p>
@@ -624,7 +624,7 @@ To this end we provide links to each tool website. </p>
 <span class="c1">#SBATCH -o fastqc_Liu2015.o</span>
 <span class="c1">#SBATCH -e fastqc_Liu2015.e</span>
 
-<span class="nv">dataDir</span><span class="o">=</span>/shared/home/SHARED/DATA/Liu2015
+<span class="nv">dataDir</span><span class="o">=</span>/shared/data/DATA/Liu2015
 
 ml fastqc
 
@@ -646,7 +646,7 @@ fastqc -o FASTQC_Liu2015/ <span class="nv">$dataDir</span>/SRR1272187_1.fastq.gz
 <span class="c1">#SBATCH -o fastqc_Ruhland2016.o</span>
 <span class="c1">#SBATCH -e fastqc_Ruhland2016.e</span>
 
-<span class="nv">dataDir</span><span class="o">=</span>/shared/home/SHARED/DATA/Ruhland2016
+<span class="nv">dataDir</span><span class="o">=</span>/shared/data/DATA/Ruhland2016
 
 ml fastqc
 
@@ -679,7 +679,7 @@ SRR3180540_TAM3_1.fastq.gz
 
 ml fastqc
 
-<span class="nv">dataDir</span><span class="o">=</span>/shared/home/SHARED/DATA/Ruhland2016
+<span class="nv">dataDir</span><span class="o">=</span>/shared/data/DATA/Ruhland2016
 
 <span class="nv">sourceFILE</span><span class="o">=</span>Ruhland2016.fastqFiles.txt
 
