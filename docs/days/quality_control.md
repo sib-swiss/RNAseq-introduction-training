@@ -95,11 +95,12 @@ FastQC is reasonnably intelligent and will try to recognise the file format and 
 **Task:** 
 
  * run FastQC analysis on the two datasets at: `/shared/data/DATA/Liu2015/` and `/shared/data/DATA/Ruhland2016`. 
- * Look at **one** of the QC report. What are your conclusions ? Would you want to perform some operations on the reads such as low-quality bases trimming, removal of adapters ?
+ * Look at at least one of the QC report. What are your conclusions ? Would you want to perform some operations on the reads such as low-quality bases trimming, removal of adapters ?
 
 
 Important points:
 
+ * in your script, don't forget to load fastqc : `ml fastqc`
  * there is no need to copy the read files to your home directory (in fact, don't do that: we won't have enough space left on the disk...)
  * FastQC RAM requirements : 1Gb is more than enough
  * FastQC time requirements : ~ 5min / read file 
@@ -241,7 +242,7 @@ Ther are many additonnal info which let you customize your report. Use `multiqc 
 **Task:** 
 
  * run MultiQC for each dataset. 
- * Look at the QC report. What are your conclusions ? 
+ * Look at the QC reports. What are your conclusions ? 
 
 
 Important points:
@@ -263,7 +264,6 @@ Important points:
 	#SBATCH -o multiqc_Ruhland2016.o
 	#SBATCH -e multiqc_Ruhland2016.e
 	
-	ml multiqc
 		
 	mkdir -p MULTIQC_Ruhland2016/
 	

@@ -14,6 +14,8 @@ At the end of this lesson, you will be able to :
 
 [STAR website](https://github.com/alexdobin/STAR){: .md-button }
 
+
+
 ## Building a reference genome index
 
 Before any mapping can be achieved, you must first *index* the genome want to map to. 
@@ -233,7 +235,7 @@ STAR <1st round options> --sjdbFileChrStartEnd sample_SJ.out.tab
 
 	genomeDIR=/shared/data/DATA/Mouse_STAR_index
 	
-	$singularity_exec STAR --runThreadN 8 --genomeDir $genomeDIR \
+	STAR --runThreadN 8 --genomeDir $genomeDIR \
 	                  --outSAMtype BAM SortedByCoordinate \
 	                  --outFileNamePrefix $outDIR/$fastqFILE.2Pass. \
 	                  --outReadsUnmapped Fastx --quantMode GeneCounts \
@@ -241,6 +243,57 @@ STAR <1st round options> --sjdbFileChrStartEnd sample_SJ.out.tab
 	                  --readFilesIn $dataDIR/$fastqFILE --readFilesCommand zcat \
 	                  --outTmpDir /tmp/${SLURM_JOB_USER}_${SLURM_JOB_ID}
 	```
+
+
+## ADDITIONNAL : pseudo-aligning with salmon
+
+[salmon website](https://salmon.readthedocs.io/en/latest/salmon.html){: .md-button }
+
+salmon can allow you of quantify transcripts expression without explicitely aligning the sequenced reads onto the reference transcriptome, thus saving computational ressources.
+
+We refer you to the tool's documentation in order to see [how the reference index is computed](https://salmon.readthedocs.io/en/latest/salmon.html#preparing-transcriptome-indices-mapping-based-mode).
+
+**Task :** run salmon to quantify the expression of either the Ruhland or Liu dataset. 
+ 
+ * Use the tool documentation to craft your command line
+ * precomputed indices can be found in `/shared/data/Mouse_salmon_index` and `/shared/data/Human_salmon_index`
+
+
+
+
+??? done "script"
+
+	```
+	#!/usr/bin/bash
+	#SBATCH --job-name=salmonRuhland
+	#SBATCH --time=01:00:00
+	#SBATCH --cpus-per-task=8
+	#SBATCH --mem=30G
+	#SBATCH -o salmon_ruhland2016.%a.o
+	#SBATCH -e salmon_ruhland2016.%a.e
+	#SBATCH --array 1-6%1
+
+	ml salmon
+
+	outDIR=salmon_Ruhland2016
+	
+	mkdir -p $outDIR
+	
+	dataDIR=/shared/data/DATA/Ruhland2016
+	
+	sourceFILE=Ruhland2016.fastqFiles.txt
+	
+	fastqFILE=`sed -n ${SLURM_ARRAY_TASK_ID}p $sourceFILE`
+
+	genomeDIR=/shared/data/DATA/Mouse_salmon_index
+	
+	salmon quant -i $genomeDIR -l A \
+				-r $fastqFILE \
+				-p 8 --validateMappings --gcBias --seqBias\
+				-o $outDIR
+	```
+
+
 
 <!--
 ## ADDITIONNAL : Assessing read coverage for biases

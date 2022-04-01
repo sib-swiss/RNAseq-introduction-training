@@ -34,7 +34,7 @@ As you start your session on the Rstudio server, please make sure that you know 
 
 ## Differential Expression Inference
 
-Use either of these libraries to conduct a differential expression analysis on the Ruhland2016 and/or Liu2015 dataset.
+Use either edgeR or DESeq2 to conduct a differential expression analysis on the Ruhland2016 and/or Liu2015 dataset.
 
 You can find the expression matrices on the server at: `/shared/home/SHARED/Solutions/Ruhland2016/...` and `/shared/home/SHARED/Solutions/Liu2015/`
 
@@ -511,3 +511,14 @@ The proposed correction will concern the results obtained with DESeq2 on the Ruh
 	![Reactomeenrich](../assets/images/DESeq2/Reactome_enrich.png)
 
 
+
+## Additionnal : importing counts from salmon with `tximport`
+
+The `tximport` R  packages offers a fairly simple sets of function in order to be able to use the **transcript-level** expression quantifications of salmon or kallisto in a differential **gene** expression analysis.
+
+
+**Task :** import salmon transcript-level quantification in R in order to perform a DE analysis on it using either edgeR or DESeq2
+**Additional:** compare the results with the ones obtained from STAR-aligned reads.
+
+ * The [tximport vignette](https://bioconductor.org/packages/release/bioc/vignettes/tximport/inst/doc/tximport.html) is a very good guide for this task.
+ * If you have not computed them, you can find files with expression quantifications in : `/shared/data/...`

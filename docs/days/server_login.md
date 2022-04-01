@@ -31,7 +31,7 @@ The first step will be to open a **terminal**
 
 === "Mac"
     
-    Open the application Xterm
+    Open a terminal, for instance with the application Xterm, or Xquartz
 
 === "Linux"
     
