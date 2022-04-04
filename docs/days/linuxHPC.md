@@ -15,7 +15,7 @@ More precisely, you will learn how to :
 
 ## Material
 
-[:fontawesome-solid-file-pdf: Download the presentation](../assets/pdf/RNA-Seq_02_QualityControl.pdf){: .md-button }
+[:fontawesome-solid-file-pdf: Download the presentation](../assets/pdf/Linux_Intro_SLURM_slides.pdf){: .md-button }
 
 
 
