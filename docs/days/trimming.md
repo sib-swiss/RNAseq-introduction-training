@@ -39,6 +39,7 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
 
 Important notes :
 
+ * when you do `ml trimmomatic`, you will have a little message which tells you how to launch the software
  * Adapter sequences can be found in `/shared/data/DATA/adapters/`
  * Trimmomatic RAM requirements : ~0.5G / cpu
  * Trimmomatic time requirements : ~ 10 min/ read file 
@@ -86,7 +87,7 @@ Important notes :
 	             $dataDIR/SRR1272187_2.fastq.gz \
 	             $outDIR/SRR1272187_NFLV_trimmed_paired_1.fastq $outDIR/SRR1272187_NFLV_trimmed_unpaired_1.fastq \
 	             $outDIR/SRR1272187_NFLV_trimmed_paired_2.fastq $outDIR/SRR1272187_NFLV_trimmed_unpaired_2.fastq \
-	             SLIDINGWINDOW:4:20 ILLUMINACLIP:/adapters/TruSeq3-PE.fa:2:30:10 
+	             SLIDINGWINDOW:4:20 ILLUMINACLIP:/shared/data/DATA/adapters/TruSeq3-PE.fa:2:30:10 
 	
 	## compressing the resulting fastq files to save some space.
 	gzip $outDIR/SRR1272187_NFLV_trimmed_paired_1.fastq

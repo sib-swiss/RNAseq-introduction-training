@@ -61,7 +61,7 @@ Important notes :
 
 	mkdir -p STAR_references
 	
-	$singularity_exec STAR --runMode genomeGenerate \
+	STAR --runMode genomeGenerate \
 	     --genomeDir STAR_references \
 	     --genomeFastaFiles $G_FASTA \
 	     --sjdbGTFfile $G_GTF \
@@ -138,7 +138,7 @@ Important notes :
 
 	fastqFILE=`sed -n ${SLURM_ARRAY_TASK_ID}p $sourceFILE`
 
-	genomeDIR=/shared/data/Mouse_STAR_index
+	genomeDIR=/shared/data/DATA/Mouse_STAR_index
 
 	STAR --runThreadN 8 --genomeDir $genomeDIR \
                   --outSAMtype BAM SortedByCoordinate --outReadsUnmapped Fastx \
@@ -288,7 +288,7 @@ We refer you to the tool's documentation in order to see [how the reference inde
 	genomeDIR=/shared/data/DATA/Mouse_salmon_index
 	
 	salmon quant -i $genomeDIR -l A \
-				-r $fastqFILE \
+				-r $dataDIR/$fastqFILE \
 				-p 8 --validateMappings --gcBias --seqBias\
 				-o $outDIR
 	```

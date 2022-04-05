@@ -41,22 +41,22 @@ For more details on the algorithm behavior (with multi/overlapping reads for ins
 	#SBATCH -e count.e
 
 	
-	G_GTF=/shared/data/DATA/Mus_musculus.GRCm39.103.gtf
+	G_GTF=/shared/data/DATA/Mus_musculus.GRCm39.105.gtf
 	
-	inFOLDER=~/Ruhland2016/STAR_Ruhland2016
-	outFOLDER=~/Ruhland2016/HTSQCOUNT_Ruhland2016
+	inFOLDER=/shared/data/Solutions/Ruhland2016/STAR_Ruhland2016
+	outFOLDER=featureCOUNT_Ruhland2016
 	
 	ml subread
 
 	mkdir -p $outFOLDER
 
 	featureCounts -T 8 -a $G_GTF -t exon -g gene_id -o featureCounts_Ruhland2016.counts.txt \
-										$inFOLDER/EtOH1_Aligned.sortedByCoord.out.bam \
-										$inFOLDER/EtOH2_Aligned.sortedByCoord.out.bam \
-										$inFOLDER/EtOH3_Aligned.sortedByCoord.out.bam \
-										$inFOLDER/TAM1_Aligned.sortedByCoord.out.bam \
-										$inFOLDER/TAM2_Aligned.sortedByCoord.out.bam \
-										$inFOLDER/TAM3_Aligned.sortedByCoord.out.bam
+										$inFOLDER/SRR3180535_EtOH1_1.fastq.gzAligned.sortedByCoord.out.bam \
+										$inFOLDER/SRR3180536_EtOH2_1.fastq.gzAligned.sortedByCoord.out.bam \
+										$inFOLDER/SRR3180537_EtOH3_1.fastq.gzAligned.sortedByCoord.out.bam \
+										$inFOLDER/SRR3180538_TAM1_1.fastq.gzAligned.sortedByCoord.out.bam \
+										$inFOLDER/SRR3180539_TAM2_1.fastq.gzAligned.sortedByCoord.out.bam \
+										$inFOLDER/SRR3180540_TAM3_1.fastq.gzAligned.sortedByCoord.out.bam
 
 	```
 

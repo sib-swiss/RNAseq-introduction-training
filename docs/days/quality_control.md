@@ -205,7 +205,7 @@ Important points:
 	fastqFILE=`sed -n ${SLURM_ARRAY_TASK_ID}p $sourceFILE`
 	
 	mkdir -p FASTQC_Ruhland2016/
-	$singularity_exec fastqc -o FASTQC_Ruhland2016/ $dataDir/$fastqFILE
+	fastqc -o FASTQC_Ruhland2016/ $dataDir/$fastqFILE
 	```
 
 	When submitted with `sbatch`, this script will spawn 6 tasks in parallel, each with a different value of `${SLURM_ARRAY_TASK_ID}`.
@@ -249,6 +249,8 @@ Important points:
 
  * MultiQC RAM requirements : 1Gb should be more than enough
  * MultiQC time requirements : ~ 1min / read file 
+ * Exceptionnally, there is no need to load multiqc as a module
+ * use `multiqc --help` to check the different options
 
 
 ??? done "sbatch scripts"
