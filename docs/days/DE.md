@@ -73,8 +73,10 @@ Or you may download them :
 	
 	# removing these first columns to keep only the sample counts
 	raw_counts = raw_counts[ ,  -1:-6  ] 
+	names( raw_counts) = gsub('_.*', '', gsub('.*.SRR[0-9]{7}_', '', names(raw_counts) ) )
+
 	# changing colomn names
-	names( raw_counts) = gsub('_.*', '', names(raw_counts) )
+	names( raw_counts) = gsub('_.*', '', gsub('.*.SRR[0-9]{7}_', '', names(raw_counts) ) )
 	
 	# some checking of what we just read
 	head(raw_counts); tail(raw_counts); dim(raw_counts)
@@ -521,4 +523,5 @@ The `tximport` R  packages offers a fairly simple sets of function in order to b
 **Additional:** compare the results with the ones obtained from STAR-aligned reads.
 
  * The [tximport vignette](https://bioconductor.org/packages/release/bioc/vignettes/tximport/inst/doc/tximport.html) is a very good guide for this task.
- * If you have not computed them, you can find files with expression quantifications in : `/shared/data/...`
+ * If you have not computed them, you can find files with expression quantifications in : `/shared/data/Solutions/Liu2015/` and `/shared/data/Solutions/Ruhland2016/`
+
