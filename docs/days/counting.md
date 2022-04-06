@@ -25,6 +25,7 @@ For more details on the algorithm behavior (with multi/overlapping reads for ins
  * Count the reads from one of your BAM files using featureCount
  * How do the count compare to the counts from STAR ?
 
+ * You can find bam files at `/shared/data/Solutions/Liu2015/STAR_Liu2015` and `/shared/data/Solutions/Ruhland2016/STAR_Ruhland2016`
  * featureCount : 400M RAM / bam
  * featureCount : 2 min cpu time / bam
 

@@ -36,13 +36,13 @@ As you start your session on the Rstudio server, please make sure that you know 
 
 Use either edgeR or DESeq2 to conduct a differential expression analysis on the Ruhland2016 and/or Liu2015 dataset.
 
-You can find the expression matrices on the server at: `/shared/home/SHARED/Solutions/Ruhland2016/...` and `/shared/home/SHARED/Solutions/Liu2015/`
+You can find the expression matrices on the server at: `/shared/data/Solutions/Ruhland2016/countFiles/featureCounts_Ruhland2016.counts.txt` and `/shared/data/Solutions/Liu2015/countFiles/featureCounts_Liu2015.counts.txt`
 
 Or you may download them :
 
-[Liu2015 count matrix](){: .md-button }
+[Liu2015 count matrix](../assets/txt/featureCounts_Liu2015.counts.txt){: .md-button }
 
-[Ruhland2016 count matrix](){: .md-button }
+[Ruhland2016 count matrix](../assets/txt/featureCounts_Ruhland2016.counts.txt){: .md-button }
 
 !!! note
 
