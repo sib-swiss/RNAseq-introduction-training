@@ -1,10 +1,10 @@
-[![DOI](https://zenodo.org/badge/383052580.svg)](https://zenodo.org/badge/latestdoi/383052580)
+
 
 # RNAseq-introduction-training
 
 Webpage of the "Introduction to RNA-Seq: From quality control to pathway analysis - streamed" SIB course.
 
-[Go to the built webpage](https://sib-swiss.github.io/RNAseq-introduction-training/)
+[Go to the built webpage](https://WandrilleD.github.io/RNAseq-introduction-training/)
 
 
 
@@ -39,4 +39,11 @@ mkdocs gh-deploy
 ```
 
 This will generate a webpage at:
-https://sib-swiss.github.io/RNAseq-introduction-training
+https://WandrilleD.github.io/RNAseq-introduction-training
+
+
+## reference
+
+this repository was originally cloned from
+
+Wandrille Duchemin. (2021, September 27). sib-swiss/RNAseq-introduction-training: course 02-09-2021 [![DOI](https://zenodo.org/badge/383052580.svg)](https://zenodo.org/badge/latestdoi/383052580)
