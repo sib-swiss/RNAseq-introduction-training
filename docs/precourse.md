@@ -2,7 +2,7 @@
 
 On top of a thirst for knowledge, and a working connection, here is what you will need for the course : 
 
-As announced in the [course registration webpage](https://www.sib.swiss/training/course/20210902_IRNAS),
+As announced in the [course registration webpage](https://www.sib.swiss/training/course/20220901_IRNAS),
 we expect participants to already have a basic knowledge in Next Generation Sequencing (NGS) techniques. 
 
 ## UNIX
