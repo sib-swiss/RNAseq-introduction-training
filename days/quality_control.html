@@ -1,0 +1,837 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/SIB_logo.svg">
+      <meta name="generator" content="mkdocs-1.2.1, mkdocs-material-7.1.8">
+    
+    
+      
+        <title>Quality control - Introduction to RNA-Seq - From quality control to pathway analysis</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ca7ac06f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.f1a3b89f.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#material" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="Introduction to RNA-Seq - From quality control to pathway analysis" class="md-header__button md-logo" aria-label="Introduction to RNA-Seq - From quality control to pathway analysis" data-md-component="logo">
+      
+  <img src="../assets/images/SIB_logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Introduction to RNA-Seq - From quality control to pathway analysis
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Quality control
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/sib-swiss/RNAseq-introduction-training/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    sib-swiss/RNAseq-introduction-training
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="Introduction to RNA-Seq - From quality control to pathway analysis" class="md-nav__button md-logo" aria-label="Introduction to RNA-Seq - From quality control to pathway analysis" data-md-component="logo">
+      
+  <img src="../assets/images/SIB_logo.svg" alt="logo">
+
+    </a>
+    Introduction to RNA-Seq - From quality control to pathway analysis
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/sib-swiss/RNAseq-introduction-training/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    sib-swiss/RNAseq-introduction-training
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../precourse.html" class="md-nav__link">
+        Precourse preparations
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../course_schedule.html" class="md-nav__link">
+        Course schedule
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      <label class="md-nav__link" for="__nav_4">
+        Day1
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Day1" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Day1
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="design.html" class="md-nav__link">
+        RNAseq - technologies and design
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="server_login.html" class="md-nav__link">
+        Server login + unix fresh up
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Quality control
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="quality_control.html" class="md-nav__link md-nav__link--active">
+        Quality control
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#material" class="md-nav__link">
+    Material
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#meet-the-datasets" class="md-nav__link">
+    Meet the datasets
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#retrieving-published-datasets" class="md-nav__link">
+    Retrieving published datasets
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fastqc-a-report-for-a-single-fastq-file" class="md-nav__link">
+    FastQC : a report for a single fastq file
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multiqc-grouping-multiple-reports" class="md-nav__link">
+    MultiQC : grouping multiple reports
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="trimming.html" class="md-nav__link">
+        Sequence trimming
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="mapping.html" class="md-nav__link">
+        Reads mapping
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Day2
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Day2" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Day2
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="counting.html" class="md-nav__link">
+        Read counting
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DE.html" class="md-nav__link">
+        Differential Expression Inference
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#material" class="md-nav__link">
+    Material
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#meet-the-datasets" class="md-nav__link">
+    Meet the datasets
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#retrieving-published-datasets" class="md-nav__link">
+    Retrieving published datasets
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fastqc-a-report-for-a-single-fastq-file" class="md-nav__link">
+    FastQC : a report for a single fastq file
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multiqc-grouping-multiple-reports" class="md-nav__link">
+    MultiQC : grouping multiple reports
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/sib-swiss/RNAseq-introduction-training/edit/master/docs/days/quality_control.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                  <h1>Quality control</h1>
+                
+                <p>Quality Control is the essential first step to perform once you have your data as <code>.fastq</code> or <code>.fastq.gz</code> form.</p>
+<p>During this block, you will learn to :</p>
+<ul>
+<li>create QC report for a single file with fastqc</li>
+<li>aggregate multiple QC reports using multiqc</li>
+<li>interpret the QC reports for RNAseq experiement</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although we aim to present tools as stable as possible, software evolve and their precise interface can change with time.
+We strongly recommend you to have a look at each command help page or manual before launching any command.
+To this end we provide links to each tool website. </p>
+<p>This can also be useful to you if you are following this course without access to a compute cluster and have to install these tools on your machine.</p>
+</div>
+<h2 id="material">Material</h2>
+<p><a class="md-button" href="../assets/pdf/RNA-Seq_02_QualityControl.pdf"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105 279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z"/></svg></span> Download the presentation</a></p>
+<p><a class="md-button" href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC website</a></p>
+<p><a class="md-button" href="https://multiqc.info/">MultiQC website</a></p>
+<h2 id="meet-the-datasets">Meet the datasets</h2>
+<p>We will be working with two datasets from the following studies:</p>
+<ul>
+<li>
+<p>Liu et al (2015) “RNA-Seq identifies novel myocardial gene expression signatures of heart failure” Genomics 105(2):83-89 <a href="https://doi.org/10.1016/j.ygeno.2014.12.002">https://doi.org/10.1016/j.ygeno.2014.12.002</a></p>
+<ul>
+<li><a href="https://www.ncbi.nlm.nih.gov/bioproject/?term=GSE57345">GSE57345</a></li>
+<li><em>Homo sapiens</em> heart left ventricle samples : 3 with heart failure, 3 without</li>
+<li>6 samples of paired-end reads </li>
+</ul>
+</li>
+<li>
+<p>Ruhland et al (2016) “Stromal senescence establishes an immunosuppressive microenvironment that drives tumorigenesis” Nature Communications 7:11762 <a href="https://dx.doi.org/10.1038/ncomms11762">https://dx.doi.org/10.1038/ncomms11762</a></p>
+<ul>
+<li><a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE78128">GSE78128</a></li>
+<li><em>Mus musculus</em> skin fibroblast samples : 3 non-senescent (EtOH) , 3 senescent(TAM)</li>
+<li>6 samples of single-end reads</li>
+</ul>
+</li>
+</ul>
+<h2 id="retrieving-published-datasets">Retrieving published datasets</h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you are following this course with a teacher, then the for the data is already on the server. There is no need to download it again.</p>
+</div>
+<p>Most NGS data is deposited at the <a href="https://www.ncbi.nlm.nih.gov/sra/">Short Read Archive (SRA)</a> hosted by the NCBI, with links from the <a href="https://www.ncbi.nlm.nih.gov/geo/">Gene Expression Omnibus (GEO)</a></p>
+<p>Several steps are required to retrieve data from a published study :</p>
+<ol>
+<li>find GEO or SRA identifier from publication</li>
+<li>find the “run” files for each sample (SRR)</li>
+<li>use <a href="https://github.com/ncbi/sra-tools/wiki/01.-Downloading-SRA-Toolkit">SRA Toolkit</a> to dump SRR to FASTQ</li>
+</ol>
+<p>For example, on the Liu2015 dataset :</p>
+<ol>
+<li>Locate in their publication the GEO accession: GSE57345 </li>
+<li>Use the NCBI search engine to find this accession : <a href="https://www.ncbi.nlm.nih.gov/bioproject/?term=GSE57345">GSE57345</a></li>
+<li>This project is made of several subproject. Scroll down, and in the table find the Bioproject id : PRJNA246308 </li>
+<li>Go to the <a href="https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA246308&amp;o=acc_s%3Aa">SRA run selector</a>, enter your Bioproject id</li>
+<li>From the <a href="https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA246308&amp;o=acc_s%3Aa">results of your search</a>, select all relevant runs</li>
+<li>click on &ldquo;Accession List&rdquo; in the Select table </li>
+</ol>
+<p><img alt="SRA run selector" src="../assets/images/SRA_run_selector.png" /></p>
+<ol start="7">
+<li>use <code>fastq-dump</code> (part of the <a href="https://github.com/ncbi/sra-tools/wiki/01.-Downloading-SRA-Toolkit">SRA Toolkit</a>) on the downloaded accession list. For example:</li>
+</ol>
+<p><code>fastq-dump --gzip --skip-technical --readids --split-files --clip SRR1272191</code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul>
+<li>You’ll need to know the nature of the dataset before attempting to (library type, paired vs single end, etc) </li>
+<li><code>fastq-dump</code> takes a very long time</li>
+<li><a href="https://edwards.sdsu.edu/research/fastq-dump/">More information about fastq-dump</a></li>
+</ul>
+</div>
+<h2 id="fastqc-a-report-for-a-single-fastq-file">FastQC : a report for a single fastq file</h2>
+<p><a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC</a> is a nice tool to get a variety of QC measures from files such as <code>.fastq</code>, <code>.bam</code> or <code>.sam</code> files. </p>
+<p>Although it has many options, the default parameters are often enough for our purpose :</p>
+<div class="highlight"><pre><span></span><code>fastqc -o &lt;output_directory&gt; file1.fastq file2.fastq ... fileN.fastq
+</code></pre></div>
+<p>FastQC is reasonnably intelligent and will try to recognise the file format and uncompress it if necessary (so no need to decompress).</p>
+<p><strong>Task:</strong> </p>
+<ul>
+<li>run FastQC analysis on the two datasets at: <code>/shared/data/DATA/Liu2015/</code> and <code>/shared/data/DATA/Ruhland2016</code>. </li>
+<li>Look at at least one of the QC report. What are your conclusions ? Would you want to perform some operations on the reads such as low-quality bases trimming, removal of adapters ?</li>
+</ul>
+<p>Important points:</p>
+<ul>
+<li>in your script, don&rsquo;t forget to load fastqc : <code>ml fastqc</code></li>
+<li>there is no need to copy the read files to your home directory (in fact, don&rsquo;t do that: we won&rsquo;t have enough space left on the disk&hellip;)</li>
+<li>FastQC RAM requirements : 1Gb is more than enough</li>
+<li>FastQC time requirements : ~ 5min / read file </li>
+<li>try to make sure FastQC outputs all reports in the same directory, this will save time for the next step ;-)</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>reminder : to get the data from the distant server to your machine, you may use an SFTP client (filezilla, mobaXterm), or the command line tool from your mahcine : <code>scp login@xx.xx.xx:~/path/to/file.txt .</code></p>
+</div>
+<details class="done"><summary>Liu2015 FastQC sbatch script</summary><p>Here is an sbatch script for one sample:</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
+<span class="c1">#SBATCH --job-name=fastqc</span>
+<span class="c1">#SBATCH --time=01:00:00</span>
+<span class="c1">#SBATCH --cpus-per-task=1</span>
+<span class="c1">#SBATCH --mem=1G</span>
+<span class="c1">#SBATCH -o fastqc_Liu2015.o</span>
+<span class="c1">#SBATCH -e fastqc_Liu2015.e</span>
+
+<span class="nv">dataDir</span><span class="o">=</span>/shared/data/DATA/Liu2015
+
+ml fastqc
+
+<span class="c1"># creating the output folder</span>
+mkdir -p FASTQC_Liu2015/
+
+fastqc -o FASTQC_Liu2015/ <span class="nv">$dataDir</span>/SRR1272187_1.fastq.gz
+</code></pre></div>
+<p>You could either have one sbatch script per sample (recommended),</p>
+<p>OR put the <code>fastqc</code> commands for all the samples in the same script (not recommended).</p>
+<p>The first is recommended because you can submit each scripts at once and they will then run in parallel, whereas with the second option the samples would be handled sequentially and the overall job would likely take &gt;1hour.</p>
+</details>
+<details class="done"><summary>Ruhland2016 FastQC sbatch script</summary><p>Here is an sbatch script for one sample:</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
+<span class="c1">#SBATCH --job-name=fastqc</span>
+<span class="c1">#SBATCH --time=01:00:00</span>
+<span class="c1">#SBATCH --cpus-per-task=1</span>
+<span class="c1">#SBATCH --mem=1G</span>
+<span class="c1">#SBATCH -o fastqc_Ruhland2016.o</span>
+<span class="c1">#SBATCH -e fastqc_Ruhland2016.e</span>
+
+<span class="nv">dataDir</span><span class="o">=</span>/shared/data/DATA/Ruhland2016
+
+ml fastqc
+
+<span class="c1"># creating the output folder</span>
+mkdir -p FASTQC_Ruhland2016/
+
+fastqc -o FASTQC_Ruhland2016/ <span class="nv">$dataDir</span>/SRR3180540_TAM3_1.fastq.gz
+</code></pre></div>
+<p>You could either have one sbatch script per sample (recommended),</p>
+<p>OR put the <code>fastqc</code> commands for all the samples in the same script (not recommended).</p>
+<p>The first is recommended because you can submit each scripts at once and they will then run in parallel, whereas with the second option the samples would be handled sequentially and the overall job would likely take &gt;1hour.</p>
+</details>
+<details class="done"><summary>alternative scripts using array job</summary><p>First, have a file named <code>Ruhland2016.fastqFiles.txt</code> containing the sample fastq file names :</p>
+<div class="highlight"><pre><span></span><code>SRR3180535_EtOH1_1.fastq.gz
+SRR3180536_EtOH2_1.fastq.gz
+SRR3180537_EtOH3_1.fastq.gz
+SRR3180538_TAM1_1.fastq.gz
+SRR3180539_TAM2_1.fastq.gz
+SRR3180540_TAM3_1.fastq.gz
+</code></pre></div>
+<p>Then, in the same folder, you can create this sbatch script :</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
+<span class="c1">#SBATCH --job-name=fastqc</span>
+<span class="c1">#SBATCH --time=00:30:00</span>
+<span class="c1">#SBATCH --cpus-per-task=1</span>
+<span class="c1">#SBATCH --mem=1G</span>
+<span class="c1">#SBATCH -o fastqc_Ruhland2016.%a.o</span>
+<span class="c1">#SBATCH -e fastqc_Ruhland2016.%a.e</span>
+<span class="c1">#SBATCH --array 1-6%6</span>
+
+ml fastqc
+
+<span class="nv">dataDir</span><span class="o">=</span>/shared/data/DATA/Ruhland2016
+
+<span class="nv">sourceFILE</span><span class="o">=</span>Ruhland2016.fastqFiles.txt
+
+<span class="c1">## retrieving 1 filename from Ruhland2016.fastqFiles.txt</span>
+<span class="nv">fastqFILE</span><span class="o">=</span><span class="sb">`</span>sed -n <span class="si">${</span><span class="nv">SLURM_ARRAY_TASK_ID</span><span class="si">}</span>p <span class="nv">$sourceFILE</span><span class="sb">`</span>
+
+mkdir -p FASTQC_Ruhland2016/
+fastqc -o FASTQC_Ruhland2016/ <span class="nv">$dataDir</span>/<span class="nv">$fastqFILE</span>
+</code></pre></div>
+<p>When submitted with <code>sbatch</code>, this script will spawn 6 tasks in parallel, each with a different value of <code>${SLURM_ARRAY_TASK_ID}</code>.</p>
+<p>This is the most recommended option : this allows you to launch all your job in parallel with a single script.</p>
+</details>
+<details class="done"><summary>Interpretation of a report</summary><p><a class="md-button" href="../assets/pdf/SRR3180535_EtOH1_1_fastqc.pdf"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105 279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z"/></svg></span> Download an annotated report</a></p>
+</details>
+<h2 id="multiqc-grouping-multiple-reports">MultiQC : grouping multiple reports</h2>
+<p>In practice, you will be likely to have more than a couple of samples (and often more than 30 or 50) to handle: consulting and comparing the QC reports of each individually would be tedious.</p>
+<p><a href="https://multiqc.info/">MultiQC</a> is a tool that lets you combine multiple reports in a single, interactive document that let you explore your data easily.</p>
+<p>We will here be focusing on grouping FastQC reports, but MultiQC can also be applied to the output or logs of other bioinformatics tools, such as mappers as we will see later.</p>
+<p>In its default usage, <code>multiqc</code> only needs to be provided a path where it will find all the individual reports, and it will scan them and write a report named <code>multiqc_report.html</code>.</p>
+<p>Although the default behaviour, with a couple of options we get a slightly better control over the output:
+ * <code>--interactive</code> : forces the plot to be interactive even when there is a lot of samples (this option can lead to larger html files)
+ * <code>-f &lt;filename&gt;</code> : specify the name of the output file name</p>
+<p>For instance, a possible command line could be :
+<div class="highlight"><pre><span></span><code>multiqc -f multiQCreports/Liu2015_multiqc.html --interactive Liu2015_fastqc/
+</code></pre></div></p>
+<p>Ther are many additonnal info which let you customize your report. Use <code>multiqc --help</code> or visit their <a href="https://multiqc.info/docs/#running-multiqc">documentation webpage</a> to learn more.</p>
+<p><strong>Task:</strong> </p>
+<ul>
+<li>run MultiQC for each dataset. </li>
+<li>Look at the QC reports. What are your conclusions ? </li>
+</ul>
+<p>Important points:</p>
+<ul>
+<li>MultiQC RAM requirements : 1Gb should be more than enough</li>
+<li>MultiQC time requirements : ~ 1min / read file </li>
+<li>Exceptionnally, there is no need to load multiqc as a module</li>
+<li>use <code>multiqc --help</code> to check the different options</li>
+</ul>
+<details class="done"><summary>sbatch scripts</summary><p>This is the script for the Ruhland2016 dataset. It presumes that the fastqc reports can be found in <code>FASTQC_Ruhland2016/</code></p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
+<span class="c1">#SBATCH --job-name=multiqc</span>
+<span class="c1">#SBATCH --time=00:30:00</span>
+<span class="c1">#SBATCH --cpus-per-task=1</span>
+<span class="c1">#SBATCH --mem=1G</span>
+<span class="c1">#SBATCH -o multiqc_Ruhland2016.o</span>
+<span class="c1">#SBATCH -e multiqc_Ruhland2016.e</span>
+
+
+mkdir -p MULTIQC_Ruhland2016/
+
+multiqc -o MULTIQC_Ruhland2016/ FASTQC_Ruhland2016/ 
+</code></pre></div>
+</details>
+<details class="done"><summary>Interpretation of a report</summary><p>We will interpret the report for the Liu2015 data.</p>
+<p><img alt="per base sequence quality" src="../assets/images/multiqc/fastqc_per_base_sequence_quality_plot.png" /></p>
+<p>The quality of reads drop below 30 around base 75. All samples seem affected</p>
+<p><img alt="fastqc_per_sequence_quality_scores_plot" src="../assets/images/multiqc/fastqc_per_sequence_quality_scores_plot.png" /></p>
+<p>Mean quality scores are on average fairly high, but some read exhibit low values.</p>
+<p><img alt="fastqc_per_sequence_gc_content_plot" src="../assets/images/multiqc/fastqc_per_sequence_gc_content_plot.png" /></p>
+<p>Most samples do not deviate too much from the expected curve. The two sample colored in orange and red have a mode for a very specific value.
+That may be indicative of contamination, retaining specific rRNA, or adapter sequence content.</p>
+<p><img alt="fastqc_per_base_n_content_plot" src="../assets/images/multiqc/fastqc_per_base_n_content_plot.png" /></p>
+<p>Ns are present at specific positions in specific samples. This is reminiscent of the PHRED quality curves at the top of the report.
+It seems some flowcells had a problem at specific time-point/positions.</p>
+<p><img alt="fastqc_sequence_duplication_levels_plot" src="../assets/images/multiqc/fastqc_sequence_duplication_levels_plot.png" /></p>
+<p>This is colored red because this would be a problem if the data was coming from genomic DNA sequencing.
+However here we are in the context of RNAseq : some transcripts are present in a large number of copies in the samples and consequently it is expected that some sequences are overrepresented.</p>
+<p><img alt="fastqc_adapter_content_plot" src="../assets/images/multiqc/fastqc_adapter_content_plot.png" /></p>
+<p>We see a clear trend of adapter contamination as we get closer to the reads end. Note the y-scale though : we never go above a 6% content per sample.</p>
+<p>Overall, we can conclude that these sample all suffer from some adapter content and a lower quality toward the reads second half. Furthermore a few samples have a peculiar Ns pattern between bases 20 and 30.</p>
+<p>It is then strongly advised to either :</p>
+<ul>
+<li>perform some trimming : remove adapter sequences + cut reads when average quality becomes too low</li>
+<li>use a mapper that takes base quality in account AND is able to ignore adapter sequence (and even then, you could try mapping on both croppedand uncropped data to see which is the best)</li>
+</ul>
+</details>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="server_login.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Server login + unix fresh up" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Server login + unix fresh up
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="trimming.html" class="md-footer__link md-footer__link--next" aria-label="Next: Sequence trimming" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Sequence trimming
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.b0710199.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.76f349be.min.js"></script>
+      
+    
+  </body>
+</html>
