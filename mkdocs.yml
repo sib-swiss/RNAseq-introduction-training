@@ -5,31 +5,27 @@ nav:
     - Precourse preparations: precourse.md
     - Course schedule: course_schedule.md
     - Day1 :
-        - Linux and cluster usage : days/linuxHPC.md
-    - Day2 :
         - RNAseq - technologies and design : days/design.md
         - Server login + unix fresh up : days/server_login.md
         - Quality control : days/quality_control.md
         - Sequence trimming : days/trimming.md
-
-    - Day3 :
         - Reads mapping : days/mapping.md
-        - Read counting : days/counting.md
 
-    - Day4 :
+    - Day2 :
+        - Read counting : days/counting.md
         - Differential Expression Inference : days/DE.md
 
 
 
 # Repository
-repo_name: WandrilleD/RNAseq-introduction-training
-repo_url: https://github.com/WandrilleD/RNAseq-introduction-training
+repo_name: sib-swiss/RNAseq-introduction-training
+repo_url: https://github.com/sib-swiss/RNAseq-introduction-training
 site_url: 
 
 theme:
   name: material
-  logo: assets/images/uni-basel-logo.svg
-  favicon: assets/images/uni-basel-logo.svg
+  logo: assets/images/SIB_logo.svg
+  favicon: assets/images/SIB_logo.svg
 
 extra_css:
   - stylesheets/extra.css

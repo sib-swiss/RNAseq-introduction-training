@@ -4,7 +4,7 @@
 
 Webpage of the "Introduction to RNA-Seq: From quality control to pathway analysis - streamed" SIB course.
 
-[Go to the built webpage](https://WandrilleD.github.io/RNAseq-introduction-training/)
+[Go to the built webpage](https://sib-swiss.github.io/RNAseq-introduction-training/)
 
 
 
@@ -39,7 +39,7 @@ mkdocs gh-deploy
 ```
 
 This will generate a webpage at:
-https://WandrilleD.github.io/RNAseq-introduction-training
+https://sib-swiss.github.io/RNAseq-introduction-training
 
 
 ## reference
