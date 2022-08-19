@@ -584,7 +584,6 @@ STAR --runMode genomeGenerate <span class="se">\</span>
      --genomeDir STAR_references <span class="se">\</span>
      --genomeFastaFiles <span class="nv">$G_FASTA</span> <span class="se">\</span>
      --sjdbGTFfile <span class="nv">$G_GTF</span> <span class="se">\</span>
-     --outTmpDir /tmp/<span class="si">${</span><span class="nv">SLURM_JOB_USER</span><span class="si">}</span>_<span class="si">${</span><span class="nv">SLURM_JOB_ID</span><span class="si">}</span> <span class="se">\</span>
      --runThreadN <span class="m">4</span>
 </code></pre></div>
 </details>
@@ -650,7 +649,6 @@ STAR --runThreadN 8 --genomeDir $genomeDIR \
               --outFileNamePrefix $outDIR/$fastqFILE \
               --quantMode GeneCounts \
               --readFilesIn $dataDIR/$fastqFILE --readFilesCommand zcat \
-              --outTmpDir /tmp/${SLURM_JOB_USER}_${SLURM_JOB_ID}
 </code></pre></div>
 <p>The options of STAR are :</p>
 <ul>
@@ -682,7 +680,6 @@ STAR --runThreadN 8 --genomeDir $genomeDIR \
 <span class="c1">#SBATCH -o multiqc_star_Ruhland2016.o</span>
 <span class="c1">#SBATCH -e multiqc_star_Ruhland2016.e</span>
 
-ml multiqc
 
 mkdir -p STAR_MULTIQC_Ruhland2016/
 
@@ -727,7 +724,6 @@ STAR --runThreadN 8 --genomeDir $genomeDIR \
                   --outReadsUnmapped Fastx --quantMode GeneCounts \
                   --sjdbFileChrStartEnd $outDIR/${fastqFILE}SJ.out.tab \
                   --readFilesIn $dataDIR/$fastqFILE --readFilesCommand zcat \
-                  --outTmpDir /tmp/${SLURM_JOB_USER}_${SLURM_JOB_ID}
 </code></pre></div>
 </details>
 <h2 id="additionnal-pseudo-aligning-with-salmon">ADDITIONNAL : pseudo-aligning with salmon</h2>
