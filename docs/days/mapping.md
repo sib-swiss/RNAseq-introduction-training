@@ -65,7 +65,6 @@ Important notes :
 	     --genomeDir STAR_references \
 	     --genomeFastaFiles $G_FASTA \
 	     --sjdbGTFfile $G_GTF \
-	     --outTmpDir /tmp/${SLURM_JOB_USER}_${SLURM_JOB_ID} \
 	     --runThreadN 4
 	```
 
@@ -145,7 +144,7 @@ Important notes :
                   --outFileNamePrefix $outDIR/$fastqFILE \
                   --quantMode GeneCounts \
                   --readFilesIn $dataDIR/$fastqFILE --readFilesCommand zcat \
-	              --outTmpDir /tmp/${SLURM_JOB_USER}_${SLURM_JOB_ID}
+
 	```
 
 	The options of STAR are :
@@ -184,7 +183,6 @@ Here this concern a single sample but usually this would cover all your samples.
 	#SBATCH -o multiqc_star_Ruhland2016.o
 	#SBATCH -e multiqc_star_Ruhland2016.e
 	
-	ml multiqc
 	
 	mkdir -p STAR_MULTIQC_Ruhland2016/
 	
@@ -241,7 +239,7 @@ STAR <1st round options> --sjdbFileChrStartEnd sample_SJ.out.tab
 	                  --outReadsUnmapped Fastx --quantMode GeneCounts \
 	                  --sjdbFileChrStartEnd $outDIR/${fastqFILE}SJ.out.tab \
 	                  --readFilesIn $dataDIR/$fastqFILE --readFilesCommand zcat \
-	                  --outTmpDir /tmp/${SLURM_JOB_USER}_${SLURM_JOB_ID}
+
 	```
 
 
