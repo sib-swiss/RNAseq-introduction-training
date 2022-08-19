@@ -65,7 +65,10 @@ Important notes :
 	     --genomeDir STAR_references \
 	     --genomeFastaFiles $G_FASTA \
 	     --sjdbGTFfile $G_GTF \
-	     --runThreadN 4
+	     --runThreadN 4 \
+	     --genomeSAindexNbases 11 \
+	     --sjdbOverhang 49 
+
 	```
 
 **Extra task :** Determine how you would add an additional feature to your reference, for example for a novel transcript not described by the standard reference.

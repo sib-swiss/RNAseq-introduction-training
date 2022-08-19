@@ -62,18 +62,21 @@ Or you may download them :
 	library(DESeq2)
 	library(ggplot2)
 	
-	#setwd("/shared/home/user01/Ruhland2016/")
+	
 	
 	# reading the counts files - adapt the file path to your situation
-	raw_counts <-read.table('.../fC_all.counts' , 
+	raw_counts <-read.table('/shared/data/Solutions/Ruhland2016/countFiles/featureCounts_Ruhland2016.counts.txt' , 
 	                        skip=1 , sep="\t" , header=T)
 	
 	# setting up row names as ensembl gene ids
 	row.names(raw_counts) = raw_counts$Geneid
 	
+	## looking at the beginning of that table
+	raw_counts[1:5,1:5]
+
 	# removing these first columns to keep only the sample counts
 	raw_counts = raw_counts[ ,  -1:-6  ] 
-	names( raw_counts) = gsub('_.*', '', gsub('.*.SRR[0-9]{7}_', '', names(raw_counts) ) )
+	
 
 	# changing colomn names
 	names( raw_counts) = gsub('_.*', '', gsub('.*.SRR[0-9]{7}_', '', names(raw_counts) ) )
@@ -100,10 +103,10 @@ Or you may download them :
 	dds.f <- dds[idx, ]
 	dim(dds.f)
 	
-	# we go from 46078 to 18010 genes
+	# we go from 55414 to 19378 genes
 	```
 
-	Around 18k genes pass our minimum expression threshold.
+	Around 19k genes pass our minimum expression threshold.
 
 ??? done "estimate dipesersion / model fitting"
 
@@ -141,7 +144,7 @@ Or you may download them :
 	DESeq2::plotMA(res)
 	DESeq2::plotMA(res.lfc)
 	# -> with shrinkage, the significativeness and logFC are more consistent
-	par()
+	par(mfrow=c(1,1))
 	```
 
 	![doubleMA](../assets/images/DESeq2/ruhland2016_doubleMA.png)
@@ -159,12 +162,14 @@ Or you may download them :
 	
 	plotPCA(vst.dds.f, intgroup = c("treatment"))
 	```
-	![doubleMA](../assets/images/DESeq2/ruhland2016_PCA.png)
+	![pca](../assets/images/DESeq2/ruhland2016_PCA.png)
 
 	The first axis (58% of the variance) seems linked to the grouping of interest.
 
 	```R
 	## Volcano plot
+	library(ggplot2)
+
 	FDRthreshold = 0.01
 	logFCthreshold = 1.0
 	# add a column of NAs
@@ -184,7 +189,7 @@ Or you may download them :
 	```
 	```
 	 DOWN    NO    UP 
-	  125 17647   240 
+	  131 19002   245 
 	```
 
 	![volcano](../assets/images/DESeq2/ruhland2016_volcano.png)
@@ -225,7 +230,7 @@ Or you may download them :
 	library(ggplot2)
 
 	# reading the counts files - adapt the file path to your situation
-	raw_counts <-read.table('.../fC_all.counts' , 
+	raw_counts <-read.table('.../Ruhland2016_featureCount_result.counts' , 
 	           skip=1 , sep="\t" , header=T)
 	
 	# setting up row names as ensembl gene ids
@@ -234,6 +239,9 @@ Or you may download them :
 	# removing these first columns to keep only the sample counts
 	raw_counts = raw_counts[ ,  -1:-6  ] 
 	
+	# changing colomn names
+	names( raw_counts) = gsub('_.*', '', gsub('.*.SRR[0-9]{7}_', '', names(raw_counts) ) )
+
 	# some checking of what we just read
 	head(raw_counts); tail(raw_counts); dim(raw_counts)
 	colSums(raw_counts) # total number of counted reads per sample
@@ -260,10 +268,10 @@ Or you may download them :
 	```
 	keep
 	FALSE  TRUE 
-	30999 15079 
+	39702 15712 
 	```
 
-	Around 15k genes are sufficiently expressed to be retained.
+	Around 16k genes are sufficiently expressed to be retained.
 
 	```R
 	#normalization
@@ -312,9 +320,9 @@ Or you may download them :
 	```
 	```
 	         1-0
-	Down     110
-	NotSig 14770
-	Up       199
+	Down     109
+	NotSig 15393
+	Up       210
 	```
 
 	The comparision is 1-0, so "Up", corresponds to a higher in group 1 (EtOH for us) compared to group 0 (TAM).
@@ -447,7 +455,7 @@ The proposed correction will concern the results obtained with DESeq2 on the Ruh
 	
 	```
 	 FALSE  TRUE 
-	 17639   365 
+	 18569   401 
 	```
 	
 	Translating gene ENSEMBL names to their entrezID (this is what clusterProfiler uses), as well as Symbol (named used by most biologist).
@@ -466,10 +474,10 @@ The proposed correction will concern the results obtained with DESeq2 on the Ruh
 	#9 ENSMUSG00000025907    12421  Rb1cc1
 	
 	dim(genes_universe)
-	# 14708     3
+	# 15878     3
 	
-	length(rownames(dds.f))
-	# 18012
+	length(rownames(res))
+	# 19378
 	```
 	
 	```R
@@ -477,7 +485,7 @@ The proposed correction will concern the results obtained with DESeq2 on the Ruh
 	                 toType = c("ENTREZID", "SYMBOL"),
 	                 OrgDb = "org.Mm.eg.db")
 	dim(genes_DE)
-	# 354   3
+	# 387   3
 	```
 	
 	```R
