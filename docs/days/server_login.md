@@ -20,6 +20,18 @@ This page will cover our first contact with the distant cluster.
 	Feel free to ignore or adapt any of the following steps to your own situation.
 
 
+## The computing cluster
+
+The computing cluster follows an architecture that enables several users to distribute computational tasks among several machines which share a number of resources, such as a common file system.
+
+![cluster_overview](../assets/images/cluster_overview.png)
+
+Users do not access each machine individually, but rather connect to a **head node**. From there, they can interact with the cluster using the **job scheduler** (here slurm).
+The job scheduler's role is to manage where and how to run the jobs of all users, such that waiting time is minimized and resource usage is optimized.
+
+!!! Warning
+	Everyone is connected to the same head node. Do not perform compute-intensive tasks on it or you will slow everyone down! 
+
 
 ## Connect to the server
 
@@ -219,17 +231,7 @@ There exists several alternatives, depending on your platform and preferences.
 	![mobaxterm_leftpanel](https://mobaxterm.mobatek.net/img/moba/features/feature-sftp-browser.png)
 
 
-## The computing cluster
-
-The computing cluster follows an architecture that enables several users to distribute computational tasks among several machines which share a number of resources, such as a common file system.
-
-![cluster_overview](../assets/images/cluster_overview.png)
-
-Users do not access each machine individually, but rather connect to a **head node**. From there, they can interact with the cluster using the **job scheduler** (here slurm).
-The job scheduler's role is to manage where and how to run the jobs of all users, such that waiting time is minimized and resource usage is optimized.
-
-!!! Warning
-	Everyone is connected to the same head node. Do not perform compute-intensive tasks on it or you will slow everyone down! 
+## Submitting jobs
 
 Jobs can be submitted to the compute cluster using **sbatch scripts**, which contain 2 parts :
 
