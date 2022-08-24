@@ -1,16 +1,18 @@
 
-To conduct the practicals of this course we will be using a dedicated computer cluster. 
-This matches the reality of most NGS workflows, which cannot be realized on a single machine. 
+To conduct the practicals of this course, we will be using a dedicated High Performance Computing cluster. 
+This matches the reality of most NGS workflows, which cannot be completed in a reasonable time on a single machine. 
 
-To interact with this cluster, you will have to login to a distant *head node*. From there you will be able to distribute your computational tasks to the cluster using a *job scheduler* called Slurm.
+To interact with this cluster, you will have to log in to a distant *head node*. From there you will be able to distribute your computational tasks to the cluster using a *job scheduler* called Slurm.
 
 This page will cover our first contact with the distant cluster. 
-More precisely, you will learn how to :
 
- * connect to the server
- * use the command line to perform basic operations on the head node
- * exchange files between the server and your own machine 
- * submit job to the cluster
+
+**You will learn how to :**
+
+ * connect to the server.
+ * use the command line to perform basic operations on the head node.
+ * exchange files between the server and your own machine.
+ * submit a job to the cluster.
 
 
 !!! note 
@@ -21,7 +23,7 @@ More precisely, you will learn how to :
 
 ## Connect to the server
 
-Say you want to connect to cluster with adress `xx.xx.xx.xx` and your login is `login`.
+Say you want to connect to cluster with address `xx.xx.xx.xx` and your login is `login`.
 
 
 !!! Warning 
@@ -31,17 +33,18 @@ The first step will be to open a **terminal**
 
 === "Mac"
     
-    Open a terminal, for instance with the application Xterm, or Xquartz
+    Open a terminal, for instance with the application Xterm, or Xquartz.
+    <!-- Might confuse some who just read "Terminal" -->
 
 === "Linux"
     
-    Open a new terminal
+    Open a new terminal.
 
 === "Windows"
     
-    Open the application mobaXterm (or any ssh-enabling terminal aplpication you prefer)
+    Open the application mobaXterm (or any ssh-enabling terminal aplpication you prefer).
 
-    On mobaXterm, click on "Start a local Terminal"
+    On mobaXterm, click on "Start a local Terminal".
 
 ---
 
@@ -53,7 +56,9 @@ ssh login@xx.xx.xx.xx
 
 When prompted for your password, type it and press Enter. 
 
-**There is no cursor or '●' character appearing while you type your password. This is normal.**
+!!! note
+  There is no cursor or '●' character appearing while you type your password. This is normal.
+
 
 After a few seconds, you should be logged into the *head node* and ready to begin.
 
