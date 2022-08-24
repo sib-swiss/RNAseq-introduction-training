@@ -30,3 +30,6 @@ To access it:
 
 Additionally, a graphical client for file transfer to and from the distant server can be useful. MobaXterm integrates this functionality, so if you use it there is no need for additional software. 
 Otherwise, we recommend [FileZilla](https://filezilla-project.org/download.php?type=client).
+
+
+<!-- Idea: add in a section for checking the attendees can use their keyboards to type special characters -->
