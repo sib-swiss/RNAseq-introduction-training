@@ -253,21 +253,22 @@ But an example is worth a thousand words :
 
 echo "looking at the size of the elements of /shared/data/"
 sleep 10 # making the script wait for 10 seconds - this is just so we can see it later on. 
-# `du` is a command that returns the size of a folder structure.
+# `du` is "disk usage", a command that returns the size of a folder structure.
 du -h -d 2 /shared/data/
 
 ```
 
 The lines beginning by `#SBATCH` specify options to the job scheduler:
 
+ * The first line indicates what shell should be used to interpret the commands.
  * `#SBATCH --job-name=test` : the job name
  * `#SBATCH --time=00:30:00` : time reserved for the job : 30min. 
- * `#SBATCH --cpus-per-task=1` : cpus for the job 
+ * `#SBATCH --cpus-per-task=1` : CPUs for the job 
  * `#SBATCH --mem=1G` : memory for the job
  * `#SBATCH -o test_log.o` : file to write output or error messages
 
 !!! Warning
-	Your job will fail as soon as it takes more time or RAM than requested.
+	Your job will fail as soon as it takes more time or RAM than requested. You might need to test it to find the appropriate values.
 
 
 Copy this script inside a new file named `mySbatchScript.sh`, then submit it to the job scheduler using :
@@ -281,12 +282,12 @@ Afterward, use the command `squeue` to monitor the jobs submitted to the cluster
 Check the output of your job in the output file.
 
 !!! note 
-	When there are a lot of jobs, `squeue -u <username>` will limit the list to your jobs only
+	When there are a lot of jobs, `squeue -u <username>` will limit the list to those of the specified user.
 
 
 ### Advanced cluster usage : job array 
 
-Oftentime we have to repeat a similar analysis on a number of files, or for a number of different parameters.
+Often, we have to repeat a similar analysis on a number of files, or for a number of different parameters.
 Rather than writing each sbatch script individually, we can rely on job arrays to facilitate our task.
 
 Say you want to execute a command, on 10 files (for example, map the reads of 10 samples).
@@ -308,7 +309,7 @@ Then, you write an sbatch array job script:
 echo "job array id" $SLURM_ARRAY_TASK_ID
 
 # sed -n <X>p <file> : retrieve line <X> of file
-# so the next line grabs the file name corresponding to our job array task id and store it in the variable ReadFileName 
+# so the next line grabs the file name corresponding to our job array task id and stores it in the variable ReadFileName 
 ReadFileName=`sed -n ${SLURM_ARRAY_TASK_ID}p readFiles.txt`
 
 # here we would put the mapping command or whatever
