@@ -65,15 +65,15 @@ After a few seconds, you should be logged into the *head node* and ready to begi
 
 ## Using command line on the cluster
 
-Now that you are in the head node, time to get acquainted with your environment and to prepare the upcoming practicals. 
-we will also use this as a short introduction/reminder on UNIX command line.
+Now that you are in the head node, it is time to get acquainted with your environment and to prepare the upcoming practicals. 
+We will also use this as a short reminder about the UNIX command line.
 
 You can also refer to this nice [Linux Command Line Cheat Sheet](https://appletree.or.kr/quick_reference_cards/Unix-Linux/Linux%20Command%20Line%20Cheat%20Sheet.pdf).
 
 
 ---
 
-At any time, you can get the location your terminal is currently at by typing:
+At any time, you can get the location (folder) your terminal is in at by typing the "print working directory" command:
 
 ```sh
 pwd
@@ -94,7 +94,7 @@ Use the command line to create a repository called `day1` where you will put all
     mkdir day1
     ```
 
-Move to that directory
+Move to that directory.
 
 ??? done "Answer"
     ```sh
@@ -107,6 +107,10 @@ The directory `/shared/data/` contains data and solutions for most practicals. C
     ```sh
     ls /shared/data/
     ```
+    
+!!! note
+    You don't need to move to that directory to list its contents!
+    
 
 Copy the script `fastqc_Liu2015_SRR1272187_1.sh` from  `/shared/data/Solutions/Liu2015` into your current directory.
 
@@ -141,6 +145,8 @@ Print the content of this script to the screen.
 
     ```
 
+We'll see what all this means soon.
+
 
 ### creating and editing a file
 
@@ -159,7 +165,7 @@ You will be taken to the `nano` interface :
 
 ![nano screenshot](../assets/images/nano_screenshot.png)
 
-Type in your favorite movie quote, and then exit by pressing `Ctrl+x`, and then `y` and `Enter` when prompted to save the modifications you just made.
+Type in your favorite movie quote, and then exit by pressing `Ctrl+x` (`control+x` on a Mac keyboard), and then `y` and `Enter` when prompted to save the modifications you just made.
 
 You can check that your modifications were saved by typing
 
@@ -172,7 +178,7 @@ more test.txt
 Whether you want to transfer some data to the cluster or retrieve the results of your latest computation, it is important to be able to exchange files with the distant server.
 
 
-There exists several alternatives, depending on your platform and preferences
+There exists several alternatives, depending on your platform and preferences.
 
 === "command line"
 
@@ -190,8 +196,8 @@ There exists several alternatives, depending on your platform and preferences
 	scp login@xx.xx.xx.xx:~/day1/file.txt .
 	```	
 
-
-	> here `~` will be interpreted as your home directory. This is useful and time-saving shorthand.
+!!! note
+	Here `~` will be interpreted as your home directory. This is useful and time-saving shorthand.
 
 
 	To copy a file from your machine to the server:
@@ -203,7 +209,7 @@ There exists several alternatives, depending on your platform and preferences
 
 === "graphical alternative"
 
-	There exist nice and free graphical software, such as [filezilla](https://filezilla-project.org/) to help you manage exchanges with the distant server. Feel free to install and experiment with it during the break.
+	There are nice and free software with graphical user interfaces, such as [filezilla](https://filezilla-project.org/), to help you manage exchanges with the distant server. Feel free to install and experiment with it during the break.
 	![filezilla_mainscreen](https://filezilla-project.org/images/screenshots/fz3_win_main.png)
 
 === "mobaXterm"
@@ -212,21 +218,22 @@ There exists several alternatives, depending on your platform and preferences
 
 	![mobaxterm_leftpanel](https://mobaxterm.mobatek.net/img/moba/features/feature-sftp-browser.png)
 
+
 ## The computing cluster
 
-The computing cluster follows an architecture that enables several users to distribute computational tasks among several machines which share a number of ressources, such as a common file system.
+The computing cluster follows an architecture that enables several users to distribute computational tasks among several machines which share a number of resources, such as a common file system.
 
 ![cluster_overview](../assets/images/cluster_overview.png)
 
 Users do not access each machine individually, but rather connect to a **head node**. From there, they can interact with the cluster using the **job scheduler** (here slurm).
-The job scheduler role is to manage where and how to run the jobs of all users, such that waiting time is minimized and resource usage is optimized.
+The job scheduler's role is to manage where and how to run the jobs of all users, such that waiting time is minimized and resource usage is optimized.
 
 !!! Warning
-	Everyone is connected to the same head node. Do not perform compute-intensive tasks on it or you will slow down everyone. 
+	Everyone is connected to the same head node. Do not perform compute-intensive tasks on it or you will slow everyone down! 
 
-Jobs can be submitted to the compute cluster using **sbatch scripts**, which contains 2 parts :
+Jobs can be submitted to the compute cluster using **sbatch scripts**, which contain 2 parts :
 
- * informations for the job scheduler:
+ * information for the job scheduler:
  	- how much RAM / CPUs do I need ?
  	- where to write the logs of my job ?
 
