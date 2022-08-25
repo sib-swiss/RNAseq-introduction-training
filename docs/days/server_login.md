@@ -98,7 +98,7 @@ When you start a session on a distant computer, you are placed in your `home` di
 /shared/home/<login>
 ```
 
-### creating a directory
+### Creating a directory
 
 Use the command line to create a repository called `day1` where you will put all materials relating to this first day.
 
