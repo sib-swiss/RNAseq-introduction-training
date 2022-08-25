@@ -7,8 +7,9 @@ To interact with this cluster, you will have to log in to a distant *head node*.
 This page will cover our first contact with the distant cluster. 
 
 
-**You will learn how to :**
+**You will learn to :**
 
+ * understand a typical computer cluster architecture.
  * connect to the server.
  * use the command line to perform basic operations on the head node.
  * exchange files between the server and your own machine.
@@ -16,7 +17,7 @@ This page will cover our first contact with the distant cluster.
 
 
 !!! note 
-	If you are doing this course on your own, then the distant server will not be available. 
+	If you are doing this course on your own, then the distant server provided within the course will not be available. 
 	Feel free to ignore or adapt any of the following steps to your own situation.
 
 
@@ -160,7 +161,7 @@ Print the content of this script to the screen.
 We'll see what all this means soon.
 
 
-### creating and editing a file
+### Creating and editing a file
 
 To edit files on the distant server, we will use the command line editor `nano`. It is far from the most complete or efficient one, but it can be found on most servers and is arguably among the easiest to start with.
 
