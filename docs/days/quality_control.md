@@ -94,30 +94,34 @@ Although it has many options, the default parameters are often enough for our pu
 fastqc -o <output_directory> file1.fastq file2.fastq ... fileN.fastq
 ```
 
-FastQC is reasonnably intelligent and will try to recognise the file format and uncompress it if necessary (so no need to decompress).
+FastQC is reasonably intelligent, and will try to recognise the file format and uncompress it if necessary (so no need to decompress manually).
 
 
 **Task:** 
 
- * run FastQC analysis on the two datasets at: `/shared/data/DATA/Liu2015/` and `/shared/data/DATA/Ruhland2016`. 
+ * Write one or more slurm-compatible sbatch scripts in your home directory that run FastQC analysis on each FASTQ file from the two datasets. These are accessible at : `/shared/data/DATA/Liu2015/` and `/shared/data/DATA/Ruhland2016`. 
  * Look at at least one of the QC report. What are your conclusions ? Would you want to perform some operations on the reads such as low-quality bases trimming, removal of adapters ?
+
+!!! Warning
+  Make sure your script writes the fastqc output to a folder within your own home directory.
 
 
 Important points:
+<!-- CF note in previous script: perhaps the concept of module should be introduced. -->
 
- * in your script, don't forget to load fastqc : `ml fastqc`
- * there is no need to copy the read files to your home directory (in fact, don't do that: we won't have enough space left on the disk...)
- * FastQC RAM requirements : 1Gb is more than enough
- * FastQC time requirements : ~ 5min / read file 
- * try to make sure FastQC outputs all reports in the same directory, this will save time for the next step ;-)
+ * in your script, don't forget to load fastqc : `ml fastqc`.
+ * there is no need to copy the read files to your home directory (in fact, it is good practice not to: it would create data redundancy, and we won't have enough space left on the disk anyway...).
+ * FastQC RAM requirements : 1Gb is more than enough.
+ * FastQC time requirements : ~ 5min / read file.
+ * try to make sure FastQC outputs all reports in the same directory, this will save time for the next step ;-).
 
 !!! note
-	reminder : to get the data from the distant server to your machine, you may use an SFTP client (filezilla, mobaXterm), or the command line tool from your mahcine :	`scp login@xx.xx.xx:~/path/to/file.txt .`
+	Reminder : to get the data from the distant server to your machine, you may use an SFTP client (filezilla, mobaXterm), or the command line tool from your machine :	`scp login@xx.xx.xx:~/path/to/file.txt .`
 
 
 ??? done "Liu2015 FastQC sbatch script"
 
-	Here is an sbatch script for one sample:
+	Here is an sbatch script for _one_ sample:
 
 	```sh
 	#!/usr/bin/bash
@@ -138,16 +142,17 @@ Important points:
 	fastqc -o FASTQC_Liu2015/ $dataDir/SRR1272187_1.fastq.gz
 	```
 
-	You could either have one sbatch script per sample (recommended),
+  You could either have:
+	
+	* one sbatch script per sample (recommended),
+	* OR put the `fastqc` commands for all the samples in the same script (not recommended).
 
-	OR put the `fastqc` commands for all the samples in the same script (not recommended).
-
-	The first is recommended because you can submit each scripts at once and they will then run in parallel, whereas with the second option the samples would be handled sequentially and the overall job would likely take >1hour.
+	The first is recommended because you can submit both scripts at once and they will then run in parallel, whereas with the second option the samples would be handled sequentially and the overall job would take much longer to finish.
 
 
 ??? done "Ruhland2016 FastQC sbatch script"
 
-	Here is an sbatch script for one sample:
+	Here is an sbatch script for _one_ sample:
 
 	```sh
 	#!/usr/bin/bash
@@ -168,15 +173,18 @@ Important points:
 	fastqc -o FASTQC_Ruhland2016/ $dataDir/SRR3180540_TAM3_1.fastq.gz
 	```
 
-	You could either have one sbatch script per sample (recommended),
+	You could either have:
+	
+	* one sbatch script per sample (recommended),
+	* OR put the `fastqc` commands for all the samples in the same script (not recommended).
 
-	OR put the `fastqc` commands for all the samples in the same script (not recommended).
-
-	The first is recommended because you can submit each scripts at once and they will then run in parallel, whereas with the second option the samples would be handled sequentially and the overall job would likely take >1hour.
+	The first is recommended because you can submit both scripts at once and they will then run in parallel, whereas with the second option the samples would be handled sequentially and the overall job would take much longer to finish.
 
 
-??? done "alternative scripts using array job"
-
+??? done "Alternative sbatch script using array job"
+  
+  Here is a solution where all files from a same dataset can be processed in parallel (recommended) by using slurm array jobs.
+  
 	First, have a file named `Ruhland2016.fastqFiles.txt` containing the sample fastq file names :
 
 	```
@@ -222,19 +230,20 @@ Important points:
 
 	[:fontawesome-solid-file-pdf: Download an annotated report](../assets/pdf/SRR3180535_EtOH1_1_fastqc.pdf){ .md-button}
 
+
 ## MultiQC : grouping multiple reports
 
-In practice, you will be likely to have more than a couple of samples (and often more than 30 or 50) to handle: consulting and comparing the QC reports of each individually would be tedious.
+In practice, you  likely will have more than a couple of samples (maybe even more than 30 or 50...) to handle: individually consulting and comparing the QC reports of each would be tedious.
 
 [MultiQC](https://multiqc.info/) is a tool that lets you combine multiple reports in a single, interactive document that let you explore your data easily.
 
-We will here be focusing on grouping FastQC reports, but MultiQC can also be applied to the output or logs of other bioinformatics tools, such as mappers as we will see later.
+Here, we will be focusing on grouping FastQC reports, but MultiQC can also be applied to the output or logs of other bioinformatics tools, such as mappers, as we will see later.
 
 In its default usage, `multiqc` only needs to be provided a path where it will find all the individual reports, and it will scan them and write a report named `multiqc_report.html`.
 
-Although the default behaviour, with a couple of options we get a slightly better control over the output:
- * `--interactive` : forces the plot to be interactive even when there is a lot of samples (this option can lead to larger html files)
- * `-f <filename>` : specify the name of the output file name
+Although the default behaviour is quite appropriate, with a couple of options we get a slightly better control over the output:
+ * `--interactive` : forces the plot to be interactive even when there is a lot of samples (this option can lead to larger html files).
+ * `-f <filename>` : specify the name of the output file name.
 
 For instance, a possible command line could be :
 ```sh
