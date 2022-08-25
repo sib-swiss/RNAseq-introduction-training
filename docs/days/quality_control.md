@@ -1,17 +1,18 @@
 
-Quality Control is the essential first step to perform once you have your data as `.fastq` or `.fastq.gz` form.
+Quality Control is the essential first step to perform once you receive your data from your sequencing facility, typically as `.fastq` or `.fastq.gz` files.
 
-During this block, you will learn to :
+
+**During this session, you will learn to :**
 
  * create QC report for a single file with fastqc
  * aggregate multiple QC reports using multiqc
- * interpret the QC reports for RNAseq experiement
+ * interpret the QC reports for an entire RNA-seq experiment
 
 
 !!! note
 	Although we aim to present tools as stable as possible, software evolve and their precise interface can change with time.
-	We strongly recommend you to have a look at each command help page or manual before launching any command.
-	To this end we provide links to each tool website. 
+	We strongly recommend you consult each command's help page or manual before launching them.
+	To this end, we provide links to each tool's website. 
 
 	This can also be useful to you if you are following this course without access to a compute cluster and have to install these tools on your machine.
 
@@ -27,23 +28,22 @@ During this block, you will learn to :
 
 ## Meet the datasets
 
-
 We will be working with two datasets from the following studies:
 
- * Liu et al (2015) “RNA-Seq identifies novel myocardial gene expression signatures of heart failure” Genomics 105(2):83-89 [https://doi.org/10.1016/j.ygeno.2014.12.002](https://doi.org/10.1016/j.ygeno.2014.12.002)
+ * Liu et al. (2015) “RNA-Seq identifies novel myocardial gene expression signatures of heart failure” Genomics 105(2):83-89 [https://doi.org/10.1016/j.ygeno.2014.12.002](https://doi.org/10.1016/j.ygeno.2014.12.002)
  	* [GSE57345](https://www.ncbi.nlm.nih.gov/bioproject/?term=GSE57345)
- 	* *Homo sapiens* heart left ventricle samples : 3 with heart failure, 3 without
- 	* 6 samples of paired-end reads 
+ 	* Samples of *Homo sapiens* heart left ventricles : 3 with heart failure, 3 without
+ 	* 6 samples of paired-end reads
 
- * Ruhland et al (2016) “Stromal senescence establishes an immunosuppressive microenvironment that drives tumorigenesis” Nature Communications 7:11762 [https://dx.doi.org/10.1038/ncomms11762](https://dx.doi.org/10.1038/ncomms11762)
+ * Ruhland et al. (2016) “Stromal senescence establishes an immunosuppressive microenvironment that drives tumorigenesis” Nature Communications 7:11762 [https://dx.doi.org/10.1038/ncomms11762](https://dx.doi.org/10.1038/ncomms11762)
  	* [GSE78128](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE78128)
- 	* *Mus musculus* skin fibroblast samples : 3 non-senescent (EtOH) , 3 senescent(TAM)
+ 	* Samples of *Mus musculus* skin fibroblasts : 3 non-senescent (EtOH), 3 senescent (TAM)
  	* 6 samples of single-end reads
 
 
 ## Retrieving published datasets
 
-!!! Warning
+!!! note
 	If you are following this course with a teacher, then the for the data is already on the server. There is no need to download it again.
 
 Most NGS data is deposited at the [Short Read Archive (SRA)](https://www.ncbi.nlm.nih.gov/sra/) hosted by the NCBI, with links from the [Gene Expression Omnibus (GEO)](https://www.ncbi.nlm.nih.gov/geo/)
@@ -51,18 +51,19 @@ Most NGS data is deposited at the [Short Read Archive (SRA)](https://www.ncbi.nl
 
  Several steps are required to retrieve data from a published study :
 	
- 1. find GEO or SRA identifier from publication
- 2. find the “run” files for each sample (SRR)
- 3. use [SRA Toolkit](https://github.com/ncbi/sra-tools/wiki/01.-Downloading-SRA-Toolkit) to dump SRR to FASTQ
+ 1. find GEO or SRA identifier from publication.
+ 2. find the “run” identifiers for each sample (SRR).
+ 3. use [SRA Toolkit](https://github.com/ncbi/sra-tools/wiki/01.-Downloading-SRA-Toolkit) to dump data from the SRR repository to FASTQ files.
+
 
 For example, on the Liu2015 dataset :
 	
  1. Locate in their publication the GEO accession: GSE57345 
  2. Use the NCBI search engine to find this accession : [GSE57345](https://www.ncbi.nlm.nih.gov/bioproject/?term=GSE57345)
- 3. This project is made of several subproject. Scroll down, and in the table find the Bioproject id : PRJNA246308 
- 4. Go to the [SRA run selector](https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA246308&o=acc_s%3Aa), enter your Bioproject id
+ 3. This project is made of several sub-projects. Scroll down, and in the table find the Bioproject id : PRJNA246308 
+ 4. Go to the [SRA run selector](https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA246308&o=acc_s%3Aa), enter the Bioproject id
  5. From the [results of your search](https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA246308&o=acc_s%3Aa), select all relevant runs
- 6. click on "Accession List" in the Select table 
+ 6. Click on "Accession List" in the Select table 
 
 ![SRA run selector](../assets/images/SRA_run_selector.png)
 
@@ -73,7 +74,7 @@ For example, on the Liu2015 dataset :
 
 
 !!! note
-	 * You’ll need to know the nature of the dataset before attempting to (library type, paired vs single end, etc) 
+	 * You’ll need to know the nature of the dataset (library type, paired vs single end, etc.) before analysing it.
 	 * `fastq-dump` takes a very long time
 	 * [More information about fastq-dump](https://edwards.sdsu.edu/research/fastq-dump/)
 
