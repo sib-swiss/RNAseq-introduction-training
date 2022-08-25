@@ -57,7 +57,11 @@ Most NGS data is deposited at the [Short Read Archive (SRA)](https://www.ncbi.nl
 
 
 For example, on the Liu2015 dataset :
-	
+<!-- I am pretty sure there is a more efficient way of doing this!
+1. locate GEO ID
+2. look it up on GEO website: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE57345 
+3. Click Run Selector down the bottom.
+4. Copy/paste the SRR IDs from the table, or use the download accession list button to get a file listing them. -->
  1. Locate in their publication the GEO accession: GSE57345 
  2. Use the NCBI search engine to find this accession : [GSE57345](https://www.ncbi.nlm.nih.gov/bioproject/?term=GSE57345)
  3. This project is made of several sub-projects. Scroll down, and in the table find the Bioproject id : PRJNA246308 
