@@ -250,24 +250,25 @@ For instance, a possible command line could be :
 multiqc -f multiQCreports/Liu2015_multiqc.html --interactive Liu2015_fastqc/
 ```
 
-Ther are many additonnal info which let you customize your report. Use `multiqc --help` or visit their [documentation webpage](https://multiqc.info/docs/#running-multiqc) to learn more.
+There are many additional info which let you customize your report. Use `multiqc --help` or visit their [documentation webpage](https://multiqc.info/docs/#running-multiqc) to learn more.
 
 
 **Task:** 
 
- * run MultiQC for each dataset. 
+ * Write an sbatch script to run MultiQC for each dataset. 
  * Look at the QC reports. What are your conclusions ? 
 
 
 Important points:
+<!-- Why is there no need to load multiqc as a module? -->
 
- * MultiQC RAM requirements : 1Gb should be more than enough
- * MultiQC time requirements : ~ 1min / read file 
- * Exceptionnally, there is no need to load multiqc as a module
- * use `multiqc --help` to check the different options
+ * MultiQC RAM requirements : 1Gb should be more than enough.
+ * MultiQC time requirements : ~ 1min / read file.
+ * Exceptionally, there is no need to load multiqc as a module.
+ * Use `multiqc --help` to check the different options
 
 
-??? done "sbatch scripts"
+??? done "MultiQC sbatch script"
 
 	This is the script for the Ruhland2016 dataset. It presumes that the fastqc reports can be found in `FASTQC_Ruhland2016/ `
 
@@ -294,39 +295,39 @@ Important points:
 
 	![per base sequence quality](../assets/images/multiqc/fastqc_per_base_sequence_quality_plot.png)
 
-	The quality of reads drop below 30 around base 75. All samples seem affected
+	The PHRED quality of reads drop below 30 around base 75. All samples seem affected. One sample seems to have some quality drops at specific timepoints/positions.
 
 	![fastqc_per_sequence_quality_scores_plot](../assets/images/multiqc/fastqc_per_sequence_quality_scores_plot.png)
 
-	Mean quality scores are on average fairly high, but some read exhibit low values.
+	Mean quality scores are on average fairly high, but some reads exhibit low values.
 
 	![fastqc_per_sequence_gc_content_plot](../assets/images/multiqc/fastqc_per_sequence_gc_content_plot.png)
 
-	Most samples do not deviate too much from the expected curve. The two sample colored in orange and red have a mode for a very specific value.
-	That may be indicative of contamination, retaining specific rRNA, or adapter sequence content.
+	Most samples do not deviate too much from the expected curve. The two samples colored in orange and red have a mode for a very specific value.
+	This may be indicative of contamination, retaining specific rRNA, or adapter sequence content.
 
 	![fastqc_per_base_n_content_plot](../assets/images/multiqc/fastqc_per_base_n_content_plot.png)
 
-	Ns are present at specific positions in specific samples. This is reminiscent of the PHRED quality curves at the top of the report.
+	Ns are present at specific positions in specific samples, in particular for one sample. This is reminiscent of the PHRED quality curves at the top of the report.
 	It seems some flowcells had a problem at specific time-point/positions.
 
 	![fastqc_sequence_duplication_levels_plot](../assets/images/multiqc/fastqc_sequence_duplication_levels_plot.png)
 
 	This is colored red because this would be a problem if the data was coming from genomic DNA sequencing.
-	However here we are in the context of RNAseq : some transcripts are present in a large number of copies in the samples and consequently it is expected that some sequences are overrepresented.
+	However here we are in the context of RNA-seq : some transcripts are present in a large number of copies in the samples, and consequently it is expected that some sequences are over-represented.
 
 
 	![fastqc_adapter_content_plot](../assets/images/multiqc/fastqc_adapter_content_plot.png)
 
-	We see a clear trend of adapter contamination as we get closer to the reads end. Note the y-scale though : we never go above a 6% content per sample.
+	We see a clear trend of adapter contamination as we get closer to the reads' end. Note the y-scale though : we never go above a 6% content per sample.
 
 
-	Overall, we can conclude that these sample all suffer from some adapter content and a lower quality toward the reads second half. Furthermore a few samples have a peculiar Ns pattern between bases 20 and 30.
+	Overall, we can conclude that these samples all suffer from some adapter content and a lower quality toward the reads' second half. Furthermore, a few samples have a peculiar N pattern between bases 20 and 30.
 
 	It is then strongly advised to either :
 
 	 * perform some trimming : remove adapter sequences + cut reads when average quality becomes too low
-	 * use a mapper that takes base quality in account AND is able to ignore adapter sequence (and even then, you could try mapping on both croppedand uncropped data to see which is the best)
+	 * use a mapper that takes base quality in account AND is able to ignore adapter sequence (and even then, you could try mapping on both trimmed and untrimmed data to see which is the best)
 
 
 
