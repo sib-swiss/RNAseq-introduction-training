@@ -288,6 +288,14 @@ Check the output of your job in the output file.
 	When there are a lot of jobs, `squeue -u <username>` will limit the list to those of the specified user.
 
 
+<!-- Proposition to Wandrille: short blurb on modules
+In the script printed above, and in the scripts used later, you use ml to load modules.
+This might need a brief introduction, here perhaps as
+### Advanced cluster usage : loading modules
+It could be placed in the 1st session that uses them (the QC part) but conceptually
+I think it makes more sense here. What do you think?
+-->
+
 ### Advanced cluster usage : job array 
 
 Often, we have to repeat a similar analysis on a number of files, or for a number of different parameters.
