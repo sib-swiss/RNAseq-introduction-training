@@ -18,19 +18,24 @@ Depending on your research question and the software you use for mapping, you ma
 
 ## to trim or not to trim ?
 
-<!-- Currently, unclear re: trimming, clipping, soft, hard ... -->
-!!! note
-  Trimming typically refers to removing bases from read sequences from a sequencing file.
-  Soft-clipping typically refers to using software that is designed to "ignore" deleterious bases from read sequences.
+There are several ways to deal with poor quality bases or adapter contamination in reads, and several terms are used in the field, sometimes very loosely. We can talk about:
+
+ * Trimming : to remove a part of, or the entirety of, a read (for quality reasons).
+   * Hard trimming : trim with a high standard of quality (eg. remove everything with QUAL<30).
+   * Soft trimming: trim with a low standard of quality (eg. remove everything with QUAL<10).
+ * Clipping : to remove the end part of a read (typically because of adapter content).
+   * Hard clipping: actually removing the end of the read from the file (ie. with trimmomatic).
+   * Soft clipping: ignoring the end of the read at mapping time (ie. what STAR does).
 
 
 If the data will be used to perform **transcriptome assembly, or variant analysis, then it must be trimmed**.
 
 
-In contrast, for applications based on **counting reads**, such as **Differential Expression analysis**, most aligners, such as [STAR](https://github.com/alexdobin/STAR), [HISAT2](http://daehwankimlab.github.io/hisat2/), [salmon](https://salmon.readthedocs.io/en/latest/salmon.html), [kallisto](https://pachterlab.github.io/kallisto/manual) can handle bad quality sequences and adapter content by performing "soft-clipping" on reads, and consequently they _usually_ do not need trimming.
+In contrast, for applications based on **counting reads**, such as **Differential Expression analysis**, most aligners, such as [STAR](https://github.com/alexdobin/STAR), [HISAT2](http://daehwankimlab.github.io/hisat2/), [salmon](https://salmon.readthedocs.io/en/latest/salmon.html), and [kallisto](https://pachterlab.github.io/kallisto/manual), can handle bad quality sequences and adapter content by soft-clipping, and consequently they _usually_ do not need trimming.
 In fact, **trimming can be detrimental** to the number of successfully quantified reads \[[William et al. 2016](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-016-0956-2)\].
 
-Nevertheless, it is usually recommend to perform some amount of soft clipping (*eg.* [kallisto](https://www.biostars.org/p/389324/), [salmon](https://github.com/COMBINE-lab/salmon/issues/398) ).
+Nevertheless, it is usually recommended to perform some amount of soft clipping (*eg.* [kallisto](https://www.biostars.org/p/389324/), [salmon](https://github.com/COMBINE-lab/salmon/issues/398) ).
+
 If possible, we recommend to perform the mapping for both the raw data and the trimmed one, in order to compare the results for both, and choose the best.
 <!-- Suggestion to Wanrdille: specify the QC metric for choosing the best -->
 
