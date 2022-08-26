@@ -1,10 +1,12 @@
+
 Read counting refers to the quantification of an *"expression level"*, or abundance, from reads mapped onto a reference genome/transcriptome.
 This *expression level* can take several forms, such as a count, or a fraction (RPKM/TPM), and concern different entities (exon, transcript, genes) depending on your biological application.
 
-During this lesson, you will learn to:
 
- * differentiate between different levels of counting and their relevance for different questions
- * perform read counting at the gene level for Differential Gene expression
+**During this lesson, you will learn to:**
+
+ * differentiate between different levels of counting and their relevance for different questions.
+ * perform read counting at the gene level for Differential Gene expression.
 
 
 ## Material
@@ -13,22 +15,27 @@ During this lesson, you will learn to:
 
 [featureCounts website](http://subread.sourceforge.net/featureCounts.html){: .md-button }
 
+
 ## Read counting with featureCounts
+
+<!-- Suggestion: Perhaps add a quite note on why use featureCounts when we've already quantified using STAR. -->
 
 The [featureCount website](http://subread.sourceforge.net/featureCounts.html) provides several useful command-line examples to get started.
 For more details on the algorithm behavior (with multi/overlapping reads for instance), you can refer to the package's [User's guide](http://subread.sourceforge.net/SubreadUsersGuide.pdf) (go to the read summarization chapter).
 
 
-**Task** :
+**Task :** 
 
  * Decide which parameters are appropriate for counting reads from the Ruhland dataset. Assume you are interested in determining which genes are differentially expressed.
- * Count the reads from one of your BAM files using featureCount
- * How do the count compare to the counts from STAR ?
+ * Count the reads from one of your BAM files using featureCount.
+ * How do the featureCount-derived counts compare to those from STAR ?
 
  * You can find bam files at `/shared/data/Solutions/Liu2015/STAR_Liu2015` and `/shared/data/Solutions/Ruhland2016/STAR_Ruhland2016`
- * featureCount : 400M RAM / bam
- * featureCount : 2 min cpu time / bam
+ * featureCount requirements : 400M RAM / BAM file
+ * featureCount requirements : 2 min CPU time / BAM file
 
+<!-- Suggestion: Perhaps add a note on how we can ask for 8 threads in the featureCounts call, 
+but only request 1 CPU via slurm? -->
 
 ??? done "featureCounts script"
 
