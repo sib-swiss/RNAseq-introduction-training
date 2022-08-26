@@ -1,11 +1,11 @@
 Once the reads have been mapped and counted, one can assess the differential expression of genes between different conditions.
 
 
-During this lesson, you will learn to:
+**During this lesson, you will learn to :**
 
- * describe the different steps of data normalization and modelization commonly used for RNAseq data
- * detect significantly differentially expressed genes using either edgeR or DESeq2
- * perform downstream analysis to over-representated gene sets (such as GO terms or reactome pathways)
+ * describe the different steps of data normalization and modelling commonly used for RNA-seq data.
+ * detect significantly differentially-expressed genes using either edgeR or DESeq2.
+ * perform downstream analysis on gene sets, such as annotation (e.g. GO terms or Reactome pathways) over-representation.
 
 
 ## Material
@@ -13,6 +13,9 @@ During this lesson, you will learn to:
 [:fontawesome-solid-file-pdf: Download the presentation](../assets/pdf/RNA-Seq_06_DE.pdf){: .md-button }
 
 [Rstudio website](https://www.rstudio.com/)
+
+!!! note
+  RStudio is set to be rebranded as Posit after October 2022.
 
 [edgeR user's guide](https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf){: .md-button }
 
@@ -23,12 +26,12 @@ During this lesson, you will learn to:
 
 !!! note
 	
-	This step is intended only for usrs who attend the course with a teacher. Otherwise you will have to rely on your own installation of Rstudio.
+	This step is intended only for users who attend the course with a teacher. Otherwise you will have to rely on your own installation of Rstudio.
 
 
-The analysis of the data once reads have been counted will be done on a Rstudio instance, using the language R and some relevant [Bioconductor](http://bioconductor.org/) libraries.
+The analysis of the read count data will be done on an RStudio instance, using the R language and some relevant [Bioconductor](http://bioconductor.org/) libraries.
 
-As you start your session on the Rstudio server, please make sure that you know where your data is situated with respect to your **working directory** (use `getwd()` and `setwd()` to respectively : know what your working is, and change it).
+As you start your session on the RStudio server, please make sure that you know where your data is situated with respect to your **working directory** (use `getwd()` and `setwd()` to respectively : know what your working is, and change it as necessary).
 
 
 
@@ -46,9 +49,9 @@ Or you may download them :
 
 !!! note
 
-	 * Generally, users find the syntax and workflow of DESeq2 easier for getting started
-	 * If you have the time, conduct a differential expression analysis using both DESeq2 and edgeR
-	 * Follow the vignettes/user's guide! They are the most up-to-date and generally contains everything a newcomer might need, including worked-out examples in the case of edgeR.
+	 * Generally, users find the syntax and workflow of DESeq2 easier for getting started.
+	 * If you have the time, conduct a differential expression analysis using both DESeq2 and edgeR.
+	 * Follow the vignettes/user's guide! They are the most up-to-date and generally contain everything a newcomer might need, including worked-out examples.
 
 
 ### DESeq2
@@ -61,7 +64,6 @@ Or you may download them :
 	# setup
 	library(DESeq2)
 	library(ggplot2)
-	
 	
 	
 	# reading the counts files - adapt the file path to your situation
@@ -78,7 +80,7 @@ Or you may download them :
 	raw_counts = raw_counts[ ,  -1:-6  ] 
 	
 
-	# changing colomn names
+	# changing column names
 	names( raw_counts) = gsub('_.*', '', gsub('.*.SRR[0-9]{7}_', '', names(raw_counts) ) )
 	
 	# some checking of what we just read
@@ -89,16 +91,19 @@ Or you may download them :
 ??? done "preprocessing"
 
 	```R
-	# setting up the model
-	treatment <- c(rep("EtOH",3), rep("TAM",3))
+	## telling DESeq2 what the experimental design was
+	# note: by default, the 1st level is considered to be the reference/control/WT/...
+	treatment <- factor( c(rep("EtOH",3), rep("TAM",3)), levels=c("EtOH", "TAM") )
 	colData <- data.frame(treatment, row.names = colnames(raw_counts))
 	colData
 	
-	# creating the DESeq data object
-	dds <- DESeqDataSetFromMatrix(countData = raw_counts, colData = colData, design = ~ treatment)
+	## creating the DESeq data object & positing the model
+	dds <- DESeqDataSetFromMatrix(
+	  countData = raw_counts, colData = colData, 
+	  design = ~ treatment)
 	dim(dds)
 	
-	## filter low count genes . Here the filter is to have at least 2 samples where there is a least 5 reads
+	## filter low count genes. Here, only keep genes with at least 2 samples where there are at least 5 reads.
 	idx <- rowSums(counts(dds, normalized=FALSE) >= 5) >= 2
 	dds.f <- dds[idx, ]
 	dim(dds.f)
@@ -106,9 +111,10 @@ Or you may download them :
 	# we go from 55414 to 19378 genes
 	```
 
-	Around 19k genes pass our minimum expression threshold.
+	Around 19k genes pass our minimum expression threshold, quite typical for a bulk Mouse RNA-seq experiment.
 
-??? done "estimate dipesersion / model fitting"
+
+??? done "estimate dispersion / model fitting"
 
 	```R
 	# we perform the estimation of dispersions 
@@ -126,9 +132,10 @@ Or you may download them :
 
 	![dispEst](../assets/images/DESeq2/ruhland2016_dispEst.png)
 
-	This plot is not easy to interpret. It represents the amount of dispersion at different levels of expression. It is directly linked to 	our ability to detect differential expression.
+	This plot is not easy to interpret. It represents the amount of dispersion at different levels of expression. It is directly linked to our ability to detect differential expression.
 
-	Here it Looks about normal compared to many other RNAseq experiment : the dispersion is comparatively larger for lowly expressed genes.
+	Here it looks about normal compared to typical bulk RNA-seq experiments : the dispersion is comparatively larger for lowly expressed genes.
+
 
 ??? done "looking at the results"
 
@@ -151,12 +158,12 @@ Or you may download them :
 
 	Without the shrinkage, we can see that for low counts we can see a high log-fold change but non significant (ie. we see a large difference but with variance is also so high that this observation may be due to chance only).
 
-	The shrinkage corrects this and the relationshipo between logFC and significance is smoother.
+	The shrinkage corrects this and the relationship between logFC and significance is smoother.
 
 
 	```R
 	# we apply the variance stabilising transformation to make the read counts comparable across libraries
-	# (nb : this is not needed for DESeq DE analysis, but rather for the PCA on the data. This replace normal PCA scaling)
+	# (nb : this is not needed for DESeq DE analysis, but rather for visualisations that compare expression across samples, such as PCA. This replaces normal PCA scaling)
 	vst.dds.f <- vst(dds.f, blind = FALSE)
 	vst.dds.f.counts <- assay(vst.dds.f)
 	
@@ -166,8 +173,9 @@ Or you may download them :
 
 	The first axis (58% of the variance) seems linked to the grouping of interest.
 
+
 	```R
-	## Volcano plot
+	## ggplot2-based volcano plot
 	library(ggplot2)
 
 	FDRthreshold = 0.01
@@ -187,12 +195,14 @@ Or you may download them :
 	
 	table(res.lfc$diffexpressed)
 	```
+	
 	```
 	 DOWN    NO    UP 
 	  131 19002   245 
 	```
 
 	![volcano](../assets/images/DESeq2/ruhland2016_volcano.png)
+	
 	
 	```R
 	library(pheatmap)
@@ -206,21 +216,17 @@ Or you may download them :
 
 
 
-
-
 	```R
-	# writing results
+	# saving results to file
+	# note: a CSV file can be imported into Excel
 	write.csv( res ,'Ruhland2016.DESeq2.results.csv' )
 	```
-
-
 
 
 
 ### EdgeR
 
 [edgeR user's guide](https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf){: .md-button }
-
 
 
 ??? done "read in the data"
@@ -230,7 +236,7 @@ Or you may download them :
 	library(ggplot2)
 
 	# reading the counts files - adapt the file path to your situation
-	raw_counts <-read.table('.../Ruhland2016_featureCount_result.counts' , 
+	raw_counts <- read.table('.../Ruhland2016_featureCount_result.counts' , 
 	           skip=1 , sep="\t" , header=T)
 	
 	# setting up row names as ensembl gene ids
@@ -239,7 +245,7 @@ Or you may download them :
 	# removing these first columns to keep only the sample counts
 	raw_counts = raw_counts[ ,  -1:-6  ] 
 	
-	# changing colomn names
+	# changing column names
 	names( raw_counts) = gsub('_.*', '', gsub('.*.SRR[0-9]{7}_', '', names(raw_counts) ) )
 
 	# some checking of what we just read
@@ -247,19 +253,20 @@ Or you may download them :
 	colSums(raw_counts) # total number of counted reads per sample
 
 	```
+	
 
 ??? done "edgeR object preprocessing"
 
 	```R
-	# setting up the model
-	#  -> the first 3 samples form an group, the 3 remaining are the other group
+	# setting up the experimental design AND the model
+	#  -> the first 3 samples form a group, the 3 remaining are the other group
 	treatment <- c(rep(0,3),rep(1,3))
 	dge.f.design <- model.matrix(~ treatment)
 
 	# creating the edgeR DGE object
 	dge.all <- DGEList(counts = raw_counts , group = treatment)  
 
-	#filtering by expression level. See ?filterByExpr for details
+	# filtering by expression level. See ?filterByExpr for details
 	keep <- filterByExpr(dge.all)
 	dge.f <- dge.all[keep, keep.lib.sizes=FALSE]
 	table( keep )
@@ -281,6 +288,7 @@ Or you may download them :
 
 	Each sample has been associated with a normalization factor.
 
+
 ??? done "edgeR model fitting"
 
 	```R
@@ -292,14 +300,15 @@ Or you may download them :
 
 	This plot is not easy to interpret. It represents the amount of biological variation at different levels of expression. It is directly linked to our ability to detect differential expression.
 
-	Here it Looks about normal compared to many other RNAseq experiment : the variation is comparatively larger for lowly expressed genes.
+	Here it looks about normal compared to other bulk RNA-seq experiments : the variation is comparatively larger for lowly expressed genes.
 
 	```R
 	# testing for differential expression. 
-	#This method is recommended whne you only have 2 groups to compare
+	# This method is recommended when you only have 2 groups to compare
 	dge.f.et <- exactTest(dge.f)
 	topTags(dge.f.et) # printing the genes where the p-value of differential expression if the lowest
 	```
+	
 	```
 	Comparison of groups:  1-0 
 	                       logFC   logCPM       PValue          FDR
@@ -314,10 +323,12 @@ Or you may download them :
 	ENSMUSG00000000120 -6.340146 6.351489 2.507019e-14 4.200371e-11
 	ENSMUSG00000034981  3.727969 5.244841 3.934957e-14 5.933521e-11
 	```
+	
 	```R
 	# see how many genes are DE
 	summary(decideTests(dge.f.et , p.value = 0.01)) # let's use 0.01 as a threshold
 	```
+	
 	```
 	         1-0
 	Down     109
@@ -325,10 +336,11 @@ Or you may download them :
 	Up       210
 	```
 
-	The comparision is 1-0, so "Up", corresponds to a higher in group 1 (EtOH for us) compared to group 0 (TAM).
+	The comparison is 1-0, so "Up", corresponds to a higher in group 1 (EtOH for us) compared to group 0 (TAM).
+	<!-- WARNING: I don't understand from the code why 1 is EtOH and 0 is TAM (considering how we encoded treatment in the DESeq2 part) -->
 
 
-??? done "edgeR looking at differentially expressed genes"
+??? done "edgeR looking at differentially-expressed genes"
 
 	```R
 	## plot all the logFCs versus average count size. Significantly DE genes are  colored
@@ -376,11 +388,11 @@ Or you may download them :
 
 
 	```R
-	# there is another fitting method reliying on quasi likelihood, which is useful when the model is more complex (ie. more than 1 factor with 2 levels)
+	# there is another fitting method reliying on quasi-likelihood, which is useful when the model is more complex (ie. more than 1 factor with 2 levels)
 	dge.f.QLfit <- glmQLFit(dge.f, dge.f.design)
 	dge.f.qlt <- glmQLFTest(dge.f.QLfit, coef=2)
 	
-	# you can see the results relatively different. The order of genes changes a bit, and the p-values are more profoundly affected
+	# you can see the results are relatively different. The order of genes changes a bit, and the p-values are more profoundly affected
 	topTags(dge.f.et)
 	topTags(dge.f.qlt)
 	
@@ -419,20 +431,21 @@ Or you may download them :
 
 ## Downstream analysis : over-representation analysis
 
-Having lists of differentially expressed genes is quite interesting in itself,
-however when there is a large number of DE genes it can be interesting to map these results 
-onto curated sets of genes associated to biological functions.
+Having lists of differentially-expressed genes is quite interesting in itself,
+however when there are many DE genes, it can be interesting to map these results 
+onto curated sets of genes associated with known biological functions.
 
-We propose here to use [clusterProfiler](https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html),
-which regroups several enrichment detection algorithm onto several databases.
+Here, we propose to use [clusterProfiler](https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html),
+which regroups several enrichment detection algorithms onto several databases.
 
-We recommend you get inspiration from their very nice [vignette/e-book](http://yulab-smu.top/clusterProfiler-book/) to perform your own analysis.
+We recommend you get inspiration from their very nice [vignette/e-book](http://yulab-smu.top/clusterProfiler-book/) to perform your own analyses.
 
 The proposed correction will concern the results obtained with DESeq2 on the Ruhland2016 dataset.
 
+
 ??? done "analysis with clusterProfiler"
 
-	We being by reading the results of the DE analysis. Adapt this to your own analsysis.
+	We begin by reading the results of the DE analysis. Adapt this to your own analysis.
 	Beware that edgeR and DESeq2 use different column names in their result tables (log2FoldChange/logFC , padj/FDR).
 
 	```R
@@ -522,12 +535,12 @@ The proposed correction will concern the results obtained with DESeq2 on the Ruh
 
 
 
-## Additionnal : importing counts from salmon with `tximport`
+## Additional : importing counts from salmon with `tximport`
 
-The `tximport` R  packages offers a fairly simple sets of function in order to be able to use the **transcript-level** expression quantifications of salmon or kallisto in a differential **gene** expression analysis.
+The `tximport` R packages offers a fairly simple set of functions to get **transcript-level** expression quantification from salmon or kallisto into a differential **gene** expression analysis.
 
 
-**Task :** import salmon transcript-level quantification in R in order to perform a DE analysis on it using either edgeR or DESeq2
+**Task :** import salmon transcript-level quantification in R in order to perform a DE analysis on it using either edgeR or DESeq2.
 **Additional:** compare the results with the ones obtained from STAR-aligned reads.
 
  * The [tximport vignette](https://bioconductor.org/packages/release/bioc/vignettes/tximport/inst/doc/tximport.html) is a very good guide for this task.
