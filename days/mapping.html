@@ -547,9 +547,11 @@
 <p><a class="md-button" href="https://github.com/alexdobin/STAR">STAR website</a></p>
 <h2 id="building-a-reference-genome-index">Building a reference genome index</h2>
 <p>Before any mapping can be achieved, you must first <em>index</em> the genome want to map to. </p>
-<p>To do this with STAR, you need two files:
- * a <em>fasta</em> file containing the sequences of the chromosome (or genome contigs)
- * a <em>gtf</em> file containing annotations (ie. where the genes and exons are)</p>
+<p>To do this with STAR, you need two files:</p>
+<ul>
+<li>a <em>fasta</em> file containing the sequences of the chromosome (or genome contigs)</li>
+<li>a <em>gtf</em> file containing annotations (ie. where the genes and exons are)</li>
+</ul>
 <p>We will be using the Ensembl references, with their accompanying GTF annotations.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -650,7 +652,6 @@ STAR --runThreadN 8 --genomeDir $genomeDIR \
 <li><strong>&ndash;quantMode GeneCounts</strong> : will create a file with counts of reads per gene.</li>
 <li><strong>&ndash;readFilesIn $dataDIR/$fastqFILE </strong> : input read file.</li>
 <li><strong>&ndash;readFilesCommand zcat</strong> : command to unzip the input file.</li>
-<li><strong>&ndash;outTmpDir /tmp/${SLURM_JOB_USER}_${SLURM_JOB_ID}</strong> : temporary file folder, for STAR temp files.</li>
 </ul>
 </details>
 <details class="done"><summary>advanced : STAR mapping script with array job</summary><p>The following sets up an array of tasks to align all samples.</p>
@@ -702,7 +703,6 @@ STAR --runThreadN 8 --genomeDir $genomeDIR \
 <li><strong>&ndash;quantMode GeneCounts</strong> : will create a file with counts of reads per gene.</li>
 <li><strong>&ndash;readFilesIn $dataDIR/$fastqFILE </strong> : input read file.</li>
 <li><strong>&ndash;readFilesCommand zcat</strong> : command to unzip the input file.</li>
-<li><strong>&ndash;outTmpDir /tmp/${SLURM_JOB_USER}_${SLURM_JOB_ID}</strong> : temporary file folder, for STAR temp files.</li>
 </ul>
 </details>
 <h2 id="qc-on-the-aligned-reads">QC on the aligned reads</h2>

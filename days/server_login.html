@@ -727,7 +727,7 @@ fastqc -o FASTQC_Liu2015/ $dataDir/SRR1272187_1.fastq.gz
 <h3 id="exchanging-files-with-the-server">Exchanging files with the server</h3>
 <p>Whether you want to transfer some data to the cluster or retrieve the results of your latest computation, it is important to be able to exchange files with the distant server.</p>
 <p>There exists several alternatives, depending on your platform and preferences.</p>
-<div class="tabbed-set" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">command line</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">command line</label><div class="tabbed-content">
 <p>We will use <code>scp</code>.</p>
 <p>To copy a file from the server to your machine, use this syntax on a <strong>terminal in your local machine</strong> (open a new terminal if necessary).</p>
 <div class="highlight"><pre><span></span><code>scp &lt;login&gt;@&lt;server-adress&gt;:/path/to/file/on/server/file.txt /local/destination/
@@ -735,20 +735,15 @@ fastqc -o FASTQC_Liu2015/ $dataDir/SRR1272187_1.fastq.gz
 <p>For example, to copy the file <code>test.txt</code> you just created in the folder <code>day1/</code>, to your current (local) working directory :</p>
 <div class="highlight"><pre><span></span><code>scp login@xx.xx.xx.xx:~/day1/file.txt .
 </code></pre></div>
-</div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Here <code>~</code> will be interpreted as your home directory. This is useful and time-saving shorthand.</p>
-<p>To copy a file from your machine to the server:</p>
+<p>To copy a file from your machine to the server (NB: here <code>~</code> will be interpreted as your home directory, this is a useful and time-saving shorthand):</p>
 <div class="highlight"><pre><span></span><code>scp /path/to/file/local/file.txt &lt;login&gt;@&lt;server-adress&gt;:/destination/on/server/
 </code></pre></div>
 </div>
-<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">graphical alternative</label><div class="tabbed-content">
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">graphical alternative</label><div class="tabbed-content">
 <p>There are nice and free software with graphical user interfaces, such as <a href="https://filezilla-project.org/">filezilla</a>, to help you manage exchanges with the distant server. Feel free to install and experiment with it during the break.
 <img alt="filezilla_mainscreen" src="https://filezilla-project.org/images/screenshots/fz3_win_main.png" /></p>
 </div>
-<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">mobaXterm</label><div class="tabbed-content">
+<input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><label for="__tabbed_2_3">mobaXterm</label><div class="tabbed-content">
 <p>If you are using mobaXterm, the left panel should provide a graphical SFTP browser in the left sidebar which allows you to browse and drag and drop files directly from/to the remote server.</p>
 <p><img alt="mobaxterm_leftpanel" src="https://mobaxterm.mobatek.net/img/moba/features/feature-sftp-browser.png" /></p>
 </div>
@@ -808,8 +803,8 @@ du -h -d <span class="m">2</span> /shared/data/
 <p>Fortunately, in most case we do not have to install each of these ourselves onto the cluster : they have already been packaged and prepared to be made available to you or your code.</p>
 <p>However, by default these are not loaded and you have to explicitely load the module containing the software you want in your script (or in the interactive shell session).</p>
 <p><strong>Question:</strong> Why aren&rsquo;t all the module already pre-loaded ?</p>
-<details class="done"><summary>Answer</summary></details>
-<p>Many toolsets have dependencies toward different, sometimes incompatible libraries. Packaging each tool independently and loading them separately circumvents this as you only load what you need, and you can always unload a toolset if you need to load another, incompatible, toolset.</p>
+<details class="done"><summary>Answer</summary><p>Many toolsets have dependencies toward different, sometimes incompatible libraries. Packaging each tool independently and loading them separately circumvents this as you only load what you need, and you can always unload a toolset if you need to load another, incompatible, toolset.</p>
+</details>
 <p>Modules are managed with the <code>module</code> command.</p>
 <p>Basic commands are :</p>
 <ul>

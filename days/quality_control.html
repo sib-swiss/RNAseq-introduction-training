@@ -643,14 +643,13 @@ mkdir -p FASTQC_Liu2015/
 
 fastqc -o FASTQC_Liu2015/ <span class="nv">$dataDir</span>/SRR1272187_1.fastq.gz
 </code></pre></div>
-</details>
 <p>You could either have:</p>
-<div class="codehilite"><pre><span></span><code>* one sbatch script per sample (recommended),
-* OR put the `fastqc` commands for all the samples in the same script (not recommended).
-
-The first is recommended because you can submit both scripts at once and they will then run in parallel, whereas with the second option the samples would be handled sequentially and the overall job would take much longer to finish.
-</code></pre></div>
-
+<ul>
+<li>one sbatch script per sample (recommended),</li>
+<li>OR put the <code>fastqc</code> commands for all the samples in the same script (not recommended).</li>
+</ul>
+<p>The first is recommended because you can submit both scripts at once and they will then run in parallel, whereas with the second option the samples would be handled sequentially and the overall job would take much longer to finish.</p>
+</details>
 <details class="done"><summary>Ruhland2016 FastQC sbatch script</summary><p>Here is an sbatch script for <em>one</em> sample:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
 <span class="c1">#SBATCH --job-name=fastqc</span>
@@ -676,49 +675,40 @@ fastqc -o FASTQC_Ruhland2016/ <span class="nv">$dataDir</span>/SRR3180540_TAM3_1
 </ul>
 <p>The first is recommended because you can submit both scripts at once and they will then run in parallel, whereas with the second option the samples would be handled sequentially and the overall job would take much longer to finish.</p>
 </details>
-<details class="done"><summary>Alternative sbatch script using array job</summary></details>
-<p>Here is a solution where all files from a same dataset can be processed in parallel (recommended) by using slurm array jobs.</p>
-<div class="codehilite"><pre><span></span><code>First, have a file named `Ruhland2016.fastqFiles.txt` containing the sample fastq file names :
-
-```
-SRR3180535_EtOH1_1.fastq.gz
+<details class="done"><summary>Alternative sbatch script using array job</summary><p>Here is a solution where all files from a same dataset can be processed in parallel (recommended) by using slurm array jobs.</p>
+<p>First, have a file named <code>Ruhland2016.fastqFiles.txt</code> containing the sample fastq file names :</p>
+<div class="highlight"><pre><span></span><code>SRR3180535_EtOH1_1.fastq.gz
 SRR3180536_EtOH2_1.fastq.gz
 SRR3180537_EtOH3_1.fastq.gz
 SRR3180538_TAM1_1.fastq.gz
 SRR3180539_TAM2_1.fastq.gz
 SRR3180540_TAM3_1.fastq.gz
-```
-
-Then, in the same folder, you can create this sbatch script :
-
-```sh
-#!/usr/bin/bash
-#SBATCH --job-name=fastqc
-#SBATCH --time=00:30:00
-#SBATCH --cpus-per-task=1
-#SBATCH --mem=1G
-#SBATCH -o fastqc_Ruhland2016.%a.o
-#SBATCH -e fastqc_Ruhland2016.%a.e
-#SBATCH --array 1-6%6
+</code></pre></div>
+<p>Then, in the same folder, you can create this sbatch script :</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
+<span class="c1">#SBATCH --job-name=fastqc</span>
+<span class="c1">#SBATCH --time=00:30:00</span>
+<span class="c1">#SBATCH --cpus-per-task=1</span>
+<span class="c1">#SBATCH --mem=1G</span>
+<span class="c1">#SBATCH -o fastqc_Ruhland2016.%a.o</span>
+<span class="c1">#SBATCH -e fastqc_Ruhland2016.%a.e</span>
+<span class="c1">#SBATCH --array 1-6%6</span>
 
 ml fastqc
 
-dataDir=/shared/data/DATA/Ruhland2016
+<span class="nv">dataDir</span><span class="o">=</span>/shared/data/DATA/Ruhland2016
 
-sourceFILE=Ruhland2016.fastqFiles.txt
+<span class="nv">sourceFILE</span><span class="o">=</span>Ruhland2016.fastqFiles.txt
 
-## retrieving 1 filename from Ruhland2016.fastqFiles.txt
-fastqFILE=`sed -n ${SLURM_ARRAY_TASK_ID}p $sourceFILE`
+<span class="c1">## retrieving 1 filename from Ruhland2016.fastqFiles.txt</span>
+<span class="nv">fastqFILE</span><span class="o">=</span><span class="sb">`</span>sed -n <span class="si">${</span><span class="nv">SLURM_ARRAY_TASK_ID</span><span class="si">}</span>p <span class="nv">$sourceFILE</span><span class="sb">`</span>
 
 mkdir -p FASTQC_Ruhland2016/
-fastqc -o FASTQC_Ruhland2016/ $dataDir/$fastqFILE
-```
-
-When submitted with `sbatch`, this script will spawn 6 tasks in parallel, each with a different value of `${SLURM_ARRAY_TASK_ID}`.
-
-This is the recommended option : this allows you to launch all your job in parallel with a single script.
+fastqc -o FASTQC_Ruhland2016/ <span class="nv">$dataDir</span>/<span class="nv">$fastqFILE</span>
 </code></pre></div>
-
+<p>When submitted with <code>sbatch</code>, this script will spawn 6 tasks in parallel, each with a different value of <code>${SLURM_ARRAY_TASK_ID}</code>.</p>
+<p>This is the recommended option : this allows you to launch all your job in parallel with a single script.</p>
+</details>
 <details class="done"><summary>Interpretation of a report</summary><p><a class="md-button" href="../assets/pdf/SRR3180535_EtOH1_1_fastqc.pdf"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105 279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z"/></svg></span> Download an annotated report</a></p>
 </details>
 <h2 id="multiqc-grouping-multiple-reports">MultiQC : grouping multiple reports</h2>
