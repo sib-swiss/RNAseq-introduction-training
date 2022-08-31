@@ -293,7 +293,7 @@ Check the output of your job in the output file.
 
 During our various analysis, we will call onto numerous software.
 
-Fortunately, in most case we do not have to install each of these ourselves onto the cluster : these have already been packaged and prepared to be made available to you or your code.
+Fortunately, in most case we do not have to install each of these ourselves onto the cluster : they have already been packaged and prepared to be made available to you or your code.
 
 However, by default these are not loaded and you have to explicitely load the module containing the software you want in your script (or in the interactive shell session).
 
@@ -306,11 +306,12 @@ Many toolsets have dependencies toward different, sometimes incompatible librari
 
 Modules are managed with the `module` command.
 
-Basic usages are :
+Basic commands are :
 
 * `module list` : lists currently loaded modules
 * `module load <modulename>` alias `ml <modulename>` : loads module `<modulename>`
-* `module purge` : unload all loaded modules
+* `module unload <modulename>`  : unloads module `<modulename>`
+* `module purge` : unloads all loaded modules
 * `module avail` : lists all modules available for loading
 * `module keyword <KW>` : lists all modules available for loading which contains `<KW>`
 
