@@ -1,27 +1,42 @@
 
-To conduct the practicals of this course we will be using a dedicated computer cluster. 
-This matches the reality of most NGS workflows, which cannot be realized on a single machine. 
+To conduct the practicals of this course, we will be using a dedicated High Performance Computing cluster. 
+This matches the reality of most NGS workflows, which cannot be completed in a reasonable time on a single machine. 
 
-To interact with this cluster, you will have to login to a distant *head node*. From there you will be able to distribute your computational tasks to the cluster using a *job scheduler* called Slurm.
+To interact with this cluster, you will have to log in to a distant *head node*. From there you will be able to distribute your computational tasks to the cluster using a *job scheduler* called Slurm.
 
 This page will cover our first contact with the distant cluster. 
-More precisely, you will learn how to :
 
- * connect to the server
- * use the command line to perform basic operations on the head node
- * exchange files between the server and your own machine 
- * submit job to the cluster
+
+**You will learn to :**
+
+ * understand a typical computer cluster architecture.
+ * connect to the server.
+ * use the command line to perform basic operations on the head node.
+ * exchange files between the server and your own machine.
+ * submit a job to the cluster.
 
 
 !!! note 
-	If you are doing this course on your own, then the distant server will not be available. 
+	If you are doing this course on your own, then the distant server provided within the course will not be available. 
 	Feel free to ignore or adapt any of the following steps to your own situation.
 
+
+## The computing cluster
+
+The computing cluster follows an architecture that enables several users to distribute computational tasks among several machines which share a number of resources, such as a common file system.
+
+![cluster_overview](../assets/images/cluster_overview.png)
+
+Users do not access each machine individually, but rather connect to a **head node**. From there, they can interact with the cluster using the **job scheduler** (here slurm).
+The job scheduler's role is to manage where and how to run the jobs of all users, such that waiting time is minimized and resource usage is optimized.
+
+!!! Warning
+	Everyone is connected to the same head node. Do not perform compute-intensive tasks on it or you will slow everyone down! 
 
 
 ## Connect to the server
 
-Say you want to connect to cluster with adress `xx.xx.xx.xx` and your login is `login`.
+Say you want to connect to cluster with address `xx.xx.xx.xx` and your login is `login`.
 
 
 !!! Warning 
@@ -31,17 +46,18 @@ The first step will be to open a **terminal**
 
 === "Mac"
     
-    Open a terminal, for instance with the application Xterm, or Xquartz
+    Open a terminal, for instance with the application Xterm, or Xquartz.
+    <!-- Might confuse some who just read "Terminal" -->
 
 === "Linux"
     
-    Open a new terminal
+    Open a new terminal.
 
 === "Windows"
     
-    Open the application mobaXterm (or any ssh-enabling terminal aplpication you prefer)
+    Open the application mobaXterm (or any ssh-enabling terminal aplpication you prefer).
 
-    On mobaXterm, click on "Start a local Terminal"
+    On mobaXterm, click on "Start a local Terminal".
 
 ---
 
@@ -53,22 +69,24 @@ ssh login@xx.xx.xx.xx
 
 When prompted for your password, type it and press Enter. 
 
-**There is no cursor or '●' character appearing while you type your password. This is normal.**
+!!! note
+  There is no cursor or '●' character appearing while you type your password. This is normal.
+
 
 After a few seconds, you should be logged into the *head node* and ready to begin.
 
 
 ## Using command line on the cluster
 
-Now that you are in the head node, time to get acquainted with your environment and to prepare the upcoming practicals. 
-we will also use this as a short introduction/reminder on UNIX command line.
+Now that you are in the head node, it is time to get acquainted with your environment and to prepare the upcoming practicals. 
+We will also use this as a short reminder about the UNIX command line.
 
 You can also refer to this nice [Linux Command Line Cheat Sheet](https://appletree.or.kr/quick_reference_cards/Unix-Linux/Linux%20Command%20Line%20Cheat%20Sheet.pdf).
 
 
 ---
 
-At any time, you can get the location your terminal is currently at by typing:
+At any time, you can get the location (folder) your terminal is in at by typing the "print working directory" command:
 
 ```sh
 pwd
@@ -80,7 +98,7 @@ When you start a session on a distant computer, you are placed in your `home` di
 /shared/home/<login>
 ```
 
-### creating a directory
+### Creating a directory
 
 Use the command line to create a repository called `day1` where you will put all materials relating to this first day.
 
@@ -89,7 +107,7 @@ Use the command line to create a repository called `day1` where you will put all
     mkdir day1
     ```
 
-Move to that directory
+Move to that directory.
 
 ??? done "Answer"
     ```sh
@@ -102,6 +120,10 @@ The directory `/shared/data/` contains data and solutions for most practicals. C
     ```sh
     ls /shared/data/
     ```
+    
+!!! note
+    You don't need to move to that directory to list its contents!
+    
 
 Copy the script `fastqc_Liu2015_SRR1272187_1.sh` from  `/shared/data/Solutions/Liu2015` into your current directory.
 
@@ -136,8 +158,10 @@ Print the content of this script to the screen.
 
     ```
 
+We'll see what all this means soon.
 
-### creating and editing a file
+
+### Creating and editing a file
 
 To edit files on the distant server, we will use the command line editor `nano`. It is far from the most complete or efficient one, but it can be found on most servers and is arguably among the easiest to start with.
 
@@ -154,7 +178,7 @@ You will be taken to the `nano` interface :
 
 ![nano screenshot](../assets/images/nano_screenshot.png)
 
-Type in your favorite movie quote, and then exit by pressing `Ctrl+x`, and then `y` and `Enter` when prompted to save the modifications you just made.
+Type in your favorite movie quote, and then exit by pressing `Ctrl+x` (`control+x` on a Mac keyboard), and then `y` and `Enter` when prompted to save the modifications you just made.
 
 You can check that your modifications were saved by typing
 
@@ -167,7 +191,7 @@ more test.txt
 Whether you want to transfer some data to the cluster or retrieve the results of your latest computation, it is important to be able to exchange files with the distant server.
 
 
-There exists several alternatives, depending on your platform and preferences
+There exists several alternatives, depending on your platform and preferences.
 
 === "command line"
 
@@ -185,8 +209,8 @@ There exists several alternatives, depending on your platform and preferences
 	scp login@xx.xx.xx.xx:~/day1/file.txt .
 	```	
 
-
-	> here `~` will be interpreted as your home directory. This is useful and time-saving shorthand.
+!!! note
+	Here `~` will be interpreted as your home directory. This is useful and time-saving shorthand.
 
 
 	To copy a file from your machine to the server:
@@ -198,7 +222,7 @@ There exists several alternatives, depending on your platform and preferences
 
 === "graphical alternative"
 
-	There exist nice and free graphical software, such as [filezilla](https://filezilla-project.org/) to help you manage exchanges with the distant server. Feel free to install and experiment with it during the break.
+	There are nice and free software with graphical user interfaces, such as [filezilla](https://filezilla-project.org/), to help you manage exchanges with the distant server. Feel free to install and experiment with it during the break.
 	![filezilla_mainscreen](https://filezilla-project.org/images/screenshots/fz3_win_main.png)
 
 === "mobaXterm"
@@ -207,21 +231,12 @@ There exists several alternatives, depending on your platform and preferences
 
 	![mobaxterm_leftpanel](https://mobaxterm.mobatek.net/img/moba/features/feature-sftp-browser.png)
 
-## The computing cluster
 
-The computing cluster follows an architecture that enables several users to distribute computational tasks among several machines which share a number of ressources, such as a common file system.
+## Submitting jobs
 
-![cluster_overview](../assets/images/cluster_overview.png)
+Jobs can be submitted to the compute cluster using **sbatch scripts**, which contain 2 parts :
 
-Users do not access each machine individually, but rather connect to a **head node**. From there, they can interact with the cluster using the **job scheduler** (here slurm).
-The job scheduler role is to manage where and how to run the jobs of all users, such that waiting time is minimized and resource usage is optimized.
-
-!!! Warning
-	Everyone is connected to the same head node. Do not perform compute-intensive tasks on it or you will slow down everyone. 
-
-Jobs can be submitted to the compute cluster using **sbatch scripts**, which contains 2 parts :
-
- * informations for the job scheduler:
+ * information for the job scheduler:
  	- how much RAM / CPUs do I need ?
  	- where to write the logs of my job ?
 
@@ -241,21 +256,22 @@ But an example is worth a thousand words :
 
 echo "looking at the size of the elements of /shared/data/"
 sleep 10 # making the script wait for 10 seconds - this is just so we can see it later on. 
-# `du` is a command that returns the size of a folder structure.
+# `du` is "disk usage", a command that returns the size of a folder structure.
 du -h -d 2 /shared/data/
 
 ```
 
 The lines beginning by `#SBATCH` specify options to the job scheduler:
 
+ * The first line indicates what shell should be used to interpret the commands.
  * `#SBATCH --job-name=test` : the job name
  * `#SBATCH --time=00:30:00` : time reserved for the job : 30min. 
- * `#SBATCH --cpus-per-task=1` : cpus for the job 
+ * `#SBATCH --cpus-per-task=1` : CPUs for the job 
  * `#SBATCH --mem=1G` : memory for the job
  * `#SBATCH -o test_log.o` : file to write output or error messages
 
 !!! Warning
-	Your job will fail as soon as it takes more time or RAM than requested.
+	Your job will fail as soon as it takes more time or RAM than requested. You might need to test it to find the appropriate values.
 
 
 Copy this script inside a new file named `mySbatchScript.sh`, then submit it to the job scheduler using :
@@ -269,12 +285,20 @@ Afterward, use the command `squeue` to monitor the jobs submitted to the cluster
 Check the output of your job in the output file.
 
 !!! note 
-	When there are a lot of jobs, `squeue -u <username>` will limit the list to your jobs only
+	When there are a lot of jobs, `squeue -u <username>` will limit the list to those of the specified user.
 
+
+<!-- Proposition to Wandrille: short blurb on modules
+In the script printed above, and in the scripts used later, you use ml to load modules.
+This might need a brief introduction, here perhaps as
+### Advanced cluster usage : loading modules
+It could be placed in the 1st session that uses them (the QC part) but conceptually
+I think it makes more sense here. What do you think?
+-->
 
 ### Advanced cluster usage : job array 
 
-Oftentime we have to repeat a similar analysis on a number of files, or for a number of different parameters.
+Often, we have to repeat a similar analysis on a number of files, or for a number of different parameters.
 Rather than writing each sbatch script individually, we can rely on job arrays to facilitate our task.
 
 Say you want to execute a command, on 10 files (for example, map the reads of 10 samples).
@@ -296,7 +320,7 @@ Then, you write an sbatch array job script:
 echo "job array id" $SLURM_ARRAY_TASK_ID
 
 # sed -n <X>p <file> : retrieve line <X> of file
-# so the next line grabs the file name corresponding to our job array task id and store it in the variable ReadFileName 
+# so the next line grabs the file name corresponding to our job array task id and stores it in the variable ReadFileName 
 ReadFileName=`sed -n ${SLURM_ARRAY_TASK_ID}p readFiles.txt`
 
 # here we would put the mapping command or whatever

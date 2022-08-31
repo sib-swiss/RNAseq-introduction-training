@@ -1,11 +1,13 @@
 
+Once you are happy with your read sequences in your FASTQ files, you can use a mapper software to align the reads to the genome and thereby find where they originated from.
 
 
-At the end of this lesson, you will be able to :
+**At the end of this lesson, you will be able to :**
 
- * identify the differences between a local aligner and a pseudo aligner
- * perform genome indexing appropriate to your data
- * map your RNAseq data onto the genome
+ * identify the differences between a local aligner and a pseudo aligner.
+ * perform genome indexing appropriate to your data.
+ * map your RNA-seq data onto the genome.
+
 
 
 ## Material
@@ -17,30 +19,33 @@ At the end of this lesson, you will be able to :
 
 
 ## Building a reference genome index
-
+<!-- Suggestion: present what a genome FASTA and GTF files are first -->
 Before any mapping can be achieved, you must first *index* the genome want to map to. 
 
 We will be using the Ensembl versions of iGenome references, with their accompanying GTF annotations.
+<!-- Question: what are iGenome references, and how do they differ from other reference genome assemblies ? -->
 
 !!! note
 
-	While the data are already on the server here, in practice, and/or if you are following this course without a teacher
-	you can grab the reference genome data from [Ensembl ftp website](https://www.ensembl.org/info/data/ftp/index.html).
+	While the data are already on the server here, in practice or if you are following this course without a teacher,
+	you can grab the reference genome data from the [Ensembl ftp website](https://www.ensembl.org/info/data/ftp/index.html).
 
-	In particular, you will want a mouse [DNA fasta file](http://ftp.ensembl.org/pub/release-104/fasta/mus_musculus/dna/) and [gtf file](http://ftp.ensembl.org/pub/release-104/gtf/mus_musculus/) \[release-104 at the time we are linking this. Checking for more recent release is recommended\].
+	In particular, you will want a mouse [DNA fasta file](http://ftp.ensembl.org/pub/release-104/fasta/mus_musculus/dna/) and [gtf file](http://ftp.ensembl.org/pub/release-104/gtf/mus_musculus/) \[release-104 at the time we are linking this. Checking for more recent release is recommended, but may slightly alter the results\].
+
 
 **Task :** Using STAR, build a genome index for chromosome 19 of *Mus musculus* using the associated GTF
 
 Important notes :
 
- * .fasta and .gtf files are in : `/shared/data/DATA/Mouse_chr19/`
+ * the module name for this aligner is `star`.
+ * .fasta and .gtf files are in : `/shared/data/DATA/Mouse_chr19/`.
  * refer to the [manual](https://raw.githubusercontent.com/alexdobin/STAR/master/doc/STARmanual.pdf) to determine which options to use.
- * the `--genomeDir` parameter is the output folder
+ * the `--genomeDir` parameter is the folder where the indexed genome will be output to.
  * this job should require less than 4Gb and 30min to run.
 
 !!! note
 	
-	While your indexing job is running, you can read ahead in STAR's manual to prepare the next step : mapping your reads onto the reference.
+	While your indexing job is running, you can read ahead in STAR's manual to prepare the next step : mapping your reads onto the indexed reference genome.
 
 
 ??? done "STAR indexing script"
@@ -71,39 +76,46 @@ Important notes :
 
 	```
 
+
 **Extra task :** Determine how you would add an additional feature to your reference, for example for a novel transcript not described by the standard reference.
 
 ??? done "Answer"
 
-	Edit the gtf file to add your additionnal feature(s), following the [proper format](https://www.ensembl.org/info/website/upload/gff.html)
+	Edit the gtf file to add your additional feature(s), following the [proper format](https://www.ensembl.org/info/website/upload/gff.html).
 
 
-!!! Warning
+<!-- Suggestion for a note: what to do if you've got multiple FASTA files for your genome, typically 1 per chromosome -->
 
-	Remember : request a maximum of 30G and 8 cpus.
 
 ## Mapping reads onto the reference
 
 **Task :** Using STAR, align ONE of the FASTQ files from the Ruhland2016 study against the mouse genome.
 
- * Use the full indexed genome at `/shared/data/DATA/Mouse_STAR_index/`
- * **IMPORTANT**: on the server use the following option in your STAR commands: `--outTmpDir /tmp/${SLURM_JOB_USER}_${SLURM_JOB_ID}/`
- * Generate a BAM file sorted by coordinate
- * Generate a geneCounts file
- * Mapping reads and generating a sorted BAM from one of the Ruhland2016 et al. FASTQ files should take about 20 minutes
+ * Use the full indexed genome at `/shared/data/DATA/Mouse_STAR_index/`, rather than the one we just made.
+ * **IMPORTANT**: use the following option in your STAR command: `--outTmpDir /tmp/${SLURM_JOB_USER}_${SLURM_JOB_ID}/`. You can use the manual to look up what this option does. The slurm variables ensure a distinct directory is created in `/tmp/` for each user and for each job.
+ * Generate a BAM file sorted by coordinate.
+ * Generate a geneCounts file.
+ * Mapping reads and generating a sorted BAM from one of the Ruhland2016 et al. FASTQ files should take about 20 minutes.
 
 
 !!! Note
 
-	Take the time to read the parts of the STAR [manual](https://raw.githubusercontent.com/alexdobin/STAR/master/doc/STARmanual.pdf) which concern you : a bit of planning ahead can save you a lot of time-consuming/headache-inducing trial and error on your script.
-	
+	Take the time to read the parts of the [STAR manual](https://raw.githubusercontent.com/alexdobin/STAR/master/doc/STARmanual.pdf) which concern you : a bit of planning ahead can save you a lot of time-consuming/headache-inducing trial and error on your script.
+
+
 !!! Warning
 
-	Remember : request a maximum of 30G and 8 cpus.
+	Remember : request a maximum of 30G and 8 CPUs for 1 hour.
+
+<!-- The correction is for an array job, BUT one that only runs one sample,
+while the exercise calls specifically for a one-sample alignment.
+I think it would be less confusing to give them the correction for the non-array, single sample first, 
+and then give the array solution (single and/or multi sample) afterwards.
+Or, specifically ask for an array script but for one sample, and say why. -->
 
 ??? done "STAR mapping script"
 
-	The following sets-up an array of tasks to align all samples.
+	The following sets up an array of tasks to align all samples.
 
 	Source file : `Ruhland2016.fastqFiles.txt` :
 
@@ -152,28 +164,28 @@ Important notes :
 
 	The options of STAR are :
 
-	 * **--runThreadN 8 ** : 8 threads to go faster
-	 * **--genomeDir $genomeDIR** : path of the genome to map to
-     * **--outSAMtype BAM SortedByCoordinate ** : output a sorted BAM file
-     * **--outReadsUnmapped Fastx** : output the non-mapping reads (in case we want to analyse them)
-     * **--outFileNamePrefix $outDIR/$fastqFILE** : prefix of output files
-     * **--quantMode GeneCounts** : will create a file with counts of reads per gene
-     * **--readFilesIn $dataDIR/$fastqFILE ** : input read file 
-     * **--readFilesCommand zcat** : command to unzip the input file
-	 * **--outTmpDir /tmp/${SLURM_JOB_USER}_${SLURM_JOB_ID}** : temporary file folder, for STAR temp files
+	 * **--runThreadN 8 ** : 8 threads to go faster.
+	 * **--genomeDir $genomeDIR** : path of the genome to map to.
+     * **--outSAMtype BAM SortedByCoordinate ** : output a coordinate-sorted BAM file.
+     * **--outReadsUnmapped Fastx** : output the non-mapping reads (in case we want to analyse them).
+     * **--outFileNamePrefix $outDIR/$fastqFILE** : prefix of output files.
+     * **--quantMode GeneCounts** : will create a file with counts of reads per gene.
+     * **--readFilesIn $dataDIR/$fastqFILE ** : input read file.
+     * **--readFilesCommand zcat** : command to unzip the input file.
+	 * **--outTmpDir /tmp/${SLURM_JOB_USER}_${SLURM_JOB_ID}** : temporary file folder, for STAR temp files.
 
 
 ## QC on the aligned reads
 
-You can call MultiQC on the STAR output folder to gather a report on the alignment.
+You can call MultiQC on the STAR output folder to gather a report on the individual alignments.
 
-Here this concern a single sample but usually this would cover all your samples.
+Here we've aligned a single sample, but usually this would cover all your samples.
 
-**Task :** use `multiqc` to generate a QC report on the result of your mapping.
+**Task :** use `multiqc` to generate a QC report on the results of your mapping.
 
  * Evaluate the alignment statistics. Do you consider this to be a good alignment?
  * How many unmapped reads are there? Where might this come from, and how would you determine this?
- * what could you say about library strandedness ? 
+ * What could you say about library strandedness ? 
 
 ??? done "script and answers"
 
@@ -190,18 +202,20 @@ Here this concern a single sample but usually this would cover all your samples.
 	mkdir -p STAR_MULTIQC_Ruhland2016/
 	
 	multiqc -o STAR_MULTIQC_Ruhland2016/ STAR_Ruhland2016/
+	
 	```
 
-	result : 
+	Result : 
 
 	[ Download the report ](../assets/html/multiqc_report.SRR3180535_EtOH1_1.html){: .md-button }
 
+
 ## ADDITIONNAL : STAR 2-Pass
 
-Genome annotations are incomplete, particularly for complex eukaryotes : ther are many missing splice junctions.
+Genome annotations are incomplete, particularly for complex eukaryotes : there are many as-of-yet unannotated splice junctions.
 
-The first pass of STAR can create a splice junction database, known and novel.
-This splice junction database can, in turn, be used to guide an improved second round of alignment using a command like:
+The first pass of STAR can create a splice junction database, containing both known and novel junctions.
+This splice junction database can, in turn, be used to guide an improved second round of alignment, using a command like:
 
 ```sh
 STAR <1st round options> --sjdbFileChrStartEnd sample_SJ.out.tab
@@ -246,20 +260,19 @@ STAR <1st round options> --sjdbFileChrStartEnd sample_SJ.out.tab
 	```
 
 
-## ADDITIONNAL : pseudo-aligning with salmon
+## ADDITIONAL : pseudo-aligning with salmon
 
 [salmon website](https://salmon.readthedocs.io/en/latest/salmon.html){: .md-button }
 
-salmon can allow you of quantify transcripts expression without explicitely aligning the sequenced reads onto the reference transcriptome, thus saving computational ressources.
+salmon can allow you to quantify transcript expression without explicitly aligning the sequenced reads onto the reference genome with its gene and splice junction annotations, but to a simplification of the corresponding transcriptome, thus saving computational resources.
 
 We refer you to the tool's documentation in order to see [how the reference index is computed](https://salmon.readthedocs.io/en/latest/salmon.html#preparing-transcriptome-indices-mapping-based-mode).
 
+
 **Task :** run salmon to quantify the expression of either the Ruhland or Liu dataset. 
  
- * Use the tool documentation to craft your command line
- * precomputed indices can be found in `/shared/data/Mouse_salmon_index` and `/shared/data/Human_salmon_index`
-
-
+ * Use the tool documentation to craft your command line.
+ * precomputed indices can be found in `/shared/data/Mouse_salmon_index` and `/shared/data/Human_salmon_index`.
 
 
 ??? done "script"
@@ -290,8 +303,9 @@ We refer you to the tool's documentation in order to see [how the reference inde
 	
 	salmon quant -i $genomeDIR -l A \
 				-r $dataDIR/$fastqFILE \
-				-p 8 --validateMappings --gcBias --seqBias\
+				-p 8 --validateMappings --gcBias --seqBias \
 				-o $outDIR
+				
 	```
 
 

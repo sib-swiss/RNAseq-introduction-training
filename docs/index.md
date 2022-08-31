@@ -7,16 +7,17 @@
 After this course, you will be able to:
 
 
- * Describe advantages and pitfalls of RNA sequencing
- * Design their own experiment
- * Perform the downstream analysis using command line software (QC, mapping, counting, differential expression analysis, pathway analysis, etc)
- * Critically assess the quality of their results at each step of the downstream analysis
- * Detect significantly differentially expressed genes between conditions
+ * Describe advantages and pitfalls of RNA sequencing.
+ * Design your own experiment.
+ * Perform the downstream analysis using command line software 
+ (QC, mapping, counting, differential expression analysis, pathway analysis, etc).
+ * Critically assess the quality of your results at each step of the downstream analysis.
+ * Detect significantly differentially-expressed genes between conditions.
 
 
 ## Learning experiences
 
-To reach the learning outcomes we will use lectures and exercises. 
+To reach the learning outcomes, we will use lectures and exercises. 
 During lectures, do not hesitate to ask any questions as we progress through the slides.
 During exercises, you are free to discuss with other participants. 
 
