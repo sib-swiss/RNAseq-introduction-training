@@ -1,6 +1,6 @@
 
 ## Day 1
-<!-- WARNING: two 13:30-14:30 slots! -->
+
 | start    	| end      	| subject                        	|
 |----------	|----------	|--------------------------------	|
 | 9:00  | 9:15 	| Welcome |
@@ -9,7 +9,6 @@
 | 11:00	| 11:30	| [Server login + unix fresh up](days/server_login.md) 	     |
 | 11:30 | 12:30	| [Quality control](days/quality_control.md)              	 |
 | 12:30	| 13:30	| LUNCH BREAK                          	|
-| 13:30	| 14:30	| [Quality control - practical](days/quality_control.md)	|
 | 13:30	| 14:30	| [Sequence Trimming and adapter removal](days/trimming.md)	|
 | 14:30	| 15:30	| [Reads mapping : indexing genome](days/mapping.md)	|
 | 15:30	| 15:45	| BREAK	|
