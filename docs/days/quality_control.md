@@ -57,15 +57,16 @@ Most NGS data is deposited at the [Short Read Archive (SRA)](https://www.ncbi.nl
 
 
 For example, on the Liu2015 dataset :
-<!-- I am pretty sure there is a more efficient way of doing this!
-1. locate GEO ID
-2. look it up on GEO website: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE57345 
-3. Click Run Selector down the bottom.
-4. Copy/paste the SRR IDs from the table, or use the download accession list button to get a file listing them. -->
+
+<!--
  1. Locate in their publication the GEO accession: GSE57345 
  2. Use the NCBI search engine to find this accession : [GSE57345](https://www.ncbi.nlm.nih.gov/bioproject/?term=GSE57345)
  3. This project is made of several sub-projects. Scroll down, and in the table find the Bioproject id : PRJNA246308 
- 4. Go to the [SRA run selector](https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA246308&o=acc_s%3Aa), enter the Bioproject id
+ 4. Go to the [SRA run selector](https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA246308&o=acc_s%3Aa), enter the Bioproject id -->
+ 1. locate GEO ID
+ 2. look it up on GEO website: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE57345 
+ 3. Click Run Selector down the bottom.
+ 4. Copy/paste the SRR IDs from the table, or use the download accession list button to get a file listing them. 
  5. From the [results of your search](https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA246308&o=acc_s%3Aa), select all relevant runs
  6. Click on "Accession List" in the Select table 
 
@@ -107,7 +108,6 @@ FastQC is reasonably intelligent, and will try to recognise the file format and 
 
 
 Important points:
-<!-- CF note in previous script: perhaps the concept of module should be introduced. -->
 
  * in your script, don't forget to load fastqc : `ml fastqc`.
  * there is no need to copy the read files to your home directory (in fact, it is good practice not to: it would create data redundancy, and we won't have enough space left on the disk anyway...).
@@ -223,7 +223,7 @@ Important points:
 
 	When submitted with `sbatch`, this script will spawn 6 tasks in parallel, each with a different value of `${SLURM_ARRAY_TASK_ID}`.
 
-	This is the most recommended option : this allows you to launch all your job in parallel with a single script.
+	This is the recommended option : this allows you to launch all your job in parallel with a single script.
 
 
 ??? done "Interpretation of a report"
@@ -260,11 +260,10 @@ There are many additional info which let you customize your report. Use `multiqc
 
 
 Important points:
-<!-- Why is there no need to load multiqc as a module? -->
 
  * MultiQC RAM requirements : 1Gb should be more than enough.
  * MultiQC time requirements : ~ 1min / read file.
- * Exceptionally, there is no need to load multiqc as a module.
+ * Exceptionally, there is no need to load multiqc as a module (it is not part of ComputeCanada and we installed it directly on the cluster, on other clusters it may not be the same).
  * Use `multiqc --help` to check the different options
 
 
