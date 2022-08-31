@@ -260,7 +260,7 @@ Or you may download them :
 	```R
 	# setting up the experimental design AND the model
 	#  -> the first 3 samples form a group, the 3 remaining are the other group
-	treatment <- c(rep(0,3),rep(1,3))
+	treatment <-  c(rep("EtOH",3), rep("TAM",3))
 	dge.f.design <- model.matrix(~ treatment)
 
 	# creating the edgeR DGE object
@@ -310,7 +310,7 @@ Or you may download them :
 	```
 	
 	```
-	Comparison of groups:  1-0 
+	Comparison of groups:  TAM-EtOH 
 	                       logFC   logCPM       PValue          FDR
 	ENSMUSG00000050272 -8.522762 4.988067 2.554513e-28 3.851950e-24
 	ENSMUSG00000075014  3.890079 5.175181 2.036909e-25 1.535728e-21
@@ -330,14 +330,14 @@ Or you may download them :
 	```
 	
 	```
-	         1-0
+	         TAM-EtOH 
 	Down     109
 	NotSig 15393
 	Up       210
 	```
 
-	The comparison is 1-0, so "Up", corresponds to a higher in group 1 (EtOH for us) compared to group 0 (TAM).
-	<!-- WARNING: I don't understand from the code why 1 is EtOH and 0 is TAM (considering how we encoded treatment in the DESeq2 part) -->
+	The comparison is TAM-EtOH, so "Up", corresponds to a higher in group TAM compared to group EtOH.
+
 
 
 ??? done "edgeR looking at differentially-expressed genes"
