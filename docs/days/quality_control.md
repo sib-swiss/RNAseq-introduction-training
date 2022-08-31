@@ -142,7 +142,7 @@ Important points:
 	fastqc -o FASTQC_Liu2015/ $dataDir/SRR1272187_1.fastq.gz
 	```
 
-  You could either have:
+	You could either have:
 	
 	* one sbatch script per sample (recommended),
 	* OR put the `fastqc` commands for all the samples in the same script (not recommended).
@@ -183,7 +183,7 @@ Important points:
 
 ??? done "Alternative sbatch script using array job"
   
-  Here is a solution where all files from a same dataset can be processed in parallel (recommended) by using slurm array jobs.
+	Here is a solution where all files from a same dataset can be processed in parallel (recommended) by using slurm array jobs.
   
 	First, have a file named `Ruhland2016.fastqFiles.txt` containing the sample fastq file names :
 

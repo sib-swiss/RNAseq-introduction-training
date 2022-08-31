@@ -209,16 +209,11 @@ There exists several alternatives, depending on your platform and preferences.
 	scp login@xx.xx.xx.xx:~/day1/file.txt .
 	```	
 
-!!! note
-	Here `~` will be interpreted as your home directory. This is useful and time-saving shorthand.
-
-
-	To copy a file from your machine to the server:
+	To copy a file from your machine to the server (NB:	here `~` will be interpreted as your home directory, this is a useful and time-saving shorthand):
 
 	```sh
 	scp /path/to/file/local/file.txt <login>@<server-adress>:/destination/on/server/
 	```
-
 
 === "graphical alternative"
 
@@ -301,7 +296,7 @@ However, by default these are not loaded and you have to explicitely load the mo
 
 ??? done "Answer"
 
-Many toolsets have dependencies toward different, sometimes incompatible libraries. Packaging each tool independently and loading them separately circumvents this as you only load what you need, and you can always unload a toolset if you need to load another, incompatible, toolset.
+	Many toolsets have dependencies toward different, sometimes incompatible libraries. Packaging each tool independently and loading them separately circumvents this as you only load what you need, and you can always unload a toolset if you need to load another, incompatible, toolset.
 
 
 Modules are managed with the `module` command.

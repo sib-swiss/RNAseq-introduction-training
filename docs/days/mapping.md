@@ -23,6 +23,7 @@ Once you are happy with your read sequences in your FASTQ files, you can use a m
 Before any mapping can be achieved, you must first *index* the genome want to map to. 
 
 To do this with STAR, you need two files:
+
  * a *fasta* file containing the sequences of the chromosome (or genome contigs)
  * a *gtf* file containing annotations (ie. where the genes and exons are)
 
@@ -151,7 +152,7 @@ Important notes :
      * **--quantMode GeneCounts** : will create a file with counts of reads per gene.
      * **--readFilesIn $dataDIR/$fastqFILE ** : input read file.
      * **--readFilesCommand zcat** : command to unzip the input file.
-	 * **--outTmpDir /tmp/${SLURM_JOB_USER}_${SLURM_JOB_ID}** : temporary file folder, for STAR temp files.
+
 
 
 ??? done "advanced : STAR mapping script with array job"
@@ -213,7 +214,7 @@ Important notes :
      * **--quantMode GeneCounts** : will create a file with counts of reads per gene.
      * **--readFilesIn $dataDIR/$fastqFILE ** : input read file.
      * **--readFilesCommand zcat** : command to unzip the input file.
-	 * **--outTmpDir /tmp/${SLURM_JOB_USER}_${SLURM_JOB_ID}** : temporary file folder, for STAR temp files.
+
 
 
 ## QC on the aligned reads
