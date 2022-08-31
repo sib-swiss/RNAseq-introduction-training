@@ -493,9 +493,9 @@
                 
                   <h1>Sequence trimming</h1>
                 
-                <p>Following a QC analysis on sequencing results, one could detect stretches of low quality bases along reads, or a contamination by adapter sequence.
-Depending on your application and the sofware you use for mapping, you may have to remove these bad quality / spurious sequences out of your data.</p>
-<p>During this block, you will learn to :</p>
+                <p>Following a QC analysis on sequencing results, one may detect stretches of low quality bases along reads, or a contamination by adapter sequence.
+Depending on your research question and the software you use for mapping, you may have to remove these bad quality / spurious sequences out of your data.</p>
+<p><strong>During this block, you will learn to :</strong></p>
 <ul>
 <li>trim your data with trimmomatic</li>
 </ul>
@@ -503,22 +503,36 @@ Depending on your application and the sofware you use for mapping, you may have 
 <p><a class="md-button" href="../assets/pdf/RNA-Seq_03_trimming.pdf"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105 279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z"/></svg></span> Download the presentation</a></p>
 <p><a class="md-button" href="http://www.usadellab.org/cms/?page=trimmomatic">Trimmomatic website</a></p>
 <h2 id="to-trim-or-not-to-trim">to trim or not to trim ?</h2>
+<p>There are several ways to deal with poor quality bases or adapter contamination in reads, and several terms are used in the field, sometimes very loosely. We can talk about:</p>
+<ul>
+<li>Trimming : to remove a part of, or the entirety of, a read (for quality reasons).</li>
+<li>Hard trimming : trim with a high standard of quality (eg. remove everything with QUAL&lt;30).</li>
+<li>Soft trimming: trim with a low standard of quality (eg. remove everything with QUAL&lt;10).</li>
+<li>Clipping : to remove the end part of a read (typically because of adapter content).</li>
+<li>Hard clipping: actually removing the end of the read from the file (ie. with trimmomatic).</li>
+<li>Soft clipping: ignoring the end of the read at mapping time (ie. what STAR does).</li>
+</ul>
 <p>If the data will be used to perform <strong>transcriptome assembly, or variant analysis, then it must be trimmed</strong>.</p>
-<p>In contrast, for applications based on <strong>counting reads, such as Differential Expression analysis</strong>, most aligners, such as <a href="https://github.com/alexdobin/STAR">STAR</a>, <a href="http://daehwankimlab.github.io/hisat2/">HISAT2</a>, <a href="https://salmon.readthedocs.io/en/latest/salmon.html">salmon</a>, <a href="https://pachterlab.github.io/kallisto/manual">kallisto</a> can handle bad quality sequences and adapter content by performing &ldquo;soft-clipping&rdquo; on reads, and consequently they <strong>usually do not need trimming.
-In fact, hard trimming can be detrimental</strong> to the number of successfully quantified reads [<a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-016-0956-2">William et al. 2016</a>].</p>
-<p>Nevertheless, they usually recommend to perform some amount of soft trimming (<em>eg.</em> <a href="https://www.biostars.org/p/389324/">kallisto</a>, <a href="https://github.com/COMBINE-lab/salmon/issues/398">salmon</a> ).
-If possible, we recommend to perform the mapping for both the raw data and the trimmed one, in order to compare the results for both and choose the best.</p>
+<p>In contrast, for applications based on <strong>counting reads</strong>, such as <strong>Differential Expression analysis</strong>, most aligners, such as <a href="https://github.com/alexdobin/STAR">STAR</a>, <a href="http://daehwankimlab.github.io/hisat2/">HISAT2</a>, <a href="https://salmon.readthedocs.io/en/latest/salmon.html">salmon</a>, and <a href="https://pachterlab.github.io/kallisto/manual">kallisto</a>, can handle bad quality sequences and adapter content by soft-clipping, and consequently they <em>usually</em> do not need trimming.
+In fact, <strong>trimming can be detrimental</strong> to the number of successfully quantified reads [<a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-016-0956-2">William et al. 2016</a>].</p>
+<p>Nevertheless, it is usually recommended to perform some amount of soft clipping (<em>eg.</em> <a href="https://www.biostars.org/p/389324/">kallisto</a>, <a href="https://github.com/COMBINE-lab/salmon/issues/398">salmon</a> ).</p>
+<p>If possible, we recommend to perform the mapping for both the raw data and the trimmed one, in order to compare the results for both, and choose the best.</p>
+<p><strong>Question:</strong> what could be a good metric to choose the best between the trimmed and untrimmed ?</p>
+<details class="done"><summary>Answer</summary><p>The number of uniquely mapped reads is generally what would matter in differential expression analysis. Of course, this means that you can only choose after you have mapped both the trimmed and the untrimmed reads.</p>
+</details>
 <h2 id="trimming-with-trimmomatic">trimming with Trimmomatic</h2>
 <p>The <a href="http://www.usadellab.org/cms/?page=trimmomatic">trimmomatic website</a> gives very good examples of their software usage for both paired-end (<code>PE</code>) and single-end (<code>SE</code>) reads. We recommend you read their quick-start section attentively.</p>
-<p><strong>Task :</strong> Conduct a soft trimming on the Liu2015 data.</p>
+<p><strong>Task :</strong> </p>
+<p>Conduct a soft trimming on the Liu2015 data.</p>
 <p><strong>Extra (if you have the time) :</strong> run a QC analysis on your trimmmed reads and compare with the raw ones.</p>
 <p>Important notes :</p>
 <ul>
-<li>when you do <code>ml trimmomatic</code>, you will have a little message which tells you how to launch the software</li>
-<li>Adapter sequences can be found in <code>/shared/data/DATA/adapters/</code></li>
-<li>Trimmomatic RAM requirements : ~0.5G / cpu</li>
-<li>Trimmomatic time requirements : ~ 10 min/ read file </li>
+<li>when you do <code>ml trimmomatic</code>, you will receive a little message which tells you how to launch the software.</li>
+<li>Adapter sequences can be found in <code>/shared/data/DATA/adapters/</code>.</li>
+<li>Trimmomatic RAM requirements : ~0.5G / CPU.</li>
+<li>Trimmomatic time requirements : ~ 10 min/ read file .</li>
 </ul>
+<!-- Should perhaps note where this comes from: $EBROOTTRIMMOMATIC -->
 <details class="done"><summary>Trimmomatic script</summary><p>The Liu2015 dataset has paired-end reads and we have to take that into account during trimming.
 For a soft-trimming, we chose the following options :</p>
 <ul>
@@ -527,7 +541,7 @@ For a soft-trimming, we chose the following options :</p>
 <li><strong>20</strong> : requiredQuality: specifies the average quality required.</li>
 </ul>
 </li>
-<li><strong>ILLUMINACLIP:/shared/home/SHARED/DATA/adapters/TruSeq3-PE.fa:2:30:10</strong> Cut adapter and other illumina-specific sequences from the read.<ul>
+<li><strong>ILLUMINACLIP:/shared/home/SHARED/DATA/adapters/TruSeq3-PE.fa:2:30:10</strong> Cut adapter and other Illumina-specific sequences from the read.<ul>
 <li>Cut adapter and other illumina-specific sequences from the read.</li>
 <li><strong>2</strong>  : seedMismatches: specifies the maximum mismatch count which will still allow a full match to be performed</li>
 <li><strong>30</strong> : palindromeClipThreshold: specifies how accurate the match between the two &lsquo;adapter ligated&rsquo; reads must be for PE palindrome read alignment.</li>

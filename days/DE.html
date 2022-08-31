@@ -444,8 +444,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#additionnal-importing-counts-from-salmon-with-tximport" class="md-nav__link">
-    Additionnal : importing counts from salmon with tximport
+  <a href="#additional-importing-counts-from-salmon-with-tximport" class="md-nav__link">
+    Additional : importing counts from salmon with tximport
   </a>
   
 </li>
@@ -536,8 +536,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#additionnal-importing-counts-from-salmon-with-tximport" class="md-nav__link">
-    Additionnal : importing counts from salmon with tximport
+  <a href="#additional-importing-counts-from-salmon-with-tximport" class="md-nav__link">
+    Additional : importing counts from salmon with tximport
   </a>
   
 </li>
@@ -562,24 +562,28 @@
                   <h1>Differential Expression Inference</h1>
                 
                 <p>Once the reads have been mapped and counted, one can assess the differential expression of genes between different conditions.</p>
-<p>During this lesson, you will learn to:</p>
+<p><strong>During this lesson, you will learn to :</strong></p>
 <ul>
-<li>describe the different steps of data normalization and modelization commonly used for RNAseq data</li>
-<li>detect significantly differentially expressed genes using either edgeR or DESeq2</li>
-<li>perform downstream analysis to over-representated gene sets (such as GO terms or reactome pathways)</li>
+<li>describe the different steps of data normalization and modelling commonly used for RNA-seq data.</li>
+<li>detect significantly differentially-expressed genes using either edgeR or DESeq2.</li>
+<li>perform downstream analysis on gene sets, such as annotation (e.g. GO terms or Reactome pathways) over-representation.</li>
 </ul>
 <h2 id="material">Material</h2>
 <p><a class="md-button" href="../assets/pdf/RNA-Seq_06_DE.pdf"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105 279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z"/></svg></span> Download the presentation</a></p>
 <p><a href="https://www.rstudio.com/">Rstudio website</a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+</div>
+<p>RStudio is set to be rebranded as Posit after October 2022.</p>
 <p><a class="md-button" href="https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf">edgeR user&rsquo;s guide</a></p>
 <p><a class="md-button" href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html">DESeq2 vignette</a></p>
 <h2 id="connexion-to-the-rstudio-server">Connexion to the Rstudio server</h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This step is intended only for usrs who attend the course with a teacher. Otherwise you will have to rely on your own installation of Rstudio.</p>
+<p>This step is intended only for users who attend the course with a teacher. Otherwise you will have to rely on your own installation of Rstudio.</p>
 </div>
-<p>The analysis of the data once reads have been counted will be done on a Rstudio instance, using the language R and some relevant <a href="http://bioconductor.org/">Bioconductor</a> libraries.</p>
-<p>As you start your session on the Rstudio server, please make sure that you know where your data is situated with respect to your <strong>working directory</strong> (use <code>getwd()</code> and <code>setwd()</code> to respectively : know what your working is, and change it).</p>
+<p>The analysis of the read count data will be done on an RStudio instance, using the R language and some relevant <a href="http://bioconductor.org/">Bioconductor</a> libraries.</p>
+<p>As you start your session on the RStudio server, please make sure that you know where your data is situated with respect to your <strong>working directory</strong> (use <code>getwd()</code> and <code>setwd()</code> to respectively : know what your working is, and change it as necessary).</p>
 <h2 id="differential-expression-inference">Differential Expression Inference</h2>
 <p>Use either edgeR or DESeq2 to conduct a differential expression analysis on the Ruhland2016 and/or Liu2015 dataset.</p>
 <p>You can find the expression matrices on the server at: <code>/shared/data/Solutions/Ruhland2016/countFiles/featureCounts_Ruhland2016.counts.txt</code> and <code>/shared/data/Solutions/Liu2015/countFiles/featureCounts_Liu2015.counts.txt</code></p>
@@ -589,9 +593,9 @@
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul>
-<li>Generally, users find the syntax and workflow of DESeq2 easier for getting started</li>
-<li>If you have the time, conduct a differential expression analysis using both DESeq2 and edgeR</li>
-<li>Follow the vignettes/user&rsquo;s guide! They are the most up-to-date and generally contains everything a newcomer might need, including worked-out examples in the case of edgeR.</li>
+<li>Generally, users find the syntax and workflow of DESeq2 easier for getting started.</li>
+<li>If you have the time, conduct a differential expression analysis using both DESeq2 and edgeR.</li>
+<li>Follow the vignettes/user&rsquo;s guide! They are the most up-to-date and generally contain everything a newcomer might need, including worked-out examples.</li>
 </ul>
 </div>
 <h3 id="deseq2">DESeq2</h3>
@@ -599,7 +603,6 @@
 <details class="done"><summary>read in the data</summary><div class="highlight"><pre><span></span><code><span class="c1"># setup</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">DESeq2</span><span class="p">)</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
-
 
 
 <span class="c1"># reading the counts files - adapt the file path to your situation</span>
@@ -616,7 +619,7 @@
 <span class="n">raw_counts</span> <span class="o">=</span> <span class="n">raw_counts</span><span class="p">[</span> <span class="p">,</span>  <span class="m">-1</span><span class="o">:</span><span class="m">-6</span>  <span class="p">]</span> 
 
 
-<span class="c1"># changing colomn names</span>
+<span class="c1"># changing column names</span>
 <span class="nf">names</span><span class="p">(</span> <span class="n">raw_counts</span><span class="p">)</span> <span class="o">=</span> <span class="nf">gsub</span><span class="p">(</span><span class="s">&#39;_.*&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="nf">gsub</span><span class="p">(</span><span class="s">&#39;.*.SRR[0-9]{7}_&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="nf">names</span><span class="p">(</span><span class="n">raw_counts</span><span class="p">)</span> <span class="p">)</span> <span class="p">)</span>
 
 <span class="c1"># some checking of what we just read</span>
@@ -624,25 +627,28 @@
 <span class="nf">colSums</span><span class="p">(</span><span class="n">raw_counts</span><span class="p">)</span> <span class="c1"># total number of counted reads per sample</span>
 </code></pre></div>
 </details>
-<details class="done"><summary>preprocessing</summary><div class="highlight"><pre><span></span><code><span class="c1"># setting up the model</span>
-<span class="n">treatment</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="s">&quot;EtOH&quot;</span><span class="p">,</span><span class="m">3</span><span class="p">),</span> <span class="nf">rep</span><span class="p">(</span><span class="s">&quot;TAM&quot;</span><span class="p">,</span><span class="m">3</span><span class="p">))</span>
+<details class="done"><summary>preprocessing</summary><div class="highlight"><pre><span></span><code><span class="c1">## telling DESeq2 what the experimental design was</span>
+<span class="c1"># note: by default, the 1st level is considered to be the reference/control/WT/...</span>
+<span class="n">treatment</span> <span class="o">&lt;-</span> <span class="nf">factor</span><span class="p">(</span> <span class="nf">c</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="s">&quot;EtOH&quot;</span><span class="p">,</span><span class="m">3</span><span class="p">),</span> <span class="nf">rep</span><span class="p">(</span><span class="s">&quot;TAM&quot;</span><span class="p">,</span><span class="m">3</span><span class="p">)),</span> <span class="n">levels</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;EtOH&quot;</span><span class="p">,</span> <span class="s">&quot;TAM&quot;</span><span class="p">)</span> <span class="p">)</span>
 <span class="n">colData</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span><span class="n">treatment</span><span class="p">,</span> <span class="n">row.names</span> <span class="o">=</span> <span class="nf">colnames</span><span class="p">(</span><span class="n">raw_counts</span><span class="p">))</span>
 <span class="n">colData</span>
 
-<span class="c1"># creating the DESeq data object</span>
-<span class="n">dds</span> <span class="o">&lt;-</span> <span class="nf">DESeqDataSetFromMatrix</span><span class="p">(</span><span class="n">countData</span> <span class="o">=</span> <span class="n">raw_counts</span><span class="p">,</span> <span class="n">colData</span> <span class="o">=</span> <span class="n">colData</span><span class="p">,</span> <span class="n">design</span> <span class="o">=</span> <span class="o">~</span> <span class="n">treatment</span><span class="p">)</span>
+<span class="c1">## creating the DESeq data object &amp; positing the model</span>
+<span class="n">dds</span> <span class="o">&lt;-</span> <span class="nf">DESeqDataSetFromMatrix</span><span class="p">(</span>
+  <span class="n">countData</span> <span class="o">=</span> <span class="n">raw_counts</span><span class="p">,</span> <span class="n">colData</span> <span class="o">=</span> <span class="n">colData</span><span class="p">,</span> 
+  <span class="n">design</span> <span class="o">=</span> <span class="o">~</span> <span class="n">treatment</span><span class="p">)</span>
 <span class="nf">dim</span><span class="p">(</span><span class="n">dds</span><span class="p">)</span>
 
-<span class="c1">## filter low count genes . Here the filter is to have at least 2 samples where there is a least 5 reads</span>
+<span class="c1">## filter low count genes. Here, only keep genes with at least 2 samples where there are at least 5 reads.</span>
 <span class="n">idx</span> <span class="o">&lt;-</span> <span class="nf">rowSums</span><span class="p">(</span><span class="nf">counts</span><span class="p">(</span><span class="n">dds</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="m">5</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="m">2</span>
 <span class="n">dds.f</span> <span class="o">&lt;-</span> <span class="n">dds</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="p">]</span>
 <span class="nf">dim</span><span class="p">(</span><span class="n">dds.f</span><span class="p">)</span>
 
 <span class="c1"># we go from 55414 to 19378 genes</span>
 </code></pre></div>
-<p>Around 19k genes pass our minimum expression threshold.</p>
+<p>Around 19k genes pass our minimum expression threshold, quite typical for a bulk Mouse RNA-seq experiment.</p>
 </details>
-<details class="done"><summary>estimate dipesersion / model fitting</summary><div class="highlight"><pre><span></span><code><span class="c1"># we perform the estimation of dispersions </span>
+<details class="done"><summary>estimate dispersion / model fitting</summary><div class="highlight"><pre><span></span><code><span class="c1"># we perform the estimation of dispersions </span>
 <span class="n">dds.f</span> <span class="o">&lt;-</span> <span class="nf">DESeq</span><span class="p">(</span><span class="n">dds.f</span><span class="p">)</span>
 
 <span class="c1"># we plot the estimate of the dispersions</span>
@@ -655,8 +661,8 @@
 <span class="n">res</span> <span class="o">&lt;-</span> <span class="nf">results</span><span class="p">(</span><span class="n">dds.f</span><span class="p">)</span>
 </code></pre></div>
 <p><img alt="dispEst" src="../assets/images/DESeq2/ruhland2016_dispEst.png" /></p>
-<p>This plot is not easy to interpret. It represents the amount of dispersion at different levels of expression. It is directly linked to  our ability to detect differential expression.</p>
-<p>Here it Looks about normal compared to many other RNAseq experiment : the dispersion is comparatively larger for lowly expressed genes.</p>
+<p>This plot is not easy to interpret. It represents the amount of dispersion at different levels of expression. It is directly linked to our ability to detect differential expression.</p>
+<p>Here it looks about normal compared to typical bulk RNA-seq experiments : the dispersion is comparatively larger for lowly expressed genes.</p>
 </details>
 <details class="done"><summary>looking at the results</summary><div class="highlight"><pre><span></span><code><span class="c1"># adds estimate of the LFC the results table. </span>
 <span class="c1"># This shrunk logFC estimate is more robust than the raw value</span>
@@ -673,9 +679,9 @@
 </code></pre></div>
 <p><img alt="doubleMA" src="../assets/images/DESeq2/ruhland2016_doubleMA.png" /></p>
 <p>Without the shrinkage, we can see that for low counts we can see a high log-fold change but non significant (ie. we see a large difference but with variance is also so high that this observation may be due to chance only).</p>
-<p>The shrinkage corrects this and the relationshipo between logFC and significance is smoother.</p>
+<p>The shrinkage corrects this and the relationship between logFC and significance is smoother.</p>
 <p><div class="highlight"><pre><span></span><code><span class="c1"># we apply the variance stabilising transformation to make the read counts comparable across libraries</span>
-<span class="c1"># (nb : this is not needed for DESeq DE analysis, but rather for the PCA on the data. This replace normal PCA scaling)</span>
+<span class="c1"># (nb : this is not needed for DESeq DE analysis, but rather for visualisations that compare expression across samples, such as PCA. This replaces normal PCA scaling)</span>
 <span class="n">vst.dds.f</span> <span class="o">&lt;-</span> <span class="nf">vst</span><span class="p">(</span><span class="n">dds.f</span><span class="p">,</span> <span class="n">blind</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
 <span class="n">vst.dds.f.counts</span> <span class="o">&lt;-</span> <span class="nf">assay</span><span class="p">(</span><span class="n">vst.dds.f</span><span class="p">)</span>
 
@@ -683,7 +689,7 @@
 </code></pre></div>
 <img alt="pca" src="../assets/images/DESeq2/ruhland2016_PCA.png" /></p>
 <p>The first axis (58% of the variance) seems linked to the grouping of interest.</p>
-<p><div class="highlight"><pre><span></span><code><span class="c1">## Volcano plot</span>
+<div class="highlight"><pre><span></span><code><span class="c1">## ggplot2-based volcano plot</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
 
 <span class="n">FDRthreshold</span> <span class="o">=</span> <span class="m">0.01</span>
@@ -705,7 +711,7 @@
 </code></pre></div>
 <div class="highlight"><pre><span></span><code> DOWN    NO    UP 
   131 19002   245 
-</code></pre></div></p>
+</code></pre></div>
 <p><img alt="volcano" src="../assets/images/DESeq2/ruhland2016_volcano.png" /></p>
 <div class="highlight"><pre><span></span><code><span class="nf">library</span><span class="p">(</span><span class="n">pheatmap</span><span class="p">)</span>
 <span class="n">topVarGenes</span> <span class="o">&lt;-</span> <span class="nf">head</span><span class="p">(</span><span class="nf">order</span><span class="p">(</span><span class="nf">rowVars</span><span class="p">(</span><span class="n">vst.dds.f.counts</span><span class="p">),</span> <span class="n">decreasing</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">),</span> <span class="m">20</span><span class="p">)</span>
@@ -714,7 +720,8 @@
 <span class="nf">pheatmap</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
 </code></pre></div>
 <p><img alt="pheatmap" src="../assets/images/DESeq2/ruhland2016_pheatmap.png" /></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># writing results</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># saving results to file</span>
+<span class="c1"># note: a CSV file can be imported into Excel</span>
 <span class="nf">write.csv</span><span class="p">(</span> <span class="n">res</span> <span class="p">,</span><span class="s">&#39;Ruhland2016.DESeq2.results.csv&#39;</span> <span class="p">)</span>
 </code></pre></div>
 </details>
@@ -724,7 +731,7 @@
 <span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
 
 <span class="c1"># reading the counts files - adapt the file path to your situation</span>
-<span class="n">raw_counts</span> <span class="o">&lt;-</span><span class="nf">read.table</span><span class="p">(</span><span class="s">&#39;.../Ruhland2016_featureCount_result.counts&#39;</span> <span class="p">,</span> 
+<span class="n">raw_counts</span> <span class="o">&lt;-</span> <span class="nf">read.table</span><span class="p">(</span><span class="s">&#39;.../Ruhland2016_featureCount_result.counts&#39;</span> <span class="p">,</span> 
            <span class="n">skip</span><span class="o">=</span><span class="m">1</span> <span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;\t&quot;</span> <span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">T</span><span class="p">)</span>
 
 <span class="c1"># setting up row names as ensembl gene ids</span>
@@ -733,7 +740,7 @@
 <span class="c1"># removing these first columns to keep only the sample counts</span>
 <span class="n">raw_counts</span> <span class="o">=</span> <span class="n">raw_counts</span><span class="p">[</span> <span class="p">,</span>  <span class="m">-1</span><span class="o">:</span><span class="m">-6</span>  <span class="p">]</span> 
 
-<span class="c1"># changing colomn names</span>
+<span class="c1"># changing column names</span>
 <span class="nf">names</span><span class="p">(</span> <span class="n">raw_counts</span><span class="p">)</span> <span class="o">=</span> <span class="nf">gsub</span><span class="p">(</span><span class="s">&#39;_.*&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="nf">gsub</span><span class="p">(</span><span class="s">&#39;.*.SRR[0-9]{7}_&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="nf">names</span><span class="p">(</span><span class="n">raw_counts</span><span class="p">)</span> <span class="p">)</span> <span class="p">)</span>
 
 <span class="c1"># some checking of what we just read</span>
@@ -741,15 +748,15 @@
 <span class="nf">colSums</span><span class="p">(</span><span class="n">raw_counts</span><span class="p">)</span> <span class="c1"># total number of counted reads per sample</span>
 </code></pre></div>
 </details>
-<details class="done"><summary>edgeR object preprocessing</summary><div class="highlight"><pre><span></span><code><span class="c1"># setting up the model</span>
-<span class="c1">#  -&gt; the first 3 samples form an group, the 3 remaining are the other group</span>
-<span class="n">treatment</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">3</span><span class="p">),</span><span class="nf">rep</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">3</span><span class="p">))</span>
+<details class="done"><summary>edgeR object preprocessing</summary><div class="highlight"><pre><span></span><code><span class="c1"># setting up the experimental design AND the model</span>
+<span class="c1">#  -&gt; the first 3 samples form a group, the 3 remaining are the other group</span>
+<span class="n">treatment</span> <span class="o">&lt;-</span>  <span class="nf">c</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="s">&quot;EtOH&quot;</span><span class="p">,</span><span class="m">3</span><span class="p">),</span> <span class="nf">rep</span><span class="p">(</span><span class="s">&quot;TAM&quot;</span><span class="p">,</span><span class="m">3</span><span class="p">))</span>
 <span class="n">dge.f.design</span> <span class="o">&lt;-</span> <span class="nf">model.matrix</span><span class="p">(</span><span class="o">~</span> <span class="n">treatment</span><span class="p">)</span>
 
 <span class="c1"># creating the edgeR DGE object</span>
 <span class="n">dge.all</span> <span class="o">&lt;-</span> <span class="nf">DGEList</span><span class="p">(</span><span class="n">counts</span> <span class="o">=</span> <span class="n">raw_counts</span> <span class="p">,</span> <span class="n">group</span> <span class="o">=</span> <span class="n">treatment</span><span class="p">)</span>  
 
-<span class="c1">#filtering by expression level. See ?filterByExpr for details</span>
+<span class="c1"># filtering by expression level. See ?filterByExpr for details</span>
 <span class="n">keep</span> <span class="o">&lt;-</span> <span class="nf">filterByExpr</span><span class="p">(</span><span class="n">dge.all</span><span class="p">)</span>
 <span class="n">dge.f</span> <span class="o">&lt;-</span> <span class="n">dge.all</span><span class="p">[</span><span class="n">keep</span><span class="p">,</span> <span class="n">keep.lib.sizes</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">]</span>
 <span class="nf">table</span><span class="p">(</span> <span class="n">keep</span> <span class="p">)</span>
@@ -771,13 +778,13 @@ FALSE  TRUE
 </code></pre></div>
 <img alt="bcv" src="../assets/images/edgeR/BCV.png" /></p>
 <p>This plot is not easy to interpret. It represents the amount of biological variation at different levels of expression. It is directly linked to our ability to detect differential expression.</p>
-<p>Here it Looks about normal compared to many other RNAseq experiment : the variation is comparatively larger for lowly expressed genes.</p>
-<p><div class="highlight"><pre><span></span><code><span class="c1"># testing for differential expression. </span>
-<span class="c1">#This method is recommended whne you only have 2 groups to compare</span>
+<p>Here it looks about normal compared to other bulk RNA-seq experiments : the variation is comparatively larger for lowly expressed genes.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># testing for differential expression. </span>
+<span class="c1"># This method is recommended when you only have 2 groups to compare</span>
 <span class="n">dge.f.et</span> <span class="o">&lt;-</span> <span class="nf">exactTest</span><span class="p">(</span><span class="n">dge.f</span><span class="p">)</span>
 <span class="nf">topTags</span><span class="p">(</span><span class="n">dge.f.et</span><span class="p">)</span> <span class="c1"># printing the genes where the p-value of differential expression if the lowest</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>Comparison of groups:  1-0 
+<div class="highlight"><pre><span></span><code>Comparison of groups:  TAM-EtOH 
                        logFC   logCPM       PValue          FDR
 ENSMUSG00000050272 -8.522762 4.988067 2.554513e-28 3.851950e-24
 ENSMUSG00000075014  3.890079 5.175181 2.036909e-25 1.535728e-21
@@ -793,14 +800,14 @@ ENSMUSG00000034981  3.727969 5.244841 3.934957e-14 5.933521e-11
 <div class="highlight"><pre><span></span><code><span class="c1"># see how many genes are DE</span>
 <span class="nf">summary</span><span class="p">(</span><span class="nf">decideTests</span><span class="p">(</span><span class="n">dge.f.et</span> <span class="p">,</span> <span class="n">p.value</span> <span class="o">=</span> <span class="m">0.01</span><span class="p">))</span> <span class="c1"># let&#39;s use 0.01 as a threshold</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>         1-0
+<div class="highlight"><pre><span></span><code>         TAM-EtOH 
 Down     109
 NotSig 15393
 Up       210
-</code></pre></div></p>
-<p>The comparision is 1-0, so &ldquo;Up&rdquo;, corresponds to a higher in group 1 (EtOH for us) compared to group 0 (TAM).</p>
+</code></pre></div>
+<p>The comparison is TAM-EtOH, so &ldquo;Up&rdquo;, corresponds to a higher in group TAM compared to group EtOH.</p>
 </details>
-<details class="done"><summary>edgeR looking at differentially expressed genes</summary><div class="highlight"><pre><span></span><code><span class="c1">## plot all the logFCs versus average count size. Significantly DE genes are  colored</span>
+<details class="done"><summary>edgeR looking at differentially-expressed genes</summary><div class="highlight"><pre><span></span><code><span class="c1">## plot all the logFCs versus average count size. Significantly DE genes are  colored</span>
 <span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">))</span>
 <span class="nf">plotMD</span><span class="p">(</span><span class="n">dge.f.et</span><span class="p">)</span>
 <span class="c1"># lines at a log2FC of 1/-1, corresponding to a shift in expression of x2 </span>
@@ -833,11 +840,11 @@ Up       210
 <details class="done"><summary>edgeR extra stuff</summary><div class="highlight"><pre><span></span><code><span class="c1"># how to extract log CPM</span>
 <span class="n">logcpm</span> <span class="o">&lt;-</span> <span class="nf">cpm</span><span class="p">(</span><span class="n">dge.f</span><span class="p">,</span> <span class="n">prior.count</span><span class="o">=</span><span class="m">2</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="c1"># there is another fitting method reliying on quasi likelihood, which is useful when the model is more complex (ie. more than 1 factor with 2 levels)</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># there is another fitting method reliying on quasi-likelihood, which is useful when the model is more complex (ie. more than 1 factor with 2 levels)</span>
 <span class="n">dge.f.QLfit</span> <span class="o">&lt;-</span> <span class="nf">glmQLFit</span><span class="p">(</span><span class="n">dge.f</span><span class="p">,</span> <span class="n">dge.f.design</span><span class="p">)</span>
 <span class="n">dge.f.qlt</span> <span class="o">&lt;-</span> <span class="nf">glmQLFTest</span><span class="p">(</span><span class="n">dge.f.QLfit</span><span class="p">,</span> <span class="n">coef</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
 
-<span class="c1"># you can see the results relatively different. The order of genes changes a bit, and the p-values are more profoundly affected</span>
+<span class="c1"># you can see the results are relatively different. The order of genes changes a bit, and the p-values are more profoundly affected</span>
 <span class="nf">topTags</span><span class="p">(</span><span class="n">dge.f.et</span><span class="p">)</span>
 <span class="nf">topTags</span><span class="p">(</span><span class="n">dge.f.qlt</span><span class="p">)</span>
 
@@ -867,14 +874,14 @@ Up       210
 FDRs show less correlation but their <strong>rank</strong> are higly correlated : they come in a very similar order.</p>
 </details>
 <h2 id="downstream-analysis-over-representation-analysis">Downstream analysis : over-representation analysis</h2>
-<p>Having lists of differentially expressed genes is quite interesting in itself,
-however when there is a large number of DE genes it can be interesting to map these results 
-onto curated sets of genes associated to biological functions.</p>
-<p>We propose here to use <a href="https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html">clusterProfiler</a>,
-which regroups several enrichment detection algorithm onto several databases.</p>
-<p>We recommend you get inspiration from their very nice <a href="http://yulab-smu.top/clusterProfiler-book/">vignette/e-book</a> to perform your own analysis.</p>
+<p>Having lists of differentially-expressed genes is quite interesting in itself,
+however when there are many DE genes, it can be interesting to map these results 
+onto curated sets of genes associated with known biological functions.</p>
+<p>Here, we propose to use <a href="https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html">clusterProfiler</a>,
+which regroups several enrichment detection algorithms onto several databases.</p>
+<p>We recommend you get inspiration from their very nice <a href="http://yulab-smu.top/clusterProfiler-book/">vignette/e-book</a> to perform your own analyses.</p>
 <p>The proposed correction will concern the results obtained with DESeq2 on the Ruhland2016 dataset.</p>
-<details class="done"><summary>analysis with clusterProfiler</summary><p>We being by reading the results of the DE analysis. Adapt this to your own analsysis.
+<details class="done"><summary>analysis with clusterProfiler</summary><p>We begin by reading the results of the DE analysis. Adapt this to your own analysis.
 Beware that edgeR and DESeq2 use different column names in their result tables (log2FoldChange/logFC , padj/FDR).</p>
 <div class="highlight"><pre><span></span><code><span class="nf">library</span><span class="p">(</span><span class="n">AnnotationHub</span><span class="p">)</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">AnnotationDbi</span><span class="p">)</span>
@@ -948,9 +955,9 @@ Beware that edgeR and DESeq2 use different column names in their result tables (
 </code></pre></div>
 <img alt="Reactomeenrich" src="../assets/images/DESeq2/Reactome_enrich.png" /></p>
 </details>
-<h2 id="additionnal-importing-counts-from-salmon-with-tximport">Additionnal : importing counts from salmon with <code>tximport</code></h2>
-<p>The <code>tximport</code> R  packages offers a fairly simple sets of function in order to be able to use the <strong>transcript-level</strong> expression quantifications of salmon or kallisto in a differential <strong>gene</strong> expression analysis.</p>
-<p><strong>Task :</strong> import salmon transcript-level quantification in R in order to perform a DE analysis on it using either edgeR or DESeq2
+<h2 id="additional-importing-counts-from-salmon-with-tximport">Additional : importing counts from salmon with <code>tximport</code></h2>
+<p>The <code>tximport</code> R packages offers a fairly simple set of functions to get <strong>transcript-level</strong> expression quantification from salmon or kallisto into a differential <strong>gene</strong> expression analysis.</p>
+<p><strong>Task :</strong> import salmon transcript-level quantification in R in order to perform a DE analysis on it using either edgeR or DESeq2.
 <strong>Additional:</strong> compare the results with the ones obtained from STAR-aligned reads.</p>
 <ul>
 <li>The <a href="https://bioconductor.org/packages/release/bioc/vignettes/tximport/inst/doc/tximport.html">tximport vignette</a> is a very good guide for this task.</li>

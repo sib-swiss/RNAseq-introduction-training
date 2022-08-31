@@ -481,34 +481,36 @@
                 
                 <p>Read counting refers to the quantification of an <em>&ldquo;expression level&rdquo;</em>, or abundance, from reads mapped onto a reference genome/transcriptome.
 This <em>expression level</em> can take several forms, such as a count, or a fraction (RPKM/TPM), and concern different entities (exon, transcript, genes) depending on your biological application.</p>
-<p>During this lesson, you will learn to:</p>
+<p><strong>During this lesson, you will learn to:</strong></p>
 <ul>
-<li>differentiate between different levels of counting and their relevance for different questions</li>
-<li>perform read counting at the gene level for Differential Gene expression</li>
+<li>differentiate between different levels of counting and their relevance for different questions.</li>
+<li>perform read counting at the gene level for Differential Gene expression.</li>
 </ul>
 <h2 id="material">Material</h2>
 <p><a class="md-button" href="../assets/pdf/RNA-Seq_05_ReadCounting.pdf"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105 279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z"/></svg></span> Download the presentation</a></p>
 <p><a class="md-button" href="http://subread.sourceforge.net/featureCounts.html">featureCounts website</a></p>
 <h2 id="read-counting-with-featurecounts">Read counting with featureCounts</h2>
+<!-- Suggestion: Perhaps add a quite note on why use featureCounts when we've already quantified using STAR. -->
+
 <p>The <a href="http://subread.sourceforge.net/featureCounts.html">featureCount website</a> provides several useful command-line examples to get started.
 For more details on the algorithm behavior (with multi/overlapping reads for instance), you can refer to the package&rsquo;s <a href="http://subread.sourceforge.net/SubreadUsersGuide.pdf">User&rsquo;s guide</a> (go to the read summarization chapter).</p>
-<p><strong>Task</strong> :</p>
+<p><strong>Task :</strong> </p>
 <ul>
 <li>Decide which parameters are appropriate for counting reads from the Ruhland dataset. Assume you are interested in determining which genes are differentially expressed.</li>
-<li>Count the reads from one of your BAM files using featureCount</li>
+<li>Count the reads from one of your BAM files using featureCount.</li>
 <li>
-<p>How do the count compare to the counts from STAR ?</p>
+<p>How do the featureCount-derived counts compare to those from STAR ?</p>
 </li>
 <li>
 <p>You can find bam files at <code>/shared/data/Solutions/Liu2015/STAR_Liu2015</code> and <code>/shared/data/Solutions/Ruhland2016/STAR_Ruhland2016</code></p>
 </li>
-<li>featureCount : 400M RAM / bam</li>
-<li>featureCount : 2 min cpu time / bam</li>
+<li>featureCount requirements : 400M RAM / BAM file</li>
+<li>featureCount requirements : 2 min CPU time / BAM file</li>
 </ul>
 <details class="done"><summary>featureCounts script</summary><div class="highlight"><pre><span></span><code>#!/usr/bin/bash
 #SBATCH --job-name=featurecount
 #SBATCH --time=00:30:00
-#SBATCH --cpus-per-task=1
+#SBATCH --cpus-per-task=8
 #SBATCH --mem=4G
 #SBATCH -o count.o
 #SBATCH -e count.e
