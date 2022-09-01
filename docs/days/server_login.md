@@ -81,6 +81,11 @@ After a few seconds, you should be logged into the *head node* and ready to begi
 Now that you are in the head node, it is time to get acquainted with your environment and to prepare the upcoming practicals. 
 We will also use this as a short reminder about the UNIX command line.
 
+<!-- Comment: need a more visible cheat sheet, and one that is adapted to course:
+pwd, cd, mkdir, mv, more/less, nano, man / -h option ... -->
+<!-- Additionally, add, or have a separate one for, SLURM commands: sbatch, squeue... -->
+<!-- I see there is one for the module commands below. -->
+<!-- Note: some may need more explanations of using variables in bash. -->
 You can also refer to this nice [Linux Command Line Cheat Sheet](https://appletree.or.kr/quick_reference_cards/Unix-Linux/Linux%20Command%20Line%20Cheat%20Sheet.pdf).
 
 
@@ -193,6 +198,9 @@ Whether you want to transfer some data to the cluster or retrieve the results of
 
 There exists several alternatives, depending on your platform and preferences.
 
+<!-- Unclear: for scp, it apparently still isn't clear enough to users that you are supposed to run the command from the local machine (this is even harder to understand for mobaXterm users). -->
+<!-- Note: I saw a user try to scp from within the course server to their own server. For some reason this did not work. -->
+
 === "command line"
 
 	We will use `scp`.
@@ -255,6 +263,7 @@ sleep 10 # making the script wait for 10 seconds - this is just so we can see it
 du -h -d 2 /shared/data/
 
 ```
+<!-- Suggestion: make the wait a little longer, many people take way longer to look up the next step (squeue) and type it up, so they end up "missing" their job. -->
 
 The lines beginning by `#SBATCH` specify options to the job scheduler:
 
@@ -269,7 +278,7 @@ The lines beginning by `#SBATCH` specify options to the job scheduler:
 	Your job will fail as soon as it takes more time or RAM than requested. You might need to test it to find the appropriate values.
 
 
-Copy this script inside a new file named `mySbatchScript.sh`, then submit it to the job scheduler using :
+Create a new file named `mySbatchScript.sh`, copy the code above into it, save, then submit this file to the job scheduler using the following command :
 
 ```sh
 	sbatch mySbatchScript.sh
@@ -286,13 +295,13 @@ Check the output of your job in the output file.
 
 ### Advanced cluster usage : loading modules
 
-During our various analysis, we will call onto numerous software.
+During our various analysis, we will call upon numerous software.
 
-Fortunately, in most case we do not have to install each of these ourselves onto the cluster : they have already been packaged and prepared to be made available to you or your code.
+Fortunately, in most cases we do not have to install each of these ourselves onto the cluster : they have already been packaged, prepared and made available to you or your code. <!-- Thank your sys admins!-->
 
-However, by default these are not loaded and you have to explicitely load the module containing the software you want in your script (or in the interactive shell session).
+However, by default, these are not loaded, and you have to explicitly load the module containing the software you want in your script (or in the interactive shell session).
 
-**Question:** Why aren't all the module already pre-loaded ?
+**Question:** Why aren't all the modules already pre-loaded ?
 
 ??? done "Answer"
 
