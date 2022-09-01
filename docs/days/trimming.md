@@ -37,7 +37,14 @@ In fact, **trimming can be detrimental** to the number of successfully quantifie
 Nevertheless, it is usually recommended to perform some amount of soft clipping (*eg.* [kallisto](https://www.biostars.org/p/389324/), [salmon](https://github.com/COMBINE-lab/salmon/issues/398) ).
 
 If possible, we recommend to perform the mapping for both the raw data and the trimmed one, in order to compare the results for both, and choose the best.
-<!-- Suggestion to Wanrdille: specify the QC metric for choosing the best -->
+
+**Question:** what could be a good metric to choose the best between the trimmed and untrimmed ?
+
+??? done "Answer"
+
+	The number of uniquely mapped reads is generally what would matter in differential expression analysis. Of course, this means that you can only choose after you have mapped both the trimmed and the untrimmed reads.
+
+
 
 
 ## trimming with Trimmomatic

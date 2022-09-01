@@ -19,11 +19,15 @@ Once you are happy with your read sequences in your FASTQ files, you can use a m
 
 
 ## Building a reference genome index
-<!-- Suggestion: present what a genome FASTA and GTF files are first -->
+
 Before any mapping can be achieved, you must first *index* the genome want to map to. 
 
-We will be using the Ensembl versions of iGenome references, with their accompanying GTF annotations.
-<!-- Question: what are iGenome references, and how do they differ from other reference genome assemblies ? -->
+To do this with STAR, you need two files:
+
+ * a *fasta* file containing the sequences of the chromosome (or genome contigs)
+ * a *gtf* file containing annotations (ie. where the genes and exons are)
+
+We will be using the Ensembl references, with their accompanying GTF annotations.
 
 !!! note
 
@@ -107,13 +111,51 @@ Important notes :
 
 	Remember : request a maximum of 30G and 8 CPUs for 1 hour.
 
-<!-- The correction is for an array job, BUT one that only runs one sample,
-while the exercise calls specifically for a one-sample alignment.
-I think it would be less confusing to give them the correction for the non-array, single sample first, 
-and then give the array solution (single and/or multi sample) afterwards.
-Or, specifically ask for an array script but for one sample, and say why. -->
 
 ??? done "STAR mapping script"
+
+
+	```
+	#!/usr/bin/bash
+	#SBATCH --job-name=star-aln
+	#SBATCH --time=01:00:00
+	#SBATCH --cpus-per-task=8
+	#SBATCH --mem=30G
+	#SBATCH -o star-aln.o
+	#SBATCH -e star-aln.e
+
+
+	ml star
+	outDIR=STAR_Ruhland2016
+
+	mkdir -p $outDIR
+
+	dataDIR=/shared/data/DATA/Ruhland2016
+
+	genomeDIR=/shared/data/DATA/Mouse_STAR_index
+
+	STAR --runThreadN 8 --genomeDir $genomeDIR \
+                  --outSAMtype BAM SortedByCoordinate --outReadsUnmapped Fastx \
+                  --outFileNamePrefix $outDIR/SRR3180535_EtOH1_1 \
+                  --quantMode GeneCounts \
+                  --readFilesIn $dataDIR/SRR3180535_EtOH1_1.fastq.gz --readFilesCommand zcat \
+
+	```
+
+	The options of STAR are :
+
+	 * **--runThreadN 8 ** : 8 threads to go faster.
+	 * **--genomeDir $genomeDIR** : path of the genome to map to.
+     * **--outSAMtype BAM SortedByCoordinate ** : output a coordinate-sorted BAM file.
+     * **--outReadsUnmapped Fastx** : output the non-mapping reads (in case we want to analyse them).
+     * **--outFileNamePrefix $outDIR/$fastqFILE** : prefix of output files.
+     * **--quantMode GeneCounts** : will create a file with counts of reads per gene.
+     * **--readFilesIn $dataDIR/$fastqFILE ** : input read file.
+     * **--readFilesCommand zcat** : command to unzip the input file.
+
+
+
+??? done "advanced : STAR mapping script with array job"
 
 	The following sets up an array of tasks to align all samples.
 
@@ -172,7 +214,7 @@ Or, specifically ask for an array script but for one sample, and say why. -->
      * **--quantMode GeneCounts** : will create a file with counts of reads per gene.
      * **--readFilesIn $dataDIR/$fastqFILE ** : input read file.
      * **--readFilesCommand zcat** : command to unzip the input file.
-	 * **--outTmpDir /tmp/${SLURM_JOB_USER}_${SLURM_JOB_ID}** : temporary file folder, for STAR temp files.
+
 
 
 ## QC on the aligned reads

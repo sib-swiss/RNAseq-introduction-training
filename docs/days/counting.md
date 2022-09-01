@@ -34,8 +34,6 @@ For more details on the algorithm behavior (with multi/overlapping reads for ins
  * featureCount requirements : 400M RAM / BAM file
  * featureCount requirements : 2 min CPU time / BAM file
 
-<!-- Suggestion: Perhaps add a note on how we can ask for 8 threads in the featureCounts call, 
-but only request 1 CPU via slurm? -->
 
 ??? done "featureCounts script"
 
@@ -43,7 +41,7 @@ but only request 1 CPU via slurm? -->
 	#!/usr/bin/bash
 	#SBATCH --job-name=featurecount
 	#SBATCH --time=00:30:00
-	#SBATCH --cpus-per-task=1
+	#SBATCH --cpus-per-task=8
 	#SBATCH --mem=4G
 	#SBATCH -o count.o
 	#SBATCH -e count.e

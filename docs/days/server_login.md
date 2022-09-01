@@ -209,16 +209,11 @@ There exists several alternatives, depending on your platform and preferences.
 	scp login@xx.xx.xx.xx:~/day1/file.txt .
 	```	
 
-!!! note
-	Here `~` will be interpreted as your home directory. This is useful and time-saving shorthand.
-
-
-	To copy a file from your machine to the server:
+	To copy a file from your machine to the server (NB:	here `~` will be interpreted as your home directory, this is a useful and time-saving shorthand):
 
 	```sh
 	scp /path/to/file/local/file.txt <login>@<server-adress>:/destination/on/server/
 	```
-
 
 === "graphical alternative"
 
@@ -288,13 +283,52 @@ Check the output of your job in the output file.
 	When there are a lot of jobs, `squeue -u <username>` will limit the list to those of the specified user.
 
 
-<!-- Proposition to Wandrille: short blurb on modules
-In the script printed above, and in the scripts used later, you use ml to load modules.
-This might need a brief introduction, here perhaps as
+
 ### Advanced cluster usage : loading modules
-It could be placed in the 1st session that uses them (the QC part) but conceptually
-I think it makes more sense here. What do you think?
--->
+
+During our various analysis, we will call onto numerous software.
+
+Fortunately, in most case we do not have to install each of these ourselves onto the cluster : they have already been packaged and prepared to be made available to you or your code.
+
+However, by default these are not loaded and you have to explicitely load the module containing the software you want in your script (or in the interactive shell session).
+
+**Question:** Why aren't all the module already pre-loaded ?
+
+??? done "Answer"
+
+	Many toolsets have dependencies toward different, sometimes incompatible libraries. Packaging each tool independently and loading them separately circumvents this as you only load what you need, and you can always unload a toolset if you need to load another, incompatible, toolset.
+
+
+Modules are managed with the `module` command.
+
+Basic commands are :
+
+* `module list` : lists currently loaded modules
+* `module load <modulename>` alias `ml <modulename>` : loads module `<modulename>`
+* `module unload <modulename>`  : unloads module `<modulename>`
+* `module purge` : unloads all loaded modules
+* `module avail` : lists all modules available for loading
+* `module keyword <KW>` : lists all modules available for loading which contains `<KW>`
+
+Try it for yourself: soon, we will need the fastqc software. 
+If we type in the terminal:
+```
+fastqc
+```
+this should give you an error, telling you there is no such command.
+
+Now, if we load it first
+```
+ml fastqc # shortcut for "module load fastqc"
+fastqc
+```
+Now you should not have any error.
+
+
+> Note: our module provider is ComputeCanada, which has a lot of [available software](https://docs.alliancecan.ca/wiki/Available_software). To avoid storing all these on our cluster, each time a new module is loaded, it is fetched first on the compute canada servers, so sometimes it can take a bit of time to load a module for the first time.
+
+
+
 
 ### Advanced cluster usage : job array 
 

@@ -18,7 +18,9 @@ You may refer to the [SIB's UNIX e-learning module](https://edu.sib.swiss/plugin
 ## R 
 
 A basic knowledge of the [R language](https://www.r-project.org/) is required to perform most analytical steps after reads have been mapped and quantified : differential gene expression, gene set enrichment, over-representation analysis.
-<!-- Can we point them towards an intro to R course? EG https://github.com/sib-swiss/first-steps-with-R-training -->
+
+> If you are not familiar with R, we recommend the [SIB First Steps with R course](https://github.com/sib-swiss/first-steps-with-R-training), or you can pick one among [this list](https://github.com/sib-swiss/training-collection#r)
+
 
 ## Software
 
