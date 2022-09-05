@@ -117,4 +117,11 @@ Important notes :
 	gzip $outDIR/SRR1272187_NFLV_trimmed_unpaired_2.fastq
 	
 	```
+<!-- Just noting some students were confused bc of the additional layer that Java imposes on running this.
+Perhaps you could add a one-line note on this? E.g.:
 
+!!! note
+  trimmomatic is a Java-based program, and thus must be run by passing its .jar file
+  to the Java interpreter.
+
+-->

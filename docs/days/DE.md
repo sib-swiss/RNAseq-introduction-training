@@ -12,7 +12,13 @@ Once the reads have been mapped and counted, one can assess the differential exp
 
 [:fontawesome-solid-file-pdf: Download the presentation](../assets/pdf/RNA-Seq_06_DE.pdf){: .md-button }
 
+<!-- Suggestion: RStudio reminders ??? Or link to some course or something? -->
 [Rstudio website](https://www.rstudio.com/)
+<!-- Suggestion: ExploreModelMatrix for visualising contrasts:
+https://github.com/csoneson/ExploreModelMatrix
+https://bioconductor.org/packages/release/bioc/html/ExploreModelMatrix.html
+Soneson C, Marini F, Geier F, Love M, Stadler M (2020). “ExploreModelMatrix: Interactive exploration for improved understanding of design matrices and linear models in R.” F1000Research, 9, 512. doi: 10.12688/f1000research.24187.2. 
+-->
 
 !!! note
   RStudio is set to be rebranded as Posit after October 2022.
@@ -222,6 +228,8 @@ Or you may download them :
 	write.csv( res ,'Ruhland2016.DESeq2.results.csv' )
 	```
 
+
+<!-- Question from students: how to map ENSEMBL gene IDs to gene names? -->
 
 
 ### EdgeR

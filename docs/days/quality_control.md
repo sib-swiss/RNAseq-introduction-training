@@ -225,7 +225,8 @@ Important points:
 
 	This is the recommended option : this allows you to launch all your job in parallel with a single script.
 
-
+<!-- Suggestion: add link to FASTQC's nice interpertation guide:
+https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon/lessons/qc_fastqc_assessment.html -->
 ??? done "Interpretation of a report"
 
 	[:fontawesome-solid-file-pdf: Download an annotated report](../assets/pdf/SRR3180535_EtOH1_1_fastqc.pdf){ .md-button}
@@ -245,12 +246,13 @@ Although the default behaviour is quite appropriate, with a couple of options we
  * `--interactive` : forces the plot to be interactive even when there is a lot of samples (this option can lead to larger html files).
  * `-f <filename>` : specify the name of the output file name.
 
+<!-- This example has generated a lot of confusion amongst the students. They try copying it but don't really know what this was trying to accomplish. Perhaps we need a "not run" flag or something? -->
 For instance, a possible command line could be :
 ```sh
 multiqc -f multiQCreports/Liu2015_multiqc.html --interactive Liu2015_fastqc/
 ```
 
-There are many additional info which let you customize your report. Use `multiqc --help` or visit their [documentation webpage](https://multiqc.info/docs/#running-multiqc) to learn more.
+There are many additional parameters which let you customize your report. Use `multiqc --help` or visit their [documentation webpage](https://multiqc.info/docs/#running-multiqc) to learn more.
 
 
 **Task:** 

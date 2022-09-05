@@ -2,6 +2,17 @@
 
 On top of a thirst for knowledge, and a working Internet connection, here is what you will need for the course : 
 
+<!-- Suggestion: have a bullet-point summary of the key items/prerequisites:
+* basic knowledge of *NGS*
+* practical knowledge of working on the *UNIX command line* 
+* basic knowledge of *programming in R*
+* a way to connect to the server
+* a way to exchange files with the server
+* a way to type special programming-related characters on your keyboard
+
+See below for details.
+-->
+
 ## NGS
 
 As announced in the [course registration webpage](https://www.sib.swiss/training/course/20220901_IRNAS),
@@ -35,3 +46,6 @@ Otherwise, we recommend [FileZilla](https://filezilla-project.org/download.php?t
 
 
 <!-- Idea: add in a section for checking the attendees can use their keyboards to type special characters -->
+
+<!-- Suggestion: should we have some practical notes re: the teaching location?
+Coffee/snakcs/toilets...? Or should this be external to the course website? -->
