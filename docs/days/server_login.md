@@ -83,9 +83,10 @@ We will also use this as a short reminder about the UNIX command line.
 
 <!-- Comment: need a more visible cheat sheet, and one that is adapted to course:
 pwd, cd, mkdir, mv, more/less, nano, man / -h option ... -->
-<!-- Additionally, add, or have a separate one for, SLURM commands: sbatch, squeue... -->
+<!-- Additionally, add (or have a separate one for) SLURM commands: sbatch, squeue... -->
 <!-- I see there is one for the module commands below. -->
-<!-- Note: some may need more explanations of using variables in bash. -->
+<!-- Note: some may need more explanations/refreshers of using variables in bash,
+several students struggled with this. -->
 You can also refer to this nice [Linux Command Line Cheat Sheet](https://appletree.or.kr/quick_reference_cards/Unix-Linux/Linux%20Command%20Line%20Cheat%20Sheet.pdf).
 
 
@@ -334,7 +335,7 @@ fastqc
 Now you should not have any error.
 
 
-> Note: our module provider is ComputeCanada, which has a lot of [available software](https://docs.alliancecan.ca/wiki/Available_software). To avoid storing all these on our cluster, each time a new module is loaded, it is fetched first on the compute canada servers, so sometimes it can take a bit of time to load a module for the first time.
+> Note: our module provider is ComputeCanada, which has a lot of [available software](https://docs.alliancecan.ca/wiki/Available_software). To avoid storing all these on our cluster, each time a new module is loaded, it is fetched first on the Compute Canada servers, so sometimes it can take a bit of time to load a module for the first time.
 
 
 

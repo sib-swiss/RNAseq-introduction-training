@@ -18,7 +18,7 @@ This *expression level* can take several forms, such as a count, or a fraction (
 
 ## Read counting with featureCounts
 
-<!-- Suggestion: Perhaps add a quite note on why use featureCounts when we've already quantified using STAR. -->
+<!-- Suggestion: Perhaps add a quick note on why use featureCounts when we've already quantified using STAR? -->
 
 The [featureCount website](http://subread.sourceforge.net/featureCounts.html) provides several useful command-line examples to get started.
 For more details on the algorithm behavior (with multi/overlapping reads for instance), you can refer to the package's [User's guide](http://subread.sourceforge.net/SubreadUsersGuide.pdf) (go to the read summarization chapter).

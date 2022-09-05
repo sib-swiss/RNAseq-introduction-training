@@ -23,7 +23,11 @@ During exercises, you are free to discuss with other participants.
 
 Exercises are provided with solutions. How you use them to your advantage is up to you.
 
-<!-- Suggestion: point out that the course has pre-requisites, and make a hyperlink to the precourse page. This is bc I suspect some users only look at the homepage... So this would make those requirements more visible. -->
+<!-- Suggestion: point out right here that the course has pre-requisites, 
+and make a hyperlink to the precourse page.
+This is bc I suspect some users only looked at the homepage... 
+So this would make those requirements more visible. -->
+
 <!-- Overall points Alex wants to talk about: 
 1) content could be simplified 
 2) slides could be simplified 
