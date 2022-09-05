@@ -1,4 +1,4 @@
-
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7049702.svg)](https://doi.org/10.5281/zenodo.7049702)
 
 # RNAseq-introduction-training
 
@@ -44,6 +44,7 @@ https://sib-swiss.github.io/RNAseq-introduction-training
 
 ## reference
 
-this repository was originally cloned from
+You can cite this course material using  :
 
-Wandrille Duchemin. (2021, September 27). sib-swiss/RNAseq-introduction-training: course 02-09-2021 [![DOI](https://zenodo.org/badge/383052580.svg)](https://zenodo.org/badge/latestdoi/383052580)
+Wandrille Duchemin, & Adam Smith. (2022, September 5). sib-swiss/RNAseq-introduction-training: Course 01-09-2022. Zenodo. [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7049702.svg)](https://doi.org/10.5281/zenodo.7049702)
+
