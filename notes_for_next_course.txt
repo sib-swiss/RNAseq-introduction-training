@@ -1,0 +1,28 @@
+notes for next course
+
+ O fastq-dump : comment le presenter.
+            - telecharger un mini jeu de donnees pour le fun.
+            - mettre en annexe (+1)
+ O explain better module how it function 
+    - details in annex
+    - better explain in talk
+ O be clearer about where the script should be launched with
+    - imperfect solution in webpage
+    - keep good solution on server (chemins absolu ... ) OR special tab in webpage
+
+ O use tests for pre-requisites
+ O keyboard-litteracy pre-requisite
+ O Slides trop chargee en general -> streamline for presentation 
+    O 2 documents : slides et notes de slides
+ O Trop de contenu pour certains, pas assez pour d'autres ?
+ O Disconnect between theory and practice : 
+    O focus more on results interpretation.
+    O + stretch goals
+ O cheatsheet specific to the course
+ O 
+
+ in R:
+  O more complex model 
+  O more matrices, try to go for group projects if there is time?
+
+
