@@ -9,6 +9,7 @@ This is a somewhat internal document, so expect a fairly draft-ish and concise s
 
 
 slides 3 - 7
+
  * the central dogma of molecular biology is know to be not so simple
  * RNA is not only a messenger but may have an effect
  * most of these elements interacts and regulates one-another 
@@ -16,6 +17,7 @@ slides 3 - 7
  * main takeaway maybe : measuring RNA is a proxy for protein levels, which is a proxy for protein activity , which is a proxy for the physiological state of the cell
 
 slides 8 - 9
+
  * non-exhaustive list of sequencing possibilities 
  * https://liorpachter.wordpress.com/seq/
 
@@ -32,6 +34,7 @@ slides 10-12
  * slide 12 : important considerations as well
 
 slide 13
+
  * Illumina : market leader 50-600bp (generally 50-100), 0.1 (nextseq) to 3 (Hiseq) billion reads
  * Ion torrent : 600bp, 260M reads
  * Pacbio : 10-30kb N50 , 4M CCS reads 
@@ -41,13 +44,16 @@ slides 14-22 : describe different technologies
 
 
 Ion Torrent :
+
 	- cell sequentially flooded with A T G C 
 
 PacBio SMRT
+
 	- DNApol at bottom of Zero-Mode-Waveguide 
 	- fluorescent dye on dNTPs
 
 Illumina seq :
+
 	- formation of clusters with the same sequence 
 	- SBS : labelled nucleotides have reversible terminators, so only 1 base is incorporated at a time.
 
@@ -59,9 +65,11 @@ slide 24: stranded sequencing https://www.ecseq.com/support/ngs/how-do-strand-sp
 slide 25-26: RIN , RNA purification
 
 slide 27-34: sequencing depth and replicates
+
  * slide 33-34 : this pattern applies to low- mid- and high- expressors (see their supp doc)
 
 slide 35-42: schematic analysis
+
  * slide 35 : before the sequencing
  * slide 36 : basic analysis
  * slide 37 : basic analysis with trimmed reads

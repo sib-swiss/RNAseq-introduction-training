@@ -1,28 +1,118 @@
 notes for next course
 
- O fastq-dump : comment le presenter.
-            - telecharger un mini jeu de donnees pour le fun.
-            - mettre en annexe (+1)
- O explain better module how it function 
-    - details in annex
-    - better explain in talk
+ O Slides trop chargee en general -> streamline for presentation 
+    O 2 documents : slides et notes de slides
+ O Trop de contenu pour certains, pas assez pour d'autres ?
+
+ O Disconnect between theory and practice : 
+    O focus more on results interpretation.
+    O + stretch goals
+ 
+ X cheatsheet specific to the course
+
  O be clearer about where the script should be launched with
     - imperfect solution in webpage
     - keep good solution on server (chemins absolu ... ) OR special tab in webpage
 
  O use tests for pre-requisites
  O keyboard-litteracy pre-requisite
- O Slides trop chargee en general -> streamline for presentation 
-    O 2 documents : slides et notes de slides
- O Trop de contenu pour certains, pas assez pour d'autres ?
- O Disconnect between theory and practice : 
-    O focus more on results interpretation.
-    O + stretch goals
- O cheatsheet specific to the course
- O 
+ 
 
  in R:
   O more complex model 
   O more matrices, try to go for group projects if there is time?
 
 
+
+Course website : https://sib-swiss.github.io/RNAseq-introduction-training
+
+general TODO:
+   O clean slides : less text, clearer messages
+   O all throughout practical : make a super super simple data-set to test commands: smthg like 9 reads: 3 to a gene, 3 to another gene, 3 to nothing in particular, and maybe among them 3 with adaper at the end, and 3 with low quality
+         -> they will be able to use that small dataset to test their command line
+
+
+
+Session1 - theory: https://sib-swiss.github.io/RNAseq-introduction-training/days/design.html
+
+   objective :
+      - discuss sequencing technologies
+      - differentiate between technical and biological replicates.
+      - choose an appropriate sequencing depth and number of replicates depending on your scientific question
+
+   todo:
+      X remove some "filler" slides about history of sequencing and alternative sequencing methods
+      X provide clearer plan of analysis: describe "simple" path and QC "feedback loops" (eg, you detect a problem during DE, which leads you to change something about your mapping)
+
+Session1.5 - UNIX and server : https://sib-swiss.github.io/RNAseq-introduction-training/days/server_login.html
+
+
+  X better cheat-sheets
+      X basic bash : https://github.com/RehanSaeed/Bash-Cheat-Sheet -- maybe a bit too much 
+                     https://cheatography.com/deleted-124743/cheat-sheets/linux-basic-commands/ -- nice
+      
+      X bash scripts/variables : https://github.com/RehanSaeed/Bash-Cheat-Sheet#bash-script
+      X SLURM
+
+  X add something about script & variable
+
+
+
+ O add some slides ??
+
+ O explain better module how it function 
+    - details in annex
+    - better explain in talk
+
+
+ 
+
+Session2 - QC : https://sib-swiss.github.io/RNAseq-introduction-training/days/quality_control.html
+   O slides : OK-ish
+   O practical : OK, except for fastq-dump :
+                  - telecharger un mini jeu de donnees pour le fun.
+                  - mettre en annexe (+1)
+
+
+Session3 - trimming : https://sib-swiss.github.io/RNAseq-introduction-training/days/trimming.html
+   O pb: trimming takes a lot of time and memory...
+      --> only do it on a toy dataset?
+      --> only compare the report from after and before trimming?
+   O clean up slides 
+
+Session4 - mapping : https://sib-swiss.github.io/RNAseq-introduction-training/days/mapping.html
+   O clean slides. 
+
+   O practical: more hand holding on option? 
+      - I like that they have to find their way through the manual, which promotes a healthy habit or properly reading the docs,
+         but this part will occur at the end of day1, when their brain is quite fried...
+
+   O GFF and SAM part -> push to extra on website
+   O compare to trimmed? --> at least add correction for that online
+
+
+Session5 - counting
+   O clarify the whole thing
+   O is it useful to call featureCount to get the same output as STAR in the end?
+
+Session6 - DE
+   O slides : simplify + example of bad stuff?
+   O put enrichment analysis in another slides set
+   O give a bit more guidance in R practicals ?
+
+Session7 - post-hoc
+   O enrichment analysis. 
+   O other kind ? (use log-count for further stuff?)
+   O guidance for non-model organisms
+
+
+Find 2/3 nice datasets with 2 or 3 conditions 
+   Julie Ruer Laventie data : https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ZNDvBGUAAAAJ&citation_for_view=ZNDvBGUAAAAJ:5nxA0vEk-isC
+   Shivani dataset? 
+
+   case with collapse of technical replicate?
+   case with exclusion of a replicate?
+
+
+
+   

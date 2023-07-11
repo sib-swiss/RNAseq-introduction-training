@@ -4,7 +4,8 @@ nav:
     - Home: index.md
     - Precourse preparations: precourse.md
     - Course schedule: course_schedule.md
-    - slides notes (draft): slides_notes.md
+    - Slides notes (draft): slides_notes.md
+    - Cheatsheets: cheatsheets.md
     - Day1 :
         - RNAseq - technologies and design : days/design.md
         - Server login + unix fresh up : days/server_login.md
@@ -44,7 +45,8 @@ markdown_extensions:
   - toc
   - pymdownx.superfences
   - attr_list
-  - pymdownx.tabbed
+  - pymdownx.tabbed:
+      alternate_style: true
   - pymdownx.keys
   - pymdownx.details
   - pymdownx.emoji:
