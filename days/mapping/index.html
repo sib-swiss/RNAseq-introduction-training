@@ -1,0 +1,945 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../trimming/">
+      
+      
+        <link rel="next" href="../counting/">
+      
+      <link rel="icon" href="../../assets/images/SIB_logo.svg">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.18">
+    
+    
+      
+        <title>Reads mapping - Introduction to RNA-Seq - From quality control to pathway analysis</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.26e3688c.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#material" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Introduction to RNA-Seq - From quality control to pathway analysis" class="md-header__button md-logo" aria-label="Introduction to RNA-Seq - From quality control to pathway analysis" data-md-component="logo">
+      
+  <img src="../../assets/images/SIB_logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Introduction to RNA-Seq - From quality control to pathway analysis
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Reads mapping
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/sib-swiss/RNAseq-introduction-training" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    sib-swiss/RNAseq-introduction-training
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Introduction to RNA-Seq - From quality control to pathway analysis" class="md-nav__button md-logo" aria-label="Introduction to RNA-Seq - From quality control to pathway analysis" data-md-component="logo">
+      
+  <img src="../../assets/images/SIB_logo.svg" alt="logo">
+
+    </a>
+    Introduction to RNA-Seq - From quality control to pathway analysis
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/sib-swiss/RNAseq-introduction-training" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    sib-swiss/RNAseq-introduction-training
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../precourse/" class="md-nav__link">
+        Precourse preparations
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../course_schedule/" class="md-nav__link">
+        Course schedule
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides_notes/" class="md-nav__link">
+        slides notes (draft)
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          Day1
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Day1
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/" class="md-nav__link">
+        RNAseq - technologies and design
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../server_login/" class="md-nav__link">
+        Server login + unix fresh up
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quality_control/" class="md-nav__link">
+        Quality control
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../trimming/" class="md-nav__link">
+        Sequence trimming
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Reads mapping
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Reads mapping
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#material" class="md-nav__link">
+    Material
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-a-reference-genome-index" class="md-nav__link">
+    Building a reference genome index
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mapping-reads-onto-the-reference" class="md-nav__link">
+    Mapping reads onto the reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qc-on-the-aligned-reads" class="md-nav__link">
+    QC on the aligned reads
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additionnal-star-2-pass" class="md-nav__link">
+    ADDITIONNAL : STAR 2-Pass
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-pseudo-aligning-with-salmon" class="md-nav__link">
+    ADDITIONAL : pseudo-aligning with salmon
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          Day2
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Day2
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../counting/" class="md-nav__link">
+        Read counting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DE/" class="md-nav__link">
+        Differential Expression Inference
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#material" class="md-nav__link">
+    Material
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-a-reference-genome-index" class="md-nav__link">
+    Building a reference genome index
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mapping-reads-onto-the-reference" class="md-nav__link">
+    Mapping reads onto the reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qc-on-the-aligned-reads" class="md-nav__link">
+    QC on the aligned reads
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additionnal-star-2-pass" class="md-nav__link">
+    ADDITIONNAL : STAR 2-Pass
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-pseudo-aligning-with-salmon" class="md-nav__link">
+    ADDITIONAL : pseudo-aligning with salmon
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+  <h1>Reads mapping</h1>
+
+<p>Once you are happy with your read sequences in your FASTQ files, you can use a mapper software to align the reads to the genome and thereby find where they originated from.</p>
+<p><strong>At the end of this lesson, you will be able to :</strong></p>
+<ul>
+<li>identify the differences between a local aligner and a pseudo aligner.</li>
+<li>perform genome indexing appropriate to your data.</li>
+<li>map your RNA-seq data onto the genome.</li>
+</ul>
+<h2 id="material">Material</h2>
+<p><a class="md-button" href="../../assets/pdf/RNA-Seq_04_Mapping.pdf"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M0 64C0 28.7 28.7 0 64 0h160v128c0 17.7 14.3 32 32 32h128v144H176c-35.3 0-64 28.7-64 64v144H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0l128 128zM176 352h32c30.9 0 56 25.1 56 56s-25.1 56-56 56h-16v32c0 8.8-7.2 16-16 16s-16-7.2-16-16V368c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24h-16v48h16zm96-80h32c26.5 0 48 21.5 48 48v64c0 26.5-21.5 48-48 48h-32c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16v-64c0-8.8-7.2-16-16-16h-16v96h16zm80-112c0-8.8 7.2-16 16-16h48c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32v32h32c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32v48c0 8.8-7.2 16-16 16s-16-7.2-16-16V368z"/></svg></span> Download the presentation</a></p>
+<p><a class="md-button" href="https://github.com/alexdobin/STAR">STAR website</a></p>
+<h2 id="building-a-reference-genome-index">Building a reference genome index</h2>
+<p>Before any mapping can be achieved, you must first <em>index</em> the genome want to map to. </p>
+<p>To do this with STAR, you need two files:</p>
+<ul>
+<li>a <em>fasta</em> file containing the sequences of the chromosome (or genome contigs)</li>
+<li>a <em>gtf</em> file containing annotations (ie. where the genes and exons are)</li>
+</ul>
+<p>We will be using the Ensembl references, with their accompanying GTF annotations.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While the data are already on the server here, in practice or if you are following this course without a teacher,
+you can grab the reference genome data from the <a href="https://www.ensembl.org/info/data/ftp/index.html">Ensembl ftp website</a>.</p>
+<p>In particular, you will want a mouse <a href="http://ftp.ensembl.org/pub/release-104/fasta/mus_musculus/dna/">DNA fasta file</a> and <a href="http://ftp.ensembl.org/pub/release-104/gtf/mus_musculus/">gtf file</a> [release-104 at the time we are linking this. Checking for more recent release is recommended, but may slightly alter the results].</p>
+</div>
+<p><strong>Task :</strong> Using STAR, build a genome index for chromosome 19 of <em>Mus musculus</em> using the associated GTF</p>
+<p>Important notes :</p>
+<ul>
+<li>the module name for this aligner is <code>star</code>.</li>
+<li>.fasta and .gtf files are in : <code>/shared/data/DATA/Mouse_chr19/</code>.</li>
+<li>refer to the <a href="https://raw.githubusercontent.com/alexdobin/STAR/master/doc/STARmanual.pdf">manual</a> to determine which options to use.</li>
+<li>the <code>--genomeDir</code> parameter is the folder where the indexed genome will be output to.</li>
+<li>this job should require less than 4Gb and 30min to run.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While your indexing job is running, you can read ahead in STAR&rsquo;s manual to prepare the next step : mapping your reads onto the indexed reference genome.</p>
+</div>
+<details class="done">
+<summary>STAR indexing script</summary>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
+<span class="c1">#SBATCH --job-name=star-build</span>
+<span class="c1">#SBATCH --time=00:30:00</span>
+<span class="c1">#SBATCH --cpus-per-task=4</span>
+<span class="c1">#SBATCH --mem=4G</span>
+<span class="c1">#SBATCH -o star-build.o</span>
+<span class="c1">#SBATCH -e star-build.e</span>
+
+<span class="nv">G_FASTA</span><span class="o">=</span>/shared/data/DATA/Mouse_chr19/Mus_musculus.GRCm38.dna.chromosome.19.fa
+<span class="nv">G_GTF</span><span class="o">=</span>/shared/data/DATA/Mouse_chr19/Mus_musculus.GRCm38.101.chr19.gtf
+
+ml<span class="w"> </span>star
+
+mkdir<span class="w"> </span>-p<span class="w"> </span>STAR_references
+
+STAR<span class="w"> </span>--runMode<span class="w"> </span>genomeGenerate<span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>--genomeDir<span class="w"> </span>STAR_references<span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>--genomeFastaFiles<span class="w"> </span><span class="nv">$G_FASTA</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>--sjdbGTFfile<span class="w"> </span><span class="nv">$G_GTF</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>--runThreadN<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>--genomeSAindexNbases<span class="w"> </span><span class="m">11</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>--sjdbOverhang<span class="w"> </span><span class="m">49</span><span class="w"> </span>
+</code></pre></div>
+</details>
+<p><strong>Extra task :</strong> Determine how you would add an additional feature to your reference, for example for a novel transcript not described by the standard reference.</p>
+<details class="done">
+<summary>Answer</summary>
+<p>Edit the gtf file to add your additional feature(s), following the <a href="https://www.ensembl.org/info/website/upload/gff.html">proper format</a>.</p>
+</details>
+<!-- Suggestion for a note: what to do if you've got multiple FASTA files for your genome, typically 1 per chromosome -->
+
+<h2 id="mapping-reads-onto-the-reference">Mapping reads onto the reference</h2>
+<p><strong>Task :</strong> Using STAR, align ONE of the FASTQ files from the Ruhland2016 study against the mouse genome.</p>
+<ul>
+<li>Use the full indexed genome at <code>/shared/data/DATA/Mouse_STAR_index/</code>, rather than the one we just made.</li>
+<li><strong>IMPORTANT</strong>: use the following option in your STAR command: <code>--outTmpDir /tmp/${SLURM_JOB_USER}_${SLURM_JOB_ID}/</code>. You can use the manual to look up what this option does. The slurm variables ensure a distinct directory is created in <code>/tmp/</code> for each user and for each job.</li>
+<li>Generate a BAM file sorted by coordinate.</li>
+<li>Generate a geneCounts file.</li>
+<li>Mapping reads and generating a sorted BAM from one of the Ruhland2016 et al. FASTQ files should take about 20 minutes.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Take the time to read the parts of the <a href="https://raw.githubusercontent.com/alexdobin/STAR/master/doc/STARmanual.pdf">STAR manual</a> which concern you : a bit of planning ahead can save you a lot of time-consuming/headache-inducing trial and error on your script.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Remember : request a maximum of 30G and 8 CPUs for 1 hour.</p>
+</div>
+<details class="done">
+<summary>STAR mapping script</summary>
+<div class="highlight"><pre><span></span><code>#!/usr/bin/bash
+#SBATCH --job-name=star-aln
+#SBATCH --time=01:00:00
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=30G
+#SBATCH -o star-aln.o
+#SBATCH -e star-aln.e
+
+
+ml star
+outDIR=STAR_Ruhland2016
+
+mkdir -p $outDIR
+
+dataDIR=/shared/data/DATA/Ruhland2016
+
+genomeDIR=/shared/data/DATA/Mouse_STAR_index
+
+STAR --runThreadN 8 --genomeDir $genomeDIR \
+              --outSAMtype BAM SortedByCoordinate --outReadsUnmapped Fastx \
+              --outFileNamePrefix $outDIR/SRR3180535_EtOH1_1 \
+              --quantMode GeneCounts \
+              --readFilesIn $dataDIR/SRR3180535_EtOH1_1.fastq.gz --readFilesCommand zcat \
+</code></pre></div>
+<p>The options of STAR are :</p>
+<ul>
+<li><strong>&ndash;runThreadN 8 </strong> : 8 threads to go faster.</li>
+<li><strong>&ndash;genomeDir $genomeDIR</strong> : path of the genome to map to.</li>
+<li><strong>&ndash;outSAMtype BAM SortedByCoordinate </strong> : output a coordinate-sorted BAM file.</li>
+<li><strong>&ndash;outReadsUnmapped Fastx</strong> : output the non-mapping reads (in case we want to analyse them).</li>
+<li><strong>&ndash;outFileNamePrefix $outDIR/$fastqFILE</strong> : prefix of output files.</li>
+<li><strong>&ndash;quantMode GeneCounts</strong> : will create a file with counts of reads per gene.</li>
+<li><strong>&ndash;readFilesIn $dataDIR/$fastqFILE </strong> : input read file.</li>
+<li><strong>&ndash;readFilesCommand zcat</strong> : command to unzip the input file.</li>
+</ul>
+</details>
+<details class="done">
+<summary>advanced : STAR mapping script with array job</summary>
+<p>The following sets up an array of tasks to align all samples.</p>
+<p>Source file : <code>Ruhland2016.fastqFiles.txt</code> :</p>
+<div class="highlight"><pre><span></span><code>SRR3180535_EtOH1_1.fastq.gz
+SRR3180536_EtOH2_1.fastq.gz
+SRR3180537_EtOH3_1.fastq.gz
+SRR3180538_TAM1_1.fastq.gz
+SRR3180539_TAM2_1.fastq.gz
+SRR3180540_TAM3_1.fastq.gz
+</code></pre></div>
+<p>sbatch script :</p>
+<div class="highlight"><pre><span></span><code>#!/usr/bin/bash
+#SBATCH --job-name=star-aln
+#SBATCH --time=01:00:00
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=30G
+#SBATCH -o star-aln.%a.o
+#SBATCH -e star-aln.%a.e
+#SBATCH --array 1-1%1
+
+
+ml star
+outDIR=STAR_Ruhland2016
+
+mkdir -p $outDIR
+
+dataDIR=/shared/data/DATA/Ruhland2016
+
+sourceFILE=Ruhland2016.fastqFiles.txt
+
+fastqFILE=`sed -n ${SLURM_ARRAY_TASK_ID}p $sourceFILE`
+
+genomeDIR=/shared/data/DATA/Mouse_STAR_index
+
+STAR --runThreadN 8 --genomeDir $genomeDIR \
+              --outSAMtype BAM SortedByCoordinate --outReadsUnmapped Fastx \
+              --outFileNamePrefix $outDIR/$fastqFILE \
+              --quantMode GeneCounts \
+              --readFilesIn $dataDIR/$fastqFILE --readFilesCommand zcat \
+</code></pre></div>
+<p>The options of STAR are :</p>
+<ul>
+<li><strong>&ndash;runThreadN 8 </strong> : 8 threads to go faster.</li>
+<li><strong>&ndash;genomeDir $genomeDIR</strong> : path of the genome to map to.</li>
+<li><strong>&ndash;outSAMtype BAM SortedByCoordinate </strong> : output a coordinate-sorted BAM file.</li>
+<li><strong>&ndash;outReadsUnmapped Fastx</strong> : output the non-mapping reads (in case we want to analyse them).</li>
+<li><strong>&ndash;outFileNamePrefix $outDIR/$fastqFILE</strong> : prefix of output files.</li>
+<li><strong>&ndash;quantMode GeneCounts</strong> : will create a file with counts of reads per gene.</li>
+<li><strong>&ndash;readFilesIn $dataDIR/$fastqFILE </strong> : input read file.</li>
+<li><strong>&ndash;readFilesCommand zcat</strong> : command to unzip the input file.</li>
+</ul>
+</details>
+<h2 id="qc-on-the-aligned-reads">QC on the aligned reads</h2>
+<p>You can call MultiQC on the STAR output folder to gather a report on the individual alignments.</p>
+<p>Here we&rsquo;ve aligned a single sample, but usually this would cover all your samples.</p>
+<p><strong>Task :</strong> use <code>multiqc</code> to generate a QC report on the results of your mapping.</p>
+<ul>
+<li>Evaluate the alignment statistics. Do you consider this to be a good alignment?</li>
+<li>How many unmapped reads are there? Where might this come from, and how would you determine this?</li>
+<li>What could you say about library strandedness ? </li>
+</ul>
+<details class="done">
+<summary>script and answers</summary>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
+<span class="c1">#SBATCH --job-name=multiqc</span>
+<span class="c1">#SBATCH --time=00:30:00</span>
+<span class="c1">#SBATCH --cpus-per-task=1</span>
+<span class="c1">#SBATCH --mem=1G</span>
+<span class="c1">#SBATCH -o multiqc_star_Ruhland2016.o</span>
+<span class="c1">#SBATCH -e multiqc_star_Ruhland2016.e</span>
+
+
+mkdir<span class="w"> </span>-p<span class="w"> </span>STAR_MULTIQC_Ruhland2016/
+
+multiqc<span class="w"> </span>-o<span class="w"> </span>STAR_MULTIQC_Ruhland2016/<span class="w"> </span>STAR_Ruhland2016/
+</code></pre></div>
+<p>Result : </p>
+<p><a class="md-button" href="../../assets/html/multiqc_report.SRR3180535_EtOH1_1.html"> Download the report </a></p>
+</details>
+<h2 id="additionnal-star-2-pass">ADDITIONNAL : STAR 2-Pass</h2>
+<p>Genome annotations are incomplete, particularly for complex eukaryotes : there are many as-of-yet unannotated splice junctions.</p>
+<p>The first pass of STAR can create a splice junction database, containing both known and novel junctions.
+This splice junction database can, in turn, be used to guide an improved second round of alignment, using a command like:</p>
+<div class="highlight"><pre><span></span><code>STAR<span class="w"> </span>&lt;1st<span class="w"> </span>round<span class="w"> </span>options&gt;<span class="w"> </span>--sjdbFileChrStartEnd<span class="w"> </span>sample_SJ.out.tab
+</code></pre></div>
+<p><strong>Task :</strong> run STAR in this STAR-2pass mode on the same sample as before and evaluate the results.</p>
+<details class="done">
+<summary>script</summary>
+<div class="highlight"><pre><span></span><code>#!/usr/bin/bash
+#SBATCH --job-name=star-aln2
+#SBATCH --time=01:00:00
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=30G
+#SBATCH -o star-aln-2pass.%a.o
+#SBATCH -e star-aln-2pass.%a.e
+#SBATCH --array 1-1%1
+
+ml star
+
+outDIR=STAR_Ruhland2016
+
+mkdir -p $outDIR
+
+dataDIR=/shared/data/DATA/Ruhland2016
+
+sourceFILE=Ruhland2016.fastqFiles.txt
+
+fastqFILE=`sed -n ${SLURM_ARRAY_TASK_ID}p $sourceFILE`
+
+genomeDIR=/shared/data/DATA/Mouse_STAR_index
+
+STAR --runThreadN 8 --genomeDir $genomeDIR \
+                  --outSAMtype BAM SortedByCoordinate \
+                  --outFileNamePrefix $outDIR/$fastqFILE.2Pass. \
+                  --outReadsUnmapped Fastx --quantMode GeneCounts \
+                  --sjdbFileChrStartEnd $outDIR/${fastqFILE}SJ.out.tab \
+                  --readFilesIn $dataDIR/$fastqFILE --readFilesCommand zcat \
+</code></pre></div>
+</details>
+<h2 id="additional-pseudo-aligning-with-salmon">ADDITIONAL : pseudo-aligning with salmon</h2>
+<p><a class="md-button" href="https://salmon.readthedocs.io/en/latest/salmon.html">salmon website</a></p>
+<p>salmon can allow you to quantify transcript expression without explicitly aligning the sequenced reads onto the reference genome with its gene and splice junction annotations, but to a simplification of the corresponding transcriptome, thus saving computational resources.</p>
+<p>We refer you to the tool&rsquo;s documentation in order to see <a href="https://salmon.readthedocs.io/en/latest/salmon.html#preparing-transcriptome-indices-mapping-based-mode">how the reference index is computed</a>.</p>
+<p><strong>Task :</strong> run salmon to quantify the expression of either the Ruhland or Liu dataset. </p>
+<ul>
+<li>Use the tool documentation to craft your command line.</li>
+<li>precomputed indices can be found in <code>/shared/data/Mouse_salmon_index</code> and <code>/shared/data/Human_salmon_index</code>.</li>
+</ul>
+<details class="done">
+<summary>script</summary>
+<div class="highlight"><pre><span></span><code>#!/usr/bin/bash
+#SBATCH --job-name=salmonRuhland
+#SBATCH --time=01:00:00
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=30G
+#SBATCH -o salmon_ruhland2016.%a.o
+#SBATCH -e salmon_ruhland2016.%a.e
+#SBATCH --array 1-6%1
+
+ml salmon
+
+outDIR=salmon_Ruhland2016
+
+mkdir -p $outDIR
+
+dataDIR=/shared/data/DATA/Ruhland2016
+
+sourceFILE=Ruhland2016.fastqFiles.txt
+
+fastqFILE=`sed -n ${SLURM_ARRAY_TASK_ID}p $sourceFILE`
+
+genomeDIR=/shared/data/DATA/Mouse_salmon_index
+
+salmon quant -i $genomeDIR -l A \
+            -r $dataDIR/$fastqFILE \
+            -p 8 --validateMappings --gcBias --seqBias \
+            -o $outDIR
+</code></pre></div>
+</details>
+<!--
+## ADDITIONNAL : Assessing read coverage for biases
+
+The [RSeQC](http://rseqc.sourceforge.net/) package includes a function for evaluating [“gene body coverage”](http://rseqc.sourceforge.net/#genebody-coverage-py), which
+can be used to assess 5’ or 3’ bias, which might happen if your RNA is degraded or otherwise biased
+
+Requirements:
+
+ * Genome annotations in the 12-column BED format : [you can grab one for mouse here](https://sourceforge.net/projects/rseqc/files/BED/Mouse_Mus_musculus/), or at `/data/GRCm38/Mus_musculus.GRCm38.89.bed12` on the server `CHECK LINK. gtf2bed instead?`
+ * *Indexed* and sorted BAM file, which can be generated from a sorted BAM using the SAMtools package: `samtools index sample1_sorted.bam`
+
+Example command :
+<div class="highlight"><pre><span></span><code>geneBody_coverage.py<span class="w"> </span>-r<span class="w"> </span>/data/GRCm38/Mus_musculus.GRCm38.89.bed12<span class="w"> </span><span class="se">\</span>
+<span class="w">                     </span>-i<span class="w"> </span>sample1_sorted.bam<span class="w"> </span><span class="se">\</span>
+<span class="w">                     </span>-f<span class="w"> </span>pdf<span class="w"> </span><span class="se">\</span>
+<span class="w">                     </span>-o<span class="w"> </span>output_prefix
+</code></pre></div>
+
+**Task** : Evaluate the gene body coverage for the sample you aligned.
+
+ * expected RAM : 
+ * expected time : 
+
+??? done "geneBody_coverage script"
+
+    TBD 
+-->
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.220ee61c.min.js"></script>
+      
+    
+  </body>
+</html>
