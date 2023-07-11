@@ -12,14 +12,14 @@
         <link rel="prev" href="../course_schedule/">
       
       
-        <link rel="next" href="../days/design/">
+        <link rel="next" href="../cheatsheets/">
       
       <link rel="icon" href="../assets/images/SIB_logo.svg">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.18">
     
     
       
-        <title>slides notes (draft) - Introduction to RNA-Seq - From quality control to pathway analysis</title>
+        <title>Slides notes (draft) - Introduction to RNA-Seq - From quality control to pathway analysis</title>
       
     
     
@@ -97,7 +97,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              slides notes (draft)
+              Slides notes (draft)
             
           </span>
         </div>
@@ -261,12 +261,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          slides notes (draft)
+          Slides notes (draft)
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        slides notes (draft)
+        Slides notes (draft)
       </a>
       
         
@@ -306,23 +306,38 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../cheatsheets/" class="md-nav__link">
+        Cheatsheets
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
     
     <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
       
       
       
-        <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
           Day1
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_5">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
           Day1
         </label>
@@ -417,17 +432,17 @@
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
       
       
       
-        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+        <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
           Day2
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_6">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_7">
           <span class="md-nav__icon md-icon"></span>
           Day2
         </label>
@@ -522,15 +537,19 @@
 <p>This document contains notes about the course slides.</p>
 <p>This is a somewhat internal document, so expect a fairly draft-ish and concise style.</p>
 <h2 id="01-overview">01 Overview</h2>
-<p>slides 3 - 7
- * the central dogma of molecular biology is know to be not so simple
- * RNA is not only a messenger but may have an effect
- * most of these elements interacts and regulates one-another 
- * alternative splicing in eukaryots adds a layer of possibilities to all this
- * main takeaway maybe : measuring RNA is a proxy for protein levels, which is a proxy for protein activity , which is a proxy for the physiological state of the cell</p>
-<p>slides 8 - 9
- * non-exhaustive list of sequencing possibilities 
- * https://liorpachter.wordpress.com/seq/</p>
+<p>slides 3 - 7</p>
+<ul>
+<li>the central dogma of molecular biology is know to be not so simple</li>
+<li>RNA is not only a messenger but may have an effect</li>
+<li>most of these elements interacts and regulates one-another </li>
+<li>alternative splicing in eukaryots adds a layer of possibilities to all this</li>
+<li>main takeaway maybe : measuring RNA is a proxy for protein levels, which is a proxy for protein activity , which is a proxy for the physiological state of the cell</li>
+</ul>
+<p>slides 8 - 9</p>
+<ul>
+<li>non-exhaustive list of sequencing possibilities </li>
+<li>https://liorpachter.wordpress.com/seq/</li>
+</ul>
 <p>slides 10-12</p>
 <ul>
 <li>RNAseq, the challenges</li>
@@ -548,34 +567,46 @@
 <p>slide 12 : important considerations as well</p>
 </li>
 </ul>
-<p>slide 13
- * Illumina : market leader 50-600bp (generally 50-100), 0.1 (nextseq) to 3 (Hiseq) billion reads
- * Ion torrent : 600bp, 260M reads
- * Pacbio : 10-30kb N50 , 4M CCS reads 
- * nanopore : theory single molecule, practice: variable (N50 &gt;100kb on ultra-long kit, up to 4.2Mb )</p>
+<p>slide 13</p>
+<ul>
+<li>Illumina : market leader 50-600bp (generally 50-100), 0.1 (nextseq) to 3 (Hiseq) billion reads</li>
+<li>Ion torrent : 600bp, 260M reads</li>
+<li>Pacbio : 10-30kb N50 , 4M CCS reads </li>
+<li>nanopore : theory single molecule, practice: variable (N50 &gt;100kb on ultra-long kit, up to 4.2Mb )</li>
+</ul>
 <p>slides 14-22 : describe different technologies</p>
-<p>Ion Torrent :
-    - cell sequentially flooded with A T G C </p>
-<p>PacBio SMRT
-    - DNApol at bottom of Zero-Mode-Waveguide 
-    - fluorescent dye on dNTPs</p>
-<p>Illumina seq :
-    - formation of clusters with the same sequence 
-    - SBS : labelled nucleotides have reversible terminators, so only 1 base is incorporated at a time.</p>
+<p>Ion Torrent :</p>
+<div class="codehilite"><pre><span></span><code>- cell sequentially flooded with A T G C
+</code></pre></div>
+
+<p>PacBio SMRT</p>
+<div class="codehilite"><pre><span></span><code>- DNApol at bottom of Zero-Mode-Waveguide 
+- fluorescent dye on dNTPs
+</code></pre></div>
+
+<p>Illumina seq :</p>
+<div class="codehilite"><pre><span></span><code>- formation of clusters with the same sequence 
+- SBS : labelled nucleotides have reversible terminators, so only 1 base is incorporated at a time.
+</code></pre></div>
+
 <p>slide 23: paired end sequencing https://www.france-genomique.org/technological-expertises/whole-genome/sequencage-a-courtes-lectures-par-clusterisation/?lang=en</p>
 <p>slide 24: stranded sequencing https://www.ecseq.com/support/ngs/how-do-strand-specific-sequencing-protocols-work</p>
 <p>slide 25-26: RIN , RNA purification</p>
-<p>slide 27-34: sequencing depth and replicates
- * slide 33-34 : this pattern applies to low- mid- and high- expressors (see their supp doc)</p>
-<p>slide 35-42: schematic analysis
- * slide 35 : before the sequencing
- * slide 36 : basic analysis
- * slide 37 : basic analysis with trimmed reads
- * slide 38 : main QC steps
- * slide 39 : QC steps provide feedback on previous steps
- * slide 40 : analysis for variant calling / isoform descriptions / &hellip;
- * slide 41 : when no reference genome: de novo assembly
- * slide 42 : the analysis which we&rsquo;ll do during this course</p>
+<p>slide 27-34: sequencing depth and replicates</p>
+<ul>
+<li>slide 33-34 : this pattern applies to low- mid- and high- expressors (see their supp doc)</li>
+</ul>
+<p>slide 35-42: schematic analysis</p>
+<ul>
+<li>slide 35 : before the sequencing</li>
+<li>slide 36 : basic analysis</li>
+<li>slide 37 : basic analysis with trimmed reads</li>
+<li>slide 38 : main QC steps</li>
+<li>slide 39 : QC steps provide feedback on previous steps</li>
+<li>slide 40 : analysis for variant calling / isoform descriptions / &hellip;</li>
+<li>slide 41 : when no reference genome: de novo assembly</li>
+<li>slide 42 : the analysis which we&rsquo;ll do during this course</li>
+</ul>
 
 
 
