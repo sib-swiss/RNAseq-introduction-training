@@ -4,6 +4,7 @@ nav:
     - Home: index.md
     - Precourse preparations: precourse.md
     - Course schedule: course_schedule.md
+    - slides notes (draft): slides_notes.md
     - Day1 :
         - RNAseq - technologies and design : days/design.md
         - Server login + unix fresh up : days/server_login.md
