@@ -90,4 +90,11 @@ slide 04 : https://support.illumina.com/help/BaseSpace_OLH_009008/Content/Source
 slide 16-... : interpretation of fastQC report
 
 
+## 03 trimming
+
+slide 02-05 : enumerating reasons we may want to trim
+
+ * slide 04 : adapter can be present if, for instance, insert size is shorter than sequenced length. https://www.ecseq.com/support/ngs/trimming-adapter-sequences-is-it-necessary
+
+slide 06-11 : different cases where we may trim
 
