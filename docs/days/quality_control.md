@@ -19,11 +19,11 @@ Quality Control is the essential first step to perform once you receive your dat
 
 ## Material
 
-[:fontawesome-solid-file-pdf: Download the presentation](../assets/pdf/RNA-Seq_02_QualityControl.pdf){: .md-button }
+[:fontawesome-solid-file-pdf: Download the presentation](../assets/pdf/RNA-Seq_02_QualityControl.pdf){target=_blank : .md-button }
 
-[FastQC website](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/){: .md-button }
+[FastQC website](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/){target=_blank : .md-button }
 
-[MultiQC website](https://multiqc.info/){: .md-button }
+[MultiQC website](https://multiqc.info/){target=_blank : .md-button }
 
 
 ## Meet the datasets

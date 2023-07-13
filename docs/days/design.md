@@ -14,4 +14,4 @@ Knowing about the sequencing technologies, their strengths and limitations, as w
 
 ## Material
 
-[:fontawesome-solid-file-pdf: Download the presentation](../assets/pdf/RNA-Seq_01_overview.pdf){: .md-button }
+[:fontawesome-solid-file-pdf: Download the presentation](../assets/pdf/RNA-Seq_01_overview.pdf){target=_blank : .md-button }

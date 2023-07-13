@@ -146,32 +146,29 @@ The directory `/shared/data/` contains data and solutions for most practicals.
 
 !!! example "practical"
 
-    Copy the script `fastqc_Liu2015_SRR1272187_1.sh` from  `/shared/data/Solutions/Liu2015` into your current directory,
+    Copy the script `010_fastqc.sh` from  `/shared/data/Solutions/mouseMT` into your current directory,
     and then print the content of this script to the screen.
 
 ??? success "Answer"
     ```sh
-    cp /shared/data/Solutions/Liu2015/fastqc_Liu2015_SRR1272187_1.sh .
-    more fastqc_Liu2015_SRR1272187_1.sh
+    cp /shared/data/Solutions/mouseMT/010_fastqc.sh .
+    more 010_fastqc.sh
     ```
     output:
     ```
     #!/usr/bin/bash
-	#SBATCH --job-name=fastqc
-	#SBATCH --time=00:30:00
-	#SBATCH --cpus-per-task=1
-	#SBATCH --mem=1G
-	#SBATCH -o fastqc_Liu2015.o
-	#SBATCH -e fastqc_Liu2015.e
-
-	ml fastqc
-
-	dataDir=/shared/data/DATA/Liu2015
-
-	mkdir -p FASTQC_Liu2015/
-	fastqc -o FASTQC_Liu2015/ $dataDir/SRR1272187_1.fastq.gz
-
-
+    #SBATCH --job-name=fastqc
+    #SBATCH --time=01:00:00
+    #SBATCH --cpus-per-task=1
+    #SBATCH --mem=1G
+    #SBATCH -o fastqc_mouseMT.o
+    
+    ml fastqc
+    
+    # creating the output folder
+    mkdir -p 010_fastqc/
+    
+    fastqc -o 010_fastqc /shared/data/DATA/mouseMT/*.fastq
     ```
 
 We'll see what all this means soon.
