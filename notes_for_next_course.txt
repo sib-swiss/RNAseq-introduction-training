@@ -68,13 +68,13 @@ Session1.5 - UNIX and server : https://sib-swiss.github.io/RNAseq-introduction-t
 Session2 - QC : https://sib-swiss.github.io/RNAseq-introduction-training/days/quality_control.html
 
    X slides : OK-ish
+   X practical : 
+      - fastQC/multiqc: le plan est de leur faire faire d'abord la tache de maniere guidee sur le toy dataset.
+                Deployer la meme chose sur les deux autres jeu de donnees est en tache extra.
+        
+                 En correction on interpretera avec eux 1 fastqc de chaque dataset 
 
 
-
-
-   O practical : 
-      le plan est de faire un 
-      - telecharger un mini jeu de donnees pour le fun.
       - fastq-dump : en annexe + petit jeu de donnees
 
 

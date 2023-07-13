@@ -33,19 +33,20 @@ We will be working with three datasets. The first is a small toy dataset for exp
  * toy dataset: RNAseq of mice mitochondrial mRNA
  	* 8 samples : 4 in group A and 4 in group B
  	* single-end, 100bp reads
- 	* `/shared/data/DATA/mouseMT/`
+ 	* on the cluster: `/shared/data/DATA/mouseMT/`
+ 	* [:fontawesome-solid-file-zipper: fastq-files](../assets/zip/toy_dataset_fastq.zip){ .md-button}
 
  * Liu et al. (2015) “RNA-Seq identifies novel myocardial gene expression signatures of heart failure” Genomics 105(2):83-89 [https://doi.org/10.1016/j.ygeno.2014.12.002](https://doi.org/10.1016/j.ygeno.2014.12.002)
  	* Gene Expression Omnibus id: [GSE57345](https://www.ncbi.nlm.nih.gov/bioproject/?term=GSE57345)
  	* Samples of *Homo sapiens* heart left ventricles : 3 with heart failure, 3 without
  	* paired-end, 100bp reads
- 	* `/shared/data/DATA/Liu2015/`
+ 	* on the cluster: `/shared/data/DATA/Liu2015/`
 
  * Ruhland et al. (2016) “Stromal senescence establishes an immunosuppressive microenvironment that drives tumorigenesis” Nature Communications 7:11762 [https://dx.doi.org/10.1038/ncomms11762](https://dx.doi.org/10.1038/ncomms11762)
  	* Gene Expression Omnibus id: [GSE78128](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE78128)
  	* Samples of *Mus musculus* skin fibroblasts : 3 non-senescent (EtOH), 3 senescent (TAM)
  	* single-end, 50bp reads
- 	* `/shared/data/DATA/Ruhland2016/`
+ 	* on the cluster: `/shared/data/DATA/Ruhland2016/`
 
 
 
