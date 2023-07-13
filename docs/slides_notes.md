@@ -78,3 +78,16 @@ slide 35-42: schematic analysis
  * slide 40 : analysis for variant calling / isoform descriptions / ...
  * slide 41 : when no reference genome: de novo assembly
  * slide 42 : the analysis which we'll do during this course
+
+
+## 02 Quality control
+
+
+slide 04 : https://support.illumina.com/help/BaseSpace_OLH_009008/Content/Source/Informatics/BS/FileFormat_FASTQ-files_swBS.htm
+
+ * control bit: 0 when none of the control bits are on, otherwise it is an even number. On HiSeq X and NextSeq systems, control specification is not performed and this number is always 0.
+
+slide 16-... : interpretation of fastQC report
+
+
+

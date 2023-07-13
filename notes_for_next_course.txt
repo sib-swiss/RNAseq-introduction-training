@@ -65,13 +65,20 @@ Session1.5 - UNIX and server : https://sib-swiss.github.io/RNAseq-introduction-t
     - better explain in talk
 
 
- 
-
 Session2 - QC : https://sib-swiss.github.io/RNAseq-introduction-training/days/quality_control.html
-   O slides : OK-ish
-   O practical : OK, except for fastq-dump :
-                  - telecharger un mini jeu de donnees pour le fun.
-                  - mettre en annexe (+1)
+
+   X slides : OK-ish
+
+
+
+
+   O practical : 
+      le plan est de faire un 
+      - telecharger un mini jeu de donnees pour le fun.
+      - fastq-dump : en annexe + petit jeu de donnees
+
+
+
 
 
 Session3 - trimming : https://sib-swiss.github.io/RNAseq-introduction-training/days/trimming.html
@@ -115,4 +122,5 @@ Find 2/3 nice datasets with 2 or 3 conditions
 
 
 
-   
+
+
