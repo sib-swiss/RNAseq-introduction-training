@@ -820,29 +820,28 @@ several students struggled with this. -->
 </div>
 <div class="admonition example">
 <p class="admonition-title">practical</p>
-<p>Copy the script <code>fastqc_Liu2015_SRR1272187_1.sh</code> from  <code>/shared/data/Solutions/Liu2015</code> into your current directory,
+<p>Copy the script <code>010_fastqc.sh</code> from  <code>/shared/data/Solutions/mouseMT</code> into your current directory,
 and then print the content of this script to the screen.</p>
 </div>
 <details class="success">
 <summary>Answer</summary>
-<p><div class="highlight"><pre><span></span><code>cp<span class="w"> </span>/shared/data/Solutions/Liu2015/fastqc_Liu2015_SRR1272187_1.sh<span class="w"> </span>.
-more<span class="w"> </span>fastqc_Liu2015_SRR1272187_1.sh
+<p><div class="highlight"><pre><span></span><code>cp<span class="w"> </span>/shared/data/Solutions/mouseMT/010_fastqc.sh<span class="w"> </span>.
+more<span class="w"> </span>010_fastqc.sh
 </code></pre></div>
 output:
 <div class="highlight"><pre><span></span><code>#!/usr/bin/bash
 #SBATCH --job-name=fastqc
-#SBATCH --time=00:30:00
+#SBATCH --time=01:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=1G
-#SBATCH -o fastqc_Liu2015.o
-#SBATCH -e fastqc_Liu2015.e
+#SBATCH -o fastqc_mouseMT.o
 
 ml fastqc
 
-dataDir=/shared/data/DATA/Liu2015
+# creating the output folder
+mkdir -p 010_fastqc/
 
-mkdir -p FASTQC_Liu2015/
-fastqc -o FASTQC_Liu2015/ $dataDir/SRR1272187_1.fastq.gz
+fastqc -o 010_fastqc /shared/data/DATA/mouseMT/*.fastq
 </code></pre></div></p>
 </details>
 <p>We&rsquo;ll see what all this means soon.</p>

@@ -291,6 +291,27 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#02-quality-control" class="md-nav__link">
+    02 Quality control
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#03-trimming" class="md-nav__link">
+    03 trimming
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#04-mapping" class="md-nav__link">
+    04 mapping
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -515,6 +536,27 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#02-quality-control" class="md-nav__link">
+    02 Quality control
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#03-trimming" class="md-nav__link">
+    03 trimming
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#04-mapping" class="md-nav__link">
+    04 mapping
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -606,6 +648,33 @@
 <li>slide 40 : analysis for variant calling / isoform descriptions / &hellip;</li>
 <li>slide 41 : when no reference genome: de novo assembly</li>
 <li>slide 42 : the analysis which we&rsquo;ll do during this course</li>
+</ul>
+<h2 id="02-quality-control">02 Quality control</h2>
+<p>slide 04 : https://support.illumina.com/help/BaseSpace_OLH_009008/Content/Source/Informatics/BS/FileFormat_FASTQ-files_swBS.htm</p>
+<ul>
+<li>control bit: 0 when none of the control bits are on, otherwise it is an even number. On HiSeq X and NextSeq systems, control specification is not performed and this number is always 0.</li>
+</ul>
+<p>slide 16-&hellip; : interpretation of fastQC report</p>
+<h2 id="03-trimming">03 trimming</h2>
+<p>slide 02-05 : enumerating reasons we may want to trim</p>
+<ul>
+<li>slide 04 : adapter can be present if, for instance, insert size is shorter than sequenced length. https://www.ecseq.com/support/ngs/trimming-adapter-sequences-is-it-necessary</li>
+</ul>
+<p>slide 06-11 : different cases where we may trim</p>
+<h2 id="04-mapping">04 mapping</h2>
+<p>slides 4-8:</p>
+<ul>
+<li>bowtie2 : https://bowtie-bio.sourceforge.net/bowtie2/manual.shtml</li>
+<li>STAR : https://github.com/alexdobin/STAR</li>
+<li>tophat2 : https://hcc.unl.edu/docs/applications/app_specific/bioinformatics_tools/alignment_tools/tophat_tophat2/</li>
+<li>RSEM : https://github.com/deweylab/RSEM</li>
+<li>cufflinks : http://cole-trapnell-lab.github.io/cufflinks/</li>
+<li>salmon : https://salmon.readthedocs.io/en/latest/salmon.html</li>
+<li>kallisto : https://pachterlab.github.io/kallisto/</li>
+<li>tximport : https://bioconductor.org/packages/release/bioc/html/tximport.html</li>
+<li>featurecount : https://subread.sourceforge.net/featureCounts.html</li>
+<li>stringtie : http://ccb.jhu.edu/software/stringtie/index.shtml?t=manual</li>
+<li>GATK variant calling pipeline https://gatk.broadinstitute.org/hc/en-us/articles/360035531192-RNAseq-short-variant-discovery-SNPs-Indels-</li>
 </ul>
 
 
