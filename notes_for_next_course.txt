@@ -82,25 +82,27 @@ Session2 - QC : https://sib-swiss.github.io/RNAseq-introduction-training/days/qu
 
 
 Session3 - trimming : https://sib-swiss.github.io/RNAseq-introduction-training/days/trimming.html
-   O pb: trimming takes a lot of time and memory...
-      --> only do it on a toy dataset?
-      --> only compare the report from after and before trimming?
-   O clean up slides 
+   X clean up slides 
+   X pb: trimming takes a lot of time and memory...
+      --> only do it on a toy dataset
+      --> compare the report from after and before trimming
 
 Session4 - mapping : https://sib-swiss.github.io/RNAseq-introduction-training/days/mapping.html
-   O clean slides. 
+   X clean slides. 
+   X GFF and SAM part -> push to extra on website
 
-   O practical: more hand holding on option? 
+
+   X practical: more hand holding on option? 
       - I like that they have to find their way through the manual, which promotes a healthy habit or properly reading the docs,
          but this part will occur at the end of day1, when their brain is quite fried...
 
-   O GFF and SAM part -> push to extra on website
-   O compare to trimmed? --> at least add correction for that online
+   X compare to trimmed? --> added multiqc html report to download
 
 
 Session5 - counting
    O clarify the whole thing
    O is it useful to call featureCount to get the same output as STAR in the end?
+   O remove that part, and discuss preprocess and normalizing more on DE??
 
 Session6 - DE
    O slides : simplify + example of bad stuff?

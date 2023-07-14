@@ -98,3 +98,18 @@ slide 02-05 : enumerating reasons we may want to trim
 
 slide 06-11 : different cases where we may trim
 
+## 04 mapping
+
+slides 4-8:
+
+ * bowtie2 : https://bowtie-bio.sourceforge.net/bowtie2/manual.shtml
+ * STAR : https://github.com/alexdobin/STAR
+ * tophat2 : https://hcc.unl.edu/docs/applications/app_specific/bioinformatics_tools/alignment_tools/tophat_tophat2/
+ * RSEM : https://github.com/deweylab/RSEM
+ * cufflinks : http://cole-trapnell-lab.github.io/cufflinks/
+ * salmon : https://salmon.readthedocs.io/en/latest/salmon.html
+ * kallisto : https://pachterlab.github.io/kallisto/
+ * tximport : https://bioconductor.org/packages/release/bioc/html/tximport.html
+ * featurecount : https://subread.sourceforge.net/featureCounts.html
+ * stringtie : http://ccb.jhu.edu/software/stringtie/index.shtml?t=manual
+ * GATK variant calling pipeline https://gatk.broadinstitute.org/hc/en-us/articles/360035531192-RNAseq-short-variant-discovery-SNPs-Indels-

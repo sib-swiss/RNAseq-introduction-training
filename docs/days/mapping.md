@@ -12,9 +12,9 @@ Once you are happy with your read sequences in your FASTQ files, you can use a m
 
 ## Material
 
-[:fontawesome-solid-file-pdf: Download the presentation](../assets/pdf/RNA-Seq_04_Mapping.pdf){: .md-button }
+[:fontawesome-solid-file-pdf: Download the presentation](../assets/pdf/RNA-Seq_04_Mapping.pdf){target=_blank : .md-button }
 
-[STAR website](https://github.com/alexdobin/STAR){: .md-button }
+[STAR website](https://github.com/alexdobin/STAR){target=_blank : .md-button }
 
 
 
@@ -34,25 +34,38 @@ We will be using the Ensembl references, with their accompanying GTF annotations
 	While the data are already on the server here, in practice or if you are following this course without a teacher,
 	you can grab the reference genome data from the [Ensembl ftp website](https://www.ensembl.org/info/data/ftp/index.html).
 
-	In particular, you will want a mouse [DNA fasta file](http://ftp.ensembl.org/pub/release-104/fasta/mus_musculus/dna/) and [gtf file](http://ftp.ensembl.org/pub/release-104/gtf/mus_musculus/) \[release-104 at the time we are linking this. Checking for more recent release is recommended, but may slightly alter the results\].
+	In particular, you will want a mouse [DNA fasta file](http://ftp.ensembl.org/pub/current_fasta/mus_musculus/dna/) and [gtf file](http://ftp.ensembl.org/pub/current_gtf/mus_musculus/).
 
 
-**Task :** Using STAR, build a genome index for chromosome 19 of *Mus musculus* using the associated GTF
+**Task :** Using STAR, build a genome index for the mouse mitochondrial chromosome.
 
-Important notes :
-
+ * .fasta and .gtf files are in : `/shared/data/DATA/Mouse_MT_genome/`.
+ * create the index in the folder `041_STAR_mouseMT_reference`
  * the module name for this aligner is `star`.
- * .fasta and .gtf files are in : `/shared/data/DATA/Mouse_chr19/`.
- * refer to the [manual](https://raw.githubusercontent.com/alexdobin/STAR/master/doc/STARmanual.pdf) to determine which options to use.
- * the `--genomeDir` parameter is the folder where the indexed genome will be output to.
- * this job should require less than 4Gb and 30min to run.
+ * this job should require less than 4Gb and 10min to run. 
+
+!!! info "STAR basic parameter for genome index generation"
+
+	From the [manual](https://raw.githubusercontent.com/alexdobin/STAR/master/doc/STARmanual.pdf). Refer to it for more details
+
+	 * `--runMode genomeGenerate` : running STAR in index generation mode
+	 * `--genomeDir </path/to/genomeDir>` : output fodler for the index
+	 * `--genomeFastaFiles </path/to/genome/fasta1>` : chromosomes sequences fasta file (can be several files)
+	 * `--sjdbGTFfile </path/to/annotations.gtf>` : annotation gtf file
+	 * `--runThreadN <NumberOfThreads>` : number of threads to run on 
+	 * `--sjdbOverhang <ReadLength-1>` : length of the genomic sequence around the annotated junctions to be used in constructing the splice junctions database. Ideally : read length - 1.
+
+	 Additionally, because the genome is so small here (we only use the muitochondrial chromosome afterall), you will need the following advanced option:
+
+	 * `--genomeSAindexNbases 5` : must be scalled to `min(14, log2(GenomeLength)/2 - 1)`, so 5 in our case
+
 
 !!! note
 	
 	While your indexing job is running, you can read ahead in STAR's manual to prepare the next step : mapping your reads onto the indexed reference genome.
 
 
-??? done "STAR indexing script"
+??? success "STAR indexing script"
 
 	```sh
 	#!/usr/bin/bash
@@ -61,45 +74,64 @@ Important notes :
 	#SBATCH --cpus-per-task=4
 	#SBATCH --mem=4G
 	#SBATCH -o star-build.o
-	#SBATCH -e star-build.e
+
 		
-	G_FASTA=/shared/data/DATA/Mouse_chr19/Mus_musculus.GRCm38.dna.chromosome.19.fa
-	G_GTF=/shared/data/DATA/Mouse_chr19/Mus_musculus.GRCm38.101.chr19.gtf
+	G_FASTA=/shared/data/DATA/Mouse_MT_genome/Mus_musculus.GRCm39.dna.chromosome.MT.fa
+	G_GTF=/shared/data/DATA/Mouse_MT_genome/Mus_musculus.GRCm39.MT.gtf
 	
 	ml star
 
-	mkdir -p STAR_references
+	mkdir -p 041_STAR_mouseMT_reference
 	
 	STAR --runMode genomeGenerate \
-	     --genomeDir STAR_references \
+	     --genomeDir 041_STAR_mouseMT_reference \
 	     --genomeFastaFiles $G_FASTA \
 	     --sjdbGTFfile $G_GTF \
 	     --runThreadN 4 \
-	     --genomeSAindexNbases 11 \
-	     --sjdbOverhang 49 
+	     --genomeSAindexNbases 5 \
+	     --sjdbOverhang 99 
 
 	```
 
 
 **Extra task :** Determine how you would add an additional feature to your reference, for example for a novel transcript not described by the standard reference.
 
-??? done "Answer"
+??? success "Answer"
 
-	Edit the gtf file to add your additional feature(s), following the [proper format](https://www.ensembl.org/info/website/upload/gff.html).
+	You would edit the gtf file to add your additional feature(s), following the [proper format](https://www.ensembl.org/info/website/upload/gff.html).
 
 
-<!-- Suggestion for a note: what to do if you've got multiple FASTA files for your genome, typically 1 per chromosome -->
+
+!!! note "Note"
+
+	In case you've got multiple FASTA files for your genome (eg, 1 per chromosome), you may just list them with the `genomeFastaFiles` option as follow:
+
+	`--genomeFastaFiles /path/to/genome/fasta1.fa /path/to/genome/fasta2.fa /path/to/genome/fasta3.fa ...`
 
 
 ## Mapping reads onto the reference
 
-**Task :** Using STAR, align ONE of the FASTQ files from the Ruhland2016 study against the mouse genome.
 
- * Use the full indexed genome at `/shared/data/DATA/Mouse_STAR_index/`, rather than the one we just made.
- * **IMPORTANT**: use the following option in your STAR command: `--outTmpDir /tmp/${SLURM_JOB_USER}_${SLURM_JOB_ID}/`. You can use the manual to look up what this option does. The slurm variables ensure a distinct directory is created in `/tmp/` for each user and for each job.
- * Generate a BAM file sorted by coordinate.
- * Generate a geneCounts file.
- * Mapping reads and generating a sorted BAM from one of the Ruhland2016 et al. FASTQ files should take about 20 minutes.
+basic 
+
+
+**Task :** Using STAR, align the raw FASTQ files of the mouseMT dataset against thed mouse mitochondrial reference you just created
+
+ * if were not able to complete the previous task you can use the index in `/shared/data/Solutions/mouseMT/041_STAR_mouseMT_reference`
+ * search the STAR manual for the option to output a BAM file sorted by coordinate.
+ * search the STAR manual for the option to output a geneCounts file.
+ * put the results in folder `042_STAR_map_raw/`
+
+
+!!! info "STAR basic parameter for mapping"
+
+	Taken again from the manual:
+
+	- `--genomeDir </path/to/genomeDir>` : folder where you have put the genome index
+	- `--readFilesIn </path/to/read1> ` : path to a fastq file. If the reads are paired, then also include the path to the second fastq file 
+	- `--runThreadN <NumberOfThreads>`: number of threads to run on.
+	- `--outFileNamePrefix  <prefix> ` : prefix of the output files, typically something like `output_directory/sampleName.` 
+
 
 
 !!! Note
@@ -109,53 +141,205 @@ Important notes :
 
 !!! Warning
 
-	Remember : request a maximum of 30G and 8 CPUs for 1 hour.
+	Mapping reads and generating a sorted BAM from one of the mouseMT FASTQ file will take less than a minute and very little RAM, but on a real dataset it should take from 15 minutes to an hour per sample and require at least 30G.
 
 
-??? done "STAR mapping script"
 
+??? success "STAR mapping script"
+
+	We will be using a job array to map each file in different job that will run at the same time.
+
+	First create a file named `sampleNames.txt`, containing the sample names:
 
 	```
+	sample_a1
+	sample_a2
+	sample_a3
+	sample_a4
+	sample_b1
+	sample_b2
+	sample_b3
+	sample_b4
+	```
+	it can also be found in the cluster at `/shared/data/Solutions/mouseMT/sampleNames.txt`
+
+	```sh
 	#!/usr/bin/bash
 	#SBATCH --job-name=star-aln
-	#SBATCH --time=01:00:00
-	#SBATCH --cpus-per-task=8
-	#SBATCH --mem=30G
-	#SBATCH -o star-aln.o
-	#SBATCH -e star-aln.e
-
+	#SBATCH --time=00:10:00
+	#SBATCH --cpus-per-task=4
+	#SBATCH --mem=1G
+	#SBATCH -o star-aln.raw.%a.o
+	#SBATCH --array 1-8%8
 
 	ml star
-	outDIR=STAR_Ruhland2016
 
-	mkdir -p $outDIR
+	mkdir -p 042_STAR_map_raw
 
-	dataDIR=/shared/data/DATA/Ruhland2016
+	SAMPLE=`sed -n ${SLURM_ARRAY_TASK_ID}p sampleNames.txt`
 
-	genomeDIR=/shared/data/DATA/Mouse_STAR_index
+	FASTQ_NAME=/shared/data/DATA/mouseMT/${sampleName}.fastq
 
-	STAR --runThreadN 8 --genomeDir $genomeDIR \
-                  --outSAMtype BAM SortedByCoordinate --outReadsUnmapped Fastx \
-                  --outFileNamePrefix $outDIR/SRR3180535_EtOH1_1 \
+	STAR --runThreadN 4 --genomeDir 041_STAR_reference/ \
+                  --outSAMtype BAM SortedByCoordinate \
+                  --outFileNamePrefix  042_STAR_map_raw/${SAMPLE}. \
                   --quantMode GeneCounts \
-                  --readFilesIn $dataDIR/SRR3180535_EtOH1_1.fastq.gz --readFilesCommand zcat \
+                  --readFilesIn $FASTQ_NAME
 
 	```
+	it can also be found in the cluster at `/shared/data/Solutions/mouseMT/042_STAR_map_raw.sh`
+
+	and its results can be found at `/shared/data/Solutions/mouseMT/042_STAR_map_raw/`
+
 
 	The options of STAR are :
 
-	 * **--runThreadN 8 ** : 8 threads to go faster.
-	 * **--genomeDir $genomeDIR** : path of the genome to map to.
-     * **--outSAMtype BAM SortedByCoordinate ** : output a coordinate-sorted BAM file.
-     * **--outReadsUnmapped Fastx** : output the non-mapping reads (in case we want to analyse them).
-     * **--outFileNamePrefix $outDIR/$fastqFILE** : prefix of output files.
-     * **--quantMode GeneCounts** : will create a file with counts of reads per gene.
-     * **--readFilesIn $dataDIR/$fastqFILE ** : input read file.
-     * **--readFilesCommand zcat** : command to unzip the input file.
+	 * `--runThreadN 4 ` : 4 threads to go faster.
+	 * `--genomeDir 041_STAR_reference` : path of the genome to map to.
+     * `--outSAMtype BAM SortedByCoordinate ` : output a coordinate-sorted BAM file.
+     * `--outFileNamePrefix 042_STAR_map_raw/${SAMPLE}.` : prefix of output files.
+     * `--quantMode GeneCounts** : will create a file with counts of reads per gene.
+     * `--readFilesIn $FASTQ_NAME ** : input read file.
 
 
 
-??? done "advanced : STAR mapping script with array job"
+## QC on the aligned reads
+
+You can call MultiQC on the STAR output folder to gather a report on the individual alignments.
+
+
+**Task :** use `multiqc` to generate a QC report on the results of your mapping.
+
+ * Evaluate the alignment statistics. Do you consider this to be a good alignment?
+ * How many unmapped reads are there? Where might this come from, and how would you determine this?
+ * What could you say about library strandedness ? 
+
+??? success "script and answers"
+
+	```sh
+	#!/usr/bin/bash
+	#SBATCH --job-name=map-multiqc
+	#SBATCH --time=00:30:00
+	#SBATCH --cpus-per-task=1
+	#SBATCH --mem=1G
+	#SBATCH -o multiqc-map-raw.o
+	
+	multiqc -n 043_multiqc_mouseMT_mapped_raw.html -f --title mapped_raw 042_STAR_map_raw/
+	```
+	it can also be found in the cluster at `043_multiqc_map_raw.sh`
+
+
+	[ Download the report ](../assets/html/043_multiqc_mouseMT_mapped_raw.html){target=_blank : .md-button }
+
+## Comparison of mapping the trimmed reads
+
+After having mapped the raw reads, we also map the trimmed reads and then compare the results to decide which one we want to use for the rest of our analysis.
+
+We will spare you the mapping of the trimmed read and let you directly download the mapping multiqc report:
+
+
+[ trimmed reads mapping  report ](../assets/html/045_multiqc_mouseMT_mapped_trimmed.html){target=_blank : .md-button }
+
+
+
+??? note "For the curious: scripts for the mapping of trimmed reads"
+	
+	```sh
+	#!/usr/bin/bash
+	#SBATCH --job-name=star-aln
+	#SBATCH --time=00:10:00
+	#SBATCH --cpus-per-task=4
+	#SBATCH --mem=1G
+	#SBATCH -o star-aln.trimmed.%a.o
+	#SBATCH --array 1-8%8
+	
+	ml star
+	
+	mkdir -p 044_STAR_map_trimmed
+	
+	SAMPLE=`sed -n ${SLURM_ARRAY_TASK_ID}p sampleNames.txt`
+	
+	FASTQ_NAME=030_trim/${sampleName}.trimmed.fastq
+	
+	STAR --runThreadN 4 --genomeDir 041_STAR_reference/ \
+	                 --outSAMtype BAM SortedByCoordinate \
+	                 --outFileNamePrefix  044_STAR_map_trimmed/${SAMPLE}_trimmed. \
+	                 --quantMode GeneCounts \
+	                 --readFilesIn $FASTQ_NAME
+	```
+
+	```sh
+	#!/usr/bin/bash
+	#SBATCH --job-name=map-multiqc
+	#SBATCH --time=00:30:00
+	#SBATCH --cpus-per-task=1
+	#SBATCH --mem=1G
+	#SBATCH -o multiqc-map-raw.o
+	
+	multiqc -n 045_multiqc_mouseMT_mapped_trimmed.html -f --title mapped_trimmed 044_STAR_map_trimmed/
+	```
+
+
+## ADDITIONAL : pseudo-aligning with salmon
+
+[salmon website](https://salmon.readthedocs.io/en/latest/salmon.html){target=_blank : .md-button }
+
+salmon can allow you to quantify transcript expression without explicitly aligning the sequenced reads onto the reference genome with its gene and splice junction annotations, but to a simplification of the corresponding transcriptome, thus saving computational resources.
+
+We refer you to the tool's documentation in order to see [how the reference index is computed](https://salmon.readthedocs.io/en/latest/salmon.html#preparing-transcriptome-indices-mapping-based-mode).
+
+
+**Task :** run salmon to quantify the expression of either the Ruhland or Liu dataset. 
+ 
+ * Use the tool documentation to craft your command line.
+ * precomputed indices can be found in `/shared/data/DATA/Mouse_salmon_index` and `/shared/data/DATA/Human_salmon_index`.
+
+
+??? success "script"
+
+	```
+	#!/usr/bin/bash
+	#SBATCH --job-name=salmonRuhland
+	#SBATCH --time=01:00:00
+	#SBATCH --cpus-per-task=8
+	#SBATCH --mem=30G
+	#SBATCH -o salmon_ruhland2016.%a.o
+	#SBATCH -e salmon_ruhland2016.%a.e
+	#SBATCH --array 1-6%1
+
+	ml salmon
+
+	outDIR=salmon_Ruhland2016
+	
+	mkdir -p $outDIR
+	
+	dataDIR=/shared/data/DATA/Ruhland2016
+	
+	sourceFILE=Ruhland2016.fastqFiles.txt
+	
+	fastqFILE=`sed -n ${SLURM_ARRAY_TASK_ID}p $sourceFILE`
+
+	genomeDIR=/shared/data/DATA/Mouse_salmon_index
+	
+	salmon quant -i $genomeDIR -l A \
+				-r $dataDIR/$fastqFILE \
+				-p 8 --validateMappings --gcBias --seqBias \
+				-o $outDIR
+				
+	```
+
+
+
+## ADDITIONAL Mapping reads from Ruhland2016 on the reference 
+
+**Task :** Using STAR, align the raw FASTQ files of the mouseMT dataset against thed mouse mitochondrial reference you just created
+
+ * Mapping reads and generating a sorted BAM from one of the Ruhland2016 et al. FASTQ files should take about 20 minutes.
+ * Use the full indexed genome at `/shared/data/DATA/Mouse_STAR_index/`, rather than the one we just made.
+ * **IMPORTANT**: use the following option in your STAR command: `--outTmpDir /tmp/${SLURM_JOB_USER}_${SLURM_JOB_ID}/`. You can use the manual to look up what this option does. The slurm variables ensure a distinct directory is created in `/tmp/` for each user and for each job.
+
+
+??? success "STAR mapping script of the Ruhland2016 data"
 
 	The following sets up an array of tasks to align all samples.
 
@@ -217,40 +401,6 @@ Important notes :
 
 
 
-## QC on the aligned reads
-
-You can call MultiQC on the STAR output folder to gather a report on the individual alignments.
-
-Here we've aligned a single sample, but usually this would cover all your samples.
-
-**Task :** use `multiqc` to generate a QC report on the results of your mapping.
-
- * Evaluate the alignment statistics. Do you consider this to be a good alignment?
- * How many unmapped reads are there? Where might this come from, and how would you determine this?
- * What could you say about library strandedness ? 
-
-??? done "script and answers"
-
-	```sh
-	#!/usr/bin/bash
-	#SBATCH --job-name=multiqc
-	#SBATCH --time=00:30:00
-	#SBATCH --cpus-per-task=1
-	#SBATCH --mem=1G
-	#SBATCH -o multiqc_star_Ruhland2016.o
-	#SBATCH -e multiqc_star_Ruhland2016.e
-	
-	
-	mkdir -p STAR_MULTIQC_Ruhland2016/
-	
-	multiqc -o STAR_MULTIQC_Ruhland2016/ STAR_Ruhland2016/
-	
-	```
-
-	Result : 
-
-	[ Download the report ](../assets/html/multiqc_report.SRR3180535_EtOH1_1.html){: .md-button }
-
 
 ## ADDITIONNAL : STAR 2-Pass
 
@@ -266,7 +416,7 @@ STAR <1st round options> --sjdbFileChrStartEnd sample_SJ.out.tab
 **Task :** run STAR in this STAR-2pass mode on the same sample as before and evaluate the results.
 
 
-??? done "script"
+??? success "script"
 
 	```
 	#!/usr/bin/bash
@@ -299,55 +449,6 @@ STAR <1st round options> --sjdbFileChrStartEnd sample_SJ.out.tab
 	                  --sjdbFileChrStartEnd $outDIR/${fastqFILE}SJ.out.tab \
 	                  --readFilesIn $dataDIR/$fastqFILE --readFilesCommand zcat \
 
-	```
-
-
-## ADDITIONAL : pseudo-aligning with salmon
-
-[salmon website](https://salmon.readthedocs.io/en/latest/salmon.html){: .md-button }
-
-salmon can allow you to quantify transcript expression without explicitly aligning the sequenced reads onto the reference genome with its gene and splice junction annotations, but to a simplification of the corresponding transcriptome, thus saving computational resources.
-
-We refer you to the tool's documentation in order to see [how the reference index is computed](https://salmon.readthedocs.io/en/latest/salmon.html#preparing-transcriptome-indices-mapping-based-mode).
-
-
-**Task :** run salmon to quantify the expression of either the Ruhland or Liu dataset. 
- 
- * Use the tool documentation to craft your command line.
- * precomputed indices can be found in `/shared/data/Mouse_salmon_index` and `/shared/data/Human_salmon_index`.
-
-
-??? done "script"
-
-	```
-	#!/usr/bin/bash
-	#SBATCH --job-name=salmonRuhland
-	#SBATCH --time=01:00:00
-	#SBATCH --cpus-per-task=8
-	#SBATCH --mem=30G
-	#SBATCH -o salmon_ruhland2016.%a.o
-	#SBATCH -e salmon_ruhland2016.%a.e
-	#SBATCH --array 1-6%1
-
-	ml salmon
-
-	outDIR=salmon_Ruhland2016
-	
-	mkdir -p $outDIR
-	
-	dataDIR=/shared/data/DATA/Ruhland2016
-	
-	sourceFILE=Ruhland2016.fastqFiles.txt
-	
-	fastqFILE=`sed -n ${SLURM_ARRAY_TASK_ID}p $sourceFILE`
-
-	genomeDIR=/shared/data/DATA/Mouse_salmon_index
-	
-	salmon quant -i $genomeDIR -l A \
-				-r $dataDIR/$fastqFILE \
-				-p 8 --validateMappings --gcBias --seqBias \
-				-o $outDIR
-				
 	```
 
 
