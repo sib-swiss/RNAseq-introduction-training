@@ -165,6 +165,19 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
 
 ??? success "alternative sbatch using an array job"
 
+	First create a file named `sampleNames.txt`, containing the sample names:
+
+	```
+	sample_a1
+	sample_a2
+	sample_a3
+	sample_a4
+	sample_b1
+	sample_b2
+	sample_b3
+	sample_b4
+	```
+	it can also be found in the cluster at `/shared/data/Solutions/mouseMT/sampleNames.txt`
 
 	```
 	#!/usr/bin/bash
