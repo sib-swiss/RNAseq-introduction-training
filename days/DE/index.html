@@ -533,26 +533,33 @@
     writing the table of results
   </a>
   
-    <nav class="md-nav" aria-label="writing the table of results">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#differential-expression-task" class="md-nav__link">
+    Differential Expression - Task
+  </a>
+  
+    <nav class="md-nav" aria-label="Differential Expression - Task">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#task" class="md-nav__link">
-    Task
+  <a href="#ruhland2016-deseq2-correction" class="md-nav__link">
+    Ruhland2016 - DESeq2 correction
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#deseq2-correction" class="md-nav__link">
-    DESeq2 correction
+  <a href="#ruhland2016-edger-correction" class="md-nav__link">
+    Ruhland2016 - EdgeR correction
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#edger-correction" class="md-nav__link">
-    EdgeR correction
+  <a href="#tuch-2010-edger-correction" class="md-nav__link">
+    Tuch 2010 - EdgeR correction
   </a>
   
 </li>
@@ -711,26 +718,33 @@
     writing the table of results
   </a>
   
-    <nav class="md-nav" aria-label="writing the table of results">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#differential-expression-task" class="md-nav__link">
+    Differential Expression - Task
+  </a>
+  
+    <nav class="md-nav" aria-label="Differential Expression - Task">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#task" class="md-nav__link">
-    Task
+  <a href="#ruhland2016-deseq2-correction" class="md-nav__link">
+    Ruhland2016 - DESeq2 correction
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#deseq2-correction" class="md-nav__link">
-    DESeq2 correction
+  <a href="#ruhland2016-edger-correction" class="md-nav__link">
+    Ruhland2016 - EdgeR correction
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#edger-correction" class="md-nav__link">
-    EdgeR correction
+  <a href="#tuch-2010-edger-correction" class="md-nav__link">
+    Tuch 2010 - EdgeR correction
   </a>
   
 </li>
@@ -788,7 +802,7 @@
 <p>The analysis of the read count data will be done on an RStudio instance, using the R language and some relevant <a href="http://bioconductor.org/">Bioconductor</a> libraries.</p>
 <p>As you start your session on the RStudio server, please make sure that you know where your data is situated with respect to your <strong>working directory</strong> (use <code>getwd()</code> and <code>setwd()</code> to respectively : know what your working is, and change it as necessary).</p>
 <h2 id="differential-expression-inference">Differential Expression Inference</h2>
-<p>Let&rsquo;s analze the <code>mouseMT</code> toy dataset.</p>
+<p>Let&rsquo;s analyze the <code>mouseMT</code> toy dataset.</p>
 <details class="note">
 <summary>DESeq2 analysis</summary>
 <div class="highlight"><pre><span></span><code><span class="nf">library</span><span class="p">(</span><span class="n">DESeq2</span><span class="p">)</span>
@@ -1306,27 +1320,44 @@ Up       1
 <p>Here is the list of <a href="https://bioconductor.org/packages/release/BiocViews.html#___OrgDb">orgDb packages</a>. For non-model organisms it will be more complex.</p>
 </blockquote>
 </div>
-<h3 id="task">Task</h3>
-<p>Use either edgeR or DESeq2 to conduct a differential expression analysis on the Ruhland2016 and/or Liu2015 dataset.</p>
-<p>You can find the expression matrices on the server at: <code>/shared/data/Solutions/Ruhland2016/countFiles/featureCounts_Ruhland2016.counts.txt</code> and <code>/shared/data/Solutions/Liu2015/countFiles/featureCounts_Liu2015.counts.txt</code></p>
-<p>Or you may download them :</p>
-<p><a :=":" class="md-button" href="../../assets/txt/featureCounts_Liu2015.counts.txt" target="_blank">Liu2015 count matrix</a></p>
-<p><a :=":" class="md-button" href="../../assets/txt/featureCounts_Ruhland2016.counts.txt" target="_blank">Ruhland2016 count matrix</a></p>
+<h2 id="differential-expression-task">Differential Expression - Task</h2>
+<p>Use either edgeR or DESeq2 to conduct a differential expression analysis.</p>
+<p>You may play with either of the following dataset:</p>
+<ul>
+<li>Ruhland2016<ul>
+<li>simple 1 factor design</li>
+<li><code>/shared/data/Solutions/Ruhland2016/countFiles/featureCounts_Ruhland2016.counts.txt</code></li>
+<li><a :=":" class="md-button" href="../../assets/txt/featureCounts_Ruhland2016.counts.txt" target="_blank"> <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M0 64C0 28.7 28.7 0 64 0h160v128c0 17.7 14.3 32 32 32h128v288c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0l128 128z"/></svg></span> Ruhland2016 count matrix</a></li>
+</ul>
+</li>
+<li>the Liu2015 dataset:<ul>
+<li>simple 1 factor design</li>
+<li><code>/shared/data/Solutions/Liu2015/countFiles/featureCounts_Liu2015.counts.txt</code></li>
+<li><a :=":" class="md-button" href="../../assets/txt/featureCounts_Liu2015.counts.txt" target="_blank"> <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M0 64C0 28.7 28.7 0 64 0h160v128c0 17.7 14.3 32 32 32h128v288c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0l128 128z"/></svg></span> Liu2015 count matrix</a></li>
+</ul>
+</li>
+<li><a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0009317">Tuch 2010</a> dataset<ul>
+<li>2 factors design : 3 patients (8, 33, and 51) had each 1 sample from tumor tissue (T) and normal tissue (N) sequenced. </li>
+<li>the goal is to find the difference between tumor and normal while taking the patient variable into account.</li>
+<li><code>/shared/data/Solutions/Tuch2010/Tuch_et_al_2010_counts.csv</code></li>
+<li><a :=":" class="md-button" href="../../assets/txt/Tuch_et_al_2010_counts.csv" target="_blank"> <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M0 64C0 28.7 28.7 0 64 0h160v128c0 17.7 14.3 32 32 32h128v288c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0l128 128z"/></svg></span> Tuch 2010 count matrix</a></li>
+</ul>
+</li>
+</ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul>
 <li>Generally, users find the syntax and workflow of DESeq2 easier for getting started.</li>
 <li>If you have the time, conduct a differential expression analysis using both DESeq2 and edgeR.</li>
-<li>Follow the vignettes/user&rsquo;s guide! They are the most up-to-date and generally contain everything a newcomer might need, including worked-out examples.</li>
+<li>
+<p>Follow the vignettes/user&rsquo;s guide! They are the most up-to-date and generally contain everything a newcomer might need, including worked-out examples.</p>
+</li>
+<li>
+<p>when dealing with more than one factor, you will need a <strong>model matrix</strong> to specify the experimental design to the library, and to craft your <strong>contrasts</strong> of interest. The <a href="https://csoneson.github.io/ExploreModelMatrix/index.html">ExploreModelMatrix</a> package may help you a lot in that regard.</p>
+</li>
 </ul>
 </div>
-<!-- Suggestion: ExploreModelMatrix for visualising contrasts:
-https://github.com/csoneson/ExploreModelMatrix
-https://bioconductor.org/packages/release/bioc/html/ExploreModelMatrix.html
-Soneson C, Marini F, Geier F, Love M, Stadler M (2020). “ExploreModelMatrix: Interactive exploration for improved understanding of design matrices and linear models in R.” F1000Research, 9, 512. doi: 10.12688/f1000research.24187.2. 
--->
-
-<h3 id="deseq2-correction">DESeq2 correction</h3>
+<h3 id="ruhland2016-deseq2-correction">Ruhland2016 - DESeq2 correction</h3>
 <p><a :=":" class="md-button" href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html" target="_blank">DESeq2 vignette</a></p>
 <details class="success">
 <summary>read in the data</summary>
@@ -1461,9 +1492,7 @@ Soneson C, Marini F, Geier F, Love M, Stadler M (2020). “ExploreModelMatrix: I
 <span class="nf">write.csv</span><span class="p">(</span><span class="w"> </span><span class="n">res</span><span class="w"> </span><span class="p">,</span><span class="s">&#39;Ruhland2016.DESeq2.results.csv&#39;</span><span class="w"> </span><span class="p">)</span>
 </code></pre></div>
 </details>
-<!-- Question from students: how to map ENSEMBL gene IDs to gene names? -->
-
-<h3 id="edger-correction">EdgeR correction</h3>
+<h3 id="ruhland2016-edger-correction">Ruhland2016 - EdgeR correction</h3>
 <p><a :=":" class="md-button" href="https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf" target="_blank">edgeR user&rsquo;s guide</a></p>
 <details class="success">
 <summary>read in the data</summary>
@@ -1621,6 +1650,8 @@ Up       210
 <p>The logFC are highly correlated.
 FDRs show less correlation but their <strong>rank</strong> are higly correlated : they come in a very similar order.</p>
 </details>
+<h3 id="tuch-2010-edger-correction">Tuch 2010 - EdgeR correction</h3>
+<p>We refer you here to section 4.1 of <a href="https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf">edgeR&rsquo;s vignette</a>.</p>
 <h2 id="additional-importing-counts-from-salmon-with-tximport">Additional : importing counts from salmon with <code>tximport</code></h2>
 <p>The <code>tximport</code> R packages offers a fairly simple set of functions to get <strong>transcript-level</strong> expression quantification from salmon or kallisto into a differential <strong>gene</strong> expression analysis.</p>
 <p><strong>Task :</strong> import salmon transcript-level quantification in R in order to perform a DE analysis on it using either edgeR or DESeq2.

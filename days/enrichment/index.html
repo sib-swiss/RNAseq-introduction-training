@@ -551,7 +551,7 @@
 <h2 id="material">Material</h2>
 <p><a :=":" class="md-button" href="../../assets/pdf/RNA-Seq_07_Enrichment_analysis.pdf" target="_blank"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M0 64C0 28.7 28.7 0 64 0h160v128c0 17.7 14.3 32 32 32h128v144H176c-35.3 0-64 28.7-64 64v144H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0l128 128zM176 352h32c30.9 0 56 25.1 56 56s-25.1 56-56 56h-16v32c0 8.8-7.2 16-16 16s-16-7.2-16-16V368c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24h-16v48h16zm96-80h32c26.5 0 48 21.5 48 48v64c0 26.5-21.5 48-48 48h-32c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16v-64c0-8.8-7.2-16-16-16h-16v96h16zm80-112c0-8.8 7.2-16 16-16h48c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32v32h32c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32v48c0 8.8-7.2 16-16 16s-16-7.2-16-16V368z"/></svg></span> Download the presentation</a></p>
 <p><a href="https://www.rstudio.com/">Rstudio website</a></p>
-<p><a href="http://yulab-smu.top/clusterProfiler-book/">vignette/e-book</a></p>
+<p><a href="http://yulab-smu.top/clusterProfiler-book/">clusterProfiler vignette/e-book</a></p>
 <h2 id="downstream-analysis-over-representation-analysis">Downstream analysis : over-representation analysis</h2>
 <p>Having lists of differentially-expressed genes is quite interesting in itself,
 however when there are many DE genes, it can be interesting to map these results 
@@ -559,9 +559,11 @@ onto curated sets of genes associated with known biological functions.</p>
 <p>Here, we propose to use <a href="https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html">clusterProfiler</a>,
 which regroups several enrichment detection algorithms onto several databases.</p>
 <p>We recommend you get inspiration from their very nice <a href="http://yulab-smu.top/clusterProfiler-book/">vignette/e-book</a> to perform your own analyses.</p>
-<p>The proposed correction will concern the results obtained with DESeq2 on the Ruhland2016 dataset.</p>
+<p>If you do not have a list of DE genes from your previous analysis, you may use the following table:</p>
+<p><a :=":" class="md-button" href="../../assets/txt/Ruhland2016.DESeq2.results.csv" target="_blank"> <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M0 64C0 28.7 28.7 0 64 0h160v128c0 17.7 14.3 32 32 32h128v288c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0l128 128z"/></svg></span> Ruhland2016 DESeq2 results</a></p>
+<p>The proposed correction will concern these.</p>
 <details class="success">
-<summary>analysis with clusterProfiler</summary>
+<summary>Ruhland2016 analysis with clusterProfiler</summary>
 <p>We begin by reading the results of the DE analysis. Adapt this to your own analysis.
 Beware that edgeR and DESeq2 use different column names in their result tables (log2FoldChange/logFC , padj/FDR).</p>
 <div class="highlight"><pre><span></span><code><span class="nf">library</span><span class="p">(</span><span class="n">AnnotationHub</span><span class="p">)</span>
