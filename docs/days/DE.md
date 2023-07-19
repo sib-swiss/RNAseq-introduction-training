@@ -35,7 +35,8 @@ As you start your session on the RStudio server, please make sure that you know 
 
 ## Differential Expression Inference
 
-Let's analze the `mouseMT` toy dataset.
+Let's analyze the `mouseMT` toy dataset.
+
 
 ??? note "DESeq2 analysis"
 
@@ -721,17 +722,27 @@ Let's analze the `mouseMT` toy dataset.
 	> Here is the list of [orgDb packages](https://bioconductor.org/packages/release/BiocViews.html#___OrgDb). For non-model organisms it will be more complex.
 
 
-### Task
+## Differential Expression - Task
 
-Use either edgeR or DESeq2 to conduct a differential expression analysis on the Ruhland2016 and/or Liu2015 dataset.
+Use either edgeR or DESeq2 to conduct a differential expression analysis.
 
-You can find the expression matrices on the server at: `/shared/data/Solutions/Ruhland2016/countFiles/featureCounts_Ruhland2016.counts.txt` and `/shared/data/Solutions/Liu2015/countFiles/featureCounts_Liu2015.counts.txt`
+You may play with either of the following dataset:
 
-Or you may download them :
+ * Ruhland2016
+ 	* simple 1 factor design
+ 	* `/shared/data/Solutions/Ruhland2016/countFiles/featureCounts_Ruhland2016.counts.txt`
+ 	* [ :fontawesome-solid-file: Ruhland2016 count matrix](../assets/txt/featureCounts_Ruhland2016.counts.txt){target=_blank : .md-button }
+ * the Liu2015 dataset:
+	 * simple 1 factor design
+	 * `/shared/data/Solutions/Liu2015/countFiles/featureCounts_Liu2015.counts.txt`
+	 * [ :fontawesome-solid-file: Liu2015 count matrix](../assets/txt/featureCounts_Liu2015.counts.txt){target=_blank : .md-button }
+ * [Tuch 2010](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0009317) dataset
+ 	* 2 factors design : 3 patients (8, 33, and 51) had each 1 sample from tumor tissue (T) and normal tissue (N) sequenced. 
+ 	* the goal is to find the difference between tumor and normal while taking the patient variable into account.
+ 	* `/shared/data/Solutions/Tuch2010/Tuch_et_al_2010_counts.csv`
+	* [ :fontawesome-solid-file: Tuch 2010 count matrix](../assets/txt/Tuch_et_al_2010_counts.csv){target=_blank : .md-button }
 
-[Liu2015 count matrix](../assets/txt/featureCounts_Liu2015.counts.txt){target=_blank : .md-button }
 
-[Ruhland2016 count matrix](../assets/txt/featureCounts_Ruhland2016.counts.txt){target=_blank : .md-button }
 
 !!! note
 
@@ -739,13 +750,10 @@ Or you may download them :
 	 * If you have the time, conduct a differential expression analysis using both DESeq2 and edgeR.
 	 * Follow the vignettes/user's guide! They are the most up-to-date and generally contain everything a newcomer might need, including worked-out examples.
 
-<!-- Suggestion: ExploreModelMatrix for visualising contrasts:
-https://github.com/csoneson/ExploreModelMatrix
-https://bioconductor.org/packages/release/bioc/html/ExploreModelMatrix.html
-Soneson C, Marini F, Geier F, Love M, Stadler M (2020). “ExploreModelMatrix: Interactive exploration for improved understanding of design matrices and linear models in R.” F1000Research, 9, 512. doi: 10.12688/f1000research.24187.2. 
--->
+	 * when dealing with more than one factor, you will need a **model matrix** to specify the experimental design to the library, and to craft your **contrasts** of interest. The [ExploreModelMatrix](https://csoneson.github.io/ExploreModelMatrix/index.html) package may help you a lot in that regard.
 
-### DESeq2 correction
+
+### Ruhland2016 - DESeq2 correction
 
 [DESeq2 vignette](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html){target=_blank : .md-button }
 
@@ -914,10 +922,9 @@ Soneson C, Marini F, Geier F, Love M, Stadler M (2020). “ExploreModelMatrix: I
 	```
 
 
-<!-- Question from students: how to map ENSEMBL gene IDs to gene names? -->
 
 
-### EdgeR correction
+### Ruhland2016 - EdgeR correction
 
 [edgeR user's guide](https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf){target=_blank : .md-button }
 
@@ -1120,6 +1127,11 @@ Soneson C, Marini F, Geier F, Love M, Stadler M (2020). “ExploreModelMatrix: I
 	The logFC are highly correlated.
 	FDRs show less correlation but their **rank** are higly correlated : they come in a very similar order.
 
+
+
+### Tuch 2010 - EdgeR correction
+
+We refer you here to section 4.1 of [edgeR's vignette](https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf).
 
 
 ## Additional : importing counts from salmon with `tximport`

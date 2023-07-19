@@ -13,7 +13,7 @@ Once the reads have been mapped and counted, one can assess the differential exp
 
 [Rstudio website](https://www.rstudio.com/)
 
-[vignette/e-book](http://yulab-smu.top/clusterProfiler-book/)
+[clusterProfiler vignette/e-book](http://yulab-smu.top/clusterProfiler-book/)
 
 
 ## Downstream analysis : over-representation analysis
@@ -27,10 +27,15 @@ which regroups several enrichment detection algorithms onto several databases.
 
 We recommend you get inspiration from their very nice [vignette/e-book](http://yulab-smu.top/clusterProfiler-book/) to perform your own analyses.
 
-The proposed correction will concern the results obtained with DESeq2 on the Ruhland2016 dataset.
+If you do not have a list of DE genes from your previous analysis, you may use the following table:
+
+[ :fontawesome-solid-file: Ruhland2016 DESeq2 results](../assets/txt/Ruhland2016.DESeq2.results.csv){target=_blank : .md-button }
+
+The proposed correction will concern these.
 
 
-??? success "analysis with clusterProfiler"
+
+??? success "Ruhland2016 analysis with clusterProfiler"
 
 	We begin by reading the results of the DE analysis. Adapt this to your own analysis.
 	Beware that edgeR and DESeq2 use different column names in their result tables (log2FoldChange/logFC , padj/FDR).
