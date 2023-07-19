@@ -9,8 +9,10 @@
       
       
       
-        <link rel="prev" href="../counting/">
+        <link rel="prev" href="../mapping/">
       
+      
+        <link rel="next" href="../enrichment/">
       
       <link rel="icon" href="../../assets/images/SIB_logo.svg">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.18">
@@ -411,20 +413,6 @@
               
   
   
-  
-    <li class="md-nav__item">
-      <a href="../counting/" class="md-nav__link">
-        Read counting
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
     
   
   
@@ -475,7 +463,77 @@
     Differential Expression Inference
   </a>
   
-    <nav class="md-nav" aria-label="Differential Expression Inference">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reading" class="md-nav__link">
+    reading
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-the-experimental-design" class="md-nav__link">
+    setting up the experimental design
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-the-deseq-data-object-and-some-qc" class="md-nav__link">
+    creating the DESeq data object and some QC
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis-without-the-outliers" class="md-nav__link">
+    analysis without the outliers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#saving-results-to-file" class="md-nav__link">
+    saving results to file
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reading_1" class="md-nav__link">
+    reading
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experimental-design" class="md-nav__link">
+    experimental design
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edger-object-preprocessing-and-qc" class="md-nav__link">
+    edgeR  object preprocessing and QC
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis-without-the-outliers_1" class="md-nav__link">
+    analysis without the outliers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing-the-table-of-results" class="md-nav__link">
+    writing the table of results
+  </a>
+  
+    <nav class="md-nav" aria-label="writing the table of results">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -505,13 +563,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#downstream-analysis-over-representation-analysis" class="md-nav__link">
-    Downstream analysis : over-representation analysis
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#additional-importing-counts-from-salmon-with-tximport" class="md-nav__link">
     Additional : importing counts from salmon with tximport
   </a>
@@ -522,6 +573,20 @@
   
 </nav>
       
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../enrichment/" class="md-nav__link">
+        Enrichment analysis
+      </a>
     </li>
   
 
@@ -576,7 +641,77 @@
     Differential Expression Inference
   </a>
   
-    <nav class="md-nav" aria-label="Differential Expression Inference">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reading" class="md-nav__link">
+    reading
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-the-experimental-design" class="md-nav__link">
+    setting up the experimental design
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-the-deseq-data-object-and-some-qc" class="md-nav__link">
+    creating the DESeq data object and some QC
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis-without-the-outliers" class="md-nav__link">
+    analysis without the outliers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#saving-results-to-file" class="md-nav__link">
+    saving results to file
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reading_1" class="md-nav__link">
+    reading
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experimental-design" class="md-nav__link">
+    experimental design
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edger-object-preprocessing-and-qc" class="md-nav__link">
+    edgeR  object preprocessing and QC
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis-without-the-outliers_1" class="md-nav__link">
+    analysis without the outliers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing-the-table-of-results" class="md-nav__link">
+    writing the table of results
+  </a>
+  
+    <nav class="md-nav" aria-label="writing the table of results">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -602,13 +737,6 @@
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#downstream-analysis-over-representation-analysis" class="md-nav__link">
-    Downstream analysis : over-representation analysis
-  </a>
   
 </li>
       
@@ -644,20 +772,14 @@
 <ul>
 <li>describe the different steps of data normalization and modelling commonly used for RNA-seq data.</li>
 <li>detect significantly differentially-expressed genes using either edgeR or DESeq2.</li>
-<li>perform downstream analysis on gene sets, such as annotation (e.g. GO terms or Reactome pathways) over-representation.</li>
 </ul>
 <h2 id="material">Material</h2>
-<p><a class="md-button" href="../../assets/pdf/RNA-Seq_06_DE.pdf"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M0 64C0 28.7 28.7 0 64 0h160v128c0 17.7 14.3 32 32 32h128v144H176c-35.3 0-64 28.7-64 64v144H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0l128 128zM176 352h32c30.9 0 56 25.1 56 56s-25.1 56-56 56h-16v32c0 8.8-7.2 16-16 16s-16-7.2-16-16V368c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24h-16v48h16zm96-80h32c26.5 0 48 21.5 48 48v64c0 26.5-21.5 48-48 48h-32c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16v-64c0-8.8-7.2-16-16-16h-16v96h16zm80-112c0-8.8 7.2-16 16-16h48c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32v32h32c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32v48c0 8.8-7.2 16-16 16s-16-7.2-16-16V368z"/></svg></span> Download the presentation</a></p>
-<!-- Suggestion: RStudio reminders ??? Or link to some course or something? -->
+<p><a :=":" class="md-button" href="../../assets/pdf/RNA-Seq_06_DE.pdf" target="_blank"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M0 64C0 28.7 28.7 0 64 0h160v128c0 17.7 14.3 32 32 32h128v144H176c-35.3 0-64 28.7-64 64v144H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0l128 128zM176 352h32c30.9 0 56 25.1 56 56s-25.1 56-56 56h-16v32c0 8.8-7.2 16-16 16s-16-7.2-16-16V368c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24h-16v48h16zm96-80h32c26.5 0 48 21.5 48 48v64c0 26.5-21.5 48-48 48h-32c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16v-64c0-8.8-7.2-16-16-16h-16v96h16zm80-112c0-8.8 7.2-16 16-16h48c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32v32h32c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32v48c0 8.8-7.2 16-16 16s-16-7.2-16-16V368z"/></svg></span> Download the presentation</a></p>
 <p><a href="https://www.rstudio.com/">Rstudio website</a></p>
-<!-- Suggestion: ExploreModelMatrix for visualising contrasts:
-https://github.com/csoneson/ExploreModelMatrix
-https://bioconductor.org/packages/release/bioc/html/ExploreModelMatrix.html
-Soneson C, Marini F, Geier F, Love M, Stadler M (2020). “ExploreModelMatrix: Interactive exploration for improved understanding of design matrices and linear models in R.” F1000Research, 9, 512. doi: 10.12688/f1000research.24187.2. 
--->
+<!-- Suggestion: RStudio reminders ??? Or link to some course or something? -->
 
-<p><a class="md-button" href="https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf">edgeR user&rsquo;s guide</a></p>
-<p><a class="md-button" href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html">DESeq2 vignette</a></p>
+<p><a :=":" class="md-button" href="https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf" target="_blank">edgeR user&rsquo;s guide</a></p>
+<p><a :=":" class="md-button" href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html" target="_blank">DESeq2 vignette</a></p>
 <h2 id="connexion-to-the-rstudio-server">Connexion to the Rstudio server</h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -667,12 +789,529 @@ Soneson C, Marini F, Geier F, Love M, Stadler M (2020). “ExploreModelMatrix: I
 <p>As you start your session on the RStudio server, please make sure that you know where your data is situated with respect to your <strong>working directory</strong> (use <code>getwd()</code> and <code>setwd()</code> to respectively : know what your working is, and change it as necessary).</p>
 <h2 id="differential-expression-inference">Differential Expression Inference</h2>
 <p>Let&rsquo;s analze the <code>mouseMT</code> toy dataset.</p>
+<details class="note">
+<summary>DESeq2 analysis</summary>
+<div class="highlight"><pre><span></span><code><span class="nf">library</span><span class="p">(</span><span class="n">DESeq2</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">pheatmap</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="reading">reading</h2>
+<p>We will use the trimmed reads</p>
+<div class="highlight"><pre><span></span><code><span class="n">folder</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/shared/data/Solutions/mouseMT/044_STAR_map_trimmed/&quot;</span>
+
+<span class="c1"># we skip the 4 first lines, which contains </span>
+<span class="c1"># N_unmapped , N_multimapping , N_noFeature , N_ambiguous   </span>
+
+<span class="n">sample_a1_table</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">read.table</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="w"> </span><span class="n">folder</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sample_a1&quot;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;.ReadsPerGene.out.tab&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span>
+<span class="w">           </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">skip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="p">)</span>
+<span class="nf">head</span><span class="p">(</span><span class="w"> </span><span class="n">sample_a1_table</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>                    V2      V3      V4
+ENSMUSG00000064336  0       0       0   
+ENSMUSG00000064337  0       0       0   
+ENSMUSG00000064338  0       0       0   
+ENSMUSG00000064339  0       0       0   
+ENSMUSG00000064340  0       0       0   
+ENSMUSG00000064341  4046    1991    2055    
+</code></pre></div>
+<p>We are interested in the first columns, which contains counts for unstranded reads</p>
+<p>Let&rsquo;s use a loop to automatize the reading:
+<div class="highlight"><pre><span></span><code><span class="n">raw_counts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="w"> </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="nf">row.names</span><span class="p">(</span><span class="n">sample_a1_table</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+
+<span class="nf">for</span><span class="p">(</span><span class="w"> </span><span class="n">sample</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;a1&#39;</span><span class="p">,</span><span class="s">&#39;a2&#39;</span><span class="p">,</span><span class="s">&#39;a3&#39;</span><span class="p">,</span><span class="s">&#39;a4&#39;</span><span class="p">,</span><span class="s">&#39;b1&#39;</span><span class="p">,</span><span class="s">&#39;b2&#39;</span><span class="p">,</span><span class="s">&#39;b3&#39;</span><span class="p">,</span><span class="s">&#39;b4&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">){</span>
+<span class="w">  </span><span class="n">sample_table</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">read.table</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="w"> </span><span class="n">folder</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sample_&quot;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">sample</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;.ReadsPerGene.out.tab&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span>
+<span class="w">                            </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">skip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="n">raw_counts</span><span class="p">[</span><span class="n">sample</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sample_table</span><span class="p">[</span><span class="w"> </span><span class="nf">row.names</span><span class="p">(</span><span class="n">raw_counts</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;V2&quot;</span><span class="w"> </span><span class="p">]</span>
+
+<span class="p">}</span>
+
+<span class="nf">head</span><span class="p">(</span><span class="w"> </span><span class="n">raw_counts</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>                    a1      a2      a3      a4  b1  b2  b3  b4
+ENSMUSG00000064336  0       0       0       0   0   0   0   0
+ENSMUSG00000064337  0       0       0       0   0   0   0   0
+ENSMUSG00000064338  0       0       0       0   0   0   0   0
+ENSMUSG00000064339  0       0       0       2   0   0   0   0
+ENSMUSG00000064340  0       0       0       0   0   0   0   0
+ENSMUSG00000064341  4046    4098    4031    1   449 515 13  456
+</code></pre></div></p>
+<h2 id="setting-up-the-experimental-design">setting up the experimental design</h2>
+<div class="highlight"><pre><span></span><code><span class="c1">#note: levels let&#39;s us define the reference levels</span>
+<span class="n">treatment</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="m">4</span><span class="p">)),</span><span class="w"> </span><span class="n">levels</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="n">colData</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">treatment</span><span class="p">,</span><span class="w"> </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">colnames</span><span class="p">(</span><span class="n">raw_counts</span><span class="p">))</span>
+<span class="n">colData</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>    treatment
+a1  a           
+a2  a           
+a3  a           
+a4  a           
+b1  b           
+b2  b           
+b3  b           
+b4  b
+</code></pre></div>
+<h2 id="creating-the-deseq-data-object-and-some-qc">creating the DESeq data object and some QC</h2>
+<p><div class="highlight"><pre><span></span><code><span class="n">dds</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">DESeqDataSetFromMatrix</span><span class="p">(</span>
+<span class="w">  </span><span class="n">countData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">raw_counts</span><span class="p">,</span><span class="w"> </span><span class="n">colData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">colData</span><span class="p">,</span><span class="w"> </span>
+<span class="w">  </span><span class="n">design</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">treatment</span><span class="p">)</span>
+<span class="nf">dim</span><span class="p">(</span><span class="n">dds</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>[1] 37  8
+</code></pre></div></p>
+<p>Filter low count genes. </p>
+<p>Here, we will apply a very soft filter and keep genes with at least 1 read in at least 4 samples (size of the smallest group).</p>
+<p><div class="highlight"><pre><span></span><code><span class="n">idx</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rowSums</span><span class="p">(</span><span class="nf">counts</span><span class="p">(</span><span class="n">dds</span><span class="p">,</span><span class="w"> </span><span class="n">normalized</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m">4</span>
+<span class="n">dds.f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dds</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="p">]</span>
+<span class="nf">dim</span><span class="p">(</span><span class="n">dds.f</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>[1] 13  8
+</code></pre></div></p>
+<p>We go from 37 to 13 genes</p>
+<p>We perform the estimation of dispersions 
+<div class="highlight"><pre><span></span><code><span class="n">dds.f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">DESeq</span><span class="p">(</span><span class="n">dds.f</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>estimating size factors
+estimating dispersions
+gene-wise dispersion estimates
+mean-dispersion relationship
+-- note: fitType=&#39;parametric&#39;, but the dispersion trend was not well captured by the
+   function: y = a/x + b, and a local regression fit was automatically substituted.
+   specify fitType=&#39;local&#39; or &#39;mean&#39; to avoid this message next time.
+final dispersion estimates
+fitting model and testing
+</code></pre></div></p>
+<p>PCA plot of the samples:
+<div class="highlight"><pre><span></span><code><span class="c1"># blind : whether to blind the transformation to the experimental design. </span>
+<span class="c1">#   - blind=TRUE : comparing samples in a manner unbiased by prior information on samples, </span>
+<span class="c1">#                  for example to perform sample QA (quality assurance).</span>
+<span class="c1">#   - blind=FALSE: should be used for transforming data for downstream analysis, </span>
+<span class="c1">#                  where the full use of the design information should be made.</span>
+
+<span class="n">vsd</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">varianceStabilizingTransformation</span><span class="p">(</span><span class="n">dds.f</span><span class="p">,</span><span class="w"> </span><span class="n">blind</span><span class="o">=</span><span class="kc">TRUE</span><span class="w"> </span><span class="p">)</span>
+<span class="n">pcaData</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">plotPCA</span><span class="p">(</span><span class="n">vsd</span><span class="p">,</span><span class="w"> </span><span class="n">intgroup</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;treatment&quot;</span><span class="p">))</span>
+<span class="n">pcaData</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">geom_label</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">PC1</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="n">PC2</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">))</span>
+</code></pre></div></p>
+<p><img alt="pca all samples" src="../../assets/images/DESeq2_mouseMT/mouseMT_pca1.png" /></p>
+<p>OK, so a4 and b3 are quite different from the rest.</p>
+<ul>
+<li>a4 was expected from the QC</li>
+<li>b3 we did not expect until now</li>
+</ul>
+<p>If we did the analysis with them, here is what we get:
+<div class="highlight"><pre><span></span><code><span class="n">res</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">results</span><span class="p">(</span><span class="n">dds.f</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="w"> </span><span class="n">res</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>out of 13 with nonzero total read count
+adjusted p-value &lt; 0.1
+LFC &gt; 0 (up)       : 0, 0%
+LFC &lt; 0 (down)     : 0, 0%
+outliers [1]       : 7, 54%
+low counts [2]     : 0, 0%
+(mean count &lt; 16)
+[1] see &#39;cooksCutoff&#39; argument of ?results
+[2] see &#39;independentFiltering&#39; argument of ?results
+</code></pre></div></p>
+<p>So, let&rsquo;s eliminate these two samples.</p>
+<h2 id="analysis-without-the-outliers">analysis without the outliers</h2>
+<div class="highlight"><pre><span></span><code><span class="n">raw_counts_no_outliers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">raw_counts</span><span class="p">[</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="o">!</span><span class="p">(</span><span class="w"> </span><span class="nf">colnames</span><span class="p">(</span><span class="n">raw_counts</span><span class="p">)</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;a4&#39;</span><span class="p">,</span><span class="s">&#39;b3&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">]</span>
+
+<span class="n">treatment</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="m">3</span><span class="p">)),</span><span class="w"> </span><span class="n">levels</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="n">colData</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">treatment</span><span class="p">,</span><span class="w"> </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">colnames</span><span class="p">(</span><span class="n">raw_counts_no_outliers</span><span class="p">))</span>
+<span class="n">colData</span><span class="w"> </span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>    treatment
+a1  a           
+a2  a           
+a3  a           
+b1  b           
+b2  b           
+b4  b
+</code></pre></div>
+<p><div class="highlight"><pre><span></span><code><span class="n">dds</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">DESeqDataSetFromMatrix</span><span class="p">(</span>
+<span class="w">  </span><span class="n">countData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">raw_counts_no_outliers</span><span class="p">,</span><span class="w"> </span><span class="n">colData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">colData</span><span class="p">,</span><span class="w"> </span>
+<span class="w">  </span><span class="n">design</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">treatment</span><span class="p">)</span>
+<span class="nf">dim</span><span class="p">(</span><span class="n">dds</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>[1] 37  6
+</code></pre></div></p>
+<p>Filter low count genes: now the smallest group is 3
+<div class="highlight"><pre><span></span><code><span class="n">idx</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rowSums</span><span class="p">(</span><span class="nf">counts</span><span class="p">(</span><span class="n">dds</span><span class="p">,</span><span class="w"> </span><span class="n">normalized</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m">3</span>
+<span class="n">dds.f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dds</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="p">]</span>
+<span class="nf">dim</span><span class="p">(</span><span class="n">dds.f</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>[1] 12  6
+</code></pre></div>
+12 genes remaining</p>
+<p>We perform the estimation of dispersions 
+<div class="highlight"><pre><span></span><code><span class="n">dds.f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">DESeq</span><span class="p">(</span><span class="n">dds.f</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>estimating size factors
+estimating dispersions
+gene-wise dispersion estimates
+mean-dispersion relationship
+final dispersion estimates
+fitting model and testing
+</code></pre></div></p>
+<p>PCA plot of the samples:
+<div class="highlight"><pre><span></span><code><span class="n">vsd</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">varianceStabilizingTransformation</span><span class="p">(</span><span class="n">dds.f</span><span class="p">,</span><span class="w"> </span><span class="n">blind</span><span class="o">=</span><span class="kc">TRUE</span><span class="w"> </span><span class="p">)</span>
+<span class="n">pcaData</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">plotPCA</span><span class="p">(</span><span class="n">vsd</span><span class="p">,</span><span class="w"> </span><span class="n">intgroup</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;treatment&quot;</span><span class="p">))</span>
+<span class="n">pcaData</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">geom_label</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">PC1</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="n">PC2</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">))</span>
+</code></pre></div>
+<img alt="pca no outliers" src="../../assets/images/DESeq2_mouseMT/mouseMT_pca2.png" /></p>
+<p>It looks much better. Seems like PC1 captures the group effect</p>
+<p>We plot the estimate of the dispersions
+<div class="highlight"><pre><span></span><code><span class="c1"># * black dot : raw</span>
+<span class="c1"># * red dot : local trend</span>
+<span class="c1"># * blue : corrected</span>
+<span class="nf">plotDispEsts</span><span class="p">(</span><span class="n">dds.f</span><span class="p">)</span>
+</code></pre></div></p>
+<p><img alt="dispersion estimate mouseMT" src="../../assets/images/DESeq2_mouseMT/mouseMT_dispEst.png" /></p>
+<p>There is so few genes that this does not look super nice here</p>
+<p>For the Ruhland2016 dataset it looks like:</p>
+<p><img alt="dispersion estimate Ruhland2016" src="../../assets/images/DESeq2/ruhland2016_dispEst.png" /></p>
+<p>This plot is not easy to interpret. It represents the amount of dispersion at different levels of expression. It is directly linked to our ability to detect differential expression.</p>
+<p>Here it looks about normal compared to typical bulk RNA-seq experiments : the dispersion is comparatively larger for lowly expressed genes.</p>
+<p><div class="highlight"><pre><span></span><code><span class="c1"># extracting results for the treatment versus control contrast</span>
+<span class="n">res</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">results</span><span class="p">(</span><span class="n">dds.f</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="w"> </span><span class="n">res</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>out of 12 with nonzero total read count
+adjusted p-value &lt; 0.1
+LFC &gt; 0 (up)       : 1, 8.3%
+LFC &lt; 0 (down)     : 2, 17%
+outliers [1]       : 0, 0%
+low counts [2]     : 0, 0%
+(mean count &lt; 1)
+[1] see &#39;cooksCutoff&#39; argument of ?results
+[2] see &#39;independentFiltering&#39; argument of ?results
+</code></pre></div></p>
+<p>We can have a look at the coefficients of this model
+<div class="highlight"><pre><span></span><code><span class="nf">head</span><span class="p">(</span><span class="nf">coef</span><span class="p">(</span><span class="n">dds.f</span><span class="p">))</span><span class="w"> </span><span class="c1"># the second column corresponds to the difference between the 2 conditions</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>                   Intercept treatment_b_vs_a
+ENSMUSG00000064341 12.084282      -3.33601412
+ENSMUSG00000064345  6.112479      -0.99101369
+ENSMUSG00000064351  3.757967       0.64546475
+ENSMUSG00000064354 10.209339       1.44160442
+ENSMUSG00000064357 11.763707      -0.06245774
+ENSMUSG00000064358  6.026334      -0.26447858
+</code></pre></div></p>
+<p>Here, it contains an intercept and a coefficient for the difference between the two groups.</p>
+<p>MA plot:
+<div class="highlight"><pre><span></span><code><span class="n">res.lfc</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lfcShrink</span><span class="p">(</span><span class="n">dds.f</span><span class="p">,</span><span class="w"> </span><span class="n">coef</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">res</span><span class="o">=</span><span class="n">res</span><span class="p">)</span>
+<span class="n">DESeq2</span><span class="o">::</span><span class="nf">plotMA</span><span class="p">(</span><span class="n">res.lfc</span><span class="p">)</span>
+</code></pre></div>
+<img alt="MA plot mouseMT" src="../../assets/images/DESeq2_mouseMT/mouseMT_MA.png" /></p>
+<p>Volcano plot:
+<div class="highlight"><pre><span></span><code><span class="n">FDRthreshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.01</span>
+<span class="n">logFCthreshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1.0</span>
+<span class="c1"># add a column of NAs</span>
+<span class="n">res.lfc</span><span class="o">$</span><span class="n">diffexpressed</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;NO&quot;</span>
+<span class="c1"># if log2Foldchange &gt; 1 and pvalue &lt; 0.01, set as &quot;UP&quot; </span>
+<span class="n">res.lfc</span><span class="o">$</span><span class="n">diffexpressed</span><span class="p">[</span><span class="n">res.lfc</span><span class="o">$</span><span class="n">log2FoldChange</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">logFCthreshold</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">res.lfc</span><span class="o">$</span><span class="n">padj</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">FDRthreshold</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;UP&quot;</span>
+<span class="c1"># if log2Foldchange &lt; 1 and pvalue &lt; 0.01, set as &quot;DOWN&quot;</span>
+<span class="n">res.lfc</span><span class="o">$</span><span class="n">diffexpressed</span><span class="p">[</span><span class="n">res.lfc</span><span class="o">$</span><span class="n">log2FoldChange</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="o">-</span><span class="n">logFCthreshold</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">res.lfc</span><span class="o">$</span><span class="n">padj</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">FDRthreshold</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;DOWN&quot;</span>
+
+<span class="nf">ggplot</span><span class="p">(</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="w"> </span><span class="n">res.lfc</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="n">log2FoldChange</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="nf">log10</span><span class="p">(</span><span class="n">padj</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="n">diffexpressed</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">geom_vline</span><span class="p">(</span><span class="n">xintercept</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="o">-</span><span class="n">logFCthreshold</span><span class="p">,</span><span class="w"> </span><span class="n">logFCthreshold</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_hline</span><span class="p">(</span><span class="n">yintercept</span><span class="o">=-</span><span class="nf">log10</span><span class="p">(</span><span class="n">FDRthreshold</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_color_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;blue&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;grey&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;red&quot;</span><span class="p">))</span>
+
+<span class="nf">table</span><span class="p">(</span><span class="n">res.lfc</span><span class="o">$</span><span class="n">diffexpressed</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>DOWN   NO   UP 
+   1   10    1 
+</code></pre></div>
+<img alt="volcano plot mouseMT" src="../../assets/images/DESeq2_mouseMT/mouseMT_volcano.png" /></p>
+<p>Heatmap:
+<div class="highlight"><pre><span></span><code><span class="n">vsd.counts</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">assay</span><span class="p">(</span><span class="n">vsd</span><span class="p">)</span>
+
+<span class="n">topVarGenes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">head</span><span class="p">(</span><span class="nf">order</span><span class="p">(</span><span class="nf">rowVars</span><span class="p">(</span><span class="n">vsd.counts</span><span class="p">),</span><span class="w"> </span><span class="n">decreasing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="m">20</span><span class="p">)</span>
+<span class="n">mat</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">vsd.counts</span><span class="p">[</span><span class="w"> </span><span class="n">topVarGenes</span><span class="p">,</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="c1">#scaled counts of the top genes</span>
+<span class="n">mat</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mat</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nf">rowMeans</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span><span class="w">  </span><span class="c1"># centering</span>
+<span class="nf">pheatmap</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
+</code></pre></div>
+<img alt="heatmap plot mouseMT" src="../../assets/images/DESeq2_mouseMT/mouseMT_heatmap.png" /></p>
+<h2 id="saving-results-to-file">saving results to file</h2>
+<p>note: a CSV file can be imported into Excel
+<div class="highlight"><pre><span></span><code><span class="nf">write.csv</span><span class="p">(</span><span class="w"> </span><span class="n">res</span><span class="w"> </span><span class="p">,</span><span class="s">&#39;mouseMT.DESeq2.results.csv&#39;</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div></p>
+</details>
+<details class="note">
+<summary>edgeR analysis</summary>
+<div class="highlight"><pre><span></span><code><span class="c1"># setup</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">edgeR</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="reading_1">reading</h2>
+<p>We will use the trimmed reads</p>
+<p>First we try with the sample_a1:</p>
+<p><div class="highlight"><pre><span></span><code><span class="n">folder</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/shared/data/Solutions/mouseMT/044_STAR_map_trimmed/&quot;</span>
+
+<span class="c1"># we skip the 4 first lines, which contains </span>
+<span class="c1"># N_unmapped , N_multimapping , N_noFeature , N_ambiguous   </span>
+
+<span class="n">sample_a1_table</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">read.table</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="w"> </span><span class="n">folder</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sample_a1&quot;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;.ReadsPerGene.out.tab&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span>
+<span class="w">           </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">skip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="p">)</span>
+<span class="nf">head</span><span class="p">(</span><span class="w"> </span><span class="n">sample_a1_table</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>                    V2      V3      V4
+ENSMUSG00000064336  0       0       0   
+ENSMUSG00000064337  0       0       0   
+ENSMUSG00000064338  0       0       0   
+ENSMUSG00000064339  0       0       0   
+ENSMUSG00000064340  0       0       0   
+ENSMUSG00000064341  4046    1991    2055    
+</code></pre></div></p>
+<p>We are interested in the first columns, which contains counts for unstranded reads</p>
+<p>Let&rsquo;s use a loop to automatize the reading:</p>
+<p><div class="highlight"><pre><span></span><code><span class="n">raw_counts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="w"> </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="nf">row.names</span><span class="p">(</span><span class="n">sample_a1_table</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+
+<span class="nf">for</span><span class="p">(</span><span class="w"> </span><span class="n">sample</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;a1&#39;</span><span class="p">,</span><span class="s">&#39;a2&#39;</span><span class="p">,</span><span class="s">&#39;a3&#39;</span><span class="p">,</span><span class="s">&#39;a4&#39;</span><span class="p">,</span><span class="s">&#39;b1&#39;</span><span class="p">,</span><span class="s">&#39;b2&#39;</span><span class="p">,</span><span class="s">&#39;b3&#39;</span><span class="p">,</span><span class="s">&#39;b4&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">){</span>
+<span class="w">  </span><span class="n">sample_table</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">read.table</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="w"> </span><span class="n">folder</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sample_&quot;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">sample</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;.ReadsPerGene.out.tab&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span>
+<span class="w">                            </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">skip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="p">)</span>
+
+<span class="w">  </span><span class="n">raw_counts</span><span class="p">[</span><span class="n">sample</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sample_table</span><span class="p">[</span><span class="w"> </span><span class="nf">row.names</span><span class="p">(</span><span class="n">raw_counts</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;V2&quot;</span><span class="w"> </span><span class="p">]</span>
+
+<span class="p">}</span>
+
+<span class="nf">head</span><span class="p">(</span><span class="w"> </span><span class="n">raw_counts</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>                    a1      a2      a3      a4  b1  b2  b3  b4
+ENSMUSG00000064336  0       0       0       0   0   0   0   0
+ENSMUSG00000064337  0       0       0       0   0   0   0   0
+ENSMUSG00000064338  0       0       0       0   0   0   0   0
+ENSMUSG00000064339  0       0       0       2   0   0   0   0
+ENSMUSG00000064340  0       0       0       0   0   0   0   0
+ENSMUSG00000064341  4046    4098    4031    1   449 515 13  456
+</code></pre></div></p>
+<h2 id="experimental-design">experimental design</h2>
+<blockquote>
+<p>note: levels let&rsquo;s us define the reference levels</p>
+</blockquote>
+<p><div class="highlight"><pre><span></span><code><span class="n">treatment</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="m">4</span><span class="p">)),</span><span class="w"> </span><span class="n">levels</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="nf">names</span><span class="p">(</span><span class="n">treatment</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">colnames</span><span class="p">(</span><span class="n">raw_counts</span><span class="p">)</span>
+
+<span class="n">treatment</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>a1 a2 a3 a4 b1 b2 b3 b4 
+ a  a  a  a  b  b  b  b 
+Levels: a b
+</code></pre></div></p>
+<h2 id="edger-object-preprocessing-and-qc">edgeR  object preprocessing and QC</h2>
+<p>Creating the edgeR DGE object and filtering low-count genes.</p>
+<p><div class="highlight"><pre><span></span><code><span class="n">dge.all</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">DGEList</span><span class="p">(</span><span class="n">counts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">raw_counts</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">treatment</span><span class="p">)</span><span class="w">  </span>
+
+<span class="n">dge.f.design</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">model.matrix</span><span class="p">(</span><span class="o">~</span><span class="w"> </span><span class="n">treatment</span><span class="p">)</span>
+
+<span class="c1"># filtering by expression level. See ?filterByExpr for details</span>
+<span class="n">keep</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">filterByExpr</span><span class="p">(</span><span class="n">dge.all</span><span class="p">)</span>
+<span class="n">dge.f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dge.all</span><span class="p">[</span><span class="n">keep</span><span class="p">,</span><span class="w"> </span><span class="n">keep.lib.sizes</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">]</span>
+<span class="nf">table</span><span class="p">(</span><span class="w"> </span><span class="n">keep</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>keep
+FALSE  TRUE 
+   28     9 
+</code></pre></div></p>
+<p><div class="highlight"><pre><span></span><code><span class="c1">#normalization</span>
+<span class="n">dge.f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">calcNormFactors</span><span class="p">(</span><span class="n">dge.f</span><span class="p">)</span>
+<span class="n">dge.f</span><span class="o">$</span><span class="n">samples</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>    group   lib.size    norm.factors
+a1  a       13799       1.2101311   
+a2  a       13649       1.2130900   
+a3  a       13938       1.2131513   
+a4  a       6831        0.1058474   
+b1  b       13703       1.3614563   
+b2  b       13627       1.3728761   
+b3  b       162         2.0759281   
+b4  b       13687       1.3671996   
+</code></pre></div>
+We represent the distances between the samples using MDS:</p>
+<p><div class="highlight"><pre><span></span><code><span class="nf">plotMDS</span><span class="p">(</span><span class="w"> </span><span class="n">dge.f</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;cornflowerblue&#39;</span><span class="p">,</span><span class="s">&#39;forestgreen&#39;</span><span class="p">)[</span><span class="n">treatment</span><span class="p">]</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div>
+<img alt="mouseMT MDS plot all samples" src="../../assets/images/edgeR_mouseMT/mouseMT_MDS1.png" /></p>
+<p>OK, so a4 and b3 are quite different from the rest.</p>
+<ul>
+<li>a4 was expected from the QC</li>
+<li>b3 we did not expect until now</li>
+</ul>
+<p>If we did the analysis with them, here is what we get:
+<div class="highlight"><pre><span></span><code><span class="c1"># estimate of the dispersion</span>
+<span class="n">dge.f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">estimateDisp</span><span class="p">(</span><span class="n">dge.f</span><span class="p">,</span><span class="n">dge.f.design</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">robust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">T</span><span class="p">)</span>
+<span class="c1"># testing for differential expression. </span>
+<span class="n">dge.f.et</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">exactTest</span><span class="p">(</span><span class="n">dge.f</span><span class="p">)</span>
+<span class="nf">topTags</span><span class="p">(</span><span class="n">dge.f.et</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>                    logFC       logCPM      PValue      FDR
+ENSMUSG00000065947  -5.06512022 13.51727    0.006432974 0.05110489
+ENSMUSG00000064351  -7.46603064 20.14951    0.011356643 0.05110489
+ENSMUSG00000064345  3.35236454  15.28962    0.050902734 0.13212506
+ENSMUSG00000064341  -2.67947447 16.69126    0.058722251 0.13212506
+ENSMUSG00000064354  1.58127747  16.60293    0.263189690 0.42743645
+ENSMUSG00000064368  1.75395362  12.51557    0.284957631 0.42743645
+ENSMUSG00000064358  -0.10554311 11.49478    0.912516094 0.96610797
+ENSMUSG00000064363  -0.08216781 17.90743    0.950808801 0.96610797
+ENSMUSG00000064357  0.06455233  17.18842    0.966107973 0.96610797
+</code></pre></div></p>
+<p>no gene is significantly DE.</p>
+<p>So, let&rsquo;s eliminate these two samples.</p>
+<h2 id="analysis-without-the-outliers_1">analysis without the outliers</h2>
+<p><div class="highlight"><pre><span></span><code><span class="n">raw_counts_no_outliers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">raw_counts</span><span class="p">[</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="o">!</span><span class="p">(</span><span class="w"> </span><span class="nf">colnames</span><span class="p">(</span><span class="n">raw_counts</span><span class="p">)</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;a4&#39;</span><span class="p">,</span><span class="s">&#39;b3&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">]</span>
+<span class="nf">head</span><span class="p">(</span><span class="w"> </span><span class="n">raw_counts_no_outliers</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>                    a1      a2      a3      b1  b2  b4
+ENSMUSG00000064336  0       0       0       0   0   0
+ENSMUSG00000064337  0       0       0       0   0   0
+ENSMUSG00000064338  0       0       0       0   0   0
+ENSMUSG00000064339  0       0       0       0   0   0
+ENSMUSG00000064340  0       0       0       0   0   0
+ENSMUSG00000064341  4046    4098    4031    449 515 456
+</code></pre></div></p>
+<p><div class="highlight"><pre><span></span><code><span class="n">treatment</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="m">3</span><span class="p">)),</span><span class="w"> </span><span class="n">levels</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="n">colData</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">treatment</span><span class="p">,</span><span class="w"> </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">colnames</span><span class="p">(</span><span class="n">raw_counts_no_outliers</span><span class="p">))</span>
+<span class="n">colData</span><span class="w"> </span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>    treatment
+a1  a           
+a2  a           
+a3  a           
+b1  b           
+b2  b           
+b4  b
+</code></pre></div></p>
+<p><div class="highlight"><pre><span></span><code><span class="n">dge.all</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">DGEList</span><span class="p">(</span><span class="n">counts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">raw_counts_no_outliers</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">treatment</span><span class="p">)</span><span class="w">  </span>
+
+<span class="n">dge.f.design</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">model.matrix</span><span class="p">(</span><span class="o">~</span><span class="w"> </span><span class="n">treatment</span><span class="p">)</span>
+
+<span class="c1"># filtering by expression level. See ?filterByExpr for details</span>
+<span class="n">keep</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">filterByExpr</span><span class="p">(</span><span class="n">dge.all</span><span class="p">)</span>
+<span class="n">dge.f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dge.all</span><span class="p">[</span><span class="n">keep</span><span class="p">,</span><span class="w"> </span><span class="n">keep.lib.sizes</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">]</span>
+<span class="nf">table</span><span class="p">(</span><span class="w"> </span><span class="n">keep</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>keep
+FALSE  TRUE 
+   28     9 
+</code></pre></div></p>
+<p>We compute the normalization factor for each library:
+<div class="highlight"><pre><span></span><code><span class="c1">#normalization</span>
+<span class="n">dge.f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">calcNormFactors</span><span class="p">(</span><span class="n">dge.f</span><span class="p">)</span>
+<span class="n">dge.f</span><span class="o">$</span><span class="n">samples</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>    group   lib.size    norm.factors
+a1  a       13799       0.9437444   
+a2  a       13649       0.9277668   
+a3  a       13938       0.9412032   
+b1  b       13703       1.0672149   
+b2  b       13627       1.0651230   
+b4  b       13687       1.0675095   
+</code></pre></div></p>
+<p>We represent the distances between the samples using MDS:</p>
+<p><div class="highlight"><pre><span></span><code><span class="nf">plotMDS</span><span class="p">(</span><span class="w"> </span><span class="n">dge.f</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;cornflowerblue&#39;</span><span class="p">,</span><span class="s">&#39;forestgreen&#39;</span><span class="p">)[</span><span class="n">treatment</span><span class="p">]</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div>
+<img alt="mouseMT MDS plot no outliers" src="../../assets/images/edgeR_mouseMT/mouseMT_MDS2.png" /></p>
+<p>It looks much better. Seems like PC1 captures the group effect.</p>
+<p>We now fit the model:</p>
+<p><div class="highlight"><pre><span></span><code><span class="c1"># estimate of the dispersion</span>
+<span class="n">dge.f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">estimateDisp</span><span class="p">(</span><span class="n">dge.f</span><span class="p">,</span><span class="n">dge.f.design</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">robust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">T</span><span class="p">)</span>
+<span class="nf">plotBCV</span><span class="p">(</span><span class="n">dge.f</span><span class="p">)</span>
+</code></pre></div>
+<img alt="mouseMT BCV" src="../../assets/images/edgeR_mouseMT/mouseMT_BCV.png" /></p>
+<p>There is so few genes that this does not look super nice here.</p>
+<p>Here is how it looks like on the Ruhland2016 data:</p>
+<p><img alt="bcv" src="../../assets/images/edgeR/BCV.png" /></p>
+<p>This plot is not easy to interpret. It represents the amount of biological variation at different levels of expression. It is directly linked to our ability to detect differential expression.</p>
+<p>Here it looks about normal compared to other bulk RNA-seq experiments : the variation is comparatively larger for lowly expressed genes.</p>
+<p><div class="highlight"><pre><span></span><code><span class="c1"># testing for differential expression. </span>
+<span class="c1"># This method is recommended when you only have 2 groups to compare</span>
+<span class="n">dge.f.et</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">exactTest</span><span class="p">(</span><span class="n">dge.f</span><span class="p">)</span>
+<span class="nf">topTags</span><span class="p">(</span><span class="n">dge.f.et</span><span class="p">)</span><span class="w"> </span><span class="c1"># printing the genes where the p-value of differential expression if the lowest</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>                    logFC           logCPM      PValue          FDR
+ENSMUSG00000064341  -3.2728209590   17.34360    0.000000e+00    0.000000e+00
+ENSMUSG00000064354  1.5046106466    17.35950    0.000000e+00    0.000000e+00
+ENSMUSG00000064345  -0.9251244495   11.92467    4.542291e-08    1.362687e-07
+ENSMUSG00000064368  0.7262191019    10.55226    1.337410e-02    3.009174e-02
+ENSMUSG00000064351  0.7031516899    10.50496    2.006905e-02    3.612429e-02
+ENSMUSG00000064358  -0.1964770294   12.14888    2.110506e-01    3.165759e-01
+ENSMUSG00000065947  0.2623477474    10.00748    4.831813e-01    5.851717e-01
+ENSMUSG00000064363  -0.0127783014   18.61543    5.201527e-01    5.851717e-01
+ENSMUSG00000064357  0.0006819028    17.93963    9.833826e-01    9.833826e-01
+</code></pre></div></p>
+<p>We can see 3 genes with FDR &lt; 0.01 and 2 others with 0.01 &lt; FDR &lt; 0.05.</p>
+<p><div class="highlight"><pre><span></span><code><span class="nf">summary</span><span class="p">(</span><span class="nf">decideTests</span><span class="p">(</span><span class="n">dge.f.et</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">p.value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.01</span><span class="p">))</span><span class="w"> </span><span class="c1"># let&#39;s use 0.01 as a threshold</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>        b-a
+Down     2
+NotSig   6
+Up       1
+</code></pre></div></p>
+<p>Let&rsquo;s plot these:
+<div class="highlight"><pre><span></span><code><span class="c1">## plot all the logFCs versus average count size. Significantly DE genes are  colored</span>
+<span class="nf">plotMD</span><span class="p">(</span><span class="n">dge.f.et</span><span class="p">)</span>
+<span class="c1"># lines at a log2FC of 1/-1, corresponding to a shift in expression of x2 </span>
+<span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">)</span>
+<span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;grey&quot;</span><span class="p">)</span>
+</code></pre></div>
+<img alt="mouseMT MA" src="../../assets/images/edgeR_mouseMT/mouseMT_MA.png" /></p>
+<p>Volcano plot</p>
+<p><div class="highlight"><pre><span></span><code><span class="n">allGenes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">topTags</span><span class="p">(</span><span class="n">dge.f.et</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">nrow</span><span class="p">(</span><span class="n">dge.f.et</span><span class="o">$</span><span class="n">table</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="o">$</span><span class="n">table</span>
+
+<span class="n">FDRthreshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.01</span>
+<span class="n">logFCthreshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1.0</span>
+<span class="c1"># add a column of NAs</span>
+<span class="n">allGenes</span><span class="o">$</span><span class="n">diffexpressed</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;NO&quot;</span>
+<span class="c1"># if log2Foldchange &gt; 1 and pvalue &lt; 0.01, set as &quot;UP&quot; </span>
+<span class="n">allGenes</span><span class="o">$</span><span class="n">diffexpressed</span><span class="p">[</span><span class="n">allGenes</span><span class="o">$</span><span class="n">logFC</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">logFCthreshold</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">allGenes</span><span class="o">$</span><span class="n">FDR</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">FDRthreshold</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;UP&quot;</span>
+<span class="c1"># if log2Foldchange &lt; 1 and pvalue &lt; 0.01, set as &quot;DOWN&quot;</span>
+<span class="n">allGenes</span><span class="o">$</span><span class="n">diffexpressed</span><span class="p">[</span><span class="n">allGenes</span><span class="o">$</span><span class="n">logFC</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="o">-</span><span class="n">logFCthreshold</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">allGenes</span><span class="o">$</span><span class="n">FDR</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">FDRthreshold</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;DOWN&quot;</span>
+
+<span class="nf">ggplot</span><span class="p">(</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">allGenes</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="n">logFC</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="nf">log10</span><span class="p">(</span><span class="n">FDR</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="n">diffexpressed</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">geom_vline</span><span class="p">(</span><span class="n">xintercept</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="o">-</span><span class="n">logFCthreshold</span><span class="p">,</span><span class="w"> </span><span class="n">logFCthreshold</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_hline</span><span class="p">(</span><span class="n">yintercept</span><span class="o">=-</span><span class="nf">log10</span><span class="p">(</span><span class="n">FDRthreshold</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_color_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;blue&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;grey&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;red&quot;</span><span class="p">))</span>
+</code></pre></div>
+<img alt="mouseMT volcano" src="../../assets/images/edgeR_mouseMT/mouseMT_volcano.png" /></p>
+<h2 id="writing-the-table-of-results">writing the table of results</h2>
+<div class="highlight"><pre><span></span><code><span class="nf">write.csv</span><span class="p">(</span><span class="w"> </span><span class="n">allGenes</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&#39;mouseMT.edgeR.results.csv&#39;</span><span class="p">)</span>
+</code></pre></div>
+</details>
+<div class="admonition note">
+<p class="admonition-title">From ensembl gene ids to gene names</p>
+<p>We can convert between different gene ids using the <code>bitr</code> function from <code>clusterProfiler</code>
+<div class="highlight"><pre><span></span><code><span class="nf">library</span><span class="p">(</span><span class="n">clusterProfiler</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">org.Mm.eg.db</span><span class="p">)</span>
+
+<span class="n">genes_universe</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">bitr</span><span class="p">(</span><span class="nf">rownames</span><span class="p">(</span><span class="n">allGenes</span><span class="p">),</span><span class="w"> </span><span class="n">fromType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;ENSEMBL&quot;</span><span class="p">,</span>
+<span class="w">                       </span><span class="n">toType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;ENTREZID&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SYMBOL&quot;</span><span class="p">),</span>
+<span class="w">                       </span><span class="n">OrgDb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;org.Mm.eg.db&quot;</span><span class="p">)</span>
+<span class="n">genes_universe</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>             ENSEMBL ENTREZID SYMBOL
+1 ENSMUSG00000064341    17716    ND1
+2 ENSMUSG00000064354    17709   COX2
+3 ENSMUSG00000064345    17717    ND2
+4 ENSMUSG00000064368    17722    ND6
+5 ENSMUSG00000064351    17708   COX1
+6 ENSMUSG00000064358    17710   COX3
+7 ENSMUSG00000065947    17720   ND4L
+8 ENSMUSG00000064363    17719    ND4
+9 ENSMUSG00000064357    17705   ATP6
+</code></pre></div></p>
+<blockquote>
+<p>Here is the list of <a href="https://bioconductor.org/packages/release/BiocViews.html#___OrgDb">orgDb packages</a>. For non-model organisms it will be more complex.</p>
+</blockquote>
+</div>
 <h3 id="task">Task</h3>
 <p>Use either edgeR or DESeq2 to conduct a differential expression analysis on the Ruhland2016 and/or Liu2015 dataset.</p>
 <p>You can find the expression matrices on the server at: <code>/shared/data/Solutions/Ruhland2016/countFiles/featureCounts_Ruhland2016.counts.txt</code> and <code>/shared/data/Solutions/Liu2015/countFiles/featureCounts_Liu2015.counts.txt</code></p>
 <p>Or you may download them :</p>
-<p><a class="md-button" href="../../assets/txt/featureCounts_Liu2015.counts.txt">Liu2015 count matrix</a></p>
-<p><a class="md-button" href="../../assets/txt/featureCounts_Ruhland2016.counts.txt">Ruhland2016 count matrix</a></p>
+<p><a :=":" class="md-button" href="../../assets/txt/featureCounts_Liu2015.counts.txt" target="_blank">Liu2015 count matrix</a></p>
+<p><a :=":" class="md-button" href="../../assets/txt/featureCounts_Ruhland2016.counts.txt" target="_blank">Ruhland2016 count matrix</a></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul>
@@ -681,9 +1320,15 @@ Soneson C, Marini F, Geier F, Love M, Stadler M (2020). “ExploreModelMatrix: I
 <li>Follow the vignettes/user&rsquo;s guide! They are the most up-to-date and generally contain everything a newcomer might need, including worked-out examples.</li>
 </ul>
 </div>
+<!-- Suggestion: ExploreModelMatrix for visualising contrasts:
+https://github.com/csoneson/ExploreModelMatrix
+https://bioconductor.org/packages/release/bioc/html/ExploreModelMatrix.html
+Soneson C, Marini F, Geier F, Love M, Stadler M (2020). “ExploreModelMatrix: Interactive exploration for improved understanding of design matrices and linear models in R.” F1000Research, 9, 512. doi: 10.12688/f1000research.24187.2. 
+-->
+
 <h3 id="deseq2-correction">DESeq2 correction</h3>
-<p><a class="md-button" href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html">DESeq2 vignette</a></p>
-<details class="done">
+<p><a :=":" class="md-button" href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html" target="_blank">DESeq2 vignette</a></p>
+<details class="success">
 <summary>read in the data</summary>
 <div class="highlight"><pre><span></span><code><span class="c1"># setup</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">DESeq2</span><span class="p">)</span>
@@ -712,7 +1357,7 @@ Soneson C, Marini F, Geier F, Love M, Stadler M (2020). “ExploreModelMatrix: I
 <span class="nf">colSums</span><span class="p">(</span><span class="n">raw_counts</span><span class="p">)</span><span class="w"> </span><span class="c1"># total number of counted reads per sample</span>
 </code></pre></div>
 </details>
-<details class="done">
+<details class="success">
 <summary>preprocessing</summary>
 <div class="highlight"><pre><span></span><code><span class="c1">## telling DESeq2 what the experimental design was</span>
 <span class="c1"># note: by default, the 1st level is considered to be the reference/control/WT/...</span>
@@ -735,7 +1380,7 @@ Soneson C, Marini F, Geier F, Love M, Stadler M (2020). “ExploreModelMatrix: I
 </code></pre></div>
 <p>Around 19k genes pass our minimum expression threshold, quite typical for a bulk Mouse RNA-seq experiment.</p>
 </details>
-<details class="done">
+<details class="success">
 <summary>estimate dispersion / model fitting</summary>
 <div class="highlight"><pre><span></span><code><span class="c1"># we perform the estimation of dispersions </span>
 <span class="n">dds.f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">DESeq</span><span class="p">(</span><span class="n">dds.f</span><span class="p">)</span>
@@ -753,7 +1398,7 @@ Soneson C, Marini F, Geier F, Love M, Stadler M (2020). “ExploreModelMatrix: I
 <p>This plot is not easy to interpret. It represents the amount of dispersion at different levels of expression. It is directly linked to our ability to detect differential expression.</p>
 <p>Here it looks about normal compared to typical bulk RNA-seq experiments : the dispersion is comparatively larger for lowly expressed genes.</p>
 </details>
-<details class="done">
+<details class="success">
 <summary>looking at the results</summary>
 <div class="highlight"><pre><span></span><code><span class="c1"># adds estimate of the LFC the results table. </span>
 <span class="c1"># This shrunk logFC estimate is more robust than the raw value</span>
@@ -819,8 +1464,8 @@ Soneson C, Marini F, Geier F, Love M, Stadler M (2020). “ExploreModelMatrix: I
 <!-- Question from students: how to map ENSEMBL gene IDs to gene names? -->
 
 <h3 id="edger-correction">EdgeR correction</h3>
-<p><a class="md-button" href="https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf">edgeR user&rsquo;s guide</a></p>
-<details class="done">
+<p><a :=":" class="md-button" href="https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf" target="_blank">edgeR user&rsquo;s guide</a></p>
+<details class="success">
 <summary>read in the data</summary>
 <div class="highlight"><pre><span></span><code><span class="nf">library</span><span class="p">(</span><span class="n">edgeR</span><span class="p">)</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
@@ -843,7 +1488,7 @@ Soneson C, Marini F, Geier F, Love M, Stadler M (2020). “ExploreModelMatrix: I
 <span class="nf">colSums</span><span class="p">(</span><span class="n">raw_counts</span><span class="p">)</span><span class="w"> </span><span class="c1"># total number of counted reads per sample</span>
 </code></pre></div>
 </details>
-<details class="done">
+<details class="success">
 <summary>edgeR object preprocessing</summary>
 <div class="highlight"><pre><span></span><code><span class="c1"># setting up the experimental design AND the model</span>
 <span class="c1">#  -&gt; the first 3 samples form a group, the 3 remaining are the other group</span>
@@ -869,7 +1514,7 @@ FALSE  TRUE
 </code></pre></div>
 <p>Each sample has been associated with a normalization factor.</p>
 </details>
-<details class="done">
+<details class="success">
 <summary>edgeR model fitting</summary>
 <p><div class="highlight"><pre><span></span><code><span class="c1"># estimate of the dispersion</span>
 <span class="n">dge.f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">estimateDisp</span><span class="p">(</span><span class="n">dge.f</span><span class="p">,</span><span class="n">dge.f.design</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">robust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">T</span><span class="p">)</span>
@@ -906,7 +1551,7 @@ Up       210
 </code></pre></div>
 <p>The comparison is TAM-EtOH, so &ldquo;Up&rdquo;, corresponds to a higher in group TAM compared to group EtOH.</p>
 </details>
-<details class="done">
+<details class="success">
 <summary>edgeR looking at differentially-expressed genes</summary>
 <div class="highlight"><pre><span></span><code><span class="c1">## plot all the logFCs versus average count size. Significantly DE genes are  colored</span>
 <span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">))</span>
@@ -938,7 +1583,7 @@ Up       210
 <span class="nf">write.csv</span><span class="p">(</span><span class="w"> </span><span class="n">allGenes</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Ruhland2016.edgeR.results.csv&#39;</span><span class="p">)</span>
 </code></pre></div>
 </details>
-<details class="done">
+<details class="success">
 <summary>edgeR extra stuff</summary>
 <div class="highlight"><pre><span></span><code><span class="c1"># how to extract log CPM</span>
 <span class="n">logcpm</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">cpm</span><span class="p">(</span><span class="n">dge.f</span><span class="p">,</span><span class="w"> </span><span class="n">prior.count</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">log</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
@@ -975,90 +1620,6 @@ Up       210
 <p><img alt="edgeR_compareTests" src="../../assets/images/edgeR/exact_QL_comparison.png" /></p>
 <p>The logFC are highly correlated.
 FDRs show less correlation but their <strong>rank</strong> are higly correlated : they come in a very similar order.</p>
-</details>
-<h2 id="downstream-analysis-over-representation-analysis">Downstream analysis : over-representation analysis</h2>
-<p>Having lists of differentially-expressed genes is quite interesting in itself,
-however when there are many DE genes, it can be interesting to map these results 
-onto curated sets of genes associated with known biological functions.</p>
-<p>Here, we propose to use <a href="https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html">clusterProfiler</a>,
-which regroups several enrichment detection algorithms onto several databases.</p>
-<p>We recommend you get inspiration from their very nice <a href="http://yulab-smu.top/clusterProfiler-book/">vignette/e-book</a> to perform your own analyses.</p>
-<p>The proposed correction will concern the results obtained with DESeq2 on the Ruhland2016 dataset.</p>
-<details class="done">
-<summary>analysis with clusterProfiler</summary>
-<p>We begin by reading the results of the DE analysis. Adapt this to your own analysis.
-Beware that edgeR and DESeq2 use different column names in their result tables (log2FoldChange/logFC , padj/FDR).</p>
-<div class="highlight"><pre><span></span><code><span class="nf">library</span><span class="p">(</span><span class="n">AnnotationHub</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">AnnotationDbi</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">clusterProfiler</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">ReactomePA</span><span class="p">)</span>
-
-<span class="nf">library</span><span class="p">(</span><span class="n">org.Mm.eg.db</span><span class="p">)</span>
-
-
-<span class="n">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">read.csv</span><span class="p">(</span><span class="w"> </span><span class="s">&#39;Ruhland2016.DESeq2.results.csv&#39;</span><span class="w">  </span><span class="p">,</span><span class="w"> </span><span class="n">row.names</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
-<span class="c1">#let&#39;s define significance as padj &lt;0.01 &amp; abs(lfc) &gt; 1</span>
-<span class="n">res</span><span class="o">$</span><span class="n">sig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">abs</span><span class="p">(</span><span class="n">res</span><span class="o">$</span><span class="n">log2FoldChange</span><span class="p">)</span><span class="o">&gt;</span><span class="m">1</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">res</span><span class="o">$</span><span class="n">padj</span><span class="o">&lt;</span><span class="m">0.01</span>
-
-<span class="nf">table</span><span class="p">(</span><span class="w"> </span><span class="n">res</span><span class="o">$</span><span class="n">sig</span><span class="w"> </span><span class="p">)</span>
-</code></pre></div>
-<p>Number of non-significant/significant genes </p>
-<div class="highlight"><pre><span></span><code> FALSE  TRUE 
- 18569   401 
-</code></pre></div>
-<p>Translating gene ENSEMBL names to their entrezID (this is what clusterProfiler uses), as well as Symbol (named used by most biologist).
-<div class="highlight"><pre><span></span><code><span class="n">genes_universe</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">bitr</span><span class="p">(</span><span class="nf">rownames</span><span class="p">(</span><span class="n">res</span><span class="p">),</span><span class="w"> </span><span class="n">fromType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;ENSEMBL&quot;</span><span class="p">,</span>
-<span class="w">                       </span><span class="n">toType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;ENTREZID&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SYMBOL&quot;</span><span class="p">),</span>
-<span class="w">                       </span><span class="n">OrgDb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;org.Mm.eg.db&quot;</span><span class="p">)</span>
-
-<span class="nf">head</span><span class="p">(</span><span class="w"> </span><span class="n">genes_universe</span><span class="w"> </span><span class="p">)</span>
-<span class="c1">#ENSEMBL ENTREZID  SYMBOL</span>
-<span class="c1">#2 ENSMUSG00000033845    27395  Mrpl15</span>
-<span class="c1">#4 ENSMUSG00000025903    18777  Lypla1</span>
-<span class="c1">#5 ENSMUSG00000033813    21399   Tcea1</span>
-<span class="c1">#7 ENSMUSG00000002459    58175   Rgs20</span>
-<span class="c1">#8 ENSMUSG00000033793   108664 Atp6v1h</span>
-<span class="c1">#9 ENSMUSG00000025907    12421  Rb1cc1</span>
-
-<span class="nf">dim</span><span class="p">(</span><span class="n">genes_universe</span><span class="p">)</span>
-<span class="c1"># 15878     3</span>
-
-<span class="nf">length</span><span class="p">(</span><span class="nf">rownames</span><span class="p">(</span><span class="n">res</span><span class="p">))</span>
-<span class="c1"># 19378</span>
-</code></pre></div></p>
-<div class="highlight"><pre><span></span><code><span class="n">genes_DE</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">bitr</span><span class="p">(</span><span class="nf">rownames</span><span class="p">(</span><span class="n">res</span><span class="p">)[</span><span class="nf">which</span><span class="p">(</span><span class="w"> </span><span class="n">res</span><span class="o">$</span><span class="n">sig</span><span class="o">==</span><span class="bp">T</span><span class="w"> </span><span class="p">)],</span><span class="w"> </span><span class="n">fromType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;ENSEMBL&quot;</span><span class="p">,</span>
-<span class="w">                 </span><span class="n">toType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;ENTREZID&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SYMBOL&quot;</span><span class="p">),</span>
-<span class="w">                 </span><span class="n">OrgDb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;org.Mm.eg.db&quot;</span><span class="p">)</span>
-<span class="nf">dim</span><span class="p">(</span><span class="n">genes_DE</span><span class="p">)</span>
-<span class="c1"># 387   3</span>
-</code></pre></div>
-<p><div class="highlight"><pre><span></span><code><span class="c1"># GO &quot;biological process (BP)&quot; enrichment</span>
-<span class="n">ego_bp</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">enrichGO</span><span class="p">(</span><span class="n">gene</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="nf">as.character</span><span class="p">(</span><span class="nf">unique</span><span class="p">(</span><span class="n">genes_DE</span><span class="o">$</span><span class="n">ENTREZID</span><span class="p">)),</span>
-<span class="w">                   </span><span class="n">universe</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="nf">as.character</span><span class="p">(</span><span class="nf">unique</span><span class="p">(</span><span class="n">genes_universe</span><span class="o">$</span><span class="n">ENTREZID</span><span class="p">)),</span>
-<span class="w">                   </span><span class="n">OrgDb</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="n">org.Mm.eg.db</span><span class="p">,</span>
-<span class="w">                   </span><span class="n">ont</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;BP&quot;</span><span class="p">,</span>
-<span class="w">                   </span><span class="n">pAdjustMethod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;BH&quot;</span><span class="p">,</span>
-<span class="w">                   </span><span class="n">pvalueCutoff</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="m">0.01</span><span class="p">,</span>
-<span class="w">                   </span><span class="n">qvalueCutoff</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="m">0.05</span><span class="p">,</span>
-<span class="w">                   </span><span class="n">readable</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span>
-<span class="nf">head</span><span class="p">(</span><span class="n">ego_bp</span><span class="p">)</span>
-<span class="nf">dotplot</span><span class="p">(</span><span class="n">ego_bp</span><span class="p">,</span><span class="w"> </span><span class="n">showCategory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">20</span><span class="p">)</span>
-<span class="c1"># sample plot, but with adjusted p-value as x-axis</span>
-<span class="c1">#dotplot(ego_bp, x = &quot;p.adjust&quot;, showCategory = 20)</span>
-</code></pre></div>
-<img alt="GOenrich" src="../../assets/images/DESeq2/GO_enrich.png" /></p>
-<p><div class="highlight"><pre><span></span><code><span class="c1"># Reactome pathways enrichment</span>
-<span class="n">reactome.enrich</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">enrichPathway</span><span class="p">(</span><span class="n">gene</span><span class="o">=</span><span class="nf">as.character</span><span class="p">(</span><span class="nf">unique</span><span class="p">(</span><span class="n">genes_DE</span><span class="o">$</span><span class="n">ENTREZID</span><span class="p">)),</span>
-<span class="w">                                 </span><span class="n">organism</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;mouse&quot;</span><span class="p">,</span>
-<span class="w">                                 </span><span class="n">pAdjustMethod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;BH&quot;</span><span class="p">,</span>
-<span class="w">                                 </span><span class="n">qvalueCutoff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.01</span><span class="p">,</span>
-<span class="w">                                 </span><span class="n">readable</span><span class="o">=</span><span class="bp">T</span><span class="p">,</span>
-<span class="w">                                 </span><span class="n">universe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">genes_universe</span><span class="o">$</span><span class="n">ENTREZID</span><span class="p">)</span>
-
-
-<span class="nf">dotplot</span><span class="p">(</span><span class="n">reactome.enrich</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;p.adjust&quot;</span><span class="p">)</span>
-</code></pre></div>
-<img alt="Reactomeenrich" src="../../assets/images/DESeq2/Reactome_enrich.png" /></p>
 </details>
 <h2 id="additional-importing-counts-from-salmon-with-tximport">Additional : importing counts from salmon with <code>tximport</code></h2>
 <p>The <code>tximport</code> R packages offers a fairly simple set of functions to get <strong>transcript-level</strong> expression quantification from salmon or kallisto into a differential <strong>gene</strong> expression analysis.</p>
