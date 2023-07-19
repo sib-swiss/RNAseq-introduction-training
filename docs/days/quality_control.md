@@ -327,12 +327,12 @@ There are many additional parameters which let you customize your report. Use `m
 
 	![fastqc per sequence gc content plot](../assets/images/multiqc_mouseMT/fastqc_per_sequence_gc_content_plot.png)
 
-	Most samples do not deviate too much, Except for one sample which clearly contains more GC% rich content compared to the other samples.
-	This may be indicative of contamination.
+	Most samples do not deviate too much, Except for two samples which clearly contains more GC% rich content compared to the other samples.
+	This may be indicative of contamination or just a difference in composition.
 
 	![fastqc sequence duplication levels plot](../assets/images/multiqc_mouseMT/fastqc_sequence_duplication_levels_plot.png)
 
-	Her we see that some sequence are duplicated, but not many.
+	Here we see that some sequence are duplicated, but not many.
 	Normally in the context of RNA-seq some transcripts are present in a large number of copies in the samples, so we would expect to see more over-represented sequences. 
 	This is not the case here because this is a toy dataset with a very small number of reads.
 
@@ -341,7 +341,7 @@ There are many additional parameters which let you customize your report. Use `m
 	We see a clear trend of adapter contamination for one sample as we get closer to the reads' end. Note the y-scale though : we never go above a 6% content per sample.
 
 
-	Overall, we can conclude that one sample stands out in particular. 
+	Overall, we can conclude that one sample in particular stands out in particular. 
 
 	We should note its name and monitor it closely as we go through the rest of our analysis pipeline.
 
