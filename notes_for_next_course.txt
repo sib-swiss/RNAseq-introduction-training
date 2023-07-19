@@ -100,29 +100,16 @@ Session4 - mapping : https://sib-swiss.github.io/RNAseq-introduction-training/da
 
 
 Session5 - counting
-   O clarify the whole thing
-   O is it useful to call featureCount to get the same output as STAR in the end?
-   O remove that part, and discuss preprocess and normalizing more on DE??
+   X remove that part, and discuss preprocess and normalizing more on DE??
 
 Session6 - DE
-   O slides : simplify + example of bad stuff?
-   O put enrichment analysis in another slides set
-   O give a bit more guidance in R practicals ?
+   X slides : simplify 
+   X put enrichment analysis in another slides set
+   X give a bit more guidance in R practicals ?
 
 Session7 - post-hoc
    O enrichment analysis. 
    O other kind ? (use log-count for further stuff?)
    O guidance for non-model organisms
-
-
-Find 2/3 nice datasets with 2 or 3 conditions 
-   Julie Ruer Laventie data : https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ZNDvBGUAAAAJ&citation_for_view=ZNDvBGUAAAAJ:5nxA0vEk-isC
-   Shivani dataset? 
-
-   case with collapse of technical replicate?
-   case with exclusion of a replicate?
-
-
-
 
 

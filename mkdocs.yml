@@ -14,8 +14,8 @@ nav:
         - Reads mapping : days/mapping.md
 
     - Day2 :
-        - Read counting : days/counting.md
         - Differential Expression Inference : days/DE.md
+        - Enrichment analysis : days/enrichment.md
 
 
 

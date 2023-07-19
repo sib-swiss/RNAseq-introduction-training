@@ -5,27 +5,19 @@ Once the reads have been mapped and counted, one can assess the differential exp
 
  * describe the different steps of data normalization and modelling commonly used for RNA-seq data.
  * detect significantly differentially-expressed genes using either edgeR or DESeq2.
- * perform downstream analysis on gene sets, such as annotation (e.g. GO terms or Reactome pathways) over-representation.
 
 
 ## Material
 
-[:fontawesome-solid-file-pdf: Download the presentation](../assets/pdf/RNA-Seq_06_DE.pdf){: .md-button }
+[:fontawesome-solid-file-pdf: Download the presentation](../assets/pdf/RNA-Seq_06_DE.pdf){target=_blank : .md-button }
 
-<!-- Suggestion: RStudio reminders ??? Or link to some course or something? -->
 [Rstudio website](https://www.rstudio.com/)
-<!-- Suggestion: ExploreModelMatrix for visualising contrasts:
-https://github.com/csoneson/ExploreModelMatrix
-https://bioconductor.org/packages/release/bioc/html/ExploreModelMatrix.html
-Soneson C, Marini F, Geier F, Love M, Stadler M (2020). “ExploreModelMatrix: Interactive exploration for improved understanding of design matrices and linear models in R.” F1000Research, 9, 512. doi: 10.12688/f1000research.24187.2. 
--->
+<!-- Suggestion: RStudio reminders ??? Or link to some course or something? -->
 
-!!! note
-  RStudio is set to be rebranded as Posit after October 2022.
 
-[edgeR user's guide](https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf){: .md-button }
+[edgeR user's guide](https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf){target=_blank : .md-button }
 
-[DESeq2 vignette](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html){: .md-button }
+[DESeq2 vignette](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html){target=_blank : .md-button }
 
 
 ## Connexion to the Rstudio server
@@ -43,15 +35,703 @@ As you start your session on the RStudio server, please make sure that you know 
 
 ## Differential Expression Inference
 
+Let's analze the `mouseMT` toy dataset.
+
+??? note "DESeq2 analysis"
+
+
+	```r
+	library(DESeq2)
+	library(ggplot2)
+	library(pheatmap)
+	```
+
+	## reading
+
+	We will use the trimmed reads
+
+	```r
+	folder  = "/shared/data/Solutions/mouseMT/044_STAR_map_trimmed/"
+
+	# we skip the 4 first lines, which contains 
+	# N_unmapped , N_multimapping , N_noFeature , N_ambiguous   
+
+	sample_a1_table = read.table(paste0( folder , "sample_a1" , ".ReadsPerGene.out.tab") , 
+	           row.names = 1 , skip = 4 )
+	head( sample_a1_table )
+	```
+
+	```
+						V2		V3		V4
+	ENSMUSG00000064336	0		0		0	
+	ENSMUSG00000064337	0		0		0	
+	ENSMUSG00000064338	0		0		0	
+	ENSMUSG00000064339	0		0		0	
+	ENSMUSG00000064340	0		0		0	
+	ENSMUSG00000064341	4046	1991	2055	
+	```
+
+	We are interested in the first columns, which contains counts for unstranded reads
+
+	Let's use a loop to automatize the reading:
+	```r
+	raw_counts = data.frame( row.names =  row.names(sample_a1_table) )
+
+	for( sample in c('a1','a2','a3','a4','b1','b2','b3','b4') ){
+	  sample_table = read.table(paste0( folder , "sample_" , sample , ".ReadsPerGene.out.tab") , 
+	                            row.names = 1 , skip = 4 )
+	  
+	  raw_counts[sample] = sample_table[ row.names(raw_counts) , "V2" ]
+	  
+	}
+
+	head( raw_counts )
+	```
+	```
+						a1		a2		a3		a4	b1	b2	b3	b4
+	ENSMUSG00000064336	0		0		0		0	0	0	0	0
+	ENSMUSG00000064337	0		0		0		0	0	0	0	0
+	ENSMUSG00000064338	0		0		0		0	0	0	0	0
+	ENSMUSG00000064339	0		0		0		2	0	0	0	0
+	ENSMUSG00000064340	0		0		0		0	0	0	0	0
+	ENSMUSG00000064341	4046	4098	4031	1	449	515	13	456
+	```
+
+	## setting up the experimental design
+
+	```r
+	#note: levels let's us define the reference levels
+	treatment <- factor( c(rep("a",4), rep("b",4)), levels=c("a", "b") )
+	colData <- data.frame(treatment, row.names = colnames(raw_counts))
+	colData
+	```
+ 
+	```
+		treatment
+	a1	a			
+	a2	a			
+	a3	a			
+	a4	a			
+	b1	b			
+	b2	b			
+	b3	b			
+	b4	b
+	```
+
+
+	## creating the DESeq data object and some QC
+
+	```r
+	dds <- DESeqDataSetFromMatrix(
+	  countData = raw_counts, colData = colData, 
+	  design = ~ treatment)
+	dim(dds)
+	```
+	```
+	[1] 37  8
+	```
+
+
+	Filter low count genes. 
+
+	Here, we will apply a very soft filter and keep genes with at least 1 read in at least 4 samples (size of the smallest group).
+
+	```r
+	idx <- rowSums(counts(dds, normalized=FALSE) >= 1) >= 4
+	dds.f <- dds[idx, ]
+	dim(dds.f)
+	```
+	```
+	[1] 13  8
+	```
+
+	We go from 37 to 13 genes
+
+
+	We perform the estimation of dispersions 
+	```r
+	dds.f <- DESeq(dds.f)
+	```
+	```
+	estimating size factors
+	estimating dispersions
+	gene-wise dispersion estimates
+	mean-dispersion relationship
+	-- note: fitType='parametric', but the dispersion trend was not well captured by the
+	   function: y = a/x + b, and a local regression fit was automatically substituted.
+	   specify fitType='local' or 'mean' to avoid this message next time.
+	final dispersion estimates
+	fitting model and testing
+	```
+
+	PCA plot of the samples:
+	```r
+	# blind	: whether to blind the transformation to the experimental design. 
+	#   - blind=TRUE : comparing samples in a manner unbiased by prior information on samples, 
+	#                  for example to perform sample QA (quality assurance).
+	#   - blind=FALSE: should be used for transforming data for downstream analysis, 
+	#                  where the full use of the design information should be made.
+
+	vsd <- varianceStabilizingTransformation(dds.f, blind=TRUE )
+	pcaData <- plotPCA(vsd, intgroup=c("treatment"))
+	pcaData + geom_label(aes(x=PC1,y=PC2,label=name))
+	```
+
+	![pca all samples](../assets/images/DESeq2_mouseMT/mouseMT_pca1.png)
+	
+
+	OK, so a4 and b3 are quite different from the rest.
+
+	 * a4 was expected from the QC
+	 * b3 we did not expect until now
+
+	If we did the analysis with them, here is what we get:
+	```r
+	res <- results(dds.f)
+	summary( res )
+	```
+	```
+	out of 13 with nonzero total read count
+	adjusted p-value < 0.1
+	LFC > 0 (up)       : 0, 0%
+	LFC < 0 (down)     : 0, 0%
+	outliers [1]       : 7, 54%
+	low counts [2]     : 0, 0%
+	(mean count < 16)
+	[1] see 'cooksCutoff' argument of ?results
+	[2] see 'independentFiltering' argument of ?results
+	```
+
+	So, let's eliminate these two samples.
+
+	## analysis without the outliers
+
+	```r
+	raw_counts_no_outliers = raw_counts[ , !( colnames(raw_counts) %in% c('a4','b3') ) ]
+
+	treatment <- factor( c(rep("a",3), rep("b",3)), levels=c("a", "b") )
+	colData <- data.frame(treatment, row.names = colnames(raw_counts_no_outliers))
+	colData 
+	```
+ 
+	```
+		treatment
+	a1	a			
+	a2	a			
+	a3	a			
+	b1	b			
+	b2	b			
+	b4	b
+	```
+
+	```r
+	dds <- DESeqDataSetFromMatrix(
+	  countData = raw_counts_no_outliers, colData = colData, 
+	  design = ~ treatment)
+	dim(dds)
+	```
+	```
+	[1] 37  6
+	```
+
+	Filter low count genes: now the smallest group is 3
+	```r
+	idx <- rowSums(counts(dds, normalized=FALSE) >= 1) >= 3
+	dds.f <- dds[idx, ]
+	dim(dds.f)
+	```
+	```
+	[1] 12  6
+	```
+	12 genes remaining
+
+	We perform the estimation of dispersions 
+	```r
+	dds.f <- DESeq(dds.f)
+	```
+	```
+	estimating size factors
+	estimating dispersions
+	gene-wise dispersion estimates
+	mean-dispersion relationship
+	final dispersion estimates
+	fitting model and testing
+	```
+
+	PCA plot of the samples:
+	```r
+	vsd <- varianceStabilizingTransformation(dds.f, blind=TRUE )
+	pcaData <- plotPCA(vsd, intgroup=c("treatment"))
+	pcaData + geom_label(aes(x=PC1,y=PC2,label=name))
+	```
+	![pca no outliers](../assets/images/DESeq2_mouseMT/mouseMT_pca2.png)
+
+	It looks much better. Seems like PC1 captures the group effect
+
+
+	We plot the estimate of the dispersions
+	```r
+	# * black dot : raw
+	# * red dot : local trend
+	# * blue : corrected
+	plotDispEsts(dds.f)
+	```
+
+	![dispersion estimate mouseMT](../assets/images/DESeq2_mouseMT/mouseMT_dispEst.png)
+
+	There is so few genes that this does not look super nice here
+
+	For the Ruhland2016 dataset it looks like:
+
+	![dispersion estimate Ruhland2016](../assets/images/DESeq2/ruhland2016_dispEst.png)
+
+	This plot is not easy to interpret. It represents the amount of dispersion at different levels of expression. It is directly linked to our ability to detect differential expression.
+
+	Here it looks about normal compared to typical bulk RNA-seq experiments : the dispersion is comparatively larger for lowly expressed genes.
+
+
+	```r
+	# extracting results for the treatment versus control contrast
+	res <- results(dds.f)
+	summary( res )
+	```
+	```
+	out of 12 with nonzero total read count
+	adjusted p-value < 0.1
+	LFC > 0 (up)       : 1, 8.3%
+	LFC < 0 (down)     : 2, 17%
+	outliers [1]       : 0, 0%
+	low counts [2]     : 0, 0%
+	(mean count < 1)
+	[1] see 'cooksCutoff' argument of ?results
+	[2] see 'independentFiltering' argument of ?results
+	```
+
+	We can have a look at the coefficients of this model
+	```r
+	head(coef(dds.f)) # the second column corresponds to the difference between the 2 conditions
+	```
+	```
+	                   Intercept treatment_b_vs_a
+	ENSMUSG00000064341 12.084282      -3.33601412
+	ENSMUSG00000064345  6.112479      -0.99101369
+	ENSMUSG00000064351  3.757967       0.64546475
+	ENSMUSG00000064354 10.209339       1.44160442
+	ENSMUSG00000064357 11.763707      -0.06245774
+	ENSMUSG00000064358  6.026334      -0.26447858
+	```
+
+	Here, it contains an intercept and a coefficient for the difference between the two groups.
+
+	MA plot:
+	```r
+	res.lfc <- lfcShrink(dds.f, coef=2, res=res)
+	DESeq2::plotMA(res.lfc)
+	```
+	![MA plot mouseMT](../assets/images/DESeq2_mouseMT/mouseMT_MA.png)
+
+	Volcano plot:
+	```r
+	FDRthreshold = 0.01
+	logFCthreshold = 1.0
+	# add a column of NAs
+	res.lfc$diffexpressed <- "NO"
+	# if log2Foldchange > 1 and pvalue < 0.01, set as "UP" 
+	res.lfc$diffexpressed[res.lfc$log2FoldChange > logFCthreshold & res.lfc$padj < FDRthreshold] <- "UP"
+	# if log2Foldchange < 1 and pvalue < 0.01, set as "DOWN"
+	res.lfc$diffexpressed[res.lfc$log2FoldChange < -logFCthreshold & res.lfc$padj < FDRthreshold] <- "DOWN"
+
+	ggplot( data = data.frame( res.lfc ) , aes( x=log2FoldChange , y = -log10(padj) , col =diffexpressed ) ) + 
+	  geom_point() + 
+	  geom_vline(xintercept=c(-logFCthreshold, logFCthreshold), col="red") +
+	  geom_hline(yintercept=-log10(FDRthreshold), col="red") +
+	  scale_color_manual(values=c("blue", "grey", "red"))
+
+	table(res.lfc$diffexpressed)
+	```
+	```
+	DOWN   NO   UP 
+	   1   10    1 
+	```
+	![volcano plot mouseMT](../assets/images/DESeq2_mouseMT/mouseMT_volcano.png)
+
+
+	Heatmap:
+	```r
+	vsd.counts <- assay(vsd)
+
+	topVarGenes <- head(order(rowVars(vsd.counts), decreasing = TRUE), 20)
+	mat  <- vsd.counts[ topVarGenes, ] #scaled counts of the top genes
+	mat  <- mat - rowMeans(mat)  # centering
+	pheatmap(mat)
+	```
+	![heatmap plot mouseMT](../assets/images/DESeq2_mouseMT/mouseMT_heatmap.png)
+
+	## saving results to file
+
+	note: a CSV file can be imported into Excel
+	```r
+	write.csv( res ,'mouseMT.DESeq2.results.csv' )
+	```
+
+??? note "edgeR analysis"
+
+	
+	```r
+	# setup
+	library(edgeR)
+	library(ggplot2)
+	```
+
+
+	## reading
+
+	We will use the trimmed reads
+
+	First we try with the sample_a1:
+
+	```r
+	folder  = "/shared/data/Solutions/mouseMT/044_STAR_map_trimmed/"
+
+	# we skip the 4 first lines, which contains 
+	# N_unmapped , N_multimapping , N_noFeature , N_ambiguous   
+
+	sample_a1_table = read.table(paste0( folder , "sample_a1" , ".ReadsPerGene.out.tab") , 
+	           row.names = 1 , skip = 4 )
+	head( sample_a1_table )
+	```
+	```
+						V2		V3		V4
+	ENSMUSG00000064336	0		0		0	
+	ENSMUSG00000064337	0		0		0	
+	ENSMUSG00000064338	0		0		0	
+	ENSMUSG00000064339	0		0		0	
+	ENSMUSG00000064340	0		0		0	
+	ENSMUSG00000064341	4046	1991	2055	
+	```
+
+	We are interested in the first columns, which contains counts for unstranded reads
+
+
+
+	Let's use a loop to automatize the reading:
+
+	```r
+	raw_counts = data.frame( row.names =  row.names(sample_a1_table) )
+
+	for( sample in c('a1','a2','a3','a4','b1','b2','b3','b4') ){
+	  sample_table = read.table(paste0( folder , "sample_" , sample , ".ReadsPerGene.out.tab") , 
+	                            row.names = 1 , skip = 4 )
+	  
+	  raw_counts[sample] = sample_table[ row.names(raw_counts) , "V2" ]
+	  
+	}
+
+	head( raw_counts )
+	```
+	```
+						a1		a2		a3		a4	b1	b2	b3	b4
+	ENSMUSG00000064336	0		0		0		0	0	0	0	0
+	ENSMUSG00000064337	0		0		0		0	0	0	0	0
+	ENSMUSG00000064338	0		0		0		0	0	0	0	0
+	ENSMUSG00000064339	0		0		0		2	0	0	0	0
+	ENSMUSG00000064340	0		0		0		0	0	0	0	0
+	ENSMUSG00000064341	4046	4098	4031	1	449	515	13	456
+	```
+
+
+	## experimental design
+
+
+	> note: levels let's us define the reference levels
+
+	```r
+	treatment <- factor( c(rep("a",4), rep("b",4)), levels=c("a", "b") )
+	names(treatment) = colnames(raw_counts)
+
+	treatment
+	```
+	```
+	a1 a2 a3 a4 b1 b2 b3 b4 
+	 a  a  a  a  b  b  b  b 
+	Levels: a b
+	```
+
+	## edgeR  object preprocessing and QC
+
+	Creating the edgeR DGE object and filtering low-count genes.
+
+	```r
+	dge.all <- DGEList(counts = raw_counts , group = treatment)  
+
+	dge.f.design <- model.matrix(~ treatment)
+
+	# filtering by expression level. See ?filterByExpr for details
+	keep <- filterByExpr(dge.all)
+	dge.f <- dge.all[keep, keep.lib.sizes=FALSE]
+	table( keep )
+	```
+	```
+	keep
+	FALSE  TRUE 
+	   28     9 
+	```
+
+	```r
+	#normalization
+	dge.f <- calcNormFactors(dge.f)
+	dge.f$samples
+	```
+	```
+		group	lib.size	norm.factors
+	a1	a		13799		1.2101311	
+	a2	a		13649		1.2130900	
+	a3	a		13938		1.2131513	
+	a4	a		6831		0.1058474	
+	b1	b		13703		1.3614563	
+	b2	b		13627		1.3728761	
+	b3	b		162			2.0759281	
+	b4	b		13687		1.3671996	
+	```
+	We represent the distances between the samples using MDS:
+
+	```r
+	plotMDS( dge.f , col = c('cornflowerblue','forestgreen')[treatment] )
+	```
+	![mouseMT MDS plot all samples](../assets/images/edgeR_mouseMT/mouseMT_MDS1.png)
+
+	OK, so a4 and b3 are quite different from the rest.
+
+	 * a4 was expected from the QC
+	 * b3 we did not expect until now
+
+	If we did the analysis with them, here is what we get:
+	```r
+	# estimate of the dispersion
+	dge.f <- estimateDisp(dge.f,dge.f.design , robust = T)
+	# testing for differential expression. 
+	dge.f.et <- exactTest(dge.f)
+	topTags(dge.f.et)
+	```
+	```	 
+						logFC		logCPM		PValue		FDR
+	ENSMUSG00000065947	-5.06512022	13.51727	0.006432974	0.05110489
+	ENSMUSG00000064351	-7.46603064	20.14951	0.011356643	0.05110489
+	ENSMUSG00000064345	3.35236454	15.28962	0.050902734	0.13212506
+	ENSMUSG00000064341	-2.67947447	16.69126	0.058722251	0.13212506
+	ENSMUSG00000064354	1.58127747	16.60293	0.263189690	0.42743645
+	ENSMUSG00000064368	1.75395362	12.51557	0.284957631	0.42743645
+	ENSMUSG00000064358	-0.10554311	11.49478	0.912516094	0.96610797
+	ENSMUSG00000064363	-0.08216781	17.90743	0.950808801	0.96610797
+	ENSMUSG00000064357	0.06455233	17.18842	0.966107973	0.96610797
+	```
+
+	no gene is significantly DE.
+
+	So, let's eliminate these two samples.
+
+	## analysis without the outliers
+
+
+	```r
+	raw_counts_no_outliers = raw_counts[ , !( colnames(raw_counts) %in% c('a4','b3') ) ]
+	head( raw_counts_no_outliers )
+	```
+	```
+					 	a1		a2		a3		b1	b2	b4
+	ENSMUSG00000064336	0		0		0		0	0	0
+	ENSMUSG00000064337	0		0		0		0	0	0
+	ENSMUSG00000064338	0		0		0		0	0	0
+	ENSMUSG00000064339	0		0		0		0	0	0
+	ENSMUSG00000064340	0		0		0		0	0	0
+	ENSMUSG00000064341	4046	4098	4031	449	515	456
+	```
+
+	```r
+	treatment <- factor( c(rep("a",3), rep("b",3)), levels=c("a", "b") )
+	colData <- data.frame(treatment, row.names = colnames(raw_counts_no_outliers))
+	colData 
+	```
+	```
+		treatment
+	a1	a			
+	a2	a			
+	a3	a			
+	b1	b			
+	b2	b			
+	b4	b
+	```
+
+	```r
+	dge.all <- DGEList(counts = raw_counts_no_outliers , group = treatment)  
+
+	dge.f.design <- model.matrix(~ treatment)
+
+	# filtering by expression level. See ?filterByExpr for details
+	keep <- filterByExpr(dge.all)
+	dge.f <- dge.all[keep, keep.lib.sizes=FALSE]
+	table( keep )
+	```
+	```
+	keep
+	FALSE  TRUE 
+	   28     9 
+	```
+
+	We compute the normalization factor for each library:
+	```r
+	#normalization
+	dge.f <- calcNormFactors(dge.f)
+	dge.f$samples
+	```
+	```
+	 	group	lib.size	norm.factors
+	a1	a		13799		0.9437444	
+	a2	a		13649		0.9277668	
+	a3	a		13938		0.9412032	
+	b1	b		13703		1.0672149	
+	b2	b		13627		1.0651230	
+	b4	b		13687		1.0675095	
+	```
+
+	We represent the distances between the samples using MDS:
+
+	```r
+	plotMDS( dge.f , col = c('cornflowerblue','forestgreen')[treatment] )
+	```
+	![mouseMT MDS plot no outliers](../assets/images/edgeR_mouseMT/mouseMT_MDS2.png)
+
+	It looks much better. Seems like PC1 captures the group effect.
+
+	We now fit the model:
+
+	```r
+	# estimate of the dispersion
+	dge.f <- estimateDisp(dge.f,dge.f.design , robust = T)
+	plotBCV(dge.f)
+	```
+	![mouseMT BCV](../assets/images/edgeR_mouseMT/mouseMT_BCV.png)
+
+	There is so few genes that this does not look super nice here.
+
+	Here is how it looks like on the Ruhland2016 data:
+
+	![bcv](../assets/images/edgeR/BCV.png)
+
+	This plot is not easy to interpret. It represents the amount of biological variation at different levels of expression. It is directly linked to our ability to detect differential expression.
+
+	Here it looks about normal compared to other bulk RNA-seq experiments : the variation is comparatively larger for lowly expressed genes.
+
+
+	```r
+	# testing for differential expression. 
+	# This method is recommended when you only have 2 groups to compare
+	dge.f.et <- exactTest(dge.f)
+	topTags(dge.f.et) # printing the genes where the p-value of differential expression if the lowest
+	```
+	```
+						logFC			logCPM		PValue			FDR
+	ENSMUSG00000064341	-3.2728209590	17.34360	0.000000e+00	0.000000e+00
+	ENSMUSG00000064354	1.5046106466	17.35950	0.000000e+00	0.000000e+00
+	ENSMUSG00000064345	-0.9251244495	11.92467	4.542291e-08	1.362687e-07
+	ENSMUSG00000064368	0.7262191019	10.55226	1.337410e-02	3.009174e-02
+	ENSMUSG00000064351	0.7031516899	10.50496	2.006905e-02	3.612429e-02
+	ENSMUSG00000064358	-0.1964770294	12.14888	2.110506e-01	3.165759e-01
+	ENSMUSG00000065947	0.2623477474	10.00748	4.831813e-01	5.851717e-01
+	ENSMUSG00000064363	-0.0127783014	18.61543	5.201527e-01	5.851717e-01
+	ENSMUSG00000064357	0.0006819028	17.93963	9.833826e-01	9.833826e-01
+	```
+
+	We can see 3 genes with FDR < 0.01 and 2 others with 0.01 < FDR < 0.05.
+
+	```r
+	summary(decideTests(dge.f.et , p.value = 0.01)) # let's use 0.01 as a threshold
+	```
+	```
+		    b-a
+	Down     2
+	NotSig   6
+	Up       1
+	```
+
+	Let's plot these:
+	```r
+	## plot all the logFCs versus average count size. Significantly DE genes are  colored
+	plotMD(dge.f.et)
+	# lines at a log2FC of 1/-1, corresponding to a shift in expression of x2 
+	abline(h=c(-1,1), col="blue")
+	abline(h=c(0), col="grey")
+	```
+	![mouseMT MA](../assets/images/edgeR_mouseMT/mouseMT_MA.png)
+
+	Volcano plot
+
+	```r
+	allGenes = topTags(dge.f.et , n = nrow(dge.f.et$table) )$table
+
+	FDRthreshold = 0.01
+	logFCthreshold = 1.0
+	# add a column of NAs
+	allGenes$diffexpressed <- "NO"
+	# if log2Foldchange > 1 and pvalue < 0.01, set as "UP" 
+	allGenes$diffexpressed[allGenes$logFC > logFCthreshold & allGenes$FDR < FDRthreshold] <- "UP"
+	# if log2Foldchange < 1 and pvalue < 0.01, set as "DOWN"
+	allGenes$diffexpressed[allGenes$logFC < -logFCthreshold & allGenes$FDR < FDRthreshold] <- "DOWN"
+
+	ggplot( data = allGenes , aes( x=logFC , y = -log10(FDR) , col =diffexpressed ) ) + 
+	  geom_point() + 
+	  geom_vline(xintercept=c(-logFCthreshold, logFCthreshold), col="red") +
+	  geom_hline(yintercept=-log10(FDRthreshold), col="red") +
+	  scale_color_manual(values=c("blue", "grey", "red"))
+	```
+	![mouseMT volcano](../assets/images/edgeR_mouseMT/mouseMT_volcano.png)
+
+	## writing the table of results
+
+	```r
+	write.csv( allGenes , 'mouseMT.edgeR.results.csv')
+	```
+
+
+!!! note "From ensembl gene ids to gene names"
+
+	We can convert between different gene ids using the `bitr` function from `clusterProfiler`
+	```r
+	library(clusterProfiler)
+	library(org.Mm.eg.db)
+
+	genes_universe <- bitr(rownames(allGenes), fromType = "ENSEMBL",
+	                       toType = c("ENTREZID", "SYMBOL"),
+	                       OrgDb = "org.Mm.eg.db")
+	genes_universe
+	```
+	```
+	             ENSEMBL ENTREZID SYMBOL
+	1 ENSMUSG00000064341    17716    ND1
+	2 ENSMUSG00000064354    17709   COX2
+	3 ENSMUSG00000064345    17717    ND2
+	4 ENSMUSG00000064368    17722    ND6
+	5 ENSMUSG00000064351    17708   COX1
+	6 ENSMUSG00000064358    17710   COX3
+	7 ENSMUSG00000065947    17720   ND4L
+	8 ENSMUSG00000064363    17719    ND4
+	9 ENSMUSG00000064357    17705   ATP6
+	```
+
+	> Here is the list of [orgDb packages](https://bioconductor.org/packages/release/BiocViews.html#___OrgDb). For non-model organisms it will be more complex.
+
+
+### Task
+
 Use either edgeR or DESeq2 to conduct a differential expression analysis on the Ruhland2016 and/or Liu2015 dataset.
 
 You can find the expression matrices on the server at: `/shared/data/Solutions/Ruhland2016/countFiles/featureCounts_Ruhland2016.counts.txt` and `/shared/data/Solutions/Liu2015/countFiles/featureCounts_Liu2015.counts.txt`
 
 Or you may download them :
 
-[Liu2015 count matrix](../assets/txt/featureCounts_Liu2015.counts.txt){: .md-button }
+[Liu2015 count matrix](../assets/txt/featureCounts_Liu2015.counts.txt){target=_blank : .md-button }
 
-[Ruhland2016 count matrix](../assets/txt/featureCounts_Ruhland2016.counts.txt){: .md-button }
+[Ruhland2016 count matrix](../assets/txt/featureCounts_Ruhland2016.counts.txt){target=_blank : .md-button }
 
 !!! note
 
@@ -59,12 +739,17 @@ Or you may download them :
 	 * If you have the time, conduct a differential expression analysis using both DESeq2 and edgeR.
 	 * Follow the vignettes/user's guide! They are the most up-to-date and generally contain everything a newcomer might need, including worked-out examples.
 
+<!-- Suggestion: ExploreModelMatrix for visualising contrasts:
+https://github.com/csoneson/ExploreModelMatrix
+https://bioconductor.org/packages/release/bioc/html/ExploreModelMatrix.html
+Soneson C, Marini F, Geier F, Love M, Stadler M (2020). “ExploreModelMatrix: Interactive exploration for improved understanding of design matrices and linear models in R.” F1000Research, 9, 512. doi: 10.12688/f1000research.24187.2. 
+-->
 
-### DESeq2
+### DESeq2 correction
 
-[DESeq2 vignette](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html){: .md-button }
+[DESeq2 vignette](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html){target=_blank : .md-button }
 
-??? done "read in the data"
+??? success "read in the data"
 	
 	```R
 	# setup
@@ -94,7 +779,7 @@ Or you may download them :
 	colSums(raw_counts) # total number of counted reads per sample
 	```
 
-??? done "preprocessing"
+??? success "preprocessing"
 
 	```R
 	## telling DESeq2 what the experimental design was
@@ -120,7 +805,7 @@ Or you may download them :
 	Around 19k genes pass our minimum expression threshold, quite typical for a bulk Mouse RNA-seq experiment.
 
 
-??? done "estimate dispersion / model fitting"
+??? success "estimate dispersion / model fitting"
 
 	```R
 	# we perform the estimation of dispersions 
@@ -143,7 +828,7 @@ Or you may download them :
 	Here it looks about normal compared to typical bulk RNA-seq experiments : the dispersion is comparatively larger for lowly expressed genes.
 
 
-??? done "looking at the results"
+??? success "looking at the results"
 
 	```R
 	# adds estimate of the LFC the results table. 
@@ -232,12 +917,12 @@ Or you may download them :
 <!-- Question from students: how to map ENSEMBL gene IDs to gene names? -->
 
 
-### EdgeR
+### EdgeR correction
 
-[edgeR user's guide](https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf){: .md-button }
+[edgeR user's guide](https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf){target=_blank : .md-button }
 
 
-??? done "read in the data"
+??? success "read in the data"
 
 	```R
 	library(edgeR)
@@ -263,7 +948,7 @@ Or you may download them :
 	```
 	
 
-??? done "edgeR object preprocessing"
+??? success "edgeR object preprocessing"
 
 	```R
 	# setting up the experimental design AND the model
@@ -297,7 +982,7 @@ Or you may download them :
 	Each sample has been associated with a normalization factor.
 
 
-??? done "edgeR model fitting"
+??? success "edgeR model fitting"
 
 	```R
 	# estimate of the dispersion
@@ -348,7 +1033,7 @@ Or you may download them :
 
 
 
-??? done "edgeR looking at differentially-expressed genes"
+??? success "edgeR looking at differentially-expressed genes"
 
 	```R
 	## plot all the logFCs versus average count size. Significantly DE genes are  colored
@@ -386,7 +1071,7 @@ Or you may download them :
 	write.csv( allGenes , 'Ruhland2016.edgeR.results.csv')
 	```
 
-??? done "edgeR extra stuff"
+??? success "edgeR extra stuff"
 
 	```R
 	# how to extract log CPM
@@ -434,112 +1119,6 @@ Or you may download them :
 
 	The logFC are highly correlated.
 	FDRs show less correlation but their **rank** are higly correlated : they come in a very similar order.
-
-
-
-## Downstream analysis : over-representation analysis
-
-Having lists of differentially-expressed genes is quite interesting in itself,
-however when there are many DE genes, it can be interesting to map these results 
-onto curated sets of genes associated with known biological functions.
-
-Here, we propose to use [clusterProfiler](https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html),
-which regroups several enrichment detection algorithms onto several databases.
-
-We recommend you get inspiration from their very nice [vignette/e-book](http://yulab-smu.top/clusterProfiler-book/) to perform your own analyses.
-
-The proposed correction will concern the results obtained with DESeq2 on the Ruhland2016 dataset.
-
-
-??? done "analysis with clusterProfiler"
-
-	We begin by reading the results of the DE analysis. Adapt this to your own analysis.
-	Beware that edgeR and DESeq2 use different column names in their result tables (log2FoldChange/logFC , padj/FDR).
-
-	```R
-	library(AnnotationHub)
-	library(AnnotationDbi)
-	library(clusterProfiler)
-	library(ReactomePA)
-	
-	library(org.Mm.eg.db)
-	
-	
-	res = read.csv( 'Ruhland2016.DESeq2.results.csv'  , row.names=1)
-	#let's define significance as padj <0.01 & abs(lfc) > 1
-	res$sig = abs(res$log2FoldChange)>1 & res$padj<0.01
-	
-	table( res$sig )
-	```
-	
-	Number of non-significant/significant genes 
-	
-	```
-	 FALSE  TRUE 
-	 18569   401 
-	```
-	
-	Translating gene ENSEMBL names to their entrezID (this is what clusterProfiler uses), as well as Symbol (named used by most biologist).
-	```R
-	genes_universe <- bitr(rownames(res), fromType = "ENSEMBL",
-	                       toType = c("ENTREZID", "SYMBOL"),
-	                       OrgDb = "org.Mm.eg.db")
-	
-	head( genes_universe )
-	#ENSEMBL ENTREZID  SYMBOL
-	#2 ENSMUSG00000033845    27395  Mrpl15
-	#4 ENSMUSG00000025903    18777  Lypla1
-	#5 ENSMUSG00000033813    21399   Tcea1
-	#7 ENSMUSG00000002459    58175   Rgs20
-	#8 ENSMUSG00000033793   108664 Atp6v1h
-	#9 ENSMUSG00000025907    12421  Rb1cc1
-	
-	dim(genes_universe)
-	# 15878     3
-	
-	length(rownames(res))
-	# 19378
-	```
-	
-	```R
-	genes_DE <- bitr(rownames(res)[which( res$sig==T )], fromType = "ENSEMBL",
-	                 toType = c("ENTREZID", "SYMBOL"),
-	                 OrgDb = "org.Mm.eg.db")
-	dim(genes_DE)
-	# 387   3
-	```
-	
-	```R
-	# GO "biological process (BP)" enrichment
-	ego_bp <- enrichGO(gene          = as.character(unique(genes_DE$ENTREZID)),
-	                   universe      = as.character(unique(genes_universe$ENTREZID)),
-	                   OrgDb         = org.Mm.eg.db,
-	                   ont           = "BP",
-	                   pAdjustMethod = "BH",
-	                   pvalueCutoff  = 0.01,
-	                   qvalueCutoff  = 0.05,
-	                   readable      = TRUE)
-	head(ego_bp)
-	dotplot(ego_bp, showCategory = 20)
-	# sample plot, but with adjusted p-value as x-axis
-	#dotplot(ego_bp, x = "p.adjust", showCategory = 20)
-	```
-	![GOenrich](../assets/images/DESeq2/GO_enrich.png)
-	
-	
-	```R
-	# Reactome pathways enrichment
-	reactome.enrich <- enrichPathway(gene=as.character(unique(genes_DE$ENTREZID)),
-	                                 organism = "mouse",
-	                                 pAdjustMethod = "BH",
-	                                 qvalueCutoff = 0.01,
-	                                 readable=T,
-	                                 universe = genes_universe$ENTREZID)
-	
-	
-	dotplot(reactome.enrich, x = "p.adjust")
-	```
-	![Reactomeenrich](../assets/images/DESeq2/Reactome_enrich.png)
 
 
 

@@ -113,3 +113,70 @@ slides 4-8:
  * featurecount : https://subread.sourceforge.net/featureCounts.html
  * stringtie : http://ccb.jhu.edu/software/stringtie/index.shtml?t=manual
  * GATK variant calling pipeline https://gatk.broadinstitute.org/hc/en-us/articles/360035531192-RNAseq-short-variant-discovery-SNPs-Indels-
+
+
+## 05 DE
+
+slide 3-9 : challenges for RNAseq 
+
+ * slide 4: sequencing depth varies accross libraries
+     * left : 100 samples from the Gtex V8 dataset: https://gtexportal.org/home/datasets
+     * right : samples from a random binomial with and without a library size factor applied
+
+ * slide 5: most of the expression is taken by very few genes + a lot of genes have 0 reads  (plots: data from 100 samples from the Gtex V8 dataset: https://gtexportal.org/home/datasets )
+
+ * slide 6: small number of samples. 10k simulation of negative binomial draws
+
+ * slide 7-9 : xkcd.com/882
+
+slide 10-11 : input
+
+slide 12-14 : https://www.rna-seqblog.com/rpkm-fpkm-and-tpm-clearly-explained/
+
+slide 15: filtering: 
+    * https://academic.oup.com/bioinformatics/article/29/17/2146/240530 max and mean refer to CPM thresholds ; CPM 1: genes with a CPM less than one in more than half the samples are filtered
+    * http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#indfilt
+    * section 2.7 of https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf
+
+slide 16: normalization
+
+https://www.biostars.org/p/284775/
+EdgeR: Trimmed Mean of M-values (TMM): 
+        
+        also based on the hypothesis that most genes are not DE. 
+
+        The TMM factor is computed for each lane, with one lane being considered as a reference sample and the others as test samples. 
+
+        For each test sample, TMM is computed as the weighted mean of log ratios between this test and the reference, after exclusion of the most expressed genes and the genes with the largest log ratios. 
+
+        According to the hypothesis of low DE, this TMM should be close to 1. If it is not, its value provides an estimate of the correction factor that must be applied to the library sizes (and not the raw counts) in order to fulfill the hypothesis. 
+
+        [source: https://www.ncbi.nlm.nih.gov/pubmed/22988256]
+DESeq2
+    DESeq:  is based on the hypothesis that most genes are not DE. 
+            
+        the median of the ratio, for each gene, of its read count over its geometric mean across all lanes. 
+
+        The underlying idea is that non-DE genes should have similar read counts across samples, leading to a ratio of 1. 
+
+        Assuming most genes are not DE, the median of this ratio for the lane provides an estimate of the correction factor that should be applied to all read counts of this lane to fulfill the hypothesis. 
+
+            [source: https://www.ncbi.nlm.nih.gov/pubmed/22988256]
+
+
+slide 17 : https://pubmed.ncbi.nlm.nih.gov/22988256/
+    * TC: Total count (CPM) - UQ: Upper Quartile - Med: median - Q: quantile
+    * top left: coef of variation in housekeeping genes in H. sapiens data
+    * top right: average false-positive rate over 10 independent datasets simulated with varying proportions of differentially expressed genes (from 0% to 30% for each normalization method). 
+    * bottom:
+        * distribution: distribution inter samples look the same
+        * Intra-variance: intra group variance 
+        * Housekeeping : coef of variation in 30 housekeeping genes, which are supposed similarly expressed
+        * clustering: similarity of DE genes with other methods
+        * false positive rate : see above
+
+slide 19: NB model
+    * https://doi.org/10.1186/gb-2010-11-10-r106
+    * orange line is the fit w(q)
+    * purple line show the variance implied by the Poisson distribution 
+    * dashed orange line is the variance estimate used by edgeR. 
