@@ -849,15 +849,15 @@ On the cluster, this script is also in <code>/shared/data/Solutions/mouseMT/020_
 <p><img alt="fastqc per sequence quality scores plot" src="../../assets/images/multiqc_mouseMT/fastqc_per_sequence_quality_scores_plot.png" /></p>
 <p>Mean quality scores are on average fairly high.</p>
 <p><img alt="fastqc per sequence gc content plot" src="../../assets/images/multiqc_mouseMT/fastqc_per_sequence_gc_content_plot.png" /></p>
-<p>Most samples do not deviate too much, Except for one sample which clearly contains more GC% rich content compared to the other samples.
-This may be indicative of contamination.</p>
+<p>Most samples do not deviate too much, Except for two samples which clearly contains more GC% rich content compared to the other samples.
+This may be indicative of contamination or just a difference in composition.</p>
 <p><img alt="fastqc sequence duplication levels plot" src="../../assets/images/multiqc_mouseMT/fastqc_sequence_duplication_levels_plot.png" /></p>
-<p>Her we see that some sequence are duplicated, but not many.
+<p>Here we see that some sequence are duplicated, but not many.
 Normally in the context of RNA-seq some transcripts are present in a large number of copies in the samples, so we would expect to see more over-represented sequences. 
 This is not the case here because this is a toy dataset with a very small number of reads.</p>
 <p><img alt="fastqc adapter content plot" src="../../assets/images/multiqc_mouseMT/fastqc_adapter_content_plot.png" /></p>
 <p>We see a clear trend of adapter contamination for one sample as we get closer to the reads&rsquo; end. Note the y-scale though : we never go above a 6% content per sample.</p>
-<p>Overall, we can conclude that one sample stands out in particular. </p>
+<p>Overall, we can conclude that one sample in particular stands out in particular. </p>
 <p>We should note its name and monitor it closely as we go through the rest of our analysis pipeline.</p>
 <p>At the moment, the analysis steps are independent from sample to sample, so keeping that potential outlier is not a problem. However, when we come to differential analysis we will have to decide if we keep this sample or exclude it.</p>
 </details>

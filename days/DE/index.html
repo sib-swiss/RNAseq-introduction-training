@@ -479,15 +479,22 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#deseq2" class="md-nav__link">
-    DESeq2
+  <a href="#task" class="md-nav__link">
+    Task
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#edger" class="md-nav__link">
-    EdgeR
+  <a href="#deseq2-correction" class="md-nav__link">
+    DESeq2 correction
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edger-correction" class="md-nav__link">
+    EdgeR correction
   </a>
   
 </li>
@@ -573,15 +580,22 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#deseq2" class="md-nav__link">
-    DESeq2
+  <a href="#task" class="md-nav__link">
+    Task
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#edger" class="md-nav__link">
-    EdgeR
+  <a href="#deseq2-correction" class="md-nav__link">
+    DESeq2 correction
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edger-correction" class="md-nav__link">
+    EdgeR correction
   </a>
   
 </li>
@@ -642,10 +656,6 @@ https://bioconductor.org/packages/release/bioc/html/ExploreModelMatrix.html
 Soneson C, Marini F, Geier F, Love M, Stadler M (2020). “ExploreModelMatrix: Interactive exploration for improved understanding of design matrices and linear models in R.” F1000Research, 9, 512. doi: 10.12688/f1000research.24187.2. 
 -->
 
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-</div>
-<p>RStudio is set to be rebranded as Posit after October 2022.</p>
 <p><a class="md-button" href="https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf">edgeR user&rsquo;s guide</a></p>
 <p><a class="md-button" href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html">DESeq2 vignette</a></p>
 <h2 id="connexion-to-the-rstudio-server">Connexion to the Rstudio server</h2>
@@ -656,6 +666,8 @@ Soneson C, Marini F, Geier F, Love M, Stadler M (2020). “ExploreModelMatrix: I
 <p>The analysis of the read count data will be done on an RStudio instance, using the R language and some relevant <a href="http://bioconductor.org/">Bioconductor</a> libraries.</p>
 <p>As you start your session on the RStudio server, please make sure that you know where your data is situated with respect to your <strong>working directory</strong> (use <code>getwd()</code> and <code>setwd()</code> to respectively : know what your working is, and change it as necessary).</p>
 <h2 id="differential-expression-inference">Differential Expression Inference</h2>
+<p>Let&rsquo;s analze the <code>mouseMT</code> toy dataset.</p>
+<h3 id="task">Task</h3>
 <p>Use either edgeR or DESeq2 to conduct a differential expression analysis on the Ruhland2016 and/or Liu2015 dataset.</p>
 <p>You can find the expression matrices on the server at: <code>/shared/data/Solutions/Ruhland2016/countFiles/featureCounts_Ruhland2016.counts.txt</code> and <code>/shared/data/Solutions/Liu2015/countFiles/featureCounts_Liu2015.counts.txt</code></p>
 <p>Or you may download them :</p>
@@ -669,7 +681,7 @@ Soneson C, Marini F, Geier F, Love M, Stadler M (2020). “ExploreModelMatrix: I
 <li>Follow the vignettes/user&rsquo;s guide! They are the most up-to-date and generally contain everything a newcomer might need, including worked-out examples.</li>
 </ul>
 </div>
-<h3 id="deseq2">DESeq2</h3>
+<h3 id="deseq2-correction">DESeq2 correction</h3>
 <p><a class="md-button" href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html">DESeq2 vignette</a></p>
 <details class="done">
 <summary>read in the data</summary>
@@ -806,7 +818,7 @@ Soneson C, Marini F, Geier F, Love M, Stadler M (2020). “ExploreModelMatrix: I
 </details>
 <!-- Question from students: how to map ENSEMBL gene IDs to gene names? -->
 
-<h3 id="edger">EdgeR</h3>
+<h3 id="edger-correction">EdgeR correction</h3>
 <p><a class="md-button" href="https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf">edgeR user&rsquo;s guide</a></p>
 <details class="done">
 <summary>read in the data</summary>
