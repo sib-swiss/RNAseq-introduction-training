@@ -270,11 +270,11 @@ In its default usage, `multiqc` only needs to be provided a path where it will f
 Although the default behaviour is quite appropriate, with a couple of options we get a slightly better control over the output:
 
  * `--interactive` : forces the plot to be interactive even when there is a lot of samples (this option can lead to larger html files).
- * `-f <filename>` : specify the name of the output file name.
+ * `-n <filename>` : specify the name of the output file name.
 
 For instance, a possible command line could be :
 ```sh
-multiqc -f <output_file.html> --interactive <fastqc reports folder>/
+multiqc -n <output_file.html> --interactive <fastqc reports folder>/
 ```
 
 There are many additional parameters which let you customize your report. Use `multiqc --help` or visit their [documentation webpage](https://multiqc.info/docs/#running-multiqc) to learn more.
@@ -308,7 +308,7 @@ There are many additional parameters which let you customize your report. Use `m
 	#SBATCH --mem=1G
 	#SBATCH -o multiqc_mouseMT.o
 	
-	multiqc -f 020_multiqc_mouseMT.html 010_fastqc/ 
+	multiqc -n 020_multiqc_mouseMT.html -f --title raw_fastq 010_fastqc/
 	```
 	On the cluster, this script is also in `/shared/data/Solutions/mouseMT/020_multiqc.sh`
 

@@ -216,6 +216,11 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
 
 ```sh
 #!/usr/bin/bash
+#SBATCH --job-name=map-multiqc
+#SBATCH --time=00:30:00
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=1G
+#SBATCH -o multiqc-map-trim.o
 
 ## fastQC on trimmed fastq files
 fastqc 030_trim/*.fastq -o 030_trim

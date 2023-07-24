@@ -71,8 +71,8 @@ We will be using the Ensembl references, with their accompanying GTF annotations
 	#!/usr/bin/bash
 	#SBATCH --job-name=star-build
 	#SBATCH --time=00:30:00
-	#SBATCH --cpus-per-task=4
-	#SBATCH --mem=4G
+	#SBATCH --cpus-per-task=2
+	#SBATCH --mem=3G
 	#SBATCH -o star-build.o
 
 		
@@ -167,7 +167,7 @@ basic
 	#!/usr/bin/bash
 	#SBATCH --job-name=star-aln
 	#SBATCH --time=00:10:00
-	#SBATCH --cpus-per-task=4
+	#SBATCH --cpus-per-task=2
 	#SBATCH --mem=1G
 	#SBATCH -o star-aln.raw.%a.o
 	#SBATCH --array 1-8%8
@@ -178,9 +178,9 @@ basic
 
 	SAMPLE=`sed -n ${SLURM_ARRAY_TASK_ID}p sampleNames.txt`
 
-	FASTQ_NAME=/shared/data/DATA/mouseMT/${sampleName}.fastq
+	FASTQ_NAME=/shared/data/DATA/mouseMT/${SAMPLE}.fastq
 
-	STAR --runThreadN 4 --genomeDir 041_STAR_reference/ \
+	STAR --runThreadN 4 --genomeDir 041_STAR_mouseMT_reference \
                   --outSAMtype BAM SortedByCoordinate \
                   --outFileNamePrefix  042_STAR_map_raw/${SAMPLE}. \
                   --quantMode GeneCounts \
@@ -248,7 +248,7 @@ We will spare you the mapping of the trimmed read and let you directly download 
 	#!/usr/bin/bash
 	#SBATCH --job-name=star-aln
 	#SBATCH --time=00:10:00
-	#SBATCH --cpus-per-task=4
+	#SBATCH --cpus-per-task=2
 	#SBATCH --mem=1G
 	#SBATCH -o star-aln.trimmed.%a.o
 	#SBATCH --array 1-8%8
@@ -259,9 +259,9 @@ We will spare you the mapping of the trimmed read and let you directly download 
 	
 	SAMPLE=`sed -n ${SLURM_ARRAY_TASK_ID}p sampleNames.txt`
 	
-	FASTQ_NAME=030_trim/${sampleName}.trimmed.fastq
+	FASTQ_NAME=030_trim/${SAMPLE}.trimmed.fastq
 	
-	STAR --runThreadN 4 --genomeDir 041_STAR_reference/ \
+	STAR --runThreadN 4 --genomeDir 041_STAR_mouseMT_reference \
 	                 --outSAMtype BAM SortedByCoordinate \
 	                 --outFileNamePrefix  044_STAR_map_trimmed/${SAMPLE}_trimmed. \
 	                 --quantMode GeneCounts \
@@ -274,7 +274,7 @@ We will spare you the mapping of the trimmed read and let you directly download 
 	#SBATCH --time=00:30:00
 	#SBATCH --cpus-per-task=1
 	#SBATCH --mem=1G
-	#SBATCH -o multiqc-map-raw.o
+	#SBATCH -o multiqc-map-trim.o
 	
 	multiqc -n 045_multiqc_mouseMT_mapped_trimmed.html -f --title mapped_trimmed 044_STAR_map_trimmed/
 	```
