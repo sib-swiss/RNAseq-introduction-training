@@ -685,8 +685,8 @@ you can grab the reference genome data from the <a href="https://www.ensembl.org
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
 <span class="c1">#SBATCH --job-name=star-build</span>
 <span class="c1">#SBATCH --time=00:30:00</span>
-<span class="c1">#SBATCH --cpus-per-task=4</span>
-<span class="c1">#SBATCH --mem=4G</span>
+<span class="c1">#SBATCH --cpus-per-task=2</span>
+<span class="c1">#SBATCH --mem=3G</span>
 <span class="c1">#SBATCH -o star-build.o</span>
 
 
@@ -760,7 +760,7 @@ it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/samp
 <p><div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
 <span class="c1">#SBATCH --job-name=star-aln</span>
 <span class="c1">#SBATCH --time=00:10:00</span>
-<span class="c1">#SBATCH --cpus-per-task=4</span>
+<span class="c1">#SBATCH --cpus-per-task=2</span>
 <span class="c1">#SBATCH --mem=1G</span>
 <span class="c1">#SBATCH -o star-aln.raw.%a.o</span>
 <span class="c1">#SBATCH --array 1-8%8</span>
@@ -771,9 +771,9 @@ mkdir<span class="w"> </span>-p<span class="w"> </span>042_STAR_map_raw
 
 <span class="nv">SAMPLE</span><span class="o">=</span><span class="sb">`</span>sed<span class="w"> </span>-n<span class="w"> </span><span class="si">${</span><span class="nv">SLURM_ARRAY_TASK_ID</span><span class="si">}</span>p<span class="w"> </span>sampleNames.txt<span class="sb">`</span>
 
-<span class="nv">FASTQ_NAME</span><span class="o">=</span>/shared/data/DATA/mouseMT/<span class="si">${</span><span class="nv">sampleName</span><span class="si">}</span>.fastq
+<span class="nv">FASTQ_NAME</span><span class="o">=</span>/shared/data/DATA/mouseMT/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.fastq
 
-STAR<span class="w"> </span>--runThreadN<span class="w"> </span><span class="m">4</span><span class="w"> </span>--genomeDir<span class="w"> </span>041_STAR_reference/<span class="w"> </span><span class="se">\</span>
+STAR<span class="w"> </span>--runThreadN<span class="w"> </span><span class="m">4</span><span class="w"> </span>--genomeDir<span class="w"> </span>041_STAR_mouseMT_reference<span class="w"> </span><span class="se">\</span>
 <span class="w">              </span>--outSAMtype<span class="w"> </span>BAM<span class="w"> </span>SortedByCoordinate<span class="w"> </span><span class="se">\</span>
 <span class="w">              </span>--outFileNamePrefix<span class="w">  </span>042_STAR_map_raw/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.<span class="w"> </span><span class="se">\</span>
 <span class="w">              </span>--quantMode<span class="w"> </span>GeneCounts<span class="w"> </span><span class="se">\</span>
@@ -822,7 +822,7 @@ it can also be found in the cluster at <code>043_multiqc_map_raw.sh</code></p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
 <span class="c1">#SBATCH --job-name=star-aln</span>
 <span class="c1">#SBATCH --time=00:10:00</span>
-<span class="c1">#SBATCH --cpus-per-task=4</span>
+<span class="c1">#SBATCH --cpus-per-task=2</span>
 <span class="c1">#SBATCH --mem=1G</span>
 <span class="c1">#SBATCH -o star-aln.trimmed.%a.o</span>
 <span class="c1">#SBATCH --array 1-8%8</span>
@@ -833,9 +833,9 @@ mkdir<span class="w"> </span>-p<span class="w"> </span>044_STAR_map_trimmed
 
 <span class="nv">SAMPLE</span><span class="o">=</span><span class="sb">`</span>sed<span class="w"> </span>-n<span class="w"> </span><span class="si">${</span><span class="nv">SLURM_ARRAY_TASK_ID</span><span class="si">}</span>p<span class="w"> </span>sampleNames.txt<span class="sb">`</span>
 
-<span class="nv">FASTQ_NAME</span><span class="o">=</span>030_trim/<span class="si">${</span><span class="nv">sampleName</span><span class="si">}</span>.trimmed.fastq
+<span class="nv">FASTQ_NAME</span><span class="o">=</span>030_trim/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.trimmed.fastq
 
-STAR<span class="w"> </span>--runThreadN<span class="w"> </span><span class="m">4</span><span class="w"> </span>--genomeDir<span class="w"> </span>041_STAR_reference/<span class="w"> </span><span class="se">\</span>
+STAR<span class="w"> </span>--runThreadN<span class="w"> </span><span class="m">4</span><span class="w"> </span>--genomeDir<span class="w"> </span>041_STAR_mouseMT_reference<span class="w"> </span><span class="se">\</span>
 <span class="w">                 </span>--outSAMtype<span class="w"> </span>BAM<span class="w"> </span>SortedByCoordinate<span class="w"> </span><span class="se">\</span>
 <span class="w">                 </span>--outFileNamePrefix<span class="w">  </span>044_STAR_map_trimmed/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>_trimmed.<span class="w"> </span><span class="se">\</span>
 <span class="w">                 </span>--quantMode<span class="w"> </span>GeneCounts<span class="w"> </span><span class="se">\</span>
@@ -846,7 +846,7 @@ STAR<span class="w"> </span>--runThreadN<span class="w"> </span><span class="m">
 <span class="c1">#SBATCH --time=00:30:00</span>
 <span class="c1">#SBATCH --cpus-per-task=1</span>
 <span class="c1">#SBATCH --mem=1G</span>
-<span class="c1">#SBATCH -o multiqc-map-raw.o</span>
+<span class="c1">#SBATCH -o multiqc-map-trim.o</span>
 
 multiqc<span class="w"> </span>-n<span class="w"> </span>045_multiqc_mouseMT_mapped_trimmed.html<span class="w"> </span>-f<span class="w"> </span>--title<span class="w"> </span>mapped_trimmed<span class="w"> </span>044_STAR_map_trimmed/
 </code></pre></div>

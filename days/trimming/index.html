@@ -742,6 +742,11 @@ On the cluster, this script is also in  <code>/shared/data/Solutions/mouseMT/030
 <li>Use the the following script to run a QC analysis on your trimmmed reads  and compare with the raw ones.</li>
 </ul>
 <p><div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
+<span class="c1">#SBATCH --job-name=map-multiqc</span>
+<span class="c1">#SBATCH --time=00:30:00</span>
+<span class="c1">#SBATCH --cpus-per-task=1</span>
+<span class="c1">#SBATCH --mem=1G</span>
+<span class="c1">#SBATCH -o multiqc-map-trim.o</span>
 
 <span class="c1">## fastQC on trimmed fastq files</span>
 fastqc<span class="w"> </span>030_trim/*.fastq<span class="w"> </span>-o<span class="w"> </span>030_trim
