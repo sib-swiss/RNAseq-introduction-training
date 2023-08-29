@@ -180,3 +180,31 @@ slide 19: NB model
     * orange line is the fit w(q)
     * purple line show the variance implied by the Poisson distribution 
     * dashed orange line is the variance estimate used by edgeR. 
+
+
+## 06 Enrichment
+
+08: geneontology.org
+09: reactome.org
+10: http://www.gsea-msigdb.org/gsea/msigdb/index.jsp
+11: https://www.genome.jp/kegg/
+
+15 to 21 : GSEA 
+
+GSEA is used a lot, but it comes in many flavour, with a large number of options
+and it is not always easy to understand what is happening.
+
+"The enrichment score (ES) represents the degree to which a set S is over-represented at the top or bottom of the ranked list L. The score is calculated by walking down the list L, increasing a running-sum statistic when we encounter a gene in S and decreasing when it is not encountered. The magnitude of the increment depends on the gene statistics (e.g., correlation of the gene with phenotype). The ES is the maximum deviation from zero encountered in the random walk; it corresponds to a weighted Kolmogorov-Smirnov(KS)-like statistic (Subramanian et al. 2005)." (from https://yulab-smu.top/biomedical-knowledge-mining-book/enrichment-overview.html#gsea-algorithm)
+
+Then the ES is normalized (NES) in order to compute a p-value.
+
+ * in the base method [Subramanian 2005](https://www.pnas.org/doi/full/10.1073/pnas.0506580102) for each gene sets they create a number of permutated dataset for which they compute an ES, and they then compare the ES on the original data to the distribution of permutated ES for that set.
+    2 flavours of permutation are described : "sample permutation" and "gene permutation". 
+        * The sample permutation is only possible if the expression data for each sample is given to the method. It is recommended to have at least 7 samples per condition for it to make sense. 
+        * The gene permutation is performed from the ranking metric directly. Hence it is sometimes called "preranked-GSEA" and to my knowledge this is the most often used permutation scheme of the 2.
+
+ * in fGSEA[Korotkevich et al. 2021](https://www.biorxiv.org/content/10.1101/060012v3) several tricks are used to make the p-value computation of "preranked-GSEA" faster and more accurate for low p-values. Consequently it has become the default GSEA method in some libraries such as clusterProfiler.
+
+Finally, a parameter to consider when performing (preranked-)(f)GSEA is which metric to use to rank genes. 
+The most commons are logFC , -log10(pvalues) * logFC , or some signed test statistics (eg. t-test or Wald statistic).
+
