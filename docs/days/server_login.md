@@ -250,9 +250,6 @@ There exists several alternatives, depending on your platform and preferences.
 
 
 
-!!! bug
-    Est-ce que j'introduirai ici l'instance Rstudio? Rstudio est present dans la majorite des serveurs et il permet de gerer plutot aisement l'edition de texte, l'exploration de fichier, et les terminaux depuis une seule interface.
-
 
 ## bash scripts
 
@@ -300,8 +297,6 @@ sh myScript.sh
 
 This should have printed a number of information about the size of `/shared/data/` subfolders to the screen.
 
-!!! bug
-    Est-ce que j'inclue ici un layus sur les variables ? ca n'est utile que pour ceux qui feront des job array, donc je pourrais le mettre la bas a la place
 
 ## Submitting jobs
 
@@ -544,6 +539,23 @@ The idea is to have a single script which will execute itself several times.
 Each of these execution is called a **task**, and they are all the same for one variable which whose value changes from 1 to the number of tasks in the array.
 
 We typically use this variable, named `$SLURM_ARRAY_TASK_ID` to fetch different lines of a file containing information on the different tasks we want to run (in general, different input file names).
+
+
+!!! note
+
+    In bash we use variables to store some information such as a file name or parameter value.
+
+    it is created with a statement such as:
+
+    ```myVar=10```
+
+    where variable `myVar` now store the value 10
+
+    and the variable content is accessed with:
+
+    ```${myVar}```
+
+    You do not really need more to understand what follows, but if you are curious you can consult [this small tutorial](https://ryanstutorials.net/bash-scripting-tutorial/bash-variables.php#setting).
 
 ---
 
