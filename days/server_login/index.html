@@ -895,10 +895,6 @@ fastqc -o 010_fastqc /shared/data/DATA/mouseMT/*.fastq
 <p class="admonition-title">practical</p>
 <p>create a text file on your local computer (using wordpad on windows, Text Edit on Mac, or gedit on linux). Save that file, and then send it to the distant server.</p>
 </div>
-<div class="admonition bug">
-<p class="admonition-title">Bug</p>
-<p>Est-ce que j&rsquo;introduirai ici l&rsquo;instance Rstudio? Rstudio est present dans la majorite des serveurs et il permet de gerer plutot aisement l&rsquo;edition de texte, l&rsquo;exploration de fichier, et les terminaux depuis une seule interface.</p>
-</div>
 <h2 id="bash-scripts">bash scripts</h2>
 <p>So far we have been executing bash commands in the interactive shell.
 This is the most common way of dealing with day-to-day with our data on the server.</p>
@@ -933,10 +929,6 @@ du<span class="w"> </span>-h<span class="w"> </span>-d<span class="w"> </span><s
 <p>Be sure to execute the script from the folder that it is in. Otherwise you would have to specify in which folder to find the script using its path.</p>
 </div>
 <p>This should have printed a number of information about the size of <code>/shared/data/</code> subfolders to the screen.</p>
-<div class="admonition bug">
-<p class="admonition-title">Bug</p>
-<p>Est-ce que j&rsquo;inclue ici un layus sur les variables ? ca n&rsquo;est utile que pour ceux qui feront des job array, donc je pourrais le mettre la bas a la place</p>
-</div>
 <h2 id="submitting-jobs">Submitting jobs</h2>
 <h3 id="submitting-a-simple-script">Submitting a simple script</h3>
 <p>When connected to the server, when </p>
@@ -1105,6 +1097,16 @@ Rather than writing each sbatch script individually, we can rely on job arrays t
 <p>The idea is to have a single script which will execute itself several times.
 Each of these execution is called a <strong>task</strong>, and they are all the same for one variable which whose value changes from 1 to the number of tasks in the array.</p>
 <p>We typically use this variable, named <code>$SLURM_ARRAY_TASK_ID</code> to fetch different lines of a file containing information on the different tasks we want to run (in general, different input file names).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In bash we use variables to store some information such as a file name or parameter value.</p>
+<p>it is created with a statement such as:</p>
+<p><code>myVar=10</code></p>
+<p>where variable <code>myVar</code> now store the value 10</p>
+<p>and the variable content is accessed with:</p>
+<p><code>${myVar}</code></p>
+<p>You do not really need more to understand what follows, but if you are curious you can consult <a href="https://ryanstutorials.net/bash-scripting-tutorial/bash-variables.php#setting">this small tutorial</a>.</p>
+</div>
 <hr />
 <p>Say you want to execute a command, on 10 files (for example, map the reads of 10 samples).</p>
 <p>You first create a file containing the name of your files (one per line); let&rsquo;s call it <code>readFiles.txt</code>.</p>
