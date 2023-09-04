@@ -83,13 +83,7 @@ After a few seconds, you should be logged into the *head node* and ready to begi
 Now that you are in the head node, it is time to get acquainted with your environment and to prepare the upcoming practicals. 
 We will also use this as a short reminder about the UNIX command line.
 
-<!-- Comment: need a more visible cheat sheet, and one that is adapted to course:
-pwd, cd, mkdir, mv, more/less, nano, man / -h option ... -->
-<!-- Additionally, add (or have a separate one for) SLURM commands: sbatch, squeue... -->
-<!-- I see there is one for the module commands below. -->
-<!-- Note: some may need more explanations/refreshers of using variables in bash,
-several students struggled with this. -->
-You can also refer to this nice [Linux Command Line Cheat Sheet](https://cheatography.com/deleted-124743/cheat-sheets/linux-basic-commands/).
+You can also refer to this nice [Linux Command Line Cheat Sheet](https://cheatography.com/deleted-124743/cheat-sheets/linux-basic-commands/) (page 1 in particular).
 
 
 ---
@@ -191,7 +185,7 @@ You will be taken to the `nano` interface :
 
 ![nano screenshot](../assets/images/nano_screenshot.png)
 
-Type in your favorite movie quote, and then exit by pressing `Ctrl+x` (`control+x` on a Mac keyboard), and then `y` and `Enter` when prompted to save the modifications you just made.
+Type in your favorite movie quote, and then exit by pressing `Ctrl+x` (`command+x` on a Mac keyboard), and then `y` and `Enter` when prompted to save the modifications you just made.
 
 You can check that your modifications were saved by typing
 
@@ -228,17 +222,19 @@ There exists several alternatives, depending on your platform and preferences.
 	scp <login>@<server-adress>:/path/to/file/on/server/file.txt /local/destination/
 	```
 
-	For example, to copy the file `test.txt` you just created in the folder `day1/`, to your current (local) working directory :
+	For example, to copy the file `test.txt` you just created in the folder `day1/`, to your current (local) working directory (NB:    here `~` will be interpreted as your home directory, this is a useful and time-saving shorthand):
 
 	```sh
 	scp login@xx.xx.xx.xx:~/day1/test.txt .
 	```	
 
-	To copy a file from your machine to the server (NB:	here `~` will be interpreted as your home directory, this is a useful and time-saving shorthand):
+	To copy a file from your machine to the server:
 
 	```sh
 	scp /path/to/file/local/file.txt <login>@<server-adress>:/destination/on/server/
 	```
+
+---
 
 !!! example "practical"
 
@@ -254,18 +250,18 @@ There exists several alternatives, depending on your platform and preferences.
 ## bash scripts
 
 So far we have been executing bash commands in the interactive shell.
-This is the most common way of dealing with day-to-day with our data on the server.
+This is the most common way of dealing with our data on the server for simple operations.
 
-However when you have to do some more serious job, such as what we will want to do on RNAseq data, you want to use scripts, which are just normal text files which contains bash commands.
+However when you have to do some more serious job, such as what we will want to do on RNAseq data, you want to use scripts, which are just normal text files which contain bash commands.
 
 Scripts :
 
  * keep a written trace of your analysis, so they enhance its reproducibility. 
  * make it easier to correct something in an analysis (you don't have to retype the whole command, just change the part that is wrong)
- * often necessary when we want to submit the big computing jobs to the cluster
+ * often necessary when we want to submit big computing jobs to the cluster
 
 
-Create a new text file name `myScript.sh` on the server (you can use nano or create it on your local machine and then transfer it to the server). 
+Create a new text file named `myScript.sh` on the server (you can use nano or create it on your local machine and later transfer it to the server). 
 
 Then, type this in the file:
 
@@ -302,13 +298,11 @@ This should have printed a number of information about the size of `/shared/data
 
 ### Submitting a simple script
 
-When connected to the server, when 
-
-Jobs can be submitted to the compute cluster using **bash scripts**, with a facultative little preamble which tells the cluster about your computing resources needs and a few additional options.
+Jobs can be submitted to the compute cluster using **bash scripts**, with a facultative little preamble which tells the cluster about your computing resource needs and a few additional options.
 
 Each time a user submits a job to the cluster, SLURM checks how much ressource they asked for with respect to the amount available right now in the cluster and how much resources are allowed for that user. 
 
-If there is enough resource available then it will launch the job on one or several of its worker node. If not, then it will wait for the required resources to become available and then launch the job.
+If there are enough resources available then it will launch the job on one or several of its worker nodes. If not, then it will wait for the required resources to become available and then launch the job.
 
 
 
@@ -339,7 +333,7 @@ The columns correspond to :
  * STATE : whether the job is currently `RUNNING`, `PENDING`, `COMPLETED`, `FAILED`
  * TIME : how long has this job been running for
  * TIME_LIMIT : how long will the job be allowed to run
- * QOS : which queue of the cluster is the job. Queues are a way to organize jobs in different categories of resource usage.
+ * QOS : which queue of the cluster does the job belong to. Queues are a way to organize jobs in different categories of resource usage.
  * NODELIST(REASON) : which worker node(s) is the job running on.
 
 You can have more info on [squeue documentation](https://curc.readthedocs.io/en/latest/running-jobs/squeue-status-codes.html)
@@ -349,10 +343,10 @@ Now, you will you will want to execute your `myScript.sh` script as a job on the
 
 This can be done with the `sbatch` command.
 
-The script can stay the same (for now), but there are an important aspect of `sbatch` we want to handle: the **script will not be executing in our terminal directly, but on the worker node.** 
+The script can stay the same (for now), but there is an important aspect of `sbatch` we want to handle: the **script will not be executing in our terminal directly, but on a worker node.** 
 
-That means that there is no screen to print to. So to still view the output of the script, SLURM will write the printed output in a file which we will be able to read when the job is finished (with `more` or `less`).
-By default SLURM will name this file something like `slurm-<jobid>.out`, which is not very informative to us; so instead of keeping the default we will give our own output file name to `sbatch` with the option `-o`. For example I will name it `myOutput.o`.
+That means that there is no screen to print to. So, in order to still be able to view the output of the script, SLURM will write the printed output in a file which we will be able to read when the job is finished (with `more` or `less`).
+By default SLURM will name this file something like `slurm-<jobid>.out`, which is not very informative to us; so instead of keeping the default we will give our own output file name to `sbatch` with the option `-o`. For example, I will name it `myOutput.o`.
 
 
 In the terminal, navigate to where you have you `myscript.sh` file on the distant server and type
@@ -361,13 +355,13 @@ In the terminal, navigate to where you have you `myscript.sh` file on the distan
 sbatch -o=myOutput.o  myScript.sh
 ```
 
-You should see an output like
-:
+You should see an output like:
+
 ```
 sbatch: Submitted batch job 41
 ```
 
-Letting you know that your job has the jobid 41 (surely your will be different).
+Letting you know that your job has the jobid 41 (surely yours will be different).
 
 Directly after this, quickly type:
 

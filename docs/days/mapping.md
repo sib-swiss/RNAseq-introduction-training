@@ -6,7 +6,7 @@ Once you are happy with your read sequences in your FASTQ files, you can use a m
 
  * identify the differences between a local aligner and a pseudo aligner.
  * perform genome indexing appropriate to your data.
- * map your RNA-seq data onto the genome.
+ * map your RNA-seq data onto a genome.
 
 
 
@@ -49,13 +49,13 @@ We will be using the Ensembl references, with their accompanying GTF annotations
 	From the [manual](https://raw.githubusercontent.com/alexdobin/STAR/master/doc/STARmanual.pdf). Refer to it for more details
 
 	 * `--runMode genomeGenerate` : running STAR in index generation mode
-	 * `--genomeDir </path/to/genomeDir>` : output fodler for the index
-	 * `--genomeFastaFiles </path/to/genome/fasta1>` : chromosomes sequences fasta file (can be several files)
+	 * `--genomeDir </path/to/genomeDir>` : output folder for the index
+	 * `--genomeFastaFiles </path/to/genome/fasta1>` : chromosome sequences fasta file (can be several files)
 	 * `--sjdbGTFfile </path/to/annotations.gtf>` : annotation gtf file
 	 * `--runThreadN <NumberOfThreads>` : number of threads to run on 
 	 * `--sjdbOverhang <ReadLength-1>` : length of the genomic sequence around the annotated junctions to be used in constructing the splice junctions database. Ideally : read length - 1.
 
-	 Additionally, because the genome is so small here (we only use the muitochondrial chromosome afterall), you will need the following advanced option:
+	 Additionally, because the genome is so small here (we only use the mitochondrial chromosome afterall), you will need the following advanced option:
 
 	 * `--genomeSAindexNbases 5` : must be scalled to `min(14, log2(GenomeLength)/2 - 1)`, so 5 in our case
 
@@ -112,10 +112,7 @@ We will be using the Ensembl references, with their accompanying GTF annotations
 ## Mapping reads onto the reference
 
 
-basic 
-
-
-**Task :** Using STAR, align the raw FASTQ files of the mouseMT dataset against thed mouse mitochondrial reference you just created
+**Task :** Using STAR, align the raw FASTQ files of the mouseMT dataset against the mouse mitochondrial reference you just created
 
  * if were not able to complete the previous task you can use the index in `/shared/data/Solutions/mouseMT/041_STAR_mouseMT_reference`
  * search the STAR manual for the option to output a BAM file sorted by coordinate.
@@ -128,7 +125,7 @@ basic
 	Taken again from the manual:
 
 	- `--genomeDir </path/to/genomeDir>` : folder where you have put the genome index
-	- `--readFilesIn </path/to/read1> ` : path to a fastq file. If the reads are paired, then also include the path to the second fastq file 
+	- `--readFilesIn </path/to/read1> ` : path to a fastq file. If the reads are paired, then also include the path to the second fastq file
 	- `--runThreadN <NumberOfThreads>`: number of threads to run on.
 	- `--outFileNamePrefix  <prefix> ` : prefix of the output files, typically something like `output_directory/sampleName.` 
 
@@ -136,7 +133,7 @@ basic
 
 !!! Note
 
-	Take the time to read the parts of the [STAR manual](https://raw.githubusercontent.com/alexdobin/STAR/master/doc/STARmanual.pdf) which concern you : a bit of planning ahead can save you a lot of time-consuming/headache-inducing trial and error on your script.
+	Take the time to read the parts of the [STAR manual](https://raw.githubusercontent.com/alexdobin/STAR/master/doc/STARmanual.pdf) which concern you: a bit of planning ahead can save you a lot of time-consuming/headache-inducing trial and error on your script.
 
 
 !!! Warning
@@ -162,6 +159,8 @@ basic
 	sample_b4
 	```
 	it can also be found in the cluster at `/shared/data/Solutions/mouseMT/sampleNames.txt`
+
+	Then for our script:
 
 	```sh
 	#!/usr/bin/bash
@@ -198,8 +197,8 @@ basic
 	 * `--genomeDir 041_STAR_reference` : path of the genome to map to.
      * `--outSAMtype BAM SortedByCoordinate ` : output a coordinate-sorted BAM file.
      * `--outFileNamePrefix 042_STAR_map_raw/${SAMPLE}.` : prefix of output files.
-     * `--quantMode GeneCounts** : will create a file with counts of reads per gene.
-     * `--readFilesIn $FASTQ_NAME ** : input read file.
+     * `--quantMode GeneCounts` : will create a file with counts of reads per gene.
+     * `--readFilesIn $FASTQ_NAME` : input read file.
 
 
 
@@ -284,7 +283,7 @@ We will spare you the mapping of the trimmed read and let you directly download 
 
 [salmon website](https://salmon.readthedocs.io/en/latest/salmon.html){target=_blank : .md-button }
 
-salmon can allow you to quantify transcript expression without explicitly aligning the sequenced reads onto the reference genome with its gene and splice junction annotations, but to a simplification of the corresponding transcriptome, thus saving computational resources.
+Salmon can allow you to quantify transcript expression without explicitly aligning the sequenced reads onto the reference genome with its gene and splice junction annotations, but to a simplification of the corresponding transcriptome, thus saving computational resources.
 
 We refer you to the tool's documentation in order to see [how the reference index is computed](https://salmon.readthedocs.io/en/latest/salmon.html#preparing-transcriptome-indices-mapping-based-mode).
 
@@ -332,7 +331,7 @@ We refer you to the tool's documentation in order to see [how the reference inde
 
 ## ADDITIONAL Mapping reads from Ruhland2016 on the reference 
 
-**Task :** Using STAR, align the raw FASTQ files of the mouseMT dataset against thed mouse mitochondrial reference you just created
+**Task :** Using STAR, align the raw FASTQ files of the Ruhland2016 dataset against thed mouse mitochondrial reference you just created
 
  * Mapping reads and generating a sorted BAM from one of the Ruhland2016 et al. FASTQ files should take about 20 minutes.
  * Use the full indexed genome at `/shared/data/DATA/Mouse_STAR_index/`, rather than the one we just made.
