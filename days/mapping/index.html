@@ -634,7 +634,7 @@
 <ul>
 <li>identify the differences between a local aligner and a pseudo aligner.</li>
 <li>perform genome indexing appropriate to your data.</li>
-<li>map your RNA-seq data onto the genome.</li>
+<li>map your RNA-seq data onto a genome.</li>
 </ul>
 <h2 id="material">Material</h2>
 <p><a :=":" class="md-button" href="../../assets/pdf/RNA-Seq_04_Mapping.pdf" target="_blank"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M0 64C0 28.7 28.7 0 64 0h160v128c0 17.7 14.3 32 32 32h128v144H176c-35.3 0-64 28.7-64 64v144H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0l128 128zM176 352h32c30.9 0 56 25.1 56 56s-25.1 56-56 56h-16v32c0 8.8-7.2 16-16 16s-16-7.2-16-16V368c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24h-16v48h16zm96-80h32c26.5 0 48 21.5 48 48v64c0 26.5-21.5 48-48 48h-32c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16v-64c0-8.8-7.2-16-16-16h-16v96h16zm80-112c0-8.8 7.2-16 16-16h48c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32v32h32c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32v48c0 8.8-7.2 16-16 16s-16-7.2-16-16V368z"/></svg></span> Download the presentation</a></p>
@@ -665,13 +665,13 @@ you can grab the reference genome data from the <a href="https://www.ensembl.org
 <p>From the <a href="https://raw.githubusercontent.com/alexdobin/STAR/master/doc/STARmanual.pdf">manual</a>. Refer to it for more details</p>
 <ul>
 <li><code>--runMode genomeGenerate</code> : running STAR in index generation mode</li>
-<li><code>--genomeDir &lt;/path/to/genomeDir&gt;</code> : output fodler for the index</li>
-<li><code>--genomeFastaFiles &lt;/path/to/genome/fasta1&gt;</code> : chromosomes sequences fasta file (can be several files)</li>
+<li><code>--genomeDir &lt;/path/to/genomeDir&gt;</code> : output folder for the index</li>
+<li><code>--genomeFastaFiles &lt;/path/to/genome/fasta1&gt;</code> : chromosome sequences fasta file (can be several files)</li>
 <li><code>--sjdbGTFfile &lt;/path/to/annotations.gtf&gt;</code> : annotation gtf file</li>
 <li><code>--runThreadN &lt;NumberOfThreads&gt;</code> : number of threads to run on </li>
 <li><code>--sjdbOverhang &lt;ReadLength-1&gt;</code> : length of the genomic sequence around the annotated junctions to be used in constructing the splice junctions database. Ideally : read length - 1.</li>
 </ul>
-<p>Additionally, because the genome is so small here (we only use the muitochondrial chromosome afterall), you will need the following advanced option:</p>
+<p>Additionally, because the genome is so small here (we only use the mitochondrial chromosome afterall), you will need the following advanced option:</p>
 <ul>
 <li><code>--genomeSAindexNbases 5</code> : must be scalled to <code>min(14, log2(GenomeLength)/2 - 1)</code>, so 5 in our case</li>
 </ul>
@@ -717,8 +717,7 @@ STAR<span class="w"> </span>--runMode<span class="w"> </span>genomeGenerate<span
 <p><code>--genomeFastaFiles /path/to/genome/fasta1.fa /path/to/genome/fasta2.fa /path/to/genome/fasta3.fa ...</code></p>
 </div>
 <h2 id="mapping-reads-onto-the-reference">Mapping reads onto the reference</h2>
-<p>basic </p>
-<p><strong>Task :</strong> Using STAR, align the raw FASTQ files of the mouseMT dataset against thed mouse mitochondrial reference you just created</p>
+<p><strong>Task :</strong> Using STAR, align the raw FASTQ files of the mouseMT dataset against the mouse mitochondrial reference you just created</p>
 <ul>
 <li>if were not able to complete the previous task you can use the index in <code>/shared/data/Solutions/mouseMT/041_STAR_mouseMT_reference</code></li>
 <li>search the STAR manual for the option to output a BAM file sorted by coordinate.</li>
@@ -730,14 +729,14 @@ STAR<span class="w"> </span>--runMode<span class="w"> </span>genomeGenerate<span
 <p>Taken again from the manual:</p>
 <ul>
 <li><code>--genomeDir &lt;/path/to/genomeDir&gt;</code> : folder where you have put the genome index</li>
-<li><code>--readFilesIn &lt;/path/to/read1&gt;</code> : path to a fastq file. If the reads are paired, then also include the path to the second fastq file </li>
+<li><code>--readFilesIn &lt;/path/to/read1&gt;</code> : path to a fastq file. If the reads are paired, then also include the path to the second fastq file</li>
 <li><code>--runThreadN &lt;NumberOfThreads&gt;</code>: number of threads to run on.</li>
 <li><code>--outFileNamePrefix  &lt;prefix&gt;</code> : prefix of the output files, typically something like <code>output_directory/sampleName.</code> </li>
 </ul>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Take the time to read the parts of the <a href="https://raw.githubusercontent.com/alexdobin/STAR/master/doc/STARmanual.pdf">STAR manual</a> which concern you : a bit of planning ahead can save you a lot of time-consuming/headache-inducing trial and error on your script.</p>
+<p>Take the time to read the parts of the <a href="https://raw.githubusercontent.com/alexdobin/STAR/master/doc/STARmanual.pdf">STAR manual</a> which concern you: a bit of planning ahead can save you a lot of time-consuming/headache-inducing trial and error on your script.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -757,6 +756,7 @@ sample_b3
 sample_b4
 </code></pre></div>
 it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/sampleNames.txt</code></p>
+<p>Then for our script:</p>
 <p><div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
 <span class="c1">#SBATCH --job-name=star-aln</span>
 <span class="c1">#SBATCH --time=00:10:00</span>
@@ -787,8 +787,8 @@ it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/042_
 <li><code>--genomeDir 041_STAR_reference</code> : path of the genome to map to.</li>
 <li><code>--outSAMtype BAM SortedByCoordinate</code> : output a coordinate-sorted BAM file.</li>
 <li><code>--outFileNamePrefix 042_STAR_map_raw/${SAMPLE}.</code> : prefix of output files.</li>
-<li>`&ndash;quantMode GeneCounts** : will create a file with counts of reads per gene.</li>
-<li>`&ndash;readFilesIn $FASTQ_NAME ** : input read file.</li>
+<li><code>--quantMode GeneCounts</code> : will create a file with counts of reads per gene.</li>
+<li><code>--readFilesIn $FASTQ_NAME</code> : input read file.</li>
 </ul>
 </details>
 <h2 id="qc-on-the-aligned-reads">QC on the aligned reads</h2>
@@ -853,7 +853,7 @@ multiqc<span class="w"> </span>-n<span class="w"> </span>045_multiqc_mouseMT_map
 </details>
 <h2 id="additional-pseudo-aligning-with-salmon">ADDITIONAL : pseudo-aligning with salmon</h2>
 <p><a :=":" class="md-button" href="https://salmon.readthedocs.io/en/latest/salmon.html" target="_blank">salmon website</a></p>
-<p>salmon can allow you to quantify transcript expression without explicitly aligning the sequenced reads onto the reference genome with its gene and splice junction annotations, but to a simplification of the corresponding transcriptome, thus saving computational resources.</p>
+<p>Salmon can allow you to quantify transcript expression without explicitly aligning the sequenced reads onto the reference genome with its gene and splice junction annotations, but to a simplification of the corresponding transcriptome, thus saving computational resources.</p>
 <p>We refer you to the tool&rsquo;s documentation in order to see <a href="https://salmon.readthedocs.io/en/latest/salmon.html#preparing-transcriptome-indices-mapping-based-mode">how the reference index is computed</a>.</p>
 <p><strong>Task :</strong> run salmon to quantify the expression of either the Ruhland or Liu dataset. </p>
 <ul>
@@ -892,7 +892,7 @@ salmon quant -i $genomeDIR -l A \
 </code></pre></div>
 </details>
 <h2 id="additional-mapping-reads-from-ruhland2016-on-the-reference">ADDITIONAL Mapping reads from Ruhland2016 on the reference</h2>
-<p><strong>Task :</strong> Using STAR, align the raw FASTQ files of the mouseMT dataset against thed mouse mitochondrial reference you just created</p>
+<p><strong>Task :</strong> Using STAR, align the raw FASTQ files of the Ruhland2016 dataset against thed mouse mitochondrial reference you just created</p>
 <ul>
 <li>Mapping reads and generating a sorted BAM from one of the Ruhland2016 et al. FASTQ files should take about 20 minutes.</li>
 <li>Use the full indexed genome at <code>/shared/data/DATA/Mouse_STAR_index/</code>, rather than the one we just made.</li>

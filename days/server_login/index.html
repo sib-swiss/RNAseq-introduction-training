@@ -770,13 +770,7 @@ The job scheduler&rsquo;s role is to manage where and how to run the jobs of all
 <h2 id="using-command-line-on-the-cluster">Using command line on the cluster</h2>
 <p>Now that you are in the head node, it is time to get acquainted with your environment and to prepare the upcoming practicals. 
 We will also use this as a short reminder about the UNIX command line.</p>
-<!-- Comment: need a more visible cheat sheet, and one that is adapted to course:
-pwd, cd, mkdir, mv, more/less, nano, man / -h option ... -->
-<!-- Additionally, add (or have a separate one for) SLURM commands: sbatch, squeue... -->
-<!-- I see there is one for the module commands below. -->
-<!-- Note: some may need more explanations/refreshers of using variables in bash,
-several students struggled with this. -->
-<p>You can also refer to this nice <a href="https://cheatography.com/deleted-124743/cheat-sheets/linux-basic-commands/">Linux Command Line Cheat Sheet</a>.</p>
+<p>You can also refer to this nice <a href="https://cheatography.com/deleted-124743/cheat-sheets/linux-basic-commands/">Linux Command Line Cheat Sheet</a> (page 1 in particular).</p>
 <hr />
 <p>At any time, you can get the location (folder) your terminal is in at by typing the &ldquo;print working directory&rdquo; command:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">pwd</span>
@@ -856,7 +850,7 @@ fastqc -o 010_fastqc /shared/data/DATA/mouseMT/*.fastq
 </code></pre></div>
 <p>You will be taken to the <code>nano</code> interface :</p>
 <p><img alt="nano screenshot" src="../../assets/images/nano_screenshot.png" /></p>
-<p>Type in your favorite movie quote, and then exit by pressing <code>Ctrl+x</code> (<code>control+x</code> on a Mac keyboard), and then <code>y</code> and <code>Enter</code> when prompted to save the modifications you just made.</p>
+<p>Type in your favorite movie quote, and then exit by pressing <code>Ctrl+x</code> (<code>command+x</code> on a Mac keyboard), and then <code>y</code> and <code>Enter</code> when prompted to save the modifications you just made.</p>
 <p>You can check that your modifications were saved by typing</p>
 <div class="highlight"><pre><span></span><code>more<span class="w"> </span>test.txt
 </code></pre></div>
@@ -878,15 +872,16 @@ fastqc -o 010_fastqc /shared/data/DATA/mouseMT/*.fastq
 <p>To copy a file from the server to your machine, use this syntax on a <strong>terminal in your local machine</strong> (open a new terminal if necessary).</p>
 <div class="highlight"><pre><span></span><code>scp<span class="w"> </span>&lt;login&gt;@&lt;server-adress&gt;:/path/to/file/on/server/file.txt<span class="w"> </span>/local/destination/
 </code></pre></div>
-<p>For example, to copy the file <code>test.txt</code> you just created in the folder <code>day1/</code>, to your current (local) working directory :</p>
+<p>For example, to copy the file <code>test.txt</code> you just created in the folder <code>day1/</code>, to your current (local) working directory (NB:    here <code>~</code> will be interpreted as your home directory, this is a useful and time-saving shorthand):</p>
 <div class="highlight"><pre><span></span><code>scp<span class="w"> </span>login@xx.xx.xx.xx:~/day1/test.txt<span class="w"> </span>.
 </code></pre></div>
-<p>To copy a file from your machine to the server (NB: here <code>~</code> will be interpreted as your home directory, this is a useful and time-saving shorthand):</p>
+<p>To copy a file from your machine to the server:</p>
 <div class="highlight"><pre><span></span><code>scp<span class="w"> </span>/path/to/file/local/file.txt<span class="w"> </span>&lt;login&gt;@&lt;server-adress&gt;:/destination/on/server/
 </code></pre></div>
 </div>
 </div>
 </div>
+<hr />
 <div class="admonition example">
 <p class="admonition-title">practical</p>
 <p>Retrieve the file <code>test.txt</code>, which you created in the previous practicals, from the distant server to your local machine. </p>
@@ -897,15 +892,15 @@ fastqc -o 010_fastqc /shared/data/DATA/mouseMT/*.fastq
 </div>
 <h2 id="bash-scripts">bash scripts</h2>
 <p>So far we have been executing bash commands in the interactive shell.
-This is the most common way of dealing with day-to-day with our data on the server.</p>
-<p>However when you have to do some more serious job, such as what we will want to do on RNAseq data, you want to use scripts, which are just normal text files which contains bash commands.</p>
+This is the most common way of dealing with our data on the server for simple operations.</p>
+<p>However when you have to do some more serious job, such as what we will want to do on RNAseq data, you want to use scripts, which are just normal text files which contain bash commands.</p>
 <p>Scripts :</p>
 <ul>
 <li>keep a written trace of your analysis, so they enhance its reproducibility. </li>
 <li>make it easier to correct something in an analysis (you don&rsquo;t have to retype the whole command, just change the part that is wrong)</li>
-<li>often necessary when we want to submit the big computing jobs to the cluster</li>
+<li>often necessary when we want to submit big computing jobs to the cluster</li>
 </ul>
-<p>Create a new text file name <code>myScript.sh</code> on the server (you can use nano or create it on your local machine and then transfer it to the server). </p>
+<p>Create a new text file named <code>myScript.sh</code> on the server (you can use nano or create it on your local machine and later transfer it to the server). </p>
 <p>Then, type this in the file:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash    </span>
 
@@ -931,10 +926,9 @@ du<span class="w"> </span>-h<span class="w"> </span>-d<span class="w"> </span><s
 <p>This should have printed a number of information about the size of <code>/shared/data/</code> subfolders to the screen.</p>
 <h2 id="submitting-jobs">Submitting jobs</h2>
 <h3 id="submitting-a-simple-script">Submitting a simple script</h3>
-<p>When connected to the server, when </p>
-<p>Jobs can be submitted to the compute cluster using <strong>bash scripts</strong>, with a facultative little preamble which tells the cluster about your computing resources needs and a few additional options.</p>
+<p>Jobs can be submitted to the compute cluster using <strong>bash scripts</strong>, with a facultative little preamble which tells the cluster about your computing resource needs and a few additional options.</p>
 <p>Each time a user submits a job to the cluster, SLURM checks how much ressource they asked for with respect to the amount available right now in the cluster and how much resources are allowed for that user. </p>
-<p>If there is enough resource available then it will launch the job on one or several of its worker node. If not, then it will wait for the required resources to become available and then launch the job.</p>
+<p>If there are enough resources available then it will launch the job on one or several of its worker nodes. If not, then it will wait for the required resources to become available and then launch the job.</p>
 <p>To start with, you can have a look at what is happening right now in the cluster with the command:</p>
 <div class="highlight"><pre><span></span><code>squeue
 </code></pre></div>
@@ -955,23 +949,22 @@ du<span class="w"> </span>-h<span class="w"> </span>-d<span class="w"> </span><s
 <li>STATE : whether the job is currently <code>RUNNING</code>, <code>PENDING</code>, <code>COMPLETED</code>, <code>FAILED</code></li>
 <li>TIME : how long has this job been running for</li>
 <li>TIME_LIMIT : how long will the job be allowed to run</li>
-<li>QOS : which queue of the cluster is the job. Queues are a way to organize jobs in different categories of resource usage.</li>
+<li>QOS : which queue of the cluster does the job belong to. Queues are a way to organize jobs in different categories of resource usage.</li>
 <li>NODELIST(REASON) : which worker node(s) is the job running on.</li>
 </ul>
 <p>You can have more info on <a href="https://curc.readthedocs.io/en/latest/running-jobs/squeue-status-codes.html">squeue documentation</a></p>
 <p>Now, you will you will want to execute your <code>myScript.sh</code> script as a job on the cluster.</p>
 <p>This can be done with the <code>sbatch</code> command.</p>
-<p>The script can stay the same (for now), but there are an important aspect of <code>sbatch</code> we want to handle: the <strong>script will not be executing in our terminal directly, but on the worker node.</strong> </p>
-<p>That means that there is no screen to print to. So to still view the output of the script, SLURM will write the printed output in a file which we will be able to read when the job is finished (with <code>more</code> or <code>less</code>).
-By default SLURM will name this file something like <code>slurm-&lt;jobid&gt;.out</code>, which is not very informative to us; so instead of keeping the default we will give our own output file name to <code>sbatch</code> with the option <code>-o</code>. For example I will name it <code>myOutput.o</code>.</p>
+<p>The script can stay the same (for now), but there is an important aspect of <code>sbatch</code> we want to handle: the <strong>script will not be executing in our terminal directly, but on a worker node.</strong> </p>
+<p>That means that there is no screen to print to. So, in order to still be able to view the output of the script, SLURM will write the printed output in a file which we will be able to read when the job is finished (with <code>more</code> or <code>less</code>).
+By default SLURM will name this file something like <code>slurm-&lt;jobid&gt;.out</code>, which is not very informative to us; so instead of keeping the default we will give our own output file name to <code>sbatch</code> with the option <code>-o</code>. For example, I will name it <code>myOutput.o</code>.</p>
 <p>In the terminal, navigate to where you have you <code>myscript.sh</code> file on the distant server and type</p>
 <div class="highlight"><pre><span></span><code>sbatch<span class="w"> </span>-o<span class="o">=</span>myOutput.o<span class="w">  </span>myScript.sh
 </code></pre></div>
-<p>You should see an output like
-:
+<p>You should see an output like:</p>
 <div class="highlight"><pre><span></span><code>sbatch: Submitted batch job 41
-</code></pre></div></p>
-<p>Letting you know that your job has the jobid 41 (surely your will be different).</p>
+</code></pre></div>
+<p>Letting you know that your job has the jobid 41 (surely yours will be different).</p>
 <p>Directly after this, quickly type:</p>
 <div class="highlight"><pre><span></span><code>squeue
 </code></pre></div>
