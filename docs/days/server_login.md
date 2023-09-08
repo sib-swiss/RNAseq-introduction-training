@@ -443,7 +443,7 @@ We would then submit the script with a simple `sbatch myScript.sh` without addit
 
 ### Advanced cluster usage : loading modules
 
-During our various analysis, we will call upon numerous software.
+During our various analyses, we will call upon numerous software.
 
 Fortunately, in most cases we do not have to install each of these ourselves onto the cluster : they have already been packaged, prepared and made available to you or your code. <!-- Thank your sys admins!-->
 
@@ -453,7 +453,7 @@ However, by default, these are not loaded, and you have to explicitly load the m
 
 ??? success "Answer"
 
-	Many toolsets have dependencies toward different, sometimes incompatible libraries. Packaging each tool independently and loading them separately circumvents this as you only load what you need, and you can always unload a toolset if you need to load another, incompatible, toolset.
+	Many toolsets have dependencies toward different, sometimes incompatible libraries. Packaging each tool independently and loading them separately circumvents this, as you only load what you need, and you can always unload a toolset if you need to load another, incompatible, toolset.
 
 
 Modules are managed with the `module` command.
@@ -468,6 +468,7 @@ Basic commands are :
 * `module keyword <KW>` : lists all modules available for loading which contains `<KW>`
 
 Try it for yourself: soon, we will need the fastqc software. 
+
 If we type in the terminal:
 ```sh
 fastqc --help
@@ -509,7 +510,7 @@ must specify the version if there is more than one version:
 -------------------------------------------------------------------------------------------------------------------------------------
 ```
 
-This tells us that a module name `fastqc` exists. It has different version available (0.11.5,0.11.8,0.11.9). 
+This tells us that a module name `fastqc` exists. It has different versions available (0.11.5,0.11.8,0.11.9). 
 The default is the rightmost one, which works well for us.
 
 So, if we load this module before executing fastqc:
@@ -521,7 +522,7 @@ Now you should not have any error, and you should see the help test of `fastqc`
 
 
 !!! note
-    our module provider is ComputeCanada, which has a lot of [available software](https://docs.alliancecan.ca/wiki/Available_software). To avoid storing all these on our cluster, each time a new module is loaded, it is fetched first on the Compute Canada servers, so sometimes it can take a bit of time to load a module for the first time.
+    Our module provider is ComputeCanada, which has a lot of [available software](https://docs.alliancecan.ca/wiki/Available_software). To avoid storing all these on our cluster, each time a new module is loaded, it is fetched first from the Compute Canada servers, so sometimes it can take a bit of time to load a module for the first time.
 
 
 
@@ -529,29 +530,29 @@ Now you should not have any error, and you should see the help test of `fastqc`
 ### Advanced cluster usage : job array 
 
 Often, we have to repeat a similar analysis on a number of files, or for a number of different parameters.
-Rather than writing each sbatch script individually, we can rely on job arrays to facilitate our task.
+Rather than writing each sbatch script individually, we can rely on **job arrays** to facilitate our task.
 
 The idea is to have a single script which will execute itself several times.
-Each of these execution is called a **task**, and they are all the same for one variable which whose value changes from 1 to the number of tasks in the array.
+Each of these executions is called a **task**, and they are all the same, save for one variable which whose value changes from 1 to the number of tasks in the array.
 
 We typically use this variable, named `$SLURM_ARRAY_TASK_ID` to fetch different lines of a file containing information on the different tasks we want to run (in general, different input file names).
 
 
 !!! note
 
-    In bash we use variables to store some information such as a file name or parameter value.
+    In bash, we use variables to store information, such as a file name or parameter value.
 
-    it is created with a statement such as:
+    Variables can be created with a statement such as:
 
     ```myVar=10```
 
-    where variable `myVar` now store the value 10
+    where variable `myVar` now stores the value 10.
 
-    and the variable content is accessed with:
+    The variable content can then be accessed with:
 
     ```${myVar}```
 
-    You do not really need more to understand what follows, but if you are curious you can consult [this small tutorial](https://ryanstutorials.net/bash-scripting-tutorial/bash-variables.php#setting).
+    You do not really need more to understand what follows, but if you are curious, you can consult [this small tutorial](https://ryanstutorials.net/bash-scripting-tutorial/bash-variables.php#setting).
 
 ---
 
