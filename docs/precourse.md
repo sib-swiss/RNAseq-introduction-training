@@ -2,21 +2,12 @@
 
 On top of a thirst for knowledge, and a working Internet connection, here is what you will need for the course : 
 
-<!-- Suggestion: have a bullet-point summary of the key items/prerequisites:
-* basic knowledge of *NGS*
-* practical knowledge of working on the *UNIX command line* 
-* basic knowledge of *programming in R*
-* a way to connect to the server
-* a way to exchange files with the server
-* a way to type special programming-related characters on your keyboard
-
-See below for details.
--->
 
 ## NGS
 
 As announced in the [course registration webpage](https://www.sib.swiss/training/course/20220901_IRNAS),
 we expect participants to already have a basic knowledge in Next Generation Sequencing (NGS) techniques. 
+
 
 ## UNIX
 
@@ -26,9 +17,10 @@ If you are unsure about your capabilities or feel a bit rusty, we strongly recom
 
 You may refer to the [SIB's UNIX e-learning module](https://edu.sib.swiss/pluginfile.php/2878/mod_resource/content/4/couselab-html/content.html)
 
+
 ## R 
 
-A basic knowledge of the [R language](https://www.r-project.org/) is required to perform most analytical steps after reads have been mapped and quantified : differential gene expression, gene set enrichment, over-representation analysis.
+A basic knowledge of the [R language](https://www.r-project.org/) is required to perform most analytical steps after reads have been mapped and quantified : differential gene expression, gene set enrichment, over-representation/pathway analysis.
 
 > If you are not familiar with R, we recommend the [SIB First Steps with R course](https://github.com/sib-swiss/first-steps-with-R-training), or you can pick one among [this list](https://github.com/sib-swiss/training-collection#r)
 
@@ -38,14 +30,13 @@ A basic knowledge of the [R language](https://www.r-project.org/) is required to
 To replicate the technical condition of today's real-life data analysis, we will perform our computations on a distant HPC cluster.
 To access it: 
 
- * macOS / Linux : you can use your pre-installed terminal.
- * Windows : you should install a terminal which lets you do ssh (for instance [mobaXterm](https://mobaxterm.mobatek.net/)). 
+ * macOS / Linux : you can use your pre-installed terminal software.
+ * Windows : you should install a terminal which lets you do secure shell connections (ssh; for instance [mobaXterm](https://mobaxterm.mobatek.net/)). 
 
 Additionally, a graphical client for file transfer to and from the distant server can be useful. MobaXterm integrates this functionality, so if you use it there is no need for additional software. 
 Otherwise, we recommend [FileZilla](https://filezilla-project.org/download.php?type=client).
 
 
-<!-- Idea: add in a section for checking the attendees can use their keyboards to type special characters -->
 
 <!-- Suggestion: should we have some practical notes re: the teaching location?
 Coffee/snakcs/toilets...? Or should this be external to the course website? -->
