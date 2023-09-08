@@ -1,4 +1,4 @@
-# Introduction to RNA-Seq: From quality control to pathway analysis
+# Introduction to RNA-Seq: from quality control to pathway analysis
 
 ## Learning outcomes
 
@@ -18,17 +18,7 @@ After this course, you will be able to:
 ## Learning experiences
 
 To reach the learning outcomes, we will use lectures and exercises. 
-During lectures, do not hesitate to ask any questions as we progress through the slides.
-During exercises, you are free to discuss with other participants. 
+During lectures, please do not hesitate to ask questions as we progress through the slides.
+During exercises, you are free to discuss things with other participants. 
 
 Exercises are provided with solutions. How you use them to your advantage is up to you.
-
-<!-- Suggestion: point out right here that the course has pre-requisites, 
-and make a hyperlink to the precourse page.
-This is bc I suspect some users only looked at the homepage... 
-So this would make those requirements more visible. -->
-
-<!-- Overall points Alex wants to talk about: 
-1) content could be simplified 
-2) slides could be simplified 
-3) disconnect bw theory and practical sessions -->
