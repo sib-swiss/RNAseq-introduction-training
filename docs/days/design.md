@@ -2,9 +2,9 @@
 Designing your experiment is the first step. 
 Design is crucial as it conditions the sort of questions that you can ask from your data, as well as the confidence you may have in the answers.
 
-Knowing about the sequencing technologies, their strengths and limitations, as well as the RNA-seq analysis pipeline, are the keys to design a successful RNA-seq experiment.
+Knowing about the sequencing technologies, their strengths and limitations, as well as the RNA-seq analysis pipeline, are the keys to designing a successful RNA-seq experiment.
 
-**After having completed this chapter you will be able to:**
+**After having completed this chapter, you will be able to:**
 
  * describe different sequencing technologies and their application in RNA-seq.
  * differentiate between technical and biological replicates.
