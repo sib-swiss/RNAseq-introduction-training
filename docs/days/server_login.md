@@ -29,10 +29,10 @@ The computing cluster follows an architecture that enables several users to dist
 ![cluster_overview](../assets/images/cluster_overview.png)
 
 Users do not access each machine individually, but rather connect to a **head node**. From there, they can interact with the cluster using the **job scheduler** (here slurm).
-The job scheduler's role is to manage where and how to run the jobs of all users, such that waiting time is minimized and resource usage is optimized.
+The job scheduler's role is to manage where and how to run the jobs of all users, such that waiting time is minimized and resource usage is shared and optimized.
 
 !!! Warning
-	Everyone is connected to the same head node. Do not perform compute-intensive tasks on it or you will slow everyone down! 
+	Everyone is connected to the same head node. Do not perform compute-intensive tasks on it, or you will slow everyone down! 
 
 
 ## Connect to the server
@@ -43,7 +43,7 @@ Say you want to connect to cluster with address `xx.xx.xx.xx` and your login is 
 !!! Warning 
 	If you are doing this course with a teacher, use the link, login and password provided before or during the course. 
 
-The first step will be to open a **terminal**
+The first step will be to open a **terminal**, a software that provides a command-line interface to a computer.
 
 === "Mac"
     
@@ -62,7 +62,7 @@ The first step will be to open a **terminal**
 
 ---
 
-In the terminal type the following command:
+In the terminal, type the following command:
 
 ```sh
 ssh login@xx.xx.xx.xx
@@ -72,10 +72,12 @@ When prompted for your password, type it and press Enter.
 
 !!! note
 
-    There is no cursor or '●' character appearing while you type your password. This is normal.
+    There is no cursor or '●' character appearing while you type your password. This is normal. Deleting characters also works invisibly.
 
 
 After a few seconds, you should be logged into the *head node* and ready to begin.
+
+<!-- Would be nice to add a screenshot? -->
 
 
 ## Using command line on the cluster
@@ -83,12 +85,12 @@ After a few seconds, you should be logged into the *head node* and ready to begi
 Now that you are in the head node, it is time to get acquainted with your environment and to prepare the upcoming practicals. 
 We will also use this as a short reminder about the UNIX command line.
 
-You can also refer to this nice [Linux Command Line Cheat Sheet](https://cheatography.com/deleted-124743/cheat-sheets/linux-basic-commands/) (page 1 in particular).
+Commands are issued using a shell command language. The one on our server is called bash. You can refer to this nice [Linux Command Line Cheat Sheet](https://cheatography.com/deleted-124743/cheat-sheets/linux-basic-commands/) (page 1 in particular) for reviewing common commands.
 
 
 ---
 
-At any time, you can get the location (folder) your terminal is in at by typing the "print working directory" command:
+At any time, you can get the file system location (folder/directory) your terminal is currently in, by typing the "print working directory" command:
 
 ```sh
 pwd
