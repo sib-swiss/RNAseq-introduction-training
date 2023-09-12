@@ -1,6 +1,6 @@
 
 Read counting refers to the quantification of an *"expression level"*, or abundance, from reads mapped onto a reference genome/transcriptome.
-This *expression level* can take several forms, such as a count, or a fraction (RPKM/TPM), and concern different entities (exon, transcript, genes) depending on your biological application.
+This *expression level* can take several forms, such as a count, or a fraction (RPKM/FPKM/TPM), and concern different entities (exons, transcripts, genes) depending on your biological application.
 
 
 **During this lesson, you will learn to:**
