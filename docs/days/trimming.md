@@ -212,7 +212,7 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
 
 **Task 2:** 
 
- * Use the the following script to run a QC analysis on your trimmmed reads  and compare with the raw ones.
+ * Use the the following script to run a QC analysis on your trimmmed reads and compare with the raw ones.
 
 
 ```sh
@@ -230,10 +230,10 @@ fastqc 030_trim/*.fastq -o 030_trim
 ## multiqc on the fastQC reports AND the trimmomatic logs
 multiqc -n 032_multiqc_mouseMT_trimmed.html -f --title trimmed_fastq 030_trim/
 ```
-on the cluster, you can find this script in : `/shared/data/Solutions/mouseMT/032_multiqc_trimmed.sh`
+On the cluster, you can find this script in : `/shared/data/Solutions/mouseMT/032_multiqc_trimmed.sh`
 
 !!! note 
-    the script above presumes that you have successfully trimmed the reads. 
+    The script above presumes that you have successfully trimmed the reads. 
 
     If not, you can grab them on the cluster in `/shared/data/Solutions/mouseMT/030_trim/`
 
@@ -245,6 +245,8 @@ on the cluster, you can find this script in : `/shared/data/Solutions/mouseMT/03
 
     **Note the second section, Trimmomatic, which lets you know the number/percentage of reads dropped**
 
+
+<!-- I'd add back the "important notes" -->
 
 <!--
 ---
