@@ -259,7 +259,7 @@ We will look at one of these html report on the toy dataset, and one of the pre-
 
 ## MultiQC : grouping multiple reports
 
-In practice, you  likely will have more than a couple of samples (maybe even more than 30 or 50...) to handle: individually consulting and comparing the QC reports of each would be tedious.
+In practice, you likely will have more than a couple of samples (maybe even more than 30 or 50...) to handle: individually consulting and comparing the QC reports of each would be tedious.
 
 [MultiQC](https://multiqc.info/) is a tool that lets you combine multiple reports in a single, interactive document that let you explore your data easily.
 
@@ -284,7 +284,7 @@ There are many additional parameters which let you customize your report. Use `m
 
  - Write an sbatch script to run MultiQC for the toy dataset.
 
- 	 to follow the naming convention with started with, you can use the following names:
+ 	 To follow the naming convention we started with, you can use the following names:
 
      * sbatch script: `020_multiqc.sh` 
      * output report: `020_multiqc_mouseMT.html`
@@ -332,8 +332,8 @@ There are many additional parameters which let you customize your report. Use `m
 
 	![fastqc sequence duplication levels plot](../assets/images/multiqc_mouseMT/fastqc_sequence_duplication_levels_plot.png)
 
-	Here we see that some sequence are duplicated, but not many.
-	Normally in the context of RNA-seq some transcripts are present in a large number of copies in the samples, so we would expect to see more over-represented sequences. 
+	Here we see that some sequences are duplicated, but not many.
+	Normally in the context of RNA-seq, some transcripts are present in a large number of copies in the samples, so we would expect to see more over-represented sequences. 
 	This is not the case here because this is a toy dataset with a very small number of reads.
 
 	![fastqc adapter content plot](../assets/images/multiqc_mouseMT/fastqc_adapter_content_plot.png)
@@ -341,7 +341,7 @@ There are many additional parameters which let you customize your report. Use `m
 	We see a clear trend of adapter contamination for one sample as we get closer to the reads' end. Note the y-scale though : we never go above a 6% content per sample.
 
 
-	Overall, we can conclude that one sample in particular stands out in particular. 
+	Overall, we can conclude that one sample in particular stands out. 
 
 	We should note its name and monitor it closely as we go through the rest of our analysis pipeline.
 
@@ -402,7 +402,7 @@ Write and execute sbatch scripts to run a MultiQC for the Liu2015 and the Ruhlan
 
 	This script fetches the report from the `Solutions/` folder.
 
-	You may adapt it to to point to your own results if you want.
+	You may adapt it to point to your own results if you want.
 
 	```sh
 	#!/usr/bin/bash
@@ -421,7 +421,7 @@ Write and execute sbatch scripts to run a MultiQC for the Liu2015 and the Ruhlan
 
 	This script fetches the report from the `Solutions/` folder.
 
-	You may adapt it to to point to your own results if you want.
+	You may adapt it to point to your own results if you want.
 
 	```sh
 	#!/usr/bin/bash
@@ -441,14 +441,14 @@ Write and execute sbatch scripts to run a MultiQC for the Liu2015 and the Ruhlan
 ## EXTRA : retrieving published datasets
 
 !!! note
-	If you are following this course with a teacher, then the for the data is already on the server. There is no need to download it again.
+	If you are following this course with a teacher, then the data is already on the server. There is no need to download it again.
 
 Most NGS data is deposited at the [Short Read Archive (SRA)](https://www.ncbi.nlm.nih.gov/sra/) hosted by the NCBI, with links from the [Gene Expression Omnibus (GEO)](https://www.ncbi.nlm.nih.gov/geo/)
 
 
  Several steps are required to retrieve data from a published study :
 	
- 1. find GEO or SRA identifier from publication.
+ 1. find GEO or SRA identifier from publication(s).
  2. find the “run” identifiers for each sample (SRR).
  3. use [SRA Toolkit](https://github.com/ncbi/sra-tools/wiki/01.-Downloading-SRA-Toolkit) to dump data from the SRR repository to FASTQ files.
 
@@ -456,10 +456,10 @@ Most NGS data is deposited at the [Short Read Archive (SRA)](https://www.ncbi.nl
 For example, on the Liu2015 dataset :
 
 
- 1. Locate in their publication the GEO accession: GSE57345 
+ 1. Locate the GEO accession in their publication: GSE57345 
  2. Use the NCBI search engine to find this accession : [GSE57345](https://www.ncbi.nlm.nih.gov/bioproject/?term=GSE57345)
  3. This project is made of several sub-projects. Scroll down, and in the table find the Bioproject id : PRJNA246308 
- 4. Go to the [SRA run selector](https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA246308&o=acc_s%3Aa), enter the Bioproject id -->
+ 4. Go to the [SRA run selector](https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA246308&o=acc_s%3Aa), enter the Bioproject id
  5. From the [results of your search](https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA246308&o=acc_s%3Aa), select all relevant runs
  6. Click on "Accession List" in the Select table 
 
