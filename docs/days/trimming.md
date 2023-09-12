@@ -28,7 +28,7 @@ There are several ways to deal with poor quality bases or adapter contamination 
  	* **Soft clipping**: ignoring the end of the read at mapping time (ie. what STAR does).
 
 
-If the data will be used to perform **transcriptome assembly, or variant analysis, then it must be trimmed**.
+If the data will be used to perform **transcriptome assembly, or variant analysis, then it MUST be trimmed**.
 
 
 In contrast, for applications based on **counting reads**, such as **Differential Expression analysis**, most aligners, such as [STAR](https://github.com/alexdobin/STAR), [HISAT2](http://daehwankimlab.github.io/hisat2/), [salmon](https://salmon.readthedocs.io/en/latest/salmon.html), and [kallisto](https://pachterlab.github.io/kallisto/manual), can handle bad quality sequences and adapter content by soft-clipping, and consequently they _usually_ do not need trimming.
@@ -63,7 +63,7 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
      - unlike fastqc, you will have to launch trimmomatic for each sample separately
      - to facilitate QC afterward, add the following at the end of your trimmomatic command (substituting `<sample name>`):
 		 		`2> 030_trim/trim_out.<sample name>.log`
-		 		This will same part of the output of trimmomatic to the same folder as the trimmed reads, which multiQC will be able to use afterward.
+		 		This will send part of the output of trimmomatic to a file in the same folder as the trimmed reads, which multiQC will be able to use afterward.
 
 
 !!! warning
@@ -75,6 +75,7 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
 	java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar
 	```
 
+<!-- Should add a note on grabbing the FASTA files for the adaptor sequences? -->
 
 ??? success "trimmomatics sbatch script"
 
