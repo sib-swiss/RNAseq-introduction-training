@@ -36,6 +36,8 @@ We will be using the Ensembl references, with their accompanying GTF annotations
 
 	In particular, you will want a mouse [DNA fasta file](http://ftp.ensembl.org/pub/current_fasta/mus_musculus/dna/) and [gtf file](http://ftp.ensembl.org/pub/current_gtf/mus_musculus/).
 
+  Take note of the genome sequence and annotation versions, you will need this in your paper's methods section!
+
 
 **Task :** Using STAR, build a genome index for the mouse mitochondrial chromosome.
 
@@ -55,9 +57,9 @@ We will be using the Ensembl references, with their accompanying GTF annotations
 	 * `--runThreadN <NumberOfThreads>` : number of threads to run on 
 	 * `--sjdbOverhang <ReadLength-1>` : length of the genomic sequence around the annotated junctions to be used in constructing the splice junctions database. Ideally : read length - 1.
 
-	 Additionally, because the genome is so small here (we only use the mitochondrial chromosome afterall), you will need the following advanced option:
+	 Additionally, because the genome is so small here (we only use the mitochondrial chromosome after all), you will need the following advanced option:
 
-	 * `--genomeSAindexNbases 5` : must be scalled to `min(14, log2(GenomeLength)/2 - 1)`, so 5 in our case
+	 * `--genomeSAindexNbases 5` : must be scaled to `min(14, log2(GenomeLength)/2 - 1)`, so 5 in our case
 
 
 !!! note
@@ -112,33 +114,33 @@ We will be using the Ensembl references, with their accompanying GTF annotations
 ## Mapping reads onto the reference
 
 
-**Task :** Using STAR, align the raw FASTQ files of the mouseMT dataset against the mouse mitochondrial reference you just created
+**Task :** Using STAR, align the raw FASTQ files of the mouseMT dataset against the mouse mitochondrial reference you just created.
 
- * if were not able to complete the previous task you can use the index in `/shared/data/Solutions/mouseMT/041_STAR_mouseMT_reference`
+ * if were not able to complete the previous task, you can use the index in `/shared/data/Solutions/mouseMT/041_STAR_mouseMT_reference` .
  * search the STAR manual for the option to output a BAM file sorted by coordinate.
  * search the STAR manual for the option to output a geneCounts file.
- * put the results in folder `042_STAR_map_raw/`
+ * put the results in folder `042_STAR_map_raw/` .
 
 
-!!! info "STAR basic parameter for mapping"
+!!! info "STAR basic parameters for mapping"
 
 	Taken again from the manual:
 
 	- `--genomeDir </path/to/genomeDir>` : folder where you have put the genome index
 	- `--readFilesIn </path/to/read1> ` : path to a fastq file. If the reads are paired, then also include the path to the second fastq file
 	- `--runThreadN <NumberOfThreads>`: number of threads to run on.
-	- `--outFileNamePrefix  <prefix> ` : prefix of the output files, typically something like `output_directory/sampleName.` 
+	- `--outFileNamePrefix  <prefix> ` : prefix of the output files, typically something like `output_directory/sampleName` . 
 
 
 
 !!! Note
 
-	Take the time to read the parts of the [STAR manual](https://raw.githubusercontent.com/alexdobin/STAR/master/doc/STARmanual.pdf) which concern you: a bit of planning ahead can save you a lot of time-consuming/headache-inducing trial and error on your script.
+	Take the time to read the parts of the [STAR manual](https://raw.githubusercontent.com/alexdobin/STAR/master/doc/STARmanual.pdf) which concern you: a bit of planning ahead can save you a lot of time-consuming/headache-inducing trial-and-error on your script.
 
 
 !!! Warning
 
-	Mapping reads and generating a sorted BAM from one of the mouseMT FASTQ file will take less than a minute and very little RAM, but on a real dataset it should take from 15 minutes to an hour per sample and require at least 30G.
+	Mapping reads and generating a sorted BAM from one of the mouseMT FASTQ file will take less than a minute and very little RAM, but on a real dataset it should take from 15 minutes to an hour per sample and require at least 30GB of RAM.
 
 
 
@@ -230,11 +232,12 @@ You can call MultiQC on the STAR output folder to gather a report on the individ
 
 	[ Download the report ](../assets/html/043_multiqc_mouseMT_mapped_raw.html){target=_blank : .md-button }
 
+
 ## Comparison of mapping the trimmed reads
 
 After having mapped the raw reads, we also map the trimmed reads and then compare the results to decide which one we want to use for the rest of our analysis.
 
-We will spare you the mapping of the trimmed read and let you directly download the mapping multiqc report:
+We will spare you the mapping of the trimmed reads, and let you directly download the mapping multiqc report:
 
 
 [ trimmed reads mapping  report ](../assets/html/045_multiqc_mouseMT_mapped_trimmed.html){target=_blank : .md-button }
@@ -283,7 +286,7 @@ We will spare you the mapping of the trimmed read and let you directly download 
 
 [salmon website](https://salmon.readthedocs.io/en/latest/salmon.html){target=_blank : .md-button }
 
-Salmon can allow you to quantify transcript expression without explicitly aligning the sequenced reads onto the reference genome with its gene and splice junction annotations, but to a simplification of the corresponding transcriptome, thus saving computational resources.
+Salmon can allow you to quantify transcript expression without explicitly aligning the sequenced reads onto the reference genome with its gene and splice junction annotations, but instead to a simplification of the corresponding transcriptome, thus saving computational resources.
 
 We refer you to the tool's documentation in order to see [how the reference index is computed](https://salmon.readthedocs.io/en/latest/salmon.html#preparing-transcriptome-indices-mapping-based-mode).
 
