@@ -585,8 +585,8 @@ echo $ReadFileName
 
 Some things have changed compared to the previous sbatch script :
 
- * `#SBATCH --array 1-10%5` : will spawn independent tasks with ids from 1 to 10, and will manage them so that at most 5 run at the same time.
- * `#SBATCH -o test_array_log.%a.o` : the `%a` will take the value of the array task id. So we will have 1 log file per task (so 10 files).
+ * `#SBATCH --array 1-10%5` : will spawn independent tasks with IDs from 1 to 10, and will manage them so that at most 5 run at the same time.
+ * `#SBATCH -o test_array_log.%a.o` : the `%a` will take the value of the array task ID. So we will have 1 log file per task (so 10 files).
  * `$SLURM_ARRAY_TASK_ID` : changes value between the different tasks. This is what we use to execute the same script on different files (using `sed -n ${SLURM_ARRAY_TASK_ID}p`)
 
 
@@ -598,7 +598,7 @@ Many things could be said on that, but I will keep it simple with this little de
 foo=123                # Initialize variable foo with 123
                        #   !warning! it will not work if you put spaces in there
 
-# we can then acces this variable content by putting a $ sign in front of it:
+# we can then access this variable content by putting a $ sign in front of it:
 
 echo $foo              # Print variable foo, sensitive to special characters
 echo ${foo}            # Another way to print variable foo, not sensitive to special characters
