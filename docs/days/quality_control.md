@@ -124,11 +124,11 @@ We will look at one of these html report on the toy dataset, and one of the pre-
 
  * repatriate one of the html report of the mouseMT dataset to your local computer, as well as the one you can find in:
 `/shared/data/Solution/Liu2015/010_fastqc/SRR3180538_TAM1_1_fastqc.html`
- * Look at these two QC report. What are your conclusions ? Would you want to perform some operations on the reads such as low-quality bases trimming, removal of adapters ?
+ * Look at these two QC reports in a web browser. What are your conclusions ? Would you want to perform some operations on the reads, such as low-quality bases trimming, removal of adapters ?
 
 !!! note "Reminder"
 
-	 to get the data from the distant server to your machine, you may use an SFTP client (filezilla, mobaXterm), or the command line tool from your machine :	`scp login@xx.xx.xx:~/path/to/file.txt .`
+	 to get the data from the distant server to your machine, you may use an SFTP client (FileZilla, mobaXterm), or the command line tool from your machine :	`scp login@xx.xx.xx:~/path/to/file.txt .`
 
 
 **Extra Task:** 
@@ -171,12 +171,12 @@ We will look at one of these html report on the toy dataset, and one of the pre-
 	on the cluster, this script is also in `/shared/data/Solutions/Liu2015/010_fastqc.sh`
 
 
+  This script runs fastqc on each of the .fastq.gz files, sequentially.
 	Note that alternatively, you could have one sbatch script per sample.
-	On a simple and relatively fast task such as this one, it is not to problematic.
+	On a simple and relatively fast task such as this one, it is not too problematic.
+	However, on more computationally-intensive tasks such as mapping, treating each file in separate script is better, because you can submit all scripts at once, and they will then run in parallel, whereas if they are all treated in the same script like here, the samples would be handled sequentially and the overall job would take much longer to finish.
 
-	However on more important tasks such as mapping, treating each file in separate script is better because you can submit all scripts at once and they will then run in parallel, whereas if they are all treated in the same script, the samples would be handled sequentially and the overall job would take much longer to finish.
-
-	**NB:** the actual recommended approach is to use SLURM arrays, which let you have a single script, but have different jobs execute in parallel. We show below how to do.
+	**NB:** BUT, the actual recommended approach is to use SLURM arrays, which let you have a single script, but have different jobs execute in parallel. Below, we show how to do this.
 
 
 ??? success "Ruhland2016 FastQC sbatch script"
@@ -250,7 +250,7 @@ We will look at one of these html report on the toy dataset, and one of the pre-
 
 	We also refer you to this [nice interpertation guide](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon/lessons/qc_fastqc_assessment.html)
 
-	pre-computed reports can be found in :
+	Pre-computed reports can be found in :
 
 	 * `/shared/data/Solutions/Ruhland2016/010_fastqc/`
 	 * `/shared/data/Solutions/Liu2015/010_fastqc/`
