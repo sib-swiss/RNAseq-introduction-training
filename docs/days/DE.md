@@ -13,7 +13,7 @@ Once the reads have been mapped and counted, one can assess the differential exp
 
 [Rstudio website](https://www.rstudio.com/)
 <!-- Suggestion: RStudio reminders ??? Or link to some course or something? -->
-
+<!-- Perhaps this one? https://www.datacamp.com/tutorial/r-studio-tutorial -->
 
 [edgeR user's guide](https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf){target=_blank : .md-button }
 
