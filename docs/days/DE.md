@@ -29,7 +29,7 @@ Once the reads have been mapped and counted, one can assess the differential exp
 
 The analysis of the read count data will be done on an RStudio instance, using the R language and some relevant [Bioconductor](http://bioconductor.org/) libraries.
 
-As you start your session on the RStudio server, please make sure that you know where your data is situated with respect to your **working directory** (use `getwd()` and `setwd()` to respectively : know what your working is, and change it as necessary).
+As you start your session on the RStudio server, please make sure that you know where your data is situated with respect to your **working directory** (use `getwd()` and `setwd()` to respectively : know what your working directory is, and change it as necessary).
 
 
 
@@ -288,7 +288,7 @@ Let's analyze the `mouseMT` toy dataset.
 
 	This plot is not easy to interpret. It represents the amount of dispersion at different levels of expression. It is directly linked to our ability to detect differential expression.
 
-	Here it looks about normal compared to typical bulk RNA-seq experiments : the dispersion is comparatively larger for lowly expressed genes.
+	Here it looks about normal compared to typical bulk RNA-seq experiments : the dispersion is comparatively larger for lowly-expressed genes.
 
 
 	```r
@@ -444,7 +444,7 @@ Let's analyze the `mouseMT` toy dataset.
 	## experimental design
 
 
-	> note: levels let's us define the reference levels
+	> note: levels lets us define the reference levels
 
 	```r
 	treatment <- factor( c(rep("a",4), rep("b",4)), levels=c("a", "b") )
@@ -613,7 +613,7 @@ Let's analyze the `mouseMT` toy dataset.
 	```
 	![mouseMT BCV](../assets/images/edgeR_mouseMT/mouseMT_BCV.png)
 
-	There is so few genes that this does not look super nice here.
+	There are so few genes that this does not look super nice here.
 
 	Here is how it looks like on the Ruhland2016 data:
 
@@ -726,7 +726,7 @@ Let's analyze the `mouseMT` toy dataset.
 
 Use either edgeR or DESeq2 to conduct a differential expression analysis.
 
-You may play with either of the following dataset:
+You may play with either of the following datasets:
 
  * Ruhland2016
  	* simple 1 factor design
@@ -737,8 +737,8 @@ You may play with either of the following dataset:
 	 * `/shared/data/Solutions/Liu2015/countFiles/featureCounts_Liu2015.counts.txt`
 	 * [ :fontawesome-solid-file: Liu2015 count matrix](../assets/txt/featureCounts_Liu2015.counts.txt){target=_blank : .md-button }
  * [Tuch 2010](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0009317) dataset
- 	* 2 factors design : 3 patients (8, 33, and 51) had each 1 sample from tumor tissue (T) and normal tissue (N) sequenced. 
- 	* the goal is to find the difference between tumor and normal while taking the patient variable into account.
+ 	* 2 factors design : 3 patients (8, 33, and 51) each had 1 sample from tumor tissue (T) and normal tissue (N) sequenced. 
+ 	* the goal is to find the difference between tumor and normal while taking the patient into account.
  	* `/shared/data/Solutions/Tuch2010/Tuch_et_al_2010_counts.csv`
 	* [ :fontawesome-solid-file: Tuch 2010 count matrix](../assets/txt/Tuch_et_al_2010_counts.csv){target=_blank : .md-button }
 
@@ -748,7 +748,7 @@ You may play with either of the following dataset:
 
 	 * Generally, users find the syntax and workflow of DESeq2 easier for getting started.
 	 * If you have the time, conduct a differential expression analysis using both DESeq2 and edgeR.
-	 * Follow the vignettes/user's guide! They are the most up-to-date and generally contain everything a newcomer might need, including worked-out examples.
+	 * Follow the vignettes/user's guide! They are the most up-to-date documents, and generally contain everything a newcomer might need, including worked-out examples.
 
 	 * when dealing with more than one factor, you will need a **model matrix** to specify the experimental design to the library, and to craft your **contrasts** of interest. The [ExploreModelMatrix](https://csoneson.github.io/ExploreModelMatrix/index.html) package may help you a lot in that regard.
 
@@ -1125,7 +1125,7 @@ You may play with either of the following dataset:
 
 
 	The logFC are highly correlated.
-	FDRs show less correlation but their **rank** are higly correlated : they come in a very similar order.
+	FDRs show less correlation but their **ranks** are highly correlated : they come in a very similar order.
 
 
 
