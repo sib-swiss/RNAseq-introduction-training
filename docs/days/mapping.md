@@ -95,6 +95,7 @@ We will be using the Ensembl references, with their accompanying GTF annotations
 
 	```
 
+<!-- TO DO: add path to solution script -->
 
 **Extra task :** Determine how you would add an additional feature to your reference, for example for a novel transcript not described by the standard reference.
 
