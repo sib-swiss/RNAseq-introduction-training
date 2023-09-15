@@ -397,7 +397,7 @@ There are many additional parameters which let you customize your report. Use `m
 
 Write and execute sbatch scripts to run a MultiQC for the Liu2015 and the Ruhland2016 datasets.
 
-
+<!-- For some reason these 2 solutions are formatted differently? -->
 ??? success "MultiQC sbatch script for Ruhland2016"
 
 	This script fetches the report from the `Solutions/` folder.
