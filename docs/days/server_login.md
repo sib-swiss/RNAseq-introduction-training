@@ -107,6 +107,9 @@ From then, we are going to do a little step-by-step practical to go through some
 
 ### Creating a directory
 
+<!-- NB: not really necessary to have a "day1" folder? We only have 2 days, and the 2nd is fully R-based now.
+Would it not make more sense just to have one folder per dataset? -->
+
 !!! example "practical"
 
     Use the command line to create a repository called `day1` where you will put all materials relating to this first day.
