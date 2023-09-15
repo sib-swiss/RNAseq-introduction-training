@@ -122,14 +122,14 @@ Unfortunately, we cannot consult the html files content directly on the cluster.
 
 We will look at one of these html report on the toy dataset, and one of the pre-computed report from one of our other datasets.
 
- * repatriate one of the html reports of the mouseMT dataset to your local computer. You can also grab the version from the Solutions folder:
-`/shared/data/Solutions/mouseMT/010_fastqc/sample_a1_fastqc.html`
+ * repatriate one of the html report of the mouseMT dataset to your local computer, as well as the one you can find in:
+`/shared/data/Solution/Liu2015/010_fastqc/SRR3180538_TAM1_1_fastqc.html`
  * Look at these two QC reports in a web browser. What are your conclusions ? Would you want to perform some operations on the reads, such as low-quality bases trimming, removal of adapters ?
 
 !!! note "Reminder"
 
 	 to get the data from the distant server to your machine, you may use an SFTP client (FileZilla, mobaXterm), or the command line tool from your machine :	`scp login@xx.xx.xx:~/path/to/file.txt .`
-	 
+
 
 **Extra Task:** 
 
