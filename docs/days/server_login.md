@@ -354,7 +354,7 @@ By default, SLURM will name this file something like `slurm-<jobid>.out`, which 
 In the terminal, navigate to where you have you `myScript.sh` file on the distant server and type
 
 ```sh
-sbatch -o=myOutput.o  myScript.sh
+sbatch -o myOutput.o  myScript.sh
 ```
 
 You should see an output like:
