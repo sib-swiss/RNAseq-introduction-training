@@ -231,6 +231,9 @@ fastqc 030_trim/*.fastq -o 030_trim
 multiqc -n 032_multiqc_mouseMT_trimmed.html -f --title trimmed_fastq 030_trim/
 ```
 On the cluster, you can find this script in : `/shared/data/Solutions/mouseMT/032_multiqc_trimmed.sh`
+<!-- BUG? Shouldn't there be a module load fastqc before the fastqc command?
+BUT as we have to launch multiqc from the head node... module load does not work.
+It has to be done from the interactive shell before executing the script. This is... confusing. -->
 
 !!! note 
     The script above presumes that you have successfully trimmed the reads. 
