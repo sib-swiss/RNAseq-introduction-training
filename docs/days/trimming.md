@@ -28,7 +28,7 @@ There are several ways to deal with poor quality bases or adapter contamination 
  	* **Soft clipping**: ignoring the end of the read at mapping time (ie. what STAR does).
 
 
-If the data will be used to perform **transcriptome assembly, or variant analysis, then it must be trimmed**.
+If the data will be used to perform **transcriptome assembly, or variant analysis, then it MUST be trimmed**.
 
 
 In contrast, for applications based on **counting reads**, such as **Differential Expression analysis**, most aligners, such as [STAR](https://github.com/alexdobin/STAR), [HISAT2](http://daehwankimlab.github.io/hisat2/), [salmon](https://salmon.readthedocs.io/en/latest/salmon.html), and [kallisto](https://pachterlab.github.io/kallisto/manual), can handle bad quality sequences and adapter content by soft-clipping, and consequently they _usually_ do not need trimming.
@@ -63,7 +63,7 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
      - unlike fastqc, you will have to launch trimmomatic for each sample separately
      - to facilitate QC afterward, add the following at the end of your trimmomatic command (substituting `<sample name>`):
 		 		`2> 030_trim/trim_out.<sample name>.log`
-		 		This will same part of the output of trimmomatic to the same folder as the trimmed reads, which multiQC will be able to use afterward.
+		 		This will send part of the output of trimmomatic to a file in the same folder as the trimmed reads, which multiQC will be able to use afterward.
 
 
 !!! warning
@@ -75,6 +75,7 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
 	java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar
 	```
 
+<!-- Should add a note on grabbing the FASTA files for the adaptor sequences? -->
 
 ??? success "trimmomatics sbatch script"
 
@@ -211,7 +212,7 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
 
 **Task 2:** 
 
- * Use the the following script to run a QC analysis on your trimmmed reads  and compare with the raw ones.
+ * Use the the following script to run a QC analysis on your trimmmed reads and compare with the raw ones.
 
 
 ```sh
@@ -229,10 +230,13 @@ fastqc 030_trim/*.fastq -o 030_trim
 ## multiqc on the fastQC reports AND the trimmomatic logs
 multiqc -n 032_multiqc_mouseMT_trimmed.html -f --title trimmed_fastq 030_trim/
 ```
-on the cluster, you can find this script in : `/shared/data/Solutions/mouseMT/032_multiqc_trimmed.sh`
+On the cluster, you can find this script in : `/shared/data/Solutions/mouseMT/032_multiqc_trimmed.sh`
+<!-- BUG? Shouldn't there be a module load fastqc before the fastqc command?
+BUT as we have to launch multiqc from the head node... module load does not work.
+It has to be done from the interactive shell before executing the script. This is... confusing. -->
 
 !!! note 
-    the script above presumes that you have successfully trimmed the reads. 
+    The script above presumes that you have successfully trimmed the reads. 
 
     If not, you can grab them on the cluster in `/shared/data/Solutions/mouseMT/030_trim/`
 
@@ -244,6 +248,8 @@ on the cluster, you can find this script in : `/shared/data/Solutions/mouseMT/03
 
     **Note the second section, Trimmomatic, which lets you know the number/percentage of reads dropped**
 
+
+<!-- I'd add back the "important notes" -->
 
 <!--
 ---

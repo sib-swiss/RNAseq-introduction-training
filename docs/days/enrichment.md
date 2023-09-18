@@ -34,6 +34,7 @@ If you do not have a list of DE genes from your previous analysis, you may use t
 The proposed correction will concern these.
 
 
+<!-- TODO: Missing Rmd file in corrections -->
 
 ??? success "Ruhland2016 analysis with clusterProfiler"
 
@@ -60,7 +61,7 @@ The proposed correction will concern these.
 	
 	```
 	 FALSE  TRUE 
-	 18569   401 
+	 17370   391 
 	```
 	
 	Translating gene ENSEMBL names to their entrezID (this is what clusterProfiler uses), as well as Symbol (named used by most biologist).
@@ -78,11 +79,11 @@ The proposed correction will concern these.
 	#8 ENSMUSG00000033793   108664 Atp6v1h
 	#9 ENSMUSG00000025907    12421  Rb1cc1
 	
-	dim(genes_universe)
-	# 15878     3
-	
-	length(rownames(res))
-	# 19378
+  dim(genes_universe)
+  # 15443     3
+
+  length(rownames(res))
+  # 18012
 	```
 	
 	```R
@@ -90,7 +91,7 @@ The proposed correction will concern these.
 	                 toType = c("ENTREZID", "SYMBOL"),
 	                 OrgDb = "org.Mm.eg.db")
 	dim(genes_DE)
-	# 387   3
+	# 382   3
 	```
 	
 	```R
@@ -103,6 +104,8 @@ The proposed correction will concern these.
 	                   pvalueCutoff  = 0.01,
 	                   qvalueCutoff  = 0.05,
 	                   readable      = TRUE)
+  # couple of minutes to run
+  
 	head(ego_bp)
 	dotplot(ego_bp, showCategory = 20)
 	# sample plot, but with adjusted p-value as x-axis
@@ -119,6 +122,7 @@ The proposed correction will concern these.
 	                                 qvalueCutoff = 0.01,
 	                                 readable=T,
 	                                 universe = genes_universe$ENTREZID)
+  # <1 minute to run
 	
 	
 	dotplot(reactome.enrich, x = "p.adjust")
