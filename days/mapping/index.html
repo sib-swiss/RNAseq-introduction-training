@@ -821,7 +821,7 @@ it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/043_
 <p><a :=":" class="md-button" href="../../assets/html/045_multiqc_mouseMT_mapped_trimmed.html" target="_blank"> trimmed reads mapping  report </a></p>
 <details class="note">
 <summary>For the curious: scripts for the mapping of trimmed reads</summary>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
+<p><div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
 <span class="c1">#SBATCH --job-name=star-aln</span>
 <span class="c1">#SBATCH --time=00:10:00</span>
 <span class="c1">#SBATCH --cpus-per-task=2</span>
@@ -843,7 +843,8 @@ STAR<span class="w"> </span>--runThreadN<span class="w"> </span><span class="m">
 <span class="w">                 </span>--quantMode<span class="w"> </span>GeneCounts<span class="w"> </span><span class="se">\</span>
 <span class="w">                 </span>--readFilesIn<span class="w"> </span><span class="nv">$FASTQ_NAME</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
+it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/044_STAR_map_trimmed.sh</code></p>
+<p><div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
 <span class="c1">#SBATCH --job-name=map-multiqc</span>
 <span class="c1">#SBATCH --time=00:30:00</span>
 <span class="c1">#SBATCH --cpus-per-task=1</span>
@@ -852,6 +853,7 @@ STAR<span class="w"> </span>--runThreadN<span class="w"> </span><span class="m">
 
 multiqc<span class="w"> </span>-n<span class="w"> </span>045_multiqc_mouseMT_mapped_trimmed.html<span class="w"> </span>-f<span class="w"> </span>--title<span class="w"> </span>mapped_trimmed<span class="w"> </span>044_STAR_map_trimmed/
 </code></pre></div>
+it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/045_multiqc_mouseMT_mapped_trimmed.sh</code></p>
 </details>
 <h2 id="additional-pseudo-aligning-with-salmon">ADDITIONAL : pseudo-aligning with salmon</h2>
 <p><a :=":" class="md-button" href="https://salmon.readthedocs.io/en/latest/salmon.html" target="_blank">salmon website</a></p>
@@ -864,7 +866,7 @@ multiqc<span class="w"> </span>-n<span class="w"> </span>045_multiqc_mouseMT_map
 </ul>
 <details class="success">
 <summary>script</summary>
-<div class="highlight"><pre><span></span><code>#!/usr/bin/bash
+<p><div class="highlight"><pre><span></span><code>#!/usr/bin/bash
 #SBATCH --job-name=salmonRuhland
 #SBATCH --time=01:00:00
 #SBATCH --cpus-per-task=8
@@ -892,6 +894,7 @@ salmon quant -i $genomeDIR -l A \
             -p 8 --validateMappings --gcBias --seqBias \
             -o $outDIR
 </code></pre></div>
+it can also be found in the cluster at <code>/shared/data/Solutions/Ruhland2016/salmon_Ruhland2016.sh</code></p>
 </details>
 <h2 id="additional-mapping-reads-from-ruhland2016-on-the-reference">ADDITIONAL Mapping reads from Ruhland2016 on the reference</h2>
 <p><strong>Task :</strong> Using STAR, align the raw FASTQ files of the Ruhland2016 dataset against thed mouse mitochondrial reference you just created</p>
@@ -912,7 +915,7 @@ SRR3180539_TAM2_1.fastq.gz
 SRR3180540_TAM3_1.fastq.gz
 </code></pre></div>
 <p>sbatch script :</p>
-<div class="highlight"><pre><span></span><code>#!/usr/bin/bash
+<p><div class="highlight"><pre><span></span><code>#!/usr/bin/bash
 #SBATCH --job-name=star-aln
 #SBATCH --time=01:00:00
 #SBATCH --cpus-per-task=8
@@ -941,6 +944,7 @@ STAR --runThreadN 8 --genomeDir $genomeDIR \
               --quantMode GeneCounts \
               --readFilesIn $dataDIR/$fastqFILE --readFilesCommand zcat \
 </code></pre></div>
+it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/STAR_aln_Ruhland2016.sh</code></p>
 <p>The options of STAR are :</p>
 <ul>
 <li><strong>&ndash;runThreadN 8 </strong> : 8 threads to go faster.</li>
@@ -962,7 +966,7 @@ This splice junction database can, in turn, be used to guide an improved second 
 <p><strong>Task :</strong> run STAR in this STAR-2pass mode on the same sample as before and evaluate the results.</p>
 <details class="success">
 <summary>script</summary>
-<div class="highlight"><pre><span></span><code>#!/usr/bin/bash
+<p><div class="highlight"><pre><span></span><code>#!/usr/bin/bash
 #SBATCH --job-name=star-aln2
 #SBATCH --time=01:00:00
 #SBATCH --cpus-per-task=8
@@ -992,6 +996,7 @@ STAR --runThreadN 8 --genomeDir $genomeDIR \
                   --sjdbFileChrStartEnd $outDIR/${fastqFILE}SJ.out.tab \
                   --readFilesIn $dataDIR/$fastqFILE --readFilesCommand zcat \
 </code></pre></div>
+it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/STAR_2PASS_Ruhland2016.sh</code></p>
 </details>
 <!--
 ## ADDITIONNAL : Assessing read coverage for biases
