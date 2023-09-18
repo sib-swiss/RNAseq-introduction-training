@@ -95,7 +95,7 @@ We will be using the Ensembl references, with their accompanying GTF annotations
 
 	```
 
-<!-- TO DO: add path to solution script -->
+	It can be found on the cluster at `/shared/data/Solutions/mouseMT/041_star_index.sh`
 
 **Extra task :** Determine how you would add an additional feature to your reference, for example for a novel transcript not described by the standard reference.
 
@@ -228,7 +228,7 @@ You can call MultiQC on the STAR output folder to gather a report on the individ
 	
 	multiqc -n 043_multiqc_mouseMT_mapped_raw.html -f --title mapped_raw 042_STAR_map_raw/
 	```
-	it can also be found in the cluster at `043_multiqc_map_raw.sh`
+	it can also be found in the cluster at `/shared/data/Solutions/mouseMT/043_multiqc_map_raw.sh`
 
 
 	[ Download the report ](../assets/html/043_multiqc_mouseMT_mapped_raw.html){target=_blank : .md-button }
