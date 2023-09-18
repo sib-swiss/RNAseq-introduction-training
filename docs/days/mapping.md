@@ -270,6 +270,8 @@ We will spare you the mapping of the trimmed reads, and let you directly downloa
 	                 --quantMode GeneCounts \
 	                 --readFilesIn $FASTQ_NAME
 	```
+	it can also be found in the cluster at `/shared/data/Solutions/mouseMT/044_STAR_map_trimmed.sh`
+
 
 	```sh
 	#!/usr/bin/bash
@@ -281,6 +283,7 @@ We will spare you the mapping of the trimmed reads, and let you directly downloa
 	
 	multiqc -n 045_multiqc_mouseMT_mapped_trimmed.html -f --title mapped_trimmed 044_STAR_map_trimmed/
 	```
+	it can also be found in the cluster at `/shared/data/Solutions/mouseMT/045_multiqc_mouseMT_mapped_trimmed.sh`
 
 
 ## ADDITIONAL : pseudo-aligning with salmon
@@ -330,7 +333,7 @@ We refer you to the tool's documentation in order to see [how the reference inde
 				-o $outDIR
 				
 	```
-
+	it can also be found in the cluster at `/shared/data/Solutions/Ruhland2016/salmon_Ruhland2016.sh`
 
 
 ## ADDITIONAL Mapping reads from Ruhland2016 on the reference 
@@ -390,6 +393,7 @@ We refer you to the tool's documentation in order to see [how the reference inde
                   --readFilesIn $dataDIR/$fastqFILE --readFilesCommand zcat \
 
 	```
+	it can also be found in the cluster at `/shared/data/Solutions/mouseMT/STAR_aln_Ruhland2016.sh`
 
 	The options of STAR are :
 
@@ -453,7 +457,7 @@ STAR <1st round options> --sjdbFileChrStartEnd sample_SJ.out.tab
 	                  --readFilesIn $dataDIR/$fastqFILE --readFilesCommand zcat \
 
 	```
-
+	it can also be found in the cluster at `/shared/data/Solutions/mouseMT/STAR_2PASS_Ruhland2016.sh`
 
 
 <!--
