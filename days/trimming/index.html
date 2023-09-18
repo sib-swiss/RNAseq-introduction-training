@@ -582,7 +582,7 @@ Depending on your research question and the software you use for mapping, you ma
 </ul>
 </li>
 </ul>
-<p>If the data will be used to perform <strong>transcriptome assembly, or variant analysis, then it must be trimmed</strong>.</p>
+<p>If the data will be used to perform <strong>transcriptome assembly, or variant analysis, then it MUST be trimmed</strong>.</p>
 <p>In contrast, for applications based on <strong>counting reads</strong>, such as <strong>Differential Expression analysis</strong>, most aligners, such as <a href="https://github.com/alexdobin/STAR">STAR</a>, <a href="http://daehwankimlab.github.io/hisat2/">HISAT2</a>, <a href="https://salmon.readthedocs.io/en/latest/salmon.html">salmon</a>, and <a href="https://pachterlab.github.io/kallisto/manual">kallisto</a>, can handle bad quality sequences and adapter content by soft-clipping, and consequently they <em>usually</em> do not need trimming.
 In fact, <strong>trimming can be detrimental</strong> to the number of successfully quantified reads [<a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-016-0956-2">William et al. 2016</a>].</p>
 <p>Nevertheless, it is usually recommended to perform some amount of soft clipping (<em>eg.</em> <a href="https://www.biostars.org/p/389324/">kallisto</a>, <a href="https://github.com/COMBINE-lab/salmon/issues/398">salmon</a> ).</p>
@@ -604,7 +604,7 @@ In fact, <strong>trimming can be detrimental</strong> to the number of successfu
 <li>unlike fastqc, you will have to launch trimmomatic for each sample separately</li>
 <li>to facilitate QC afterward, add the following at the end of your trimmomatic command (substituting <code>&lt;sample name&gt;</code>):
             <code>2&gt; 030_trim/trim_out.&lt;sample name&gt;.log</code>
-            This will same part of the output of trimmomatic to the same folder as the trimmed reads, which multiQC will be able to use afterward.</li>
+            This will send part of the output of trimmomatic to a file in the same folder as the trimmed reads, which multiQC will be able to use afterward.</li>
 </ul>
 </li>
 </ul>
@@ -615,6 +615,8 @@ In fact, <strong>trimming can be detrimental</strong> to the number of successfu
 java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar
 </code></pre></div>
 </div>
+<!-- Should add a note on grabbing the FASTA files for the adaptor sequences? -->
+
 <details class="success">
 <summary>trimmomatics sbatch script</summary>
 <p>We chose the following option:</p>
@@ -739,7 +741,7 @@ On the cluster, this script is also in  <code>/shared/data/Solutions/mouseMT/030
 </details>
 <p><strong>Task 2:</strong> </p>
 <ul>
-<li>Use the the following script to run a QC analysis on your trimmmed reads  and compare with the raw ones.</li>
+<li>Use the the following script to run a QC analysis on your trimmmed reads and compare with the raw ones.</li>
 </ul>
 <p><div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
 <span class="c1">#SBATCH --job-name=map-multiqc</span>
@@ -755,10 +757,14 @@ fastqc<span class="w"> </span>030_trim/*.fastq<span class="w"> </span>-o<span cl
 <span class="c1">## multiqc on the fastQC reports AND the trimmomatic logs</span>
 multiqc<span class="w"> </span>-n<span class="w"> </span>032_multiqc_mouseMT_trimmed.html<span class="w"> </span>-f<span class="w"> </span>--title<span class="w"> </span>trimmed_fastq<span class="w"> </span>030_trim/
 </code></pre></div>
-on the cluster, you can find this script in : <code>/shared/data/Solutions/mouseMT/032_multiqc_trimmed.sh</code></p>
+On the cluster, you can find this script in : <code>/shared/data/Solutions/mouseMT/032_multiqc_trimmed.sh</code></p>
+<!-- BUG? Shouldn't there be a module load fastqc before the fastqc command?
+BUT as we have to launch multiqc from the head node... module load does not work.
+It has to be done from the interactive shell before executing the script. This is... confusing. -->
+
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>the script above presumes that you have successfully trimmed the reads. </p>
+<p>The script above presumes that you have successfully trimmed the reads. </p>
 <p>If not, you can grab them on the cluster in <code>/shared/data/Solutions/mouseMT/030_trim/</code></p>
 </div>
 <details class="success">
@@ -766,6 +772,8 @@ on the cluster, you can find this script in : <code>/shared/data/Solutions/mouse
 <p><a :=":" class="md-button" href="../../assets/html/032_multiqc_mouseMT_trimmed.html" target="_blank"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M0 64C0 28.7 28.7 0 64 0h160v128c0 17.7 14.3 32 32 32h128v288c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0l128 128z"/></svg></span> Download the multiqc report</a></p>
 <p><strong>Note the second section, Trimmomatic, which lets you know the number/percentage of reads dropped</strong></p>
 </details>
+<!-- I'd add back the "important notes" -->
+
 <!--
 ---
 

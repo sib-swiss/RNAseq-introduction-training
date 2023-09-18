@@ -680,12 +680,12 @@ sample_a1_fastqc.zip<span class="w">   </span>sample_a2_fastqc.zip<span class="w
 <p>We will look at one of these html report on the toy dataset, and one of the pre-computed report from one of our other datasets.</p>
 <ul>
 <li>repatriate one of the html report of the mouseMT dataset to your local computer, as well as the one you can find in:
-<code>/shared/data/Solution/Liu2015/010_fastqc/SRR3180538_TAM1_1_fastqc.html</code></li>
-<li>Look at these two QC report. What are your conclusions ? Would you want to perform some operations on the reads such as low-quality bases trimming, removal of adapters ?</li>
+<code>/shared/data/Solutions/Liu2015/010_fastqc/SRR3180538_TAM1_1_fastqc.html</code></li>
+<li>Look at these two QC reports in a web browser. What are your conclusions ? Would you want to perform some operations on the reads, such as low-quality bases trimming, removal of adapters ?</li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Reminder</p>
-<p>to get the data from the distant server to your machine, you may use an SFTP client (filezilla, mobaXterm), or the command line tool from your machine :   <code>scp login@xx.xx.xx:~/path/to/file.txt .</code></p>
+<p>to get the data from the distant server to your machine, you may use an SFTP client (FileZilla, mobaXterm), or the command line tool from your machine :   <code>scp login@xx.xx.xx:~/path/to/file.txt .</code></p>
 </div>
 <p><strong>Extra Task:</strong> </p>
 <ul>
@@ -722,11 +722,14 @@ mkdir<span class="w"> </span>-p<span class="w"> </span>010_fastqc/
 fastqc<span class="w"> </span>-o<span class="w"> </span>010_fastqc<span class="w"> </span>/shared/data/DATA/Liu2015/*.fastq.gz
 </code></pre></div>
 <p>on the cluster, this script is also in <code>/shared/data/Solutions/Liu2015/010_fastqc.sh</code></p>
-<p>Note that alternatively, you could have one sbatch script per sample.
-On a simple and relatively fast task such as this one, it is not to problematic.</p>
-<p>However on more important tasks such as mapping, treating each file in separate script is better because you can submit all scripts at once and they will then run in parallel, whereas if they are all treated in the same script, the samples would be handled sequentially and the overall job would take much longer to finish.</p>
-<p><strong>NB:</strong> the actual recommended approach is to use SLURM arrays, which let you have a single script, but have different jobs execute in parallel. We show below how to do.</p>
 </details>
+<p>This script runs fastqc on each of the .fastq.gz files, sequentially.
+    Note that alternatively, you could have one sbatch script per sample.
+    On a simple and relatively fast task such as this one, it is not too problematic.
+    However, on more computationally-intensive tasks such as mapping, treating each file in separate script is better, because you can submit all scripts at once, and they will then run in parallel, whereas if they are all treated in the same script like here, the samples would be handled sequentially and the overall job would take much longer to finish.</p>
+<div class="codehilite"><pre><span></span><code>**NB:** BUT, the actual recommended approach is to use SLURM arrays, which let you have a single script, but have different jobs execute in parallel. Below, we show how to do this.
+</code></pre></div>
+
 <details class="success">
 <summary>Ruhland2016 FastQC sbatch script</summary>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
@@ -784,7 +787,7 @@ fastqc<span class="w"> </span>-o<span class="w"> </span>010_fastqc/<span class="
 <summary>Interpretation of a report</summary>
 <p><a class="md-button" href="../../assets/pdf/SRR3180535_EtOH1_1_fastqc.pdf"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M0 64C0 28.7 28.7 0 64 0h160v128c0 17.7 14.3 32 32 32h128v144H176c-35.3 0-64 28.7-64 64v144H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0l128 128zM176 352h32c30.9 0 56 25.1 56 56s-25.1 56-56 56h-16v32c0 8.8-7.2 16-16 16s-16-7.2-16-16V368c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24h-16v48h16zm96-80h32c26.5 0 48 21.5 48 48v64c0 26.5-21.5 48-48 48h-32c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16v-64c0-8.8-7.2-16-16-16h-16v96h16zm80-112c0-8.8 7.2-16 16-16h48c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32v32h32c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32v48c0 8.8-7.2 16-16 16s-16-7.2-16-16V368z"/></svg></span> Download an annotated report</a></p>
 <p>We also refer you to this <a href="https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon/lessons/qc_fastqc_assessment.html">nice interpertation guide</a></p>
-<p>pre-computed reports can be found in :</p>
+<p>Pre-computed reports can be found in :</p>
 <ul>
 <li><code>/shared/data/Solutions/Ruhland2016/010_fastqc/</code></li>
 <li><code>/shared/data/Solutions/Liu2015/010_fastqc/</code></li>
@@ -792,7 +795,7 @@ fastqc<span class="w"> </span>-o<span class="w"> </span>010_fastqc/<span class="
 </ul>
 </details>
 <h2 id="multiqc-grouping-multiple-reports">MultiQC : grouping multiple reports</h2>
-<p>In practice, you  likely will have more than a couple of samples (maybe even more than 30 or 50&hellip;) to handle: individually consulting and comparing the QC reports of each would be tedious.</p>
+<p>In practice, you likely will have more than a couple of samples (maybe even more than 30 or 50&hellip;) to handle: individually consulting and comparing the QC reports of each would be tedious.</p>
 <p><a href="https://multiqc.info/">MultiQC</a> is a tool that lets you combine multiple reports in a single, interactive document that let you explore your data easily.</p>
 <p>Here, we will be focusing on grouping FastQC reports, but MultiQC can also be applied to the output or logs of other bioinformatics tools, such as mappers, as we will see later.</p>
 <p>In its default usage, <code>multiqc</code> only needs to be provided a path where it will find all the individual reports, and it will scan them and write a report named <code>multiqc_report.html</code>.</p>
@@ -809,7 +812,7 @@ fastqc<span class="w"> </span>-o<span class="w"> </span>010_fastqc/<span class="
 <ul>
 <li>
 <p>Write an sbatch script to run MultiQC for the toy dataset.</p>
-<p>to follow the naming convention with started with, you can use the following names:</p>
+<p>To follow the naming convention we started with, you can use the following names:</p>
 <ul>
 <li>sbatch script: <code>020_multiqc.sh</code> </li>
 <li>output report: <code>020_multiqc_mouseMT.html</code></li>
@@ -852,12 +855,12 @@ On the cluster, this script is also in <code>/shared/data/Solutions/mouseMT/020_
 <p>Most samples do not deviate too much, Except for two samples which clearly contains more GC% rich content compared to the other samples.
 This may be indicative of contamination or just a difference in composition.</p>
 <p><img alt="fastqc sequence duplication levels plot" src="../../assets/images/multiqc_mouseMT/fastqc_sequence_duplication_levels_plot.png" /></p>
-<p>Here we see that some sequence are duplicated, but not many.
-Normally in the context of RNA-seq some transcripts are present in a large number of copies in the samples, so we would expect to see more over-represented sequences. 
+<p>Here we see that some sequences are duplicated, but not many.
+Normally in the context of RNA-seq, some transcripts are present in a large number of copies in the samples, so we would expect to see more over-represented sequences. 
 This is not the case here because this is a toy dataset with a very small number of reads.</p>
 <p><img alt="fastqc adapter content plot" src="../../assets/images/multiqc_mouseMT/fastqc_adapter_content_plot.png" /></p>
 <p>We see a clear trend of adapter contamination for one sample as we get closer to the reads&rsquo; end. Note the y-scale though : we never go above a 6% content per sample.</p>
-<p>Overall, we can conclude that one sample in particular stands out in particular. </p>
+<p>Overall, we can conclude that one sample in particular stands out. </p>
 <p>We should note its name and monitor it closely as we go through the rest of our analysis pipeline.</p>
 <p>At the moment, the analysis steps are independent from sample to sample, so keeping that potential outlier is not a problem. However, when we come to differential analysis we will have to decide if we keep this sample or exclude it.</p>
 </details>
@@ -889,10 +892,11 @@ However here we are in the context of RNA-seq : some transcripts are present in 
 </details>
 <p><strong>extra Task</strong></p>
 <p>Write and execute sbatch scripts to run a MultiQC for the Liu2015 and the Ruhland2016 datasets.</p>
+<!-- For some reason these 2 solutions are formatted differently? -->
 <details class="success">
 <summary>MultiQC sbatch script for Ruhland2016</summary>
 <p>This script fetches the report from the <code>Solutions/</code> folder.</p>
-<p>You may adapt it to to point to your own results if you want.</p>
+<p>You may adapt it to point to your own results if you want.</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
 <span class="c1">#SBATCH --job-name=multiqc_Ruhland2016</span>
 <span class="c1">#SBATCH --time=00:30:00</span>
@@ -907,7 +911,7 @@ multiqc<span class="w"> </span>-f<span class="w"> </span>020_multiqc_Ruhland2016
 <details class="done">
 <summary>MultiQC sbatch script for Liu2015</summary>
 <p>This script fetches the report from the <code>Solutions/</code> folder.</p>
-<p>You may adapt it to to point to your own results if you want.</p>
+<p>You may adapt it to point to your own results if you want.</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
 <span class="c1">#SBATCH --job-name=multiqc_Liu2015</span>
 <span class="c1">#SBATCH --time=00:30:00</span>
@@ -922,21 +926,21 @@ multiqc<span class="w"> </span>-f<span class="w"> </span>020_multiqc_Liu2015.htm
 <h2 id="extra-retrieving-published-datasets">EXTRA : retrieving published datasets</h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you are following this course with a teacher, then the for the data is already on the server. There is no need to download it again.</p>
+<p>If you are following this course with a teacher, then the data is already on the server. There is no need to download it again.</p>
 </div>
 <p>Most NGS data is deposited at the <a href="https://www.ncbi.nlm.nih.gov/sra/">Short Read Archive (SRA)</a> hosted by the NCBI, with links from the <a href="https://www.ncbi.nlm.nih.gov/geo/">Gene Expression Omnibus (GEO)</a></p>
 <p>Several steps are required to retrieve data from a published study :</p>
 <ol>
-<li>find GEO or SRA identifier from publication.</li>
+<li>find GEO or SRA identifier from publication(s).</li>
 <li>find the “run” identifiers for each sample (SRR).</li>
 <li>use <a href="https://github.com/ncbi/sra-tools/wiki/01.-Downloading-SRA-Toolkit">SRA Toolkit</a> to dump data from the SRR repository to FASTQ files.</li>
 </ol>
 <p>For example, on the Liu2015 dataset :</p>
 <ol>
-<li>Locate in their publication the GEO accession: GSE57345 </li>
+<li>Locate the GEO accession in their publication: GSE57345 </li>
 <li>Use the NCBI search engine to find this accession : <a href="https://www.ncbi.nlm.nih.gov/bioproject/?term=GSE57345">GSE57345</a></li>
 <li>This project is made of several sub-projects. Scroll down, and in the table find the Bioproject id : PRJNA246308 </li>
-<li>Go to the <a href="https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA246308&amp;o=acc_s%3Aa">SRA run selector</a>, enter the Bioproject id &ndash;&gt;</li>
+<li>Go to the <a href="https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA246308&amp;o=acc_s%3Aa">SRA run selector</a>, enter the Bioproject id</li>
 <li>From the <a href="https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA246308&amp;o=acc_s%3Aa">results of your search</a>, select all relevant runs</li>
 <li>Click on &ldquo;Accession List&rdquo; in the Select table </li>
 </ol>

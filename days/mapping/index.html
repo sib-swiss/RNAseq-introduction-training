@@ -653,6 +653,7 @@
 you can grab the reference genome data from the <a href="https://www.ensembl.org/info/data/ftp/index.html">Ensembl ftp website</a>.</p>
 <p>In particular, you will want a mouse <a href="http://ftp.ensembl.org/pub/current_fasta/mus_musculus/dna/">DNA fasta file</a> and <a href="http://ftp.ensembl.org/pub/current_gtf/mus_musculus/">gtf file</a>.</p>
 </div>
+<p>Take note of the genome sequence and annotation versions, you will need this in your paper&rsquo;s methods section!</p>
 <p><strong>Task :</strong> Using STAR, build a genome index for the mouse mitochondrial chromosome.</p>
 <ul>
 <li>.fasta and .gtf files are in : <code>/shared/data/DATA/Mouse_MT_genome/</code>.</li>
@@ -671,9 +672,9 @@ you can grab the reference genome data from the <a href="https://www.ensembl.org
 <li><code>--runThreadN &lt;NumberOfThreads&gt;</code> : number of threads to run on </li>
 <li><code>--sjdbOverhang &lt;ReadLength-1&gt;</code> : length of the genomic sequence around the annotated junctions to be used in constructing the splice junctions database. Ideally : read length - 1.</li>
 </ul>
-<p>Additionally, because the genome is so small here (we only use the mitochondrial chromosome afterall), you will need the following advanced option:</p>
+<p>Additionally, because the genome is so small here (we only use the mitochondrial chromosome after all), you will need the following advanced option:</p>
 <ul>
-<li><code>--genomeSAindexNbases 5</code> : must be scalled to <code>min(14, log2(GenomeLength)/2 - 1)</code>, so 5 in our case</li>
+<li><code>--genomeSAindexNbases 5</code> : must be scaled to <code>min(14, log2(GenomeLength)/2 - 1)</code>, so 5 in our case</li>
 </ul>
 </div>
 <div class="admonition note">
@@ -706,6 +707,8 @@ STAR<span class="w"> </span>--runMode<span class="w"> </span>genomeGenerate<span
 <span class="w">     </span>--sjdbOverhang<span class="w"> </span><span class="m">99</span><span class="w"> </span>
 </code></pre></div>
 </details>
+<!-- TO DO: add path to solution script -->
+
 <p><strong>Extra task :</strong> Determine how you would add an additional feature to your reference, for example for a novel transcript not described by the standard reference.</p>
 <details class="success">
 <summary>Answer</summary>
@@ -717,30 +720,30 @@ STAR<span class="w"> </span>--runMode<span class="w"> </span>genomeGenerate<span
 <p><code>--genomeFastaFiles /path/to/genome/fasta1.fa /path/to/genome/fasta2.fa /path/to/genome/fasta3.fa ...</code></p>
 </div>
 <h2 id="mapping-reads-onto-the-reference">Mapping reads onto the reference</h2>
-<p><strong>Task :</strong> Using STAR, align the raw FASTQ files of the mouseMT dataset against the mouse mitochondrial reference you just created</p>
+<p><strong>Task :</strong> Using STAR, align the raw FASTQ files of the mouseMT dataset against the mouse mitochondrial reference you just created.</p>
 <ul>
-<li>if were not able to complete the previous task you can use the index in <code>/shared/data/Solutions/mouseMT/041_STAR_mouseMT_reference</code></li>
+<li>if were not able to complete the previous task, you can use the index in <code>/shared/data/Solutions/mouseMT/041_STAR_mouseMT_reference</code> .</li>
 <li>search the STAR manual for the option to output a BAM file sorted by coordinate.</li>
 <li>search the STAR manual for the option to output a geneCounts file.</li>
-<li>put the results in folder <code>042_STAR_map_raw/</code></li>
+<li>put the results in folder <code>042_STAR_map_raw/</code> .</li>
 </ul>
 <div class="admonition info">
-<p class="admonition-title">STAR basic parameter for mapping</p>
+<p class="admonition-title">STAR basic parameters for mapping</p>
 <p>Taken again from the manual:</p>
 <ul>
 <li><code>--genomeDir &lt;/path/to/genomeDir&gt;</code> : folder where you have put the genome index</li>
 <li><code>--readFilesIn &lt;/path/to/read1&gt;</code> : path to a fastq file. If the reads are paired, then also include the path to the second fastq file</li>
 <li><code>--runThreadN &lt;NumberOfThreads&gt;</code>: number of threads to run on.</li>
-<li><code>--outFileNamePrefix  &lt;prefix&gt;</code> : prefix of the output files, typically something like <code>output_directory/sampleName.</code> </li>
+<li><code>--outFileNamePrefix  &lt;prefix&gt;</code> : prefix of the output files, typically something like <code>output_directory/sampleName</code> . </li>
 </ul>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Take the time to read the parts of the <a href="https://raw.githubusercontent.com/alexdobin/STAR/master/doc/STARmanual.pdf">STAR manual</a> which concern you: a bit of planning ahead can save you a lot of time-consuming/headache-inducing trial and error on your script.</p>
+<p>Take the time to read the parts of the <a href="https://raw.githubusercontent.com/alexdobin/STAR/master/doc/STARmanual.pdf">STAR manual</a> which concern you: a bit of planning ahead can save you a lot of time-consuming/headache-inducing trial-and-error on your script.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Mapping reads and generating a sorted BAM from one of the mouseMT FASTQ file will take less than a minute and very little RAM, but on a real dataset it should take from 15 minutes to an hour per sample and require at least 30G.</p>
+<p>Mapping reads and generating a sorted BAM from one of the mouseMT FASTQ file will take less than a minute and very little RAM, but on a real dataset it should take from 15 minutes to an hour per sample and require at least 30GB of RAM.</p>
 </div>
 <details class="success">
 <summary>STAR mapping script</summary>
@@ -815,7 +818,7 @@ it can also be found in the cluster at <code>043_multiqc_map_raw.sh</code></p>
 </details>
 <h2 id="comparison-of-mapping-the-trimmed-reads">Comparison of mapping the trimmed reads</h2>
 <p>After having mapped the raw reads, we also map the trimmed reads and then compare the results to decide which one we want to use for the rest of our analysis.</p>
-<p>We will spare you the mapping of the trimmed read and let you directly download the mapping multiqc report:</p>
+<p>We will spare you the mapping of the trimmed reads, and let you directly download the mapping multiqc report:</p>
 <p><a :=":" class="md-button" href="../../assets/html/045_multiqc_mouseMT_mapped_trimmed.html" target="_blank"> trimmed reads mapping  report </a></p>
 <details class="note">
 <summary>For the curious: scripts for the mapping of trimmed reads</summary>
@@ -853,7 +856,7 @@ multiqc<span class="w"> </span>-n<span class="w"> </span>045_multiqc_mouseMT_map
 </details>
 <h2 id="additional-pseudo-aligning-with-salmon">ADDITIONAL : pseudo-aligning with salmon</h2>
 <p><a :=":" class="md-button" href="https://salmon.readthedocs.io/en/latest/salmon.html" target="_blank">salmon website</a></p>
-<p>Salmon can allow you to quantify transcript expression without explicitly aligning the sequenced reads onto the reference genome with its gene and splice junction annotations, but to a simplification of the corresponding transcriptome, thus saving computational resources.</p>
+<p>Salmon can allow you to quantify transcript expression without explicitly aligning the sequenced reads onto the reference genome with its gene and splice junction annotations, but instead to a simplification of the corresponding transcriptome, thus saving computational resources.</p>
 <p>We refer you to the tool&rsquo;s documentation in order to see <a href="https://salmon.readthedocs.io/en/latest/salmon.html#preparing-transcriptome-indices-mapping-based-mode">how the reference index is computed</a>.</p>
 <p><strong>Task :</strong> run salmon to quantify the expression of either the Ruhland or Liu dataset. </p>
 <ul>

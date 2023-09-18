@@ -470,6 +470,55 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#ensembl-entrezid-symbol" class="md-nav__link">
+    ENSEMBL ENTREZID  SYMBOL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ensmusg00000033845-27395-mrpl15" class="md-nav__link">
+    2 ENSMUSG00000033845    27395  Mrpl15
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-ensmusg00000025903-18777-lypla1" class="md-nav__link">
+    4 ENSMUSG00000025903    18777  Lypla1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-ensmusg00000033813-21399-tcea1" class="md-nav__link">
+    5 ENSMUSG00000033813    21399   Tcea1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-ensmusg00000002459-58175-rgs20" class="md-nav__link">
+    7 ENSMUSG00000002459    58175   Rgs20
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-ensmusg00000033793-108664-atp6v1h" class="md-nav__link">
+    8 ENSMUSG00000033793   108664 Atp6v1h
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-ensmusg00000025907-12421-rb1cc1" class="md-nav__link">
+    9 ENSMUSG00000025907    12421  Rb1cc1
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -523,6 +572,55 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#ensembl-entrezid-symbol" class="md-nav__link">
+    ENSEMBL ENTREZID  SYMBOL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ensmusg00000033845-27395-mrpl15" class="md-nav__link">
+    2 ENSMUSG00000033845    27395  Mrpl15
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-ensmusg00000025903-18777-lypla1" class="md-nav__link">
+    4 ENSMUSG00000025903    18777  Lypla1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-ensmusg00000033813-21399-tcea1" class="md-nav__link">
+    5 ENSMUSG00000033813    21399   Tcea1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-ensmusg00000002459-58175-rgs20" class="md-nav__link">
+    7 ENSMUSG00000002459    58175   Rgs20
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-ensmusg00000033793-108664-atp6v1h" class="md-nav__link">
+    8 ENSMUSG00000033793   108664 Atp6v1h
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-ensmusg00000025907-12421-rb1cc1" class="md-nav__link">
+    9 ENSMUSG00000025907    12421  Rb1cc1
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -540,8 +638,6 @@
   
   
 
-
-  <h1>Enrichment analysis</h1>
 
 <p>Once the reads have been mapped and counted, one can assess the differential expression of genes between different conditions.</p>
 <p><strong>During this lesson, you will learn to :</strong></p>
@@ -562,6 +658,8 @@ which regroups several enrichment detection algorithms onto several databases.</
 <p>If you do not have a list of DE genes from your previous analysis, you may use the following table:</p>
 <p><a :=":" class="md-button" href="../../assets/txt/Ruhland2016.DESeq2.results.csv" target="_blank"> <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M0 64C0 28.7 28.7 0 64 0h160v128c0 17.7 14.3 32 32 32h128v288c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0l128 128z"/></svg></span> Ruhland2016 DESeq2 results</a></p>
 <p>The proposed correction will concern these.</p>
+<!-- TODO: Missing Rmd file in corrections -->
+
 <details class="success">
 <summary>Ruhland2016 analysis with clusterProfiler</summary>
 <p>We begin by reading the results of the DE analysis. Adapt this to your own analysis.
@@ -582,62 +680,69 @@ Beware that edgeR and DESeq2 use different column names in their result tables (
 </code></pre></div>
 <p>Number of non-significant/significant genes </p>
 <div class="highlight"><pre><span></span><code> FALSE  TRUE 
- 18569   401 
+ 17370   391 
 </code></pre></div>
 <p>Translating gene ENSEMBL names to their entrezID (this is what clusterProfiler uses), as well as Symbol (named used by most biologist).
-<div class="highlight"><pre><span></span><code><span class="n">genes_universe</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">bitr</span><span class="p">(</span><span class="nf">rownames</span><span class="p">(</span><span class="n">res</span><span class="p">),</span><span class="w"> </span><span class="n">fromType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;ENSEMBL&quot;</span><span class="p">,</span>
-<span class="w">                       </span><span class="n">toType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;ENTREZID&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SYMBOL&quot;</span><span class="p">),</span>
-<span class="w">                       </span><span class="n">OrgDb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;org.Mm.eg.db&quot;</span><span class="p">)</span>
-
-<span class="nf">head</span><span class="p">(</span><span class="w"> </span><span class="n">genes_universe</span><span class="w"> </span><span class="p">)</span>
-<span class="c1">#ENSEMBL ENTREZID  SYMBOL</span>
-<span class="c1">#2 ENSMUSG00000033845    27395  Mrpl15</span>
-<span class="c1">#4 ENSMUSG00000025903    18777  Lypla1</span>
-<span class="c1">#5 ENSMUSG00000033813    21399   Tcea1</span>
-<span class="c1">#7 ENSMUSG00000002459    58175   Rgs20</span>
-<span class="c1">#8 ENSMUSG00000033793   108664 Atp6v1h</span>
-<span class="c1">#9 ENSMUSG00000025907    12421  Rb1cc1</span>
-
-<span class="nf">dim</span><span class="p">(</span><span class="n">genes_universe</span><span class="p">)</span>
-<span class="c1"># 15878     3</span>
-
-<span class="nf">length</span><span class="p">(</span><span class="nf">rownames</span><span class="p">(</span><span class="n">res</span><span class="p">))</span>
-<span class="c1"># 19378</span>
-</code></pre></div></p>
-<div class="highlight"><pre><span></span><code><span class="n">genes_DE</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">bitr</span><span class="p">(</span><span class="nf">rownames</span><span class="p">(</span><span class="n">res</span><span class="p">)[</span><span class="nf">which</span><span class="p">(</span><span class="w"> </span><span class="n">res</span><span class="o">$</span><span class="n">sig</span><span class="o">==</span><span class="bp">T</span><span class="w"> </span><span class="p">)],</span><span class="w"> </span><span class="n">fromType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;ENSEMBL&quot;</span><span class="p">,</span>
-<span class="w">                 </span><span class="n">toType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;ENTREZID&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SYMBOL&quot;</span><span class="p">),</span>
-<span class="w">                 </span><span class="n">OrgDb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;org.Mm.eg.db&quot;</span><span class="p">)</span>
-<span class="nf">dim</span><span class="p">(</span><span class="n">genes_DE</span><span class="p">)</span>
-<span class="c1"># 387   3</span>
-</code></pre></div>
-<p><div class="highlight"><pre><span></span><code><span class="c1"># GO &quot;biological process (BP)&quot; enrichment</span>
-<span class="n">ego_bp</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">enrichGO</span><span class="p">(</span><span class="n">gene</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="nf">as.character</span><span class="p">(</span><span class="nf">unique</span><span class="p">(</span><span class="n">genes_DE</span><span class="o">$</span><span class="n">ENTREZID</span><span class="p">)),</span>
-<span class="w">                   </span><span class="n">universe</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="nf">as.character</span><span class="p">(</span><span class="nf">unique</span><span class="p">(</span><span class="n">genes_universe</span><span class="o">$</span><span class="n">ENTREZID</span><span class="p">)),</span>
-<span class="w">                   </span><span class="n">OrgDb</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="n">org.Mm.eg.db</span><span class="p">,</span>
-<span class="w">                   </span><span class="n">ont</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;BP&quot;</span><span class="p">,</span>
-<span class="w">                   </span><span class="n">pAdjustMethod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;BH&quot;</span><span class="p">,</span>
-<span class="w">                   </span><span class="n">pvalueCutoff</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="m">0.01</span><span class="p">,</span>
-<span class="w">                   </span><span class="n">qvalueCutoff</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="m">0.05</span><span class="p">,</span>
-<span class="w">                   </span><span class="n">readable</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span>
-<span class="nf">head</span><span class="p">(</span><span class="n">ego_bp</span><span class="p">)</span>
-<span class="nf">dotplot</span><span class="p">(</span><span class="n">ego_bp</span><span class="p">,</span><span class="w"> </span><span class="n">showCategory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">20</span><span class="p">)</span>
-<span class="c1"># sample plot, but with adjusted p-value as x-axis</span>
-<span class="c1">#dotplot(ego_bp, x = &quot;p.adjust&quot;, showCategory = 20)</span>
-</code></pre></div>
-<img alt="GOenrich" src="../../assets/images/DESeq2/GO_enrich.png" /></p>
-<p><div class="highlight"><pre><span></span><code><span class="c1"># Reactome pathways enrichment</span>
-<span class="n">reactome.enrich</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">enrichPathway</span><span class="p">(</span><span class="n">gene</span><span class="o">=</span><span class="nf">as.character</span><span class="p">(</span><span class="nf">unique</span><span class="p">(</span><span class="n">genes_DE</span><span class="o">$</span><span class="n">ENTREZID</span><span class="p">)),</span>
-<span class="w">                                 </span><span class="n">organism</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;mouse&quot;</span><span class="p">,</span>
-<span class="w">                                 </span><span class="n">pAdjustMethod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;BH&quot;</span><span class="p">,</span>
-<span class="w">                                 </span><span class="n">qvalueCutoff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.01</span><span class="p">,</span>
-<span class="w">                                 </span><span class="n">readable</span><span class="o">=</span><span class="bp">T</span><span class="p">,</span>
-<span class="w">                                 </span><span class="n">universe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">genes_universe</span><span class="o">$</span><span class="n">ENTREZID</span><span class="p">)</span>
-
-
-<span class="nf">dotplot</span><span class="p">(</span><span class="n">reactome.enrich</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;p.adjust&quot;</span><span class="p">)</span>
-</code></pre></div>
-<img alt="Reactomeenrich" src="../../assets/images/DESeq2/Reactome_enrich.png" /></p>
+```R
+genes_universe &lt;- bitr(rownames(res), fromType = &ldquo;ENSEMBL&rdquo;,
+                       toType = c(&ldquo;ENTREZID&rdquo;, &ldquo;SYMBOL&rdquo;),
+                       OrgDb = &ldquo;org.Mm.eg.db&rdquo;)</p>
+<p>head( genes_universe )</p>
+<h1 id="ensembl-entrezid-symbol">ENSEMBL ENTREZID  SYMBOL</h1>
+<h1 id="2-ensmusg00000033845-27395-mrpl15">2 ENSMUSG00000033845    27395  Mrpl15</h1>
+<h1 id="4-ensmusg00000025903-18777-lypla1">4 ENSMUSG00000025903    18777  Lypla1</h1>
+<h1 id="5-ensmusg00000033813-21399-tcea1">5 ENSMUSG00000033813    21399   Tcea1</h1>
+<h1 id="7-ensmusg00000002459-58175-rgs20">7 ENSMUSG00000002459    58175   Rgs20</h1>
+<h1 id="8-ensmusg00000033793-108664-atp6v1h">8 ENSMUSG00000033793   108664 Atp6v1h</h1>
+<h1 id="9-ensmusg00000025907-12421-rb1cc1">9 ENSMUSG00000025907    12421  Rb1cc1</h1>
 </details>
+<p>dim(genes_universe)
+  # 15443     3</p>
+<p>length(rownames(res))
+  # 18012
+    <div class="highlight"><pre><span></span><code>```R
+genes_DE &lt;- bitr(rownames(res)[which( res$sig==T )], fromType = &quot;ENSEMBL&quot;,
+                 toType = c(&quot;ENTREZID&quot;, &quot;SYMBOL&quot;),
+                 OrgDb = &quot;org.Mm.eg.db&quot;)
+dim(genes_DE)
+# 382   3
+</code></pre></div></p>
+<div class="codehilite"><pre><span></span><code>```R
+# GO &quot;biological process (BP)&quot; enrichment
+ego_bp &lt;- enrichGO(gene          = as.character(unique(genes_DE$ENTREZID)),
+                   universe      = as.character(unique(genes_universe$ENTREZID)),
+                   OrgDb         = org.Mm.eg.db,
+                   ont           = &quot;BP&quot;,
+                   pAdjustMethod = &quot;BH&quot;,
+                   pvalueCutoff  = 0.01,
+                   qvalueCutoff  = 0.05,
+                   readable      = TRUE)
+</code></pre></div>
+
+<p># couple of minutes to run</p>
+<div class="codehilite"><pre><span></span><code>head(ego_bp)
+dotplot(ego_bp, showCategory = 20)
+# sample plot, but with adjusted p-value as x-axis
+#dotplot(ego_bp, x = &quot;p.adjust&quot;, showCategory = 20)
+```
+![GOenrich](../assets/images/DESeq2/GO_enrich.png)
+
+
+```R
+# Reactome pathways enrichment
+reactome.enrich &lt;- enrichPathway(gene=as.character(unique(genes_DE$ENTREZID)),
+                                 organism = &quot;mouse&quot;,
+                                 pAdjustMethod = &quot;BH&quot;,
+                                 qvalueCutoff = 0.01,
+                                 readable=T,
+                                 universe = genes_universe$ENTREZID)
+</code></pre></div>
+
+<p># &lt;1 minute to run</p>
+<div class="codehilite"><pre><span></span><code>dotplot(reactome.enrich, x = &quot;p.adjust&quot;)
+```
+![Reactomeenrich](../assets/images/DESeq2/Reactome_enrich.png)
+</code></pre></div>
 
 
 

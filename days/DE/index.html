@@ -791,6 +791,7 @@
 <p><a :=":" class="md-button" href="../../assets/pdf/RNA-Seq_06_DE.pdf" target="_blank"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M0 64C0 28.7 28.7 0 64 0h160v128c0 17.7 14.3 32 32 32h128v144H176c-35.3 0-64 28.7-64 64v144H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0l128 128zM176 352h32c30.9 0 56 25.1 56 56s-25.1 56-56 56h-16v32c0 8.8-7.2 16-16 16s-16-7.2-16-16V368c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24h-16v48h16zm96-80h32c26.5 0 48 21.5 48 48v64c0 26.5-21.5 48-48 48h-32c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16v-64c0-8.8-7.2-16-16-16h-16v96h16zm80-112c0-8.8 7.2-16 16-16h48c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32v32h32c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32v48c0 8.8-7.2 16-16 16s-16-7.2-16-16V368z"/></svg></span> Download the presentation</a></p>
 <p><a href="https://www.rstudio.com/">Rstudio website</a></p>
 <!-- Suggestion: RStudio reminders ??? Or link to some course or something? -->
+<!-- Perhaps this one? https://www.datacamp.com/tutorial/r-studio-tutorial -->
 
 <p><a :=":" class="md-button" href="https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf" target="_blank">edgeR user&rsquo;s guide</a></p>
 <p><a :=":" class="md-button" href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html" target="_blank">DESeq2 vignette</a></p>
@@ -800,7 +801,7 @@
 <p>This step is intended only for users who attend the course with a teacher. Otherwise you will have to rely on your own installation of Rstudio.</p>
 </div>
 <p>The analysis of the read count data will be done on an RStudio instance, using the R language and some relevant <a href="http://bioconductor.org/">Bioconductor</a> libraries.</p>
-<p>As you start your session on the RStudio server, please make sure that you know where your data is situated with respect to your <strong>working directory</strong> (use <code>getwd()</code> and <code>setwd()</code> to respectively : know what your working is, and change it as necessary).</p>
+<p>As you start your session on the RStudio server, please make sure that you know where your data is situated with respect to your <strong>working directory</strong> (use <code>getwd()</code> and <code>setwd()</code> to respectively : know what your working directory is, and change it as necessary).</p>
 <h2 id="differential-expression-inference">Differential Expression Inference</h2>
 <p>Let&rsquo;s analyze the <code>mouseMT</code> toy dataset.</p>
 <details class="note">
@@ -986,7 +987,7 @@ fitting model and testing
 <p>For the Ruhland2016 dataset it looks like:</p>
 <p><img alt="dispersion estimate Ruhland2016" src="../../assets/images/DESeq2/ruhland2016_dispEst.png" /></p>
 <p>This plot is not easy to interpret. It represents the amount of dispersion at different levels of expression. It is directly linked to our ability to detect differential expression.</p>
-<p>Here it looks about normal compared to typical bulk RNA-seq experiments : the dispersion is comparatively larger for lowly expressed genes.</p>
+<p>Here it looks about normal compared to typical bulk RNA-seq experiments : the dispersion is comparatively larger for lowly-expressed genes.</p>
 <p><div class="highlight"><pre><span></span><code><span class="c1"># extracting results for the treatment versus control contrast</span>
 <span class="n">res</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">results</span><span class="p">(</span><span class="n">dds.f</span><span class="p">)</span>
 <span class="nf">summary</span><span class="p">(</span><span class="w"> </span><span class="n">res</span><span class="w"> </span><span class="p">)</span>
@@ -1104,7 +1105,7 @@ ENSMUSG00000064341  4046    4098    4031    1   449 515 13  456
 </code></pre></div></p>
 <h2 id="experimental-design">experimental design</h2>
 <blockquote>
-<p>note: levels let&rsquo;s us define the reference levels</p>
+<p>note: levels lets us define the reference levels</p>
 </blockquote>
 <p><div class="highlight"><pre><span></span><code><span class="n">treatment</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="m">4</span><span class="p">)),</span><span class="w"> </span><span class="n">levels</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
 <span class="nf">names</span><span class="p">(</span><span class="n">treatment</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">colnames</span><span class="p">(</span><span class="n">raw_counts</span><span class="p">)</span>
@@ -1234,7 +1235,7 @@ b4  b       13687       1.0675095
 <span class="nf">plotBCV</span><span class="p">(</span><span class="n">dge.f</span><span class="p">)</span>
 </code></pre></div>
 <img alt="mouseMT BCV" src="../../assets/images/edgeR_mouseMT/mouseMT_BCV.png" /></p>
-<p>There is so few genes that this does not look super nice here.</p>
+<p>There are so few genes that this does not look super nice here.</p>
 <p>Here is how it looks like on the Ruhland2016 data:</p>
 <p><img alt="bcv" src="../../assets/images/edgeR/BCV.png" /></p>
 <p>This plot is not easy to interpret. It represents the amount of biological variation at different levels of expression. It is directly linked to our ability to detect differential expression.</p>
@@ -1322,7 +1323,7 @@ Up       1
 </div>
 <h2 id="differential-expression-task">Differential Expression - Task</h2>
 <p>Use either edgeR or DESeq2 to conduct a differential expression analysis.</p>
-<p>You may play with either of the following dataset:</p>
+<p>You may play with either of the following datasets:</p>
 <ul>
 <li>Ruhland2016<ul>
 <li>simple 1 factor design</li>
@@ -1337,8 +1338,8 @@ Up       1
 </ul>
 </li>
 <li><a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0009317">Tuch 2010</a> dataset<ul>
-<li>2 factors design : 3 patients (8, 33, and 51) had each 1 sample from tumor tissue (T) and normal tissue (N) sequenced. </li>
-<li>the goal is to find the difference between tumor and normal while taking the patient variable into account.</li>
+<li>2 factors design : 3 patients (8, 33, and 51) each had 1 sample from tumor tissue (T) and normal tissue (N) sequenced. </li>
+<li>the goal is to find the difference between tumor and normal while taking the patient into account.</li>
 <li><code>/shared/data/Solutions/Tuch2010/Tuch_et_al_2010_counts.csv</code></li>
 <li><a :=":" class="md-button" href="../../assets/txt/Tuch_et_al_2010_counts.csv" target="_blank"> <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M0 64C0 28.7 28.7 0 64 0h160v128c0 17.7 14.3 32 32 32h128v288c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0l128 128z"/></svg></span> Tuch 2010 count matrix</a></li>
 </ul>
@@ -1350,7 +1351,7 @@ Up       1
 <li>Generally, users find the syntax and workflow of DESeq2 easier for getting started.</li>
 <li>If you have the time, conduct a differential expression analysis using both DESeq2 and edgeR.</li>
 <li>
-<p>Follow the vignettes/user&rsquo;s guide! They are the most up-to-date and generally contain everything a newcomer might need, including worked-out examples.</p>
+<p>Follow the vignettes/user&rsquo;s guide! They are the most up-to-date documents, and generally contain everything a newcomer might need, including worked-out examples.</p>
 </li>
 <li>
 <p>when dealing with more than one factor, you will need a <strong>model matrix</strong> to specify the experimental design to the library, and to craft your <strong>contrasts</strong> of interest. The <a href="https://csoneson.github.io/ExploreModelMatrix/index.html">ExploreModelMatrix</a> package may help you a lot in that regard.</p>
@@ -1648,7 +1649,7 @@ Up       210
 </code></pre></div>
 <p><img alt="edgeR_compareTests" src="../../assets/images/edgeR/exact_QL_comparison.png" /></p>
 <p>The logFC are highly correlated.
-FDRs show less correlation but their <strong>rank</strong> are higly correlated : they come in a very similar order.</p>
+FDRs show less correlation but their <strong>ranks</strong> are highly correlated : they come in a very similar order.</p>
 </details>
 <h3 id="tuch-2010-edger-correction">Tuch 2010 - EdgeR correction</h3>
 <p>We refer you here to section 4.1 of <a href="https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf">edgeR&rsquo;s vignette</a>.</p>
