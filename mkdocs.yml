@@ -11,9 +11,9 @@ nav:
         - Server login + unix fresh up : days/server_login.md
         - Quality control : days/quality_control.md
         - Sequence trimming : days/trimming.md
-        - Reads mapping : days/mapping.md
 
     - Day2 :
+        - Reads mapping : days/mapping.md
         - Differential Expression Inference : days/DE.md
         - Enrichment analysis : days/enrichment.md
 
