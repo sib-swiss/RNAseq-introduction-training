@@ -358,20 +358,6 @@
 
             
           
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../mapping/" class="md-nav__link">
-        Reads mapping
-      </a>
-    </li>
-  
-
-            
-          
         </ul>
       </nav>
     </li>
@@ -408,6 +394,20 @@
           Day2
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mapping/" class="md-nav__link">
+        Reads mapping
+      </a>
+    </li>
+  
+
+            
           
             
               
@@ -466,13 +466,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#reading" class="md-nav__link">
-    reading
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#setting-up-the-experimental-design" class="md-nav__link">
     setting up the experimental design
   </a>
@@ -496,13 +489,6 @@
         <li class="md-nav__item">
   <a href="#saving-results-to-file" class="md-nav__link">
     saving results to file
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#reading_1" class="md-nav__link">
-    reading
   </a>
   
 </li>
@@ -651,13 +637,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#reading" class="md-nav__link">
-    reading
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#setting-up-the-experimental-design" class="md-nav__link">
     setting up the experimental design
   </a>
@@ -681,13 +660,6 @@
         <li class="md-nav__item">
   <a href="#saving-results-to-file" class="md-nav__link">
     saving results to file
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#reading_1" class="md-nav__link">
-    reading
   </a>
   
 </li>
@@ -804,15 +776,8 @@
 <p>As you start your session on the RStudio server, please make sure that you know where your data is situated with respect to your <strong>working directory</strong> (use <code>getwd()</code> and <code>setwd()</code> to respectively : know what your working directory is, and change it as necessary).</p>
 <h2 id="differential-expression-inference">Differential Expression Inference</h2>
 <p>Let&rsquo;s analyze the <code>mouseMT</code> toy dataset.</p>
-<details class="note">
-<summary>DESeq2 analysis</summary>
-<div class="highlight"><pre><span></span><code><span class="nf">library</span><span class="p">(</span><span class="n">DESeq2</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">pheatmap</span><span class="p">)</span>
-</code></pre></div>
-<h2 id="reading">reading</h2>
-<p>We will use the trimmed reads</p>
-<div class="highlight"><pre><span></span><code><span class="n">folder</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/shared/data/Solutions/mouseMT/044_STAR_map_trimmed/&quot;</span>
+<p>To help you get started, here is the code to load the reads counts into R as a count matrix:</p>
+<div class="highlight"><pre><span></span><code><span class="n">folder</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/shared/data/Solutions/mouseMT/042_d_STAR_map_raw/&quot;</span>
 
 <span class="c1"># we skip the 4 first lines, which contains </span>
 <span class="c1"># N_unmapped , N_multimapping , N_noFeature , N_ambiguous   </span>
@@ -851,6 +816,12 @@ ENSMUSG00000064339  0       0       0       2   0   0   0   0
 ENSMUSG00000064340  0       0       0       0   0   0   0   0
 ENSMUSG00000064341  4046    4098    4031    1   449 515 13  456
 </code></pre></div></p>
+<details class="success">
+<summary>DESeq2 analysis</summary>
+<div class="highlight"><pre><span></span><code><span class="nf">library</span><span class="p">(</span><span class="n">DESeq2</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">pheatmap</span><span class="p">)</span>
+</code></pre></div>
 <h2 id="setting-up-the-experimental-design">setting up the experimental design</h2>
 <div class="highlight"><pre><span></span><code><span class="c1">#note: levels let&#39;s us define the reference levels</span>
 <span class="n">treatment</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="m">4</span><span class="p">)),</span><span class="w"> </span><span class="n">levels</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
@@ -1052,57 +1023,15 @@ ENSMUSG00000064358  6.026334      -0.26447858
 <img alt="heatmap plot mouseMT" src="../../assets/images/DESeq2_mouseMT/mouseMT_heatmap.png" /></p>
 <h2 id="saving-results-to-file">saving results to file</h2>
 <p>note: a CSV file can be imported into Excel
-<div class="highlight"><pre><span></span><code><span class="nf">write.csv</span><span class="p">(</span><span class="w"> </span><span class="n">res</span><span class="w"> </span><span class="p">,</span><span class="s">&#39;mouseMT.DESeq2.results.csv&#39;</span><span class="w"> </span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="nf">write.csv</span><span class="p">(</span><span class="w"> </span><span class="n">res</span><span class="w"> </span><span class="p">,</span><span class="s">&#39;051_r_mouseMT.DESeq2.results.csv&#39;</span><span class="w"> </span><span class="p">)</span>
 </code></pre></div></p>
 </details>
-<details class="note">
+<details class="success">
 <summary>edgeR analysis</summary>
 <div class="highlight"><pre><span></span><code><span class="c1"># setup</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">edgeR</span><span class="p">)</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
 </code></pre></div>
-<h2 id="reading_1">reading</h2>
-<p>We will use the trimmed reads</p>
-<p>First we try with the sample_a1:</p>
-<p><div class="highlight"><pre><span></span><code><span class="n">folder</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/shared/data/Solutions/mouseMT/044_STAR_map_trimmed/&quot;</span>
-
-<span class="c1"># we skip the 4 first lines, which contains </span>
-<span class="c1"># N_unmapped , N_multimapping , N_noFeature , N_ambiguous   </span>
-
-<span class="n">sample_a1_table</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">read.table</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="w"> </span><span class="n">folder</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sample_a1&quot;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;.ReadsPerGene.out.tab&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span>
-<span class="w">           </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">skip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="p">)</span>
-<span class="nf">head</span><span class="p">(</span><span class="w"> </span><span class="n">sample_a1_table</span><span class="w"> </span><span class="p">)</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>                    V2      V3      V4
-ENSMUSG00000064336  0       0       0   
-ENSMUSG00000064337  0       0       0   
-ENSMUSG00000064338  0       0       0   
-ENSMUSG00000064339  0       0       0   
-ENSMUSG00000064340  0       0       0   
-ENSMUSG00000064341  4046    1991    2055    
-</code></pre></div></p>
-<p>We are interested in the first columns, which contains counts for unstranded reads</p>
-<p>Let&rsquo;s use a loop to automatize the reading:</p>
-<p><div class="highlight"><pre><span></span><code><span class="n">raw_counts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="w"> </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="nf">row.names</span><span class="p">(</span><span class="n">sample_a1_table</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
-
-<span class="nf">for</span><span class="p">(</span><span class="w"> </span><span class="n">sample</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;a1&#39;</span><span class="p">,</span><span class="s">&#39;a2&#39;</span><span class="p">,</span><span class="s">&#39;a3&#39;</span><span class="p">,</span><span class="s">&#39;a4&#39;</span><span class="p">,</span><span class="s">&#39;b1&#39;</span><span class="p">,</span><span class="s">&#39;b2&#39;</span><span class="p">,</span><span class="s">&#39;b3&#39;</span><span class="p">,</span><span class="s">&#39;b4&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">){</span>
-<span class="w">  </span><span class="n">sample_table</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">read.table</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="w"> </span><span class="n">folder</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sample_&quot;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">sample</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;.ReadsPerGene.out.tab&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span>
-<span class="w">                            </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">skip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="p">)</span>
-
-<span class="w">  </span><span class="n">raw_counts</span><span class="p">[</span><span class="n">sample</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sample_table</span><span class="p">[</span><span class="w"> </span><span class="nf">row.names</span><span class="p">(</span><span class="n">raw_counts</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;V2&quot;</span><span class="w"> </span><span class="p">]</span>
-
-<span class="p">}</span>
-
-<span class="nf">head</span><span class="p">(</span><span class="w"> </span><span class="n">raw_counts</span><span class="w"> </span><span class="p">)</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>                    a1      a2      a3      a4  b1  b2  b3  b4
-ENSMUSG00000064336  0       0       0       0   0   0   0   0
-ENSMUSG00000064337  0       0       0       0   0   0   0   0
-ENSMUSG00000064338  0       0       0       0   0   0   0   0
-ENSMUSG00000064339  0       0       0       2   0   0   0   0
-ENSMUSG00000064340  0       0       0       0   0   0   0   0
-ENSMUSG00000064341  4046    4098    4031    1   449 515 13  456
-</code></pre></div></p>
 <h2 id="experimental-design">experimental design</h2>
 <blockquote>
 <p>note: levels lets us define the reference levels</p>
@@ -1292,7 +1221,7 @@ Up       1
 </code></pre></div>
 <img alt="mouseMT volcano" src="../../assets/images/edgeR_mouseMT/mouseMT_volcano.png" /></p>
 <h2 id="writing-the-table-of-results">writing the table of results</h2>
-<div class="highlight"><pre><span></span><code><span class="nf">write.csv</span><span class="p">(</span><span class="w"> </span><span class="n">allGenes</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&#39;mouseMT.edgeR.results.csv&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="nf">write.csv</span><span class="p">(</span><span class="w"> </span><span class="n">allGenes</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&#39;052_r_mouseMT.edgeR.results.csv&#39;</span><span class="p">)</span>
 </code></pre></div>
 </details>
 <div class="admonition note">

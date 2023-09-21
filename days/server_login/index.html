@@ -486,20 +486,6 @@
 
             
           
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../mapping/" class="md-nav__link">
-        Reads mapping
-      </a>
-    </li>
-  
-
-            
-          
         </ul>
       </nav>
     </li>
@@ -534,6 +520,20 @@
           Day2
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mapping/" class="md-nav__link">
+        Reads mapping
+      </a>
+    </li>
+  
+
+            
           
             
               
@@ -767,7 +767,7 @@ The job scheduler&rsquo;s role is to manage where and how to run the jobs of all
 <p>There is no cursor or &lsquo;●&rsquo; character appearing while you type your password. This is normal. Deleting characters also works invisibly.</p>
 </div>
 <p>After a few seconds, you should be logged into the <em>head node</em> and ready to begin.</p>
-<!-- Would be nice to add a screenshot? -->
+<!-- TODO : Would be nice to add a screenshot? -->
 
 <h2 id="using-command-line-on-the-cluster">Using command line on the cluster</h2>
 <p>Now that you are in the head node, it is time to get acquainted with your environment and to prepare the upcoming practicals. 
@@ -782,16 +782,13 @@ We will also use this as a short reminder about the UNIX command line.</p>
 </code></pre></div>
 <p>From then, we are going to do a little step-by-step practical to go through some of bash&rsquo;s most useful commands for this course.</p>
 <h3 id="creating-a-directory">Creating a directory</h3>
-<!-- NB: not really necessary to have a "day1" folder? We only have 2 days, and the 2nd is fully R-based now.
-Would it not make more sense just to have one folder per dataset? -->
-
 <div class="admonition example">
 <p class="admonition-title">practical</p>
-<p>Use the command line to create a repository called <code>day1</code> where you will put all materials relating to this first day.</p>
+<p>Use the command line to create a repository called <code>mouseMT</code> where you will put all materials relating to the analysis of the mouseMT dataset.</p>
 </div>
 <details class="success">
 <summary>Answer</summary>
-<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>day1
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>mouseMT
 </code></pre></div>
 </details>
 <div class="admonition example">
@@ -800,7 +797,7 @@ Would it not make more sense just to have one folder per dataset? -->
 </div>
 <details class="success">
 <summary>Answer</summary>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>day1
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>mouseMT
 </code></pre></div>
 </details>
 <p>The directory <code>/shared/data/</code> contains data and solutions for most practicals. </p>
@@ -819,28 +816,28 @@ Would it not make more sense just to have one folder per dataset? -->
 </div>
 <div class="admonition example">
 <p class="admonition-title">practical</p>
-<p>Copy the script <code>010_fastqc.sh</code> from  <code>/shared/data/Solutions/mouseMT</code> into your current directory,
+<p>Copy the script <code>010_s_fastqc.sh</code> from  <code>/shared/data/Solutions/mouseMT</code> into your current directory,
 and then print the content of this script to the screen.</p>
 </div>
 <details class="success">
 <summary>Answer</summary>
-<p><div class="highlight"><pre><span></span><code>cp<span class="w"> </span>/shared/data/Solutions/mouseMT/010_fastqc.sh<span class="w"> </span>.
-more<span class="w"> </span>010_fastqc.sh
+<p><div class="highlight"><pre><span></span><code>cp<span class="w"> </span>/shared/data/Solutions/mouseMT/010_s_fastqc.sh<span class="w"> </span>.
+more<span class="w"> </span>010_s_fastqc.sh
 </code></pre></div>
 output:
 <div class="highlight"><pre><span></span><code>#!/usr/bin/bash
-#SBATCH --job-name=fastqc
+#SBATCH --job-name=fastqc_mouseMT
 #SBATCH --time=01:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=1G
-#SBATCH -o fastqc_mouseMT.o
+#SBATCH -o 010_l_fastqc_mouseMT.o
 
 ml fastqc
 
 # creating the output folder
-mkdir -p 010_fastqc/
+mkdir -p 010_d_fastqc/
 
-fastqc -o 010_fastqc /shared/data/DATA/mouseMT/*.fastq
+fastqc -o 010_d_fastqc /shared/data/DATA/mouseMT/*.fastq
 </code></pre></div></p>
 </details>
 <p>We&rsquo;ll see what all this means soon.</p>
@@ -894,6 +891,12 @@ fastqc -o 010_fastqc /shared/data/DATA/mouseMT/*.fastq
 <div class="admonition example">
 <p class="admonition-title">practical</p>
 <p>Create a text file on your local computer (using wordpad on windows, Text Edit on Mac, or gedit on linux). Save that file, and then send it to the distant server.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>For <strong>Windows users</strong>, if you edit files on your computer before sending them to the server, you will likely see strange character at the end of the file lines.</p>
+<p>This is because Windows ends line with &ldquo;\r\n&rdquo; while Unix uses just &ldquo;\n&rdquo;. This can be solved using the <code>dos2unix</code> command line tool:</p>
+<p><code>dos2unix &lt;filename&gt;</code></p>
 </div>
 <h2 id="bash-scripts">bash scripts</h2>
 <p>So far we have been executing bash commands in the interactive shell.
