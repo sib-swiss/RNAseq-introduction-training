@@ -50,7 +50,7 @@ folder  = "/shared/data/Solutions/mouseMT/042_d_STAR_map_raw/"
 sample_a1_table = read.table(paste0( folder , "sample_a1" , ".ReadsPerGene.out.tab") , 
            row.names = 1 , skip = 4 )
 head( sample_a1_table )
-	```
+```
 
 ```
 					V2		V3		V4
@@ -374,7 +374,7 @@ ENSMUSG00000064341	4046	4098	4031	1	449	515	13	456
 	write.csv( res ,'051_r_mouseMT.DESeq2.results.csv' )
 	```
 
-??? note "edgeR analysis"
+??? success "edgeR analysis"
 
 	
 	```r
