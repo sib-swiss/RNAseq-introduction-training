@@ -65,12 +65,14 @@ The proposed correction will concern these.
 	```
 	
 	Translating gene ENSEMBL names to their entrezID (this is what clusterProfiler uses), as well as Symbol (named used by most biologist).
+
 	```R
 	genes_universe <- bitr(rownames(res), fromType = "ENSEMBL",
 	                       toType = c("ENTREZID", "SYMBOL"),
 	                       OrgDb = "org.Mm.eg.db")
 	
 	head( genes_universe )
+	
 	#ENSEMBL ENTREZID  SYMBOL
 	#2 ENSMUSG00000033845    27395  Mrpl15
 	#4 ENSMUSG00000025903    18777  Lypla1
@@ -79,11 +81,11 @@ The proposed correction will concern these.
 	#8 ENSMUSG00000033793   108664 Atp6v1h
 	#9 ENSMUSG00000025907    12421  Rb1cc1
 	
-  dim(genes_universe)
-  # 15443     3
+	dim(genes_universe)
+	# 15443     3
 
-  length(rownames(res))
-  # 18012
+	length(rownames(res))
+	# 18012
 	```
 	
 	```R
@@ -104,7 +106,7 @@ The proposed correction will concern these.
 	                   pvalueCutoff  = 0.01,
 	                   qvalueCutoff  = 0.05,
 	                   readable      = TRUE)
-  # couple of minutes to run
+	# couple of minutes to run
   
 	head(ego_bp)
 	dotplot(ego_bp, showCategory = 20)
@@ -122,7 +124,7 @@ The proposed correction will concern these.
 	                                 qvalueCutoff = 0.01,
 	                                 readable=T,
 	                                 universe = genes_universe$ENTREZID)
-  # <1 minute to run
+	# <1 minute to run
 	
 	
 	dotplot(reactome.enrich, x = "p.adjust")
