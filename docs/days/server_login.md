@@ -77,7 +77,7 @@ When prompted for your password, type it and press Enter.
 
 After a few seconds, you should be logged into the *head node* and ready to begin.
 
-<!-- Would be nice to add a screenshot? -->
+<!-- TODO : Would be nice to add a screenshot? -->
 
 
 ## Using command line on the cluster
@@ -107,16 +107,15 @@ From then, we are going to do a little step-by-step practical to go through some
 
 ### Creating a directory
 
-<!-- NB: not really necessary to have a "day1" folder? We only have 2 days, and the 2nd is fully R-based now.
-Would it not make more sense just to have one folder per dataset? -->
+
 
 !!! example "practical"
 
-    Use the command line to create a repository called `day1` where you will put all materials relating to this first day.
+    Use the command line to create a repository called `mouseMT` where you will put all materials relating to the analysis of the mouseMT dataset.
 
 ??? success "Answer"
     ```sh
-    mkdir day1
+    mkdir mouseMT
     ```
 
 !!! example "practical"
@@ -125,7 +124,7 @@ Would it not make more sense just to have one folder per dataset? -->
 
 ??? success "Answer"
     ```sh
-    cd day1
+    cd mouseMT
     ```
 
 The directory `/shared/data/` contains data and solutions for most practicals. 
@@ -145,29 +144,29 @@ The directory `/shared/data/` contains data and solutions for most practicals.
 
 !!! example "practical"
 
-    Copy the script `010_fastqc.sh` from  `/shared/data/Solutions/mouseMT` into your current directory,
+    Copy the script `010_s_fastqc.sh` from  `/shared/data/Solutions/mouseMT` into your current directory,
     and then print the content of this script to the screen.
 
 ??? success "Answer"
     ```sh
-    cp /shared/data/Solutions/mouseMT/010_fastqc.sh .
-    more 010_fastqc.sh
+    cp /shared/data/Solutions/mouseMT/010_s_fastqc.sh .
+    more 010_s_fastqc.sh
     ```
     output:
     ```
     #!/usr/bin/bash
-    #SBATCH --job-name=fastqc
+    #SBATCH --job-name=fastqc_mouseMT
     #SBATCH --time=01:00:00
     #SBATCH --cpus-per-task=1
     #SBATCH --mem=1G
-    #SBATCH -o fastqc_mouseMT.o
+    #SBATCH -o 010_l_fastqc_mouseMT.o
     
     ml fastqc
     
     # creating the output folder
-    mkdir -p 010_fastqc/
+    mkdir -p 010_d_fastqc/
     
-    fastqc -o 010_fastqc /shared/data/DATA/mouseMT/*.fastq
+    fastqc -o 010_d_fastqc /shared/data/DATA/mouseMT/*.fastq
     ```
 
 We'll see what all this means soon.
@@ -250,8 +249,15 @@ There exists several alternatives, depending on your platform and preferences.
     Create a text file on your local computer (using wordpad on windows, Text Edit on Mac, or gedit on linux). Save that file, and then send it to the distant server.
 
 
+!!! Warning
 
+    For **Windows users**, if you edit files on your computer before sending them to the server, you will likely see strange character at the end of the file lines.
 
+    This is because Windows ends line with "\r\n" while Unix uses just "\n". This can be solved using the `dos2unix` command line tool:
+
+    `dos2unix <filename>`
+
+ 
 ## bash scripts
 
 So far we have been executing bash commands in the interactive shell.

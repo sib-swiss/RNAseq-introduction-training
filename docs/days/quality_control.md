@@ -76,28 +76,42 @@ mkdir mouseMT
 cd mouseMT
 ```
 
-Then, create here a new text file name `010_fastqc.sh` (with `nano`, or on your local computer ), and paste the following content in it:
+Then, create here a new text file name `010_s_fastqc.sh` (with `nano`, or on your local computer ), and paste the following content in it:
+
+!!! note
+
+    A note on our choice of naming conventions. Each step is numbered: 010 for fastqc, 020 for mulqc, 030 fro trimming,...
+
+    Sub-steps are then denoted for example 040 is mapping, and so 041 for indexing, 042 for mapping, 043 for QC of the mapping,...
+
+    The number is followed by a caracter which depends on the type of file/folder:
+
+     * `s` : script containing the bash commands
+     * `l` : logs of the scripts, documenting the software messages
+     * `d` : directory containing the results
+     * `r` : result file (when they are note in a specific directory)
+
 
 ```sh
 #!/usr/bin/bash
-#SBATCH --job-name=fastqc
+#SBATCH --job-name=fastqc_mouseMT
 #SBATCH --time=01:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=1G
-#SBATCH -o fastqc_mouseMT.o
+#SBATCH -o 010_l_fastqc_mouseMT.o
 
 ml fastqc
 
 # creating the output folder
-mkdir -p 010_fastqc/
+mkdir -p 010_d_fastqc/
 
-fastqc -o 010_fastqc /shared/data/DATA/mouseMT/*.fastq
+fastqc -o 010_d_fastqc /shared/data/DATA/mouseMT/*.fastq
 ```
 
 Save it, and then submit it to the cluster:
 
 ```sh
-sbatch 010_fastqc.sh
+sbatch 010_s_fastqc.sh
 ```
 
 Monitor it with `squeue`. It should take around 15 to 30 seconds in total.
@@ -109,7 +123,7 @@ Check that all analysis were complete and that there were no error.
 You can also check that the `010_fastqc/` folder contains several html files:
 
 ```sh
-ls 010_fastqc/
+ls 010_d_fastqc/
 ```
 
 output:
@@ -123,7 +137,7 @@ Unfortunately, we cannot consult the html files content directly on the cluster.
 We will look at one of these html report on the toy dataset, and one of the pre-computed report from one of our other datasets.
 
  * repatriate one of the html report of the mouseMT dataset to your local computer, as well as the one you can find in:
-`/shared/data/Solutions/Liu2015/010_fastqc/SRR3180538_TAM1_1_fastqc.html`
+`/shared/data/Solutions/Liu2015/010_d_fastqc/SRR3180538_TAM1_1_fastqc.html`
  * Look at these two QC reports in a web browser. What are your conclusions ? Would you want to perform some operations on the reads, such as low-quality bases trimming, removal of adapters ?
 
 !!! note "Reminder"
@@ -154,49 +168,49 @@ We will look at one of these html report on the toy dataset, and one of the pre-
 
 	```sh
 	#!/usr/bin/bash
-	#SBATCH --job-name=fastqc
+	#SBATCH --job-name=fastqc_liu2015
 	#SBATCH --time=01:00:00
 	#SBATCH --cpus-per-task=1
 	#SBATCH --mem=1G
-	#SBATCH -o fastqc_Liu2015.o
+	#SBATCH -o 010_l_fastqc_Liu2015.o
 
 	ml fastqc
 
 	# creating the output folder
-	mkdir -p 010_fastqc/
+	mkdir -p 010_d_fastqc/
 
-	fastqc -o 010_fastqc /shared/data/DATA/Liu2015/*.fastq.gz
+	fastqc -o 010_d_fastqc /shared/data/DATA/Liu2015/*.fastq.gz
 	```
 
-	on the cluster, this script is also in `/shared/data/Solutions/Liu2015/010_fastqc.sh`
+	on the cluster, this script is also in `/shared/data/Solutions/Liu2015/010_s_fastqc.sh`
 
 
-  This script runs fastqc on each of the .fastq.gz files, sequentially.
+	This script runs fastqc on each of the .fastq.gz files, sequentially.
 	Note that alternatively, you could have one sbatch script per sample.
 	On a simple and relatively fast task such as this one, it is not too problematic.
 	However, on more computationally-intensive tasks such as mapping, treating each file in separate script is better, because you can submit all scripts at once, and they will then run in parallel, whereas if they are all treated in the same script like here, the samples would be handled sequentially and the overall job would take much longer to finish.
 
-	**NB:** BUT, the actual recommended approach is to use SLURM arrays, which let you have a single script, but have different jobs execute in parallel. Below, we show how to do this.
+	**BUT**, the actual recommended approach is to use SLURM arrays, which let you have a single script, but have different jobs execute in parallel. Below, we show how to do this.
 
 
 ??? success "Ruhland2016 FastQC sbatch script"
 
 	```sh
 	#!/usr/bin/bash
-	#SBATCH --job-name=fastqc
+	#SBATCH --job-name=fastqc_Ruhland2016
 	#SBATCH --time=00:30:00
 	#SBATCH --cpus-per-task=1
 	#SBATCH --mem=1G
-	#SBATCH -o fastqc_Ruhland2016.o
+	#SBATCH -o 010_l_fastqc_Ruhland2016.o
 
 	ml fastqc
 
-	mkdir -p 010_fastqc/
+	mkdir -p 010_d_fastqc/
 
-	fastqc -o 010_fastqc /shared/data/DATA/Ruhland2016/*.fastq.gz
+	fastqc -o 010_d_fastqc /shared/data/DATA/Ruhland2016/*.fastq.gz
 	```
 
-	on the cluster, this script is also in `/shared/data/Solutions/Ruhland2016/010_fastqc.sh`
+	on the cluster, this script is also in `/shared/data/Solutions/Ruhland2016/010_s_fastqc.sh`
 
 
 ??? success "Alternative sbatch script using array job"
@@ -218,12 +232,12 @@ We will look at one of these html report on the toy dataset, and one of the pre-
 
 	```sh
 	#!/usr/bin/bash
-	#SBATCH --job-name=fastqc
+	#SBATCH --job-name=fastqc_array_Ruhland2016
 	#SBATCH --time=00:30:00
 	#SBATCH --cpus-per-task=1
 	#SBATCH --mem=1G
-	#SBATCH -o fastqc_Ruhland2016.%a.o
-	#SBATCH -e fastqc_Ruhland2016.%a.e
+	#SBATCH -o 010_l_fastqc_Ruhland2016.%a.o
+	#SBATCH -e 010_l_fastqc_Ruhland2016.%a.e
 	#SBATCH --array 1-6%6
 
 	ml fastqc
@@ -235,8 +249,8 @@ We will look at one of these html report on the toy dataset, and one of the pre-
 	## retrieving 1 filename from Ruhland2016.fastqFiles.txt
 	fastqFILE=`sed -n ${SLURM_ARRAY_TASK_ID}p $sourceFILE`
 	
-	mkdir -p 010_fastqc/
-	fastqc -o 010_fastqc/ $dataDir/$fastqFILE
+	mkdir -p 010_d_fastqc/
+	fastqc -o 010_d_fastqc/ $dataDir/$fastqFILE
 	```
 
 	When submitted with `sbatch`, this script will spawn 6 tasks in parallel, each with a different value of `${SLURM_ARRAY_TASK_ID}`.
@@ -252,9 +266,9 @@ We will look at one of these html report on the toy dataset, and one of the pre-
 
 	Pre-computed reports can be found in :
 
-	 * `/shared/data/Solutions/Ruhland2016/010_fastqc/`
-	 * `/shared/data/Solutions/Liu2015/010_fastqc/`
-	 * `/shared/data/Solutions/mouseMT/010_fastqc/`
+	 * `/shared/data/Solutions/Ruhland2016/010_d_fastqc/`
+	 * `/shared/data/Solutions/Liu2015/010_d_fastqc/`
+	 * `/shared/data/Solutions/mouseMT/010_d_fastqc/`
 
 
 ## MultiQC : grouping multiple reports
@@ -286,8 +300,8 @@ There are many additional parameters which let you customize your report. Use `m
 
  	 To follow the naming convention we started with, you can use the following names:
 
-     * sbatch script: `020_multiqc.sh` 
-     * output report: `020_multiqc_mouseMT.html`
+     * sbatch script: `020_s_multiqc.sh` 
+     * output report: `020_r_multiqc_mouseMT.html`
 
  - Look at the generated html report. What are your conclusions ?
 
@@ -302,15 +316,15 @@ There are many additional parameters which let you customize your report. Use `m
 
 	```sh
 	#!/usr/bin/bash
-	#SBATCH --job-name=multiqc
+	#SBATCH --job-name=multiqc_mouseMT
 	#SBATCH --time=00:30:00
 	#SBATCH --cpus-per-task=1
 	#SBATCH --mem=1G
-	#SBATCH -o multiqc_mouseMT.o
+	#SBATCH -o 020_l_multiqc_mouseMT.o
 	
-	multiqc -n 020_multiqc_mouseMT.html -f --title raw_fastq 010_fastqc/
+	multiqc -n 020_r_multiqc_mouseMT.html -f --title raw_fastq 010_d_fastqc/
 	```
-	On the cluster, this script is also in `/shared/data/Solutions/mouseMT/020_multiqc.sh`
+	On the cluster, this script is also in `/shared/data/Solutions/mouseMT/020_s_multiqc.sh`
 
 	[:fontawesome-solid-file-pdf: Download the results of this script](../assets/html/020_multiqc_mouseMT.html){ .md-button}
 
@@ -397,7 +411,7 @@ There are many additional parameters which let you customize your report. Use `m
 
 Write and execute sbatch scripts to run a MultiQC for the Liu2015 and the Ruhland2016 datasets.
 
-<!-- For some reason these 2 solutions are formatted differently? -->
+
 ??? success "MultiQC sbatch script for Ruhland2016"
 
 	This script fetches the report from the `Solutions/` folder.
@@ -410,14 +424,14 @@ Write and execute sbatch scripts to run a MultiQC for the Liu2015 and the Ruhlan
 	#SBATCH --time=00:30:00
 	#SBATCH --cpus-per-task=1
 	#SBATCH --mem=1G
-	#SBATCH -o multiqc_Ruhland2016.o
+	#SBATCH -o 020_l_multiqc_Ruhland2016.o
 	
-	multiqc -f 020_multiqc_Ruhland2016.html /shared/data/Solutions/Ruhland2016/010_fastqc/
+	multiqc -f 020_r_multiqc_Ruhland2016.html 010_d_fastqc/
 	```
-  On the cluster, this script is also in `/shared/data/Solutions/Ruhland2016/020_multiqc.sh`
+  On the cluster, this script is also in `/shared/data/Solutions/Ruhland2016/020_s_multiqc.sh`
 
 
-??? done "MultiQC sbatch script for Liu2015"
+??? success "MultiQC sbatch script for Liu2015"
 
 	This script fetches the report from the `Solutions/` folder.
 
@@ -429,12 +443,12 @@ Write and execute sbatch scripts to run a MultiQC for the Liu2015 and the Ruhlan
 	#SBATCH --time=00:30:00
 	#SBATCH --cpus-per-task=1
 	#SBATCH --mem=1G
-	#SBATCH -o multiqc_Liu2015.o
+	#SBATCH -o 020_l_multiqc_Liu2015.o
 	
-	multiqc -f 020_multiqc_Liu2015.html /shared/data/Solutions/Liu2015/010_fastqc/
+	multiqc -f 020_r_multiqc_Liu2015.html 010_d_fastqc/
 	```
 
-	On the cluster, this script is also in `/shared/data/Solutions/Liu2015/020_multiqc.sh`
+	On the cluster, this script is also in `/shared/data/Solutions/Liu2015/020_s_multiqc.sh`
 
 
 

@@ -38,64 +38,63 @@ As you start your session on the RStudio server, please make sure that you know 
 Let's analyze the `mouseMT` toy dataset.
 
 
-??? note "DESeq2 analysis"
+To help you get started, here is the code to load the reads counts into R as a count matrix:
 
+
+```r
+folder  = "/shared/data/Solutions/mouseMT/042_d_STAR_map_raw/"
+
+# we skip the 4 first lines, which contains 
+# N_unmapped , N_multimapping , N_noFeature , N_ambiguous   
+
+sample_a1_table = read.table(paste0( folder , "sample_a1" , ".ReadsPerGene.out.tab") , 
+           row.names = 1 , skip = 4 )
+head( sample_a1_table )
+	```
+
+```
+					V2		V3		V4
+ENSMUSG00000064336	0		0		0	
+ENSMUSG00000064337	0		0		0	
+ENSMUSG00000064338	0		0		0	
+ENSMUSG00000064339	0		0		0	
+ENSMUSG00000064340	0		0		0	
+ENSMUSG00000064341	4046	1991	2055	
+```
+
+We are interested in the first columns, which contains counts for unstranded reads
+
+Let's use a loop to automatize the reading:
+```r
+raw_counts = data.frame( row.names =  row.names(sample_a1_table) )
+
+for( sample in c('a1','a2','a3','a4','b1','b2','b3','b4') ){
+  sample_table = read.table(paste0( folder , "sample_" , sample , ".ReadsPerGene.out.tab") , 
+                            row.names = 1 , skip = 4 )
+  
+  raw_counts[sample] = sample_table[ row.names(raw_counts) , "V2" ]
+  
+}
+
+head( raw_counts )
+```
+```
+					a1		a2		a3		a4	b1	b2	b3	b4
+ENSMUSG00000064336	0		0		0		0	0	0	0	0
+ENSMUSG00000064337	0		0		0		0	0	0	0	0
+ENSMUSG00000064338	0		0		0		0	0	0	0	0
+ENSMUSG00000064339	0		0		0		2	0	0	0	0
+ENSMUSG00000064340	0		0		0		0	0	0	0	0
+ENSMUSG00000064341	4046	4098	4031	1	449	515	13	456
+```
+
+
+??? success "DESeq2 analysis"
 
 	```r
 	library(DESeq2)
 	library(ggplot2)
 	library(pheatmap)
-	```
-
-	## reading
-
-	We will use the trimmed reads
-
-	```r
-	folder  = "/shared/data/Solutions/mouseMT/044_STAR_map_trimmed/"
-
-	# we skip the 4 first lines, which contains 
-	# N_unmapped , N_multimapping , N_noFeature , N_ambiguous   
-
-	sample_a1_table = read.table(paste0( folder , "sample_a1" , ".ReadsPerGene.out.tab") , 
-	           row.names = 1 , skip = 4 )
-	head( sample_a1_table )
-	```
-
-	```
-						V2		V3		V4
-	ENSMUSG00000064336	0		0		0	
-	ENSMUSG00000064337	0		0		0	
-	ENSMUSG00000064338	0		0		0	
-	ENSMUSG00000064339	0		0		0	
-	ENSMUSG00000064340	0		0		0	
-	ENSMUSG00000064341	4046	1991	2055	
-	```
-
-	We are interested in the first columns, which contains counts for unstranded reads
-
-	Let's use a loop to automatize the reading:
-	```r
-	raw_counts = data.frame( row.names =  row.names(sample_a1_table) )
-
-	for( sample in c('a1','a2','a3','a4','b1','b2','b3','b4') ){
-	  sample_table = read.table(paste0( folder , "sample_" , sample , ".ReadsPerGene.out.tab") , 
-	                            row.names = 1 , skip = 4 )
-	  
-	  raw_counts[sample] = sample_table[ row.names(raw_counts) , "V2" ]
-	  
-	}
-
-	head( raw_counts )
-	```
-	```
-						a1		a2		a3		a4	b1	b2	b3	b4
-	ENSMUSG00000064336	0		0		0		0	0	0	0	0
-	ENSMUSG00000064337	0		0		0		0	0	0	0	0
-	ENSMUSG00000064338	0		0		0		0	0	0	0	0
-	ENSMUSG00000064339	0		0		0		2	0	0	0	0
-	ENSMUSG00000064340	0		0		0		0	0	0	0	0
-	ENSMUSG00000064341	4046	4098	4031	1	449	515	13	456
 	```
 
 	## setting up the experimental design
@@ -372,7 +371,7 @@ Let's analyze the `mouseMT` toy dataset.
 
 	note: a CSV file can be imported into Excel
 	```r
-	write.csv( res ,'mouseMT.DESeq2.results.csv' )
+	write.csv( res ,'051_r_mouseMT.DESeq2.results.csv' )
 	```
 
 ??? note "edgeR analysis"
@@ -382,62 +381,6 @@ Let's analyze the `mouseMT` toy dataset.
 	# setup
 	library(edgeR)
 	library(ggplot2)
-	```
-
-
-	## reading
-
-	We will use the trimmed reads
-
-	First we try with the sample_a1:
-
-	```r
-	folder  = "/shared/data/Solutions/mouseMT/044_STAR_map_trimmed/"
-
-	# we skip the 4 first lines, which contains 
-	# N_unmapped , N_multimapping , N_noFeature , N_ambiguous   
-
-	sample_a1_table = read.table(paste0( folder , "sample_a1" , ".ReadsPerGene.out.tab") , 
-	           row.names = 1 , skip = 4 )
-	head( sample_a1_table )
-	```
-	```
-						V2		V3		V4
-	ENSMUSG00000064336	0		0		0	
-	ENSMUSG00000064337	0		0		0	
-	ENSMUSG00000064338	0		0		0	
-	ENSMUSG00000064339	0		0		0	
-	ENSMUSG00000064340	0		0		0	
-	ENSMUSG00000064341	4046	1991	2055	
-	```
-
-	We are interested in the first columns, which contains counts for unstranded reads
-
-
-
-	Let's use a loop to automatize the reading:
-
-	```r
-	raw_counts = data.frame( row.names =  row.names(sample_a1_table) )
-
-	for( sample in c('a1','a2','a3','a4','b1','b2','b3','b4') ){
-	  sample_table = read.table(paste0( folder , "sample_" , sample , ".ReadsPerGene.out.tab") , 
-	                            row.names = 1 , skip = 4 )
-	  
-	  raw_counts[sample] = sample_table[ row.names(raw_counts) , "V2" ]
-	  
-	}
-
-	head( raw_counts )
-	```
-	```
-						a1		a2		a3		a4	b1	b2	b3	b4
-	ENSMUSG00000064336	0		0		0		0	0	0	0	0
-	ENSMUSG00000064337	0		0		0		0	0	0	0	0
-	ENSMUSG00000064338	0		0		0		0	0	0	0	0
-	ENSMUSG00000064339	0		0		0		2	0	0	0	0
-	ENSMUSG00000064340	0		0		0		0	0	0	0	0
-	ENSMUSG00000064341	4046	4098	4031	1	449	515	13	456
 	```
 
 
@@ -690,7 +633,7 @@ Let's analyze the `mouseMT` toy dataset.
 	## writing the table of results
 
 	```r
-	write.csv( allGenes , 'mouseMT.edgeR.results.csv')
+	write.csv( allGenes , '052_r_mouseMT.edgeR.results.csv')
 	```
 
 

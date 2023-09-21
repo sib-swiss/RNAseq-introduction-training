@@ -42,7 +42,7 @@ We will be using the Ensembl references, with their accompanying GTF annotations
 **Task :** Using STAR, build a genome index for the mouse mitochondrial chromosome.
 
  * .fasta and .gtf files are in : `/shared/data/DATA/Mouse_MT_genome/`.
- * create the index in the folder `041_STAR_mouseMT_reference`
+ * create the index in the folder `041_d_STAR_mouseMT_reference`
  * the module name for this aligner is `star`.
  * this job should require less than 4Gb and 10min to run. 
 
@@ -75,7 +75,7 @@ We will be using the Ensembl references, with their accompanying GTF annotations
 	#SBATCH --time=00:30:00
 	#SBATCH --cpus-per-task=2
 	#SBATCH --mem=3G
-	#SBATCH -o star-build.o
+	#SBATCH -o 041_l_star_index.o
 
 		
 	G_FASTA=/shared/data/DATA/Mouse_MT_genome/Mus_musculus.GRCm39.dna.chromosome.MT.fa
@@ -83,10 +83,10 @@ We will be using the Ensembl references, with their accompanying GTF annotations
 	
 	ml star
 
-	mkdir -p 041_STAR_mouseMT_reference
+	mkdir -p 041_d_STAR_mouseMT_reference
 	
 	STAR --runMode genomeGenerate \
-	     --genomeDir 041_STAR_mouseMT_reference \
+	     --genomeDir 041_d_STAR_mouseMT_reference \
 	     --genomeFastaFiles $G_FASTA \
 	     --sjdbGTFfile $G_GTF \
 	     --runThreadN 4 \
@@ -95,7 +95,7 @@ We will be using the Ensembl references, with their accompanying GTF annotations
 
 	```
 
-	It can be found on the cluster at `/shared/data/Solutions/mouseMT/041_star_index.sh`
+	It can be found on the cluster at `/shared/data/Solutions/mouseMT/041_s_star_index.sh`
 
 **Extra task :** Determine how you would add an additional feature to your reference, for example for a novel transcript not described by the standard reference.
 
@@ -117,10 +117,10 @@ We will be using the Ensembl references, with their accompanying GTF annotations
 
 **Task :** Using STAR, align the raw FASTQ files of the mouseMT dataset against the mouse mitochondrial reference you just created.
 
- * if were not able to complete the previous task, you can use the index in `/shared/data/Solutions/mouseMT/041_STAR_mouseMT_reference` .
+ * if were not able to complete the previous task, you can use the index in `/shared/data/Solutions/mouseMT/041_d_STAR_mouseMT_reference` .
  * search the STAR manual for the option to output a BAM file sorted by coordinate.
  * search the STAR manual for the option to output a geneCounts file.
- * put the results in folder `042_STAR_map_raw/` .
+ * put the results in folder `042_d_STAR_map_raw/` .
 
 
 !!! info "STAR basic parameters for mapping"
@@ -171,27 +171,27 @@ We will be using the Ensembl references, with their accompanying GTF annotations
 	#SBATCH --time=00:10:00
 	#SBATCH --cpus-per-task=2
 	#SBATCH --mem=1G
-	#SBATCH -o star-aln.raw.%a.o
+	#SBATCH -o 042_l_STAR_map_raw.%a.o
 	#SBATCH --array 1-8%8
 
 	ml star
 
-	mkdir -p 042_STAR_map_raw
+	mkdir -p 042_d_STAR_map_raw
 
 	SAMPLE=`sed -n ${SLURM_ARRAY_TASK_ID}p sampleNames.txt`
 
 	FASTQ_NAME=/shared/data/DATA/mouseMT/${SAMPLE}.fastq
 
-	STAR --runThreadN 4 --genomeDir 041_STAR_mouseMT_reference \
+	STAR --runThreadN 4 --genomeDir 041_d_STAR_mouseMT_reference \
                   --outSAMtype BAM SortedByCoordinate \
-                  --outFileNamePrefix  042_STAR_map_raw/${SAMPLE}. \
+                  --outFileNamePrefix  042_d_STAR_map_raw/${SAMPLE}. \
                   --quantMode GeneCounts \
                   --readFilesIn $FASTQ_NAME
 
 	```
-	it can also be found in the cluster at `/shared/data/Solutions/mouseMT/042_STAR_map_raw.sh`
+	it can also be found in the cluster at `/shared/data/Solutions/mouseMT/042_s_STAR_map_raw.sh`
 
-	and its results can be found at `/shared/data/Solutions/mouseMT/042_STAR_map_raw/`
+	and its results can be found at `/shared/data/Solutions/mouseMT/042_d_STAR_map_raw/`
 
 
 	The options of STAR are :
@@ -224,11 +224,11 @@ You can call MultiQC on the STAR output folder to gather a report on the individ
 	#SBATCH --time=00:30:00
 	#SBATCH --cpus-per-task=1
 	#SBATCH --mem=1G
-	#SBATCH -o multiqc-map-raw.o
+	#SBATCH -o 043_l_multiqc_map_raw.o
 	
-	multiqc -n 043_multiqc_mouseMT_mapped_raw.html -f --title mapped_raw 042_STAR_map_raw/
+	multiqc -n 043_r_multiqc_mouseMT_mapped_raw.html -f --title mapped_raw 042_d_STAR_map_raw/
 	```
-	it can also be found in the cluster at `/shared/data/Solutions/mouseMT/043_multiqc_map_raw.sh`
+	it can also be found in the cluster at `/shared/data/Solutions/mouseMT/043_s_multiqc_map_raw.sh`
 
 
 	[ Download the report ](../assets/html/043_multiqc_mouseMT_mapped_raw.html){target=_blank : .md-button }
@@ -253,37 +253,37 @@ We will spare you the mapping of the trimmed reads, and let you directly downloa
 	#SBATCH --time=00:10:00
 	#SBATCH --cpus-per-task=2
 	#SBATCH --mem=1G
-	#SBATCH -o star-aln.trimmed.%a.o
+	#SBATCH -o 044_l_STAR_map_trimmed.%a.o
 	#SBATCH --array 1-8%8
 	
 	ml star
 	
-	mkdir -p 044_STAR_map_trimmed
+	mkdir -p 044_d_STAR_map_trimmed
 	
 	SAMPLE=`sed -n ${SLURM_ARRAY_TASK_ID}p sampleNames.txt`
 	
-	FASTQ_NAME=030_trim/${SAMPLE}.trimmed.fastq
+	FASTQ_NAME=030_d_trim/${SAMPLE}.trimmed.fastq
 	
-	STAR --runThreadN 4 --genomeDir 041_STAR_mouseMT_reference \
+	STAR --runThreadN 4 --genomeDir 041_d_STAR_mouseMT_reference \
 	                 --outSAMtype BAM SortedByCoordinate \
-	                 --outFileNamePrefix  044_STAR_map_trimmed/${SAMPLE}_trimmed. \
+	                 --outFileNamePrefix  044_d_STAR_map_trimmed/${SAMPLE}_trimmed. \
 	                 --quantMode GeneCounts \
 	                 --readFilesIn $FASTQ_NAME
 	```
-	it can also be found in the cluster at `/shared/data/Solutions/mouseMT/044_STAR_map_trimmed.sh`
+	it can also be found in the cluster at `/shared/data/Solutions/mouseMT/044_s_STAR_map_trimmed.sh`
 
 
 	```sh
 	#!/usr/bin/bash
-	#SBATCH --job-name=map-multiqc
+	#SBATCH --job-name=map-trim-multiqc
 	#SBATCH --time=00:30:00
 	#SBATCH --cpus-per-task=1
 	#SBATCH --mem=1G
-	#SBATCH -o multiqc-map-trim.o
+	#SBATCH -o 045_l_multiqc_mouseMT_mapped_trimmed.o
 	
-	multiqc -n 045_multiqc_mouseMT_mapped_trimmed.html -f --title mapped_trimmed 044_STAR_map_trimmed/
+	multiqc -n 045_r_multiqc_mouseMT_mapped_trimmed.html -f --title mapped_trimmed 044_d_STAR_map_trimmed/
 	```
-	it can also be found in the cluster at `/shared/data/Solutions/mouseMT/045_multiqc_mouseMT_mapped_trimmed.sh`
+	it can also be found in the cluster at `/shared/data/Solutions/mouseMT/045_s_multiqc_mouseMT_mapped_trimmed.sh`
 
 
 ## ADDITIONAL : pseudo-aligning with salmon
@@ -309,15 +309,10 @@ We refer you to the tool's documentation in order to see [how the reference inde
 	#SBATCH --time=01:00:00
 	#SBATCH --cpus-per-task=8
 	#SBATCH --mem=30G
-	#SBATCH -o salmon_ruhland2016.%a.o
-	#SBATCH -e salmon_ruhland2016.%a.e
+	#SBATCH -o 033_l_salmon_ruhland2016.%a.o
 	#SBATCH --array 1-6%1
 
 	ml salmon
-
-	outDIR=salmon_Ruhland2016
-	
-	mkdir -p $outDIR
 	
 	dataDIR=/shared/data/DATA/Ruhland2016
 	
@@ -326,6 +321,10 @@ We refer you to the tool's documentation in order to see [how the reference inde
 	fastqFILE=`sed -n ${SLURM_ARRAY_TASK_ID}p $sourceFILE`
 
 	genomeDIR=/shared/data/DATA/Mouse_salmon_index
+
+	outDIR=033_d_salmon_Ruhland2016_${fastqFILE%.*}
+	
+	mkdir -p $outDIR
 	
 	salmon quant -i $genomeDIR -l A \
 				-r $dataDIR/$fastqFILE \
@@ -333,7 +332,7 @@ We refer you to the tool's documentation in order to see [how the reference inde
 				-o $outDIR
 				
 	```
-	it can also be found in the cluster at `/shared/data/Solutions/Ruhland2016/salmon_Ruhland2016.sh`
+	it can also be found in the cluster at `/shared/data/Solutions/Ruhland2016/033_s_salmon_Ruhland2016.sh`
 
 
 ## ADDITIONAL Mapping reads from Ruhland2016 on the reference 
@@ -364,17 +363,16 @@ We refer you to the tool's documentation in order to see [how the reference inde
 
 	```
 	#!/usr/bin/bash
-	#SBATCH --job-name=star-aln
+	#SBATCH --job-name=star-aln-Ruhland2016
 	#SBATCH --time=01:00:00
 	#SBATCH --cpus-per-task=8
 	#SBATCH --mem=30G
-	#SBATCH -o star-aln.%a.o
-	#SBATCH -e star-aln.%a.e
+	#SBATCH -o 031_l_STAR_aln_Ruhland2016.%a.o
 	#SBATCH --array 1-1%1
 
 
 	ml star
-	outDIR=STAR_Ruhland2016
+	outDIR=031_d_STAR_aln_Ruhland2016
 
 	mkdir -p $outDIR
 
@@ -393,7 +391,7 @@ We refer you to the tool's documentation in order to see [how the reference inde
                   --readFilesIn $dataDIR/$fastqFILE --readFilesCommand zcat \
 
 	```
-	it can also be found in the cluster at `/shared/data/Solutions/mouseMT/STAR_aln_Ruhland2016.sh`
+	it can also be found in the cluster at `/shared/data/Solutions/mouseMT/031_s_STAR_aln_Ruhland2016.sh`
 
 	The options of STAR are :
 
@@ -427,17 +425,16 @@ STAR <1st round options> --sjdbFileChrStartEnd sample_SJ.out.tab
 
 	```
 	#!/usr/bin/bash
-	#SBATCH --job-name=star-aln2
+	#SBATCH --job-name=star-aln2-Ruhland2016
 	#SBATCH --time=01:00:00
 	#SBATCH --cpus-per-task=8
 	#SBATCH --mem=30G
-	#SBATCH -o star-aln-2pass.%a.o
-	#SBATCH -e star-aln-2pass.%a.e
+	#SBATCH -o 032_l_STAR_2PASS_Ruhland2016.%a.o
 	#SBATCH --array 1-1%1
 
 	ml star
 
-	outDIR=STAR_Ruhland2016
+	outDIR=032_d_STAR_Ruhland2016
 	
 	mkdir -p $outDIR
 	
@@ -457,7 +454,7 @@ STAR <1st round options> --sjdbFileChrStartEnd sample_SJ.out.tab
 	                  --readFilesIn $dataDIR/$fastqFILE --readFilesCommand zcat \
 
 	```
-	it can also be found in the cluster at `/shared/data/Solutions/mouseMT/STAR_2PASS_Ruhland2016.sh`
+	it can also be found in the cluster at `/shared/data/Solutions/mouseMT/032_s_STAR_2PASS_Ruhland2016.sh`
 
 
 <!--

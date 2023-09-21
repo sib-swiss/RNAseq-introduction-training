@@ -58,8 +58,9 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
 
  * Conduct a soft trimming on the mouseMT data
 
-     - name the output folder : `030_trim/`.
-     - Adapter sequences can be found in `/shared/data/DATA/adapters/`.
+     - name the output folder : `030_d_trim/`.
+     - when you do `ml trimmomatic`, you will receive a little message which tells you how to launch the software.
+     - Adapter sequences can be found in `/shared/data/DATA/adapters/TruSeq3-PE.fa` ([adapter sequence source](https://github.com/usadellab/Trimmomatic/tree/main/adapters)).
      - unlike fastqc, you will have to launch trimmomatic for each sample separately
      - to facilitate QC afterward, add the following at the end of your trimmomatic command (substituting `<sample name>`):
 		 		`2> 030_trim/trim_out.<sample name>.log`
@@ -75,7 +76,6 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
 	java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar
 	```
 
-<!-- Should add a note on grabbing the FASTA files for the adaptor sequences? -->
 
 ??? success "trimmomatics sbatch script"
 
@@ -97,12 +97,12 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
     #SBATCH --time=01:00:00
     #SBATCH --cpus-per-task=1
     #SBATCH --mem=1G
-    #SBATCH -o trim_mouseMT.o
+    #SBATCH -o 030_l_trim_mouseMT.o
 
     ml  trimmomatic
 
     ## creating output folder, in case it does not exists
-    mkdir -p 030_trim
+    mkdir -p 030_d_trim
 
     ## we store the input folder in a variable, 
     ## to access its value, we will write $INPUT_FOLDER
@@ -112,56 +112,56 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
 
     java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar SE -phred33 \
                                              $INPUT_FOLDER/sample_a1.fastq \
-                                             030_trim/sample_a1.trimmed.fastq \
+                                             030_d_trim/sample_a1.trimmed.fastq \
                                              ILLUMINACLIP:/shared/data/DATA/adapters/TruSeq3-PE.fa:2:30:10 \
-                                             SLIDINGWINDOW:3:25 2> 030_trim/trim_out.sample_a1.log
+                                             SLIDINGWINDOW:3:25 2> 030_d_trim/030_l_trim_out.sample_a1.log
     
     java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar SE -phred33 \
                                              $INPUT_FOLDER/sample_a2.fastq \
-                                             030_trim/sample_a2.trimmed.fastq \
+                                             030_d_trim/sample_a2.trimmed.fastq \
                                              ILLUMINACLIP:/shared/data/DATA/adapters/TruSeq3-PE.fa:2:30:10 \
-                                             SLIDINGWINDOW:3:25 2> 030_trim/trim_out.sample_a2.log
+                                             SLIDINGWINDOW:3:25 2> 030_d_trim/030_l_trim_out.sample_a2.log
     
     java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar SE -phred33 \
                                              $INPUT_FOLDER/sample_a3.fastq \
-                                             030_trim/sample_a3.trimmed.fastq \
+                                             030_d_trim/sample_a3.trimmed.fastq \
                                              ILLUMINACLIP:/shared/data/DATA/adapters/TruSeq3-PE.fa:2:30:10 \
-                                             SLIDINGWINDOW:3:25 2> 030_trim/trim_out.sample_a3.log
+                                             SLIDINGWINDOW:3:25 2> 030_d_trim/030_l_trim_out.sample_a3.log
     
     java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar SE -phred33 \
                                              $INPUT_FOLDER/sample_a4.fastq \
-                                             030_trim/sample_a4.trimmed.fastq \
+                                             030_d_trim/sample_a4.trimmed.fastq \
                                              ILLUMINACLIP:/shared/data/DATA/adapters/TruSeq3-PE.fa:2:30:10 \
-                                             SLIDINGWINDOW:3:25 2> 030_trim/trim_out.sample_a4.log
+                                             SLIDINGWINDOW:3:25 2> 030_d_trim/030_l_trim_out.sample_a4.log
     
     
     java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar SE -phred33 \
                                              $INPUT_FOLDER/sample_b1.fastq \
-                                             030_trim/sample_b1.trimmed.fastq \
+                                             030_d_trim/sample_b1.trimmed.fastq \
                                              ILLUMINACLIP:/shared/data/DATA/adapters/TruSeq3-PE.fa:2:30:10 \
-                                             SLIDINGWINDOW:3:25 2> 030_trim/trim_out.sample_b1.log
+                                             SLIDINGWINDOW:3:25 2> 030_d_trim/030_l_trim_out.sample_b1.log
     
     java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar SE -phred33 \
                                              $INPUT_FOLDER/sample_b2.fastq \
-                                             030_trim/sample_b2.trimmed.fastq \
+                                             030_d_trim/sample_b2.trimmed.fastq \
                                              ILLUMINACLIP:/shared/data/DATA/adapters/TruSeq3-PE.fa:2:30:10 \
-                                             SLIDINGWINDOW:3:25 2> 030_trim/trim_out.sample_b2.log
+                                             SLIDINGWINDOW:3:25 2> 030_d_trim/030_l_trim_out.sample_b2.log
     
     java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar SE -phred33 \
                                              $INPUT_FOLDER/sample_b3.fastq \
-                                             030_trim/sample_b3.trimmed.fastq \
+                                             030_d_trim/sample_b3.trimmed.fastq \
                                              ILLUMINACLIP:/shared/data/DATA/adapters/TruSeq3-PE.fa:2:30:10 \
-                                             SLIDINGWINDOW:3:25 2> 030_trim/trim_out.sample_b3.log
+                                             SLIDINGWINDOW:3:25 2> 030_d_trim/030_l_trim_out.sample_b3.log
     
     java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar SE -phred33 \
                                              $INPUT_FOLDER/sample_b4.fastq \
-                                             030_trim/sample_b4.trimmed.fastq \
+                                             030_d_trim/sample_b4.trimmed.fastq \
                                              ILLUMINACLIP:/shared/data/DATA/adapters/TruSeq3-PE.fa:2:30:10 \
-                                             SLIDINGWINDOW:3:25 2> 030_trim/trim_out.sample_b4.log
+                                             SLIDINGWINDOW:3:25 2> 030_d_trim/030_l_trim_out.sample_b4.log
 
     ```
 
-    On the cluster, this script is also in `/shared/data/Solutions/mouseMT/030_trim.sh`
+    On the cluster, this script is also in `/shared/data/Solutions/mouseMT/030_s_trim.sh`
 
 
 ??? success "alternative sbatch using an array job"
@@ -186,13 +186,13 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
 	#SBATCH --time=01:00:00
 	#SBATCH --cpus-per-task=1
 	#SBATCH --mem=1G
-	#SBATCH -o trim_mouseMT.%a.o
+	#SBATCH -o 030_l_trim_mouseMT.%a.o
 	#SBATCH --array=1-8%8
 	
 	ml  trimmomatic
 	
 	## creating output folder, in case it does not exists
-	mkdir -p 030_trim
+	mkdir -p 030_d_trim
 	
 	INPUT_FOLDER=/shared/data/DATA/mouseMT
 	
@@ -202,12 +202,12 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
 	
 	java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar SE -phred33 \
 	                                         $INPUT_FOLDER/${SAMPLE}.fastq \
-	                                         030_trim/${SAMPLE}.trimmed.fastq \
+	                                         030_d_trim/${SAMPLE}.trimmed.fastq \
 	                                         ILLUMINACLIP:/shared/data/DATA/adapters/TruSeq3-PE.fa:2:30:10 \
-	                                         SLIDINGWINDOW:3:25 2> 030_trim/trim_out.${SAMPLE}.log
+	                                         SLIDINGWINDOW:3:25 2> 030_d_trim/030_l_trim_out.${SAMPLE}.log
 	
 	```
-	On the cluster, this script is also in	`/shared/data/Solutions/mouseMT/030_trim_array.sh`
+	On the cluster, this script is also in	`/shared/data/Solutions/mouseMT/030bis_s_trim_array.sh`
 
 
 **Task 2:** 
@@ -217,28 +217,27 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
 
 ```sh
 #!/usr/bin/bash
-#SBATCH --job-name=map-multiqc
+#SBATCH --job-name=trim-multiqc
 #SBATCH --time=00:30:00
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=1G
-#SBATCH -o multiqc-map-trim.o
+#SBATCH -o 032_l_multiqc_trimmed.o
 
+ml fastqc
 ## fastQC on trimmed fastq files
-fastqc 030_trim/*.fastq -o 030_trim
+fastqc 030_d_trim/*.fastq -o 030_d_trim
 
 
 ## multiqc on the fastQC reports AND the trimmomatic logs
-multiqc -n 032_multiqc_mouseMT_trimmed.html -f --title trimmed_fastq 030_trim/
+multiqc -n 032_r_multiqc_mouseMT_trimmed.html -f --title trimmed_fastq 030_d_trim/
 ```
-On the cluster, you can find this script in : `/shared/data/Solutions/mouseMT/032_multiqc_trimmed.sh`
-<!-- BUG? Shouldn't there be a module load fastqc before the fastqc command?
-BUT as we have to launch multiqc from the head node... module load does not work.
-It has to be done from the interactive shell before executing the script. This is... confusing. -->
+On the cluster, you can find this script in : `/shared/data/Solutions/mouseMT/032_s_multiqc_trimmed.sh`
+
 
 !!! note 
     The script above presumes that you have successfully trimmed the reads. 
 
-    If not, you can grab them on the cluster in `/shared/data/Solutions/mouseMT/030_trim/`
+    If not, you can grab them on the cluster in `/shared/data/Solutions/mouseMT/030_d_trim/`
 
 
 
