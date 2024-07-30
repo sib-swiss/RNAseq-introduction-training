@@ -286,6 +286,25 @@ We will spare you the mapping of the trimmed reads, and let you directly downloa
 	it can also be found in the cluster at `/shared/data/Solutions/mouseMT/045_s_multiqc_mouseMT_mapped_trimmed.sh`
 
 
+## QC report of mapping for the Liu2015 and Ruhland2016 dataset
+
+**Liu2015**
+
+Take the time to look at the following reports: 
+
+[ Liu2015 raw reads mapping  report ](../assets/html/042_r_star_aln_raw_QC_Liu2015.html){target=_blank : .md-button }
+[ Liu2015 trimmed reads mapping  report ](../assets/html/044_r_star_map_trim_QC_Liu2015.html){target=_blank : .md-button }
+
+Which one would you choose? 
+
+
+**Ruhland**
+
+[ Ruhland2016 raw reads mapping  report ](../assets/html/034_r_STAR_multiqc_Ruhland2016.html){target=_blank : .md-button }
+
+
+
+
 ## ADDITIONAL : pseudo-aligning with salmon
 
 [salmon website](https://salmon.readthedocs.io/en/latest/salmon.html){target=_blank : .md-button }

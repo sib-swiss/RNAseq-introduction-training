@@ -392,6 +392,7 @@ Otherwis, you will see some error messages.
 ### Specifying resources needed to SLURM
 
 When submitting the previous job, we did not specify our resource requirements to SLURM, which means that SLURM assigned it the default:
+
  * 1 hour
  * 1 CPU
  * 1 GB of RAM

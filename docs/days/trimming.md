@@ -34,7 +34,7 @@ If the data will be used to perform **transcriptome assembly, or variant analysi
 In contrast, for applications based on **counting reads**, such as **Differential Expression analysis**, most aligners, such as [STAR](https://github.com/alexdobin/STAR), [HISAT2](http://daehwankimlab.github.io/hisat2/), [salmon](https://salmon.readthedocs.io/en/latest/salmon.html), and [kallisto](https://pachterlab.github.io/kallisto/manual), can handle bad quality sequences and adapter content by soft-clipping, and consequently they _usually_ do not need trimming.
 In fact, **trimming can be detrimental** to the number of successfully quantified reads \[[William et al. 2016](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-016-0956-2)\].
 
-Nevertheless, it is usually recommended to perform some amount of soft clipping (*eg.* [kallisto](https://www.biostars.org/p/389324/), [salmon](https://github.com/COMBINE-lab/salmon/issues/398) ).
+Nevertheless, it is usually recommended to perform some amount of soft trimming (*eg.* [kallisto](https://www.biostars.org/p/389324/), [salmon](https://github.com/COMBINE-lab/salmon/issues/398) ).
 
 If possible, we recommend to perform the mapping for both the raw data and the trimmed one, in order to compare the results for both, and choose the best.
 
@@ -247,6 +247,25 @@ On the cluster, you can find this script in : `/shared/data/Solutions/mouseMT/03
 
     **Note the second section, Trimmomatic, which lets you know the number/percentage of reads dropped**
 
+
+
+
+
+
+
+**Extra Task: if you have the time**
+
+We have trimmed the Liu2015 data with trimmomatic with the following option:
+
+ * SLIDINGWINDOW:4:20 
+ * MINLEN:36 
+ * ILLUMINACLIP:/shared/data/DATA/adapters/TruSeq3-PE.fa:2:30:10 
+
+Download the multiQC report:
+
+[:fontawesome-solid-file: Liu2015 trim multiqc report](../assets/html/032_r_trimQC_Liu2015.html){target=_blank : .md-button }
+
+Analyze it : what do you think? Did the trimming do its job?
 
 <!-- I'd add back the "important notes" -->
 

@@ -80,6 +80,13 @@ slide 04 : [illumina doc](https://support.illumina.com/help/BaseSpace_OLH_009008
 
 slide 16-... : interpretation of fastQC report
 
+ * Some additionnal help for specific problems:
+    * https://sequencing.qcfail.com/articles/position-specific-failures-of-flowcells/
+    * https://sequencing.qcfail.com/articles/positional-sequence-bias-in-random-primed-libraries/
+    * https://sequencing.qcfail.com/articles/read-through-adapters-can-appear-at-the-ends-of-sequencing-reads/
+    * https://sequencing.qcfail.com/articles/sudden-loss-of-base-call-quality/
+    * 
+
 
 ## 03 trimming
 

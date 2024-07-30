@@ -69,7 +69,7 @@ So, let's apply fastQC to the toy dataset.
 
 **Task:** 
 
-On the cluster, in the folder `day1`, create a new folder `mouseMT` and enter it.
+On the cluster, create a new folder `mouseMT` and enter it.
 
 ```sh
 mkdir mouseMT
@@ -80,7 +80,7 @@ Then, create here a new text file name `010_s_fastqc.sh` (with `nano`, or on you
 
 !!! note
 
-    A note on our choice of naming conventions. Each step is numbered: 010 for fastqc, 020 for mulqc, 030 fro trimming,...
+    A note on our choice of naming conventions. Each step is numbered: 010 for fastqc, 020 for multiqc, 030 for trimming,...
 
     Sub-steps are then denoted for example 040 is mapping, and so 041 for indexing, 042 for mapping, 043 for QC of the mapping,...
 
@@ -126,7 +126,8 @@ You can also check that the `010_fastqc/` folder contains several html files:
 ls 010_d_fastqc/
 ```
 
-output:
+**output:**
+
 ```sh
 sample_a1_fastqc.html  sample_a2_fastqc.html  sample_a3_fastqc.html  sample_a4_fastqc.html  sample_b1_fastqc.html  sample_b2_fastqc.html  sample_b3_fastqc.html  sample_b4_fastqc.html
 sample_a1_fastqc.zip   sample_a2_fastqc.zip   sample_a3_fastqc.zip   sample_a4_fastqc.zip   sample_b1_fastqc.zip   sample_b2_fastqc.zip   sample_b3_fastqc.zip   sample_b4_fastqc.zip
@@ -138,11 +139,21 @@ We will look at one of these html report on the toy dataset, and one of the pre-
 
  * repatriate one of the html report of the mouseMT dataset to your local computer, as well as the one you can find in:
 `/shared/data/Solutions/Liu2015/010_d_fastqc/SRR3180538_TAM1_1_fastqc.html`
- * Look at these two QC reports in a web browser. What are your conclusions ? Would you want to perform some operations on the reads, such as low-quality bases trimming, removal of adapters ?
+	**OR**
+	Download them:
+
+	* [:fontawesome-solid-file-code: a fastQC report from the Ruhland 2016 data](../assets/html/SRR3180535_EtOH1_1_fastqc.html){ .md-button}
+	* [:fontawesome-solid-file-code: a fastQC report from the Liu 2015 data](../assets/html/SRR1272187_1_fastqc.html){ .md-button}
+	* [:fontawesome-solid-file-code: a fastQC report from the mouseMT data](../assets/html/sample_a1_fastqc.html){ .md-button}
+
+
+
+ * Look at these QC reports in a web browser. What are your conclusions ? Would you want to perform some operations on the reads, such as low-quality bases trimming, removal of adapters ?
 
 !!! note "Reminder"
 
 	 to get the data from the distant server to your machine, you may use an SFTP client (FileZilla, mobaXterm), or the command line tool from your machine :	`scp login@xx.xx.xx:~/path/to/file.txt .`
+
 
 
 **Extra Task:** 
@@ -305,6 +316,10 @@ There are many additional parameters which let you customize your report. Use `m
 
  - Look at the generated html report. What are your conclusions ?
 
+ - Compare the report of the toy dataset with the following report for the Ruhland2016 and Liu2015 data:
+     * [:fontawesome-solid-file-code: Download the report](../assets/html/020_multiqc_Liu2015.html){ .md-button}
+     * [:fontawesome-solid-file-code: Download the report](../assets/html/020_multiqc_Ruhland2016.html){ .md-button}
+
 !!! info
      * MultiQC RAM requirements : 1Gb should be more than enough.
      * MultiQC time requirements : ~ 1min / read file.
@@ -367,7 +382,7 @@ There are many additional parameters which let you customize your report. Use `m
 
 	We will interpret the report for the Liu2015 data.
 
-	[:fontawesome-solid-file-pdf: Download the report](../assets/html/020_multiqc_mouseLiu2015.html){ .md-button}
+	[:fontawesome-solid-file-code: Download the report](../assets/html/020_multiqc_Liu2015.html){ .md-button}
 
 	![per base sequence quality](../assets/images/multiqc_liu2015/fastqc_per_base_sequence_quality_plot.png)
 
@@ -489,4 +504,5 @@ For example, on the Liu2015 dataset :
 	 * `fastq-dump` takes a very long time
 	 * You’ll need to know the nature of the dataset (library type, paired vs single end, etc.) before analysing it.
 	 * [More information about fastq-dump](https://edwards.sdsu.edu/research/fastq-dump/)
+
 

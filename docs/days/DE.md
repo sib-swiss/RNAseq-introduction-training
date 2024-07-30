@@ -685,6 +685,17 @@ You may play with either of the following datasets:
  	* `/shared/data/Solutions/Tuch2010/Tuch_et_al_2010_counts.csv`
 	* [ :fontawesome-solid-file: Tuch 2010 count matrix](../assets/txt/Tuch_et_al_2010_counts.csv){target=_blank : .md-button }
 
+ * [Mansingh 2024](https://physoc.onlinelibrary.wiley.com/doi/10.1113/JP285585) dataset
+ 	* A complex design with 36 mice from two genotypes (KO,WT) and collected at 6 time points (T0,T4,T8,T12,T16,T20), with 3 technical replicate per mouse (108 samples in total)
+ 	* The goal is to investigate the effect of the genotype on the circadian cycle (represented with the different time points)
+ 	* `/shared/data/Solutions/Mansingh2024/Mansingh2024_expression_matrix.txt`
+	* [ :fontawesome-solid-file: Mansingh 2024 count matrix](../assets/txt/Mansingh2024_expression_matrix.txt){target=_blank : .md-button }
+ 	* The mice ids should be understood as follow : `HL3YTBGX5_4_3__7_CTRL_ZT4` means:
+ 		* replicate `HL3YTBGX5`
+ 		* mouse `7`
+ 		* genotype WT (`CTRL`)
+ 		* time point 4 (`ZT4`)
+
 
 
 !!! note
@@ -730,6 +741,28 @@ You may play with either of the following datasets:
 	colSums(raw_counts) # total number of counted reads per sample
 	```
 
+	output:
+
+	```
+		                   EtOH1.counts EtOH2.counts EtOH3.counts TAM1.counts TAM2.counts TAM3.counts
+	ENSMUSG00000000001         6726         5150         5362        4867        5982        5527
+	ENSMUSG00000000003            0            0            0           0           0           0
+	ENSMUSG00000000028           84          162          127         130         260         136
+	ENSMUSG00000000031          116         4890          153          81         113         239
+	ENSMUSG00000000037           35           24           41          13          11          21
+	ENSMUSG00000000049            4            5            2           4           4           5
+	                   EtOH1.counts EtOH2.counts EtOH3.counts TAM1.counts TAM2.counts TAM3.counts
+	ENSMUSG00000107387            0            0            0           0           0           0
+	ENSMUSG00000107388           20           32           28          16           8          30
+	ENSMUSG00000107389            0            0            1           0           0           0
+	ENSMUSG00000107390            2            0            0           3           2           3
+	ENSMUSG00000107391            0            0            0           0           0           0
+	ENSMUSG00000107392            0            0            0           0           0           0
+	[1] 46078     6
+	```
+
+	there are 46'078 genes and 6 samples.
+
 ??? success "preprocessing"
 
 	```R
@@ -738,7 +771,19 @@ You may play with either of the following datasets:
 	treatment <- factor( c(rep("EtOH",3), rep("TAM",3)), levels=c("EtOH", "TAM") )
 	colData <- data.frame(treatment, row.names = colnames(raw_counts))
 	colData
-	
+	```
+	output:
+	```
+	             treatment
+	EtOH1.counts      EtOH
+	EtOH2.counts      EtOH
+	EtOH3.counts      EtOH
+	TAM1.counts        TAM
+	TAM2.counts        TAM
+	TAM3.counts        TAM
+	```
+
+	```R
 	## creating the DESeq data object & positing the model
 	dds <- DESeqDataSetFromMatrix(
 	  countData = raw_counts, colData = colData, 
@@ -1075,6 +1120,20 @@ You may play with either of the following datasets:
 ### Tuch 2010 - EdgeR correction
 
 We refer you here to section 4.1 of [edgeR's vignette](https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf).
+
+
+### Mansingh 2024 - correction
+
+Here you can download more or less the script we used to analyze this data in the paper.
+
+You will see that the analysis is fairly complex, with exclusion of outliers, accounting for technical batch effect, ...
+
+Also, this code covers enrichment too
+
+
+[ :fontawesome-solid-file-code: Mansingh 2024 analysis script](../assets/txt/Mansingh2024_DESeq2.Rmd){target=_blank : .md-button }
+
+
 
 
 ## Additional : importing counts from salmon with `tximport`
