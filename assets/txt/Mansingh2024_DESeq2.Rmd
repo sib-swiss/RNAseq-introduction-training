@@ -1,0 +1,716 @@
+---
+title: "RORa effect on exercise - RNAseq DE Analysis"
+author: "wandrille Duchemin"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## setting up environnement
+```{r , message=F}
+
+baseDir="."
+
+library(DESeq2)
+library(RColorBrewer)
+library(ggplot2)
+library(gridExtra)
+library(pheatmap)
+
+## recipe for a heatmap
+makeHeatMap <- function( VSTdata , sampleNames , main='' )
+{
+	sampleDists <- dist(t(assay(VSTdata)))
+	sampleDistMatrix <- as.matrix(sampleDists)
+	rownames(sampleDistMatrix) <- sampleNames
+	colnames(sampleDistMatrix) <- NULL
+	colors <- colorRampPalette( rev(brewer.pal(9, "Blues")) )(255)
+	X = pheatmap(sampleDistMatrix,
+	         clustering_distance_rows=sampleDists,
+	         clustering_distance_cols=sampleDists,
+	         col=colors , main=main)
+	return(X)
+}
+
+
+```
+
+
+## setting up data
+
+```{r }
+
+## count matrix. 
+# 	 - rows are genes
+# 	 - columns are sample
+countMatrixFile = paste(baseDir,'05_expression_matrix.txt',sep='/') 
+cts_raw <- read.csv(countMatrixFile,sep="\t", header=T)
+
+# samples MUST   be in the same order in count matrix and info table
+# 		 (MUST?)  have the same name  in count matrix and info table
+
+cts = as.matrix(cts_raw)
+
+#head(cts)
+dim(cts)
+
+```
+```{r}
+colnames(cts)
+```
+
+```{r }
+
+## information table
+# 	 - rows are sample
+# 	 - columns are variable
+library(stringr)
+library(plyr)
+
+
+
+genotype = as.factor( str_detect( colnames(cts) , 'CTRL' )  )
+genotype = revalue( genotype , c( 'TRUE'="WT" , 'FALSE' = 'KO'  )  )
+
+time_point = factor( substring(colnames(cts), regexpr("_Z",colnames(cts)) + 2) , levels = c("T0",'T4','T8','T12','T16','T20'))
+
+mouse = sapply( strsplit( colnames( cts ) , "_") , '[' , 5)
+
+replicate = substring(colnames(cts) , 1, nchar( "HL3YYBGX5" ) ) 
+
+coldata <- data.frame( sample = colnames(cts) ,
+                       genotype = genotype ,
+                       time_point = time_point,
+                       mouse = mouse,
+                       replicate = replicate
+                       )
+
+
+head( coldata )
+```
+
+
+
+### ensembl to gene name table
+
+```{r}
+
+library(clusterProfiler)
+library(org.Mm.eg.db)
+
+entrezId = bitr( rownames( cts ) , fromType="ENSEMBL", toType="SYMBOL", OrgDb="org.Mm.eg.db")
+  
+## problem -> n:n mapping from ensembl to  entrez
+## -> for now remove all duplicates on both sides
+nbefore=nrow(entrezId)
+entrezId = entrezId[!duplicated(entrezId$ENSEMBL),]
+entrezId = entrezId[!duplicated(entrezId$SYMBOL),]
+nafter=nrow(entrezId)
+  
+
+print(paste("removed",nbefore-nafter,"multiplicates"))
+print(paste( '   genes with a n Entrez id',  length( entrezId$SYMBOL ) , '/' , length( rownames( cts ) ) , '(' ,length( entrezId$SYMBOL ) / length( rownames( cts ) ) , ')' )  )
+
+rownames( entrezId ) = entrezId$ENSEMBL
+
+```
+
+
+## 1. pre-processing : looking at batch effect and potential outliers
+
+### count data filtering
+
+Let's apply a filtering of at least 10 reads counted in at least a number of samples equivalent to the number of replicates : 3.
+
+```{r}
+
+totalNbGenes = nrow(cts)
+NbGenesNonEmpty = sum(apply(cts, 1, sum)>0)
+
+threshold = 10
+nbSample = 3
+filterOK <- function( row , t = threshold , n = nbSample ){ sum(row>=t)>=n }
+
+genesPassing = apply(cts, 1, filterOK)
+nbGenesPassing = sum(genesPassing)
+
+cts_filtered = cts[genesPassing,]
+
+print( paste( 'total number of genes' , totalNbGenes ))
+print( paste( 'number of genes with at least 1 read' , NbGenesNonEmpty ))
+print( paste( 'number of genes passing the filter' , nbGenesPassing ))
+
+dim(cts_filtered)
+#head(cts_filtered)
+
+
+```
+
+### DESeq 
+
+```{r}
+# design should be a formula using the column of the info table. 
+# In order to benefit from the default settings of the package, 
+# 		you should put the variable of interest at the end of the formula 
+# 		and make sure the control level is the first level.
+RNAdata <- DESeqDataSetFromMatrix(countData = cts_filtered,
+                                       colData = coldata,
+                                       design = ~ mouse + replicate)
+```
+
+
+### PCA
+
+```{r}
+library(plotly)
+# variance stabilisation transform
+RNAdata_VST <- vst(RNAdata, blind=FALSE)
+
+```
+
+```{r}
+pairedPCAplot = function (object, intgroup = "condition", ntop = 500, returnData = FALSE , pairing = '') 
+{
+    rv <- rowVars(assay(object))
+    select <- order(rv, decreasing = TRUE)[seq_len(min(ntop, 
+        length(rv)))]
+    pca <- prcomp(t(assay(object)[select, ]))
+    percentVar <- pca$sdev^2/sum(pca$sdev^2)
+    if (!all(intgroup %in% names(colData(object)))) {
+        stop("the argument 'intgroup' should specify columns of colData(dds)")
+    }
+    intgroup.df <- as.data.frame(colData(object)[, intgroup, 
+        drop = FALSE])
+    group <- if (length(intgroup) > 1) {
+        factor(apply(intgroup.df, 1, paste, collapse = ":"))
+    }
+    else {
+        colData(object)[[intgroup]]
+    }
+    d <- data.frame(PC1 = pca$x[, 1], PC2 = pca$x[, 2], group = group, 
+        intgroup.df, name = colnames(object) , pairing = colData(object)[[pairing]] )
+    if (returnData) {
+        attr(d, "percentVar") <- percentVar[1:2]
+        return(d)
+    }
+    ggplot(data = d, aes_string(x = "PC1", y = "PC2", color = "group" )) + 
+        geom_point(size = 3, aes(label=d$group)) + xlab(paste0("PC1: ", round(percentVar[1] * 
+        100), "% variance")) + ylab(paste0("PC2: ", round(percentVar[2] * 
+        100), "% variance")) + coord_fixed() + geom_line(aes(group=pairing))
+}
+```
+
+```{r}
+g = pairedPCAplot(RNAdata_VST, intgroup=c("replicate") , pairing = 'mouse' ) + ggtitle("PCA - filtered 10reads 3samples - VST")
+ggplotly(g)
+```
+
+Zooming in. we can see that mice group very well by replicate. However, The relationship between these does not look random. 
+Let's investigate if a simple model can find DE genes associated to replicate: 
+
+```{r}
+RNAdata <- DESeq(RNAdata) 
+
+```
+
+```{r}
+FDRthreshold = 0.01
+resultsNames(RNAdata)
+
+res <- results(RNAdata, name= "replicate_HL3YYBGX5_vs_HL3YTBGX5" ,alpha = FDRthreshold )
+print(summary(res))
+
+res <- results(RNAdata, name= "replicate_HL7CHBGX5_vs_HL3YTBGX5" ,alpha = FDRthreshold )
+print(summary(res))
+```
+Indeed we can find a significant signal associated with technical replicates.
+
+As each mouse is present once per technical replication, we are not prevented from answering any questions we may have, but we will not be collapsing technical replicates and have to take them into account as a co-variable in our model.
+
+```{r}
+g = pairedPCAplot(RNAdata_VST, intgroup=c("mouse",'genotype',"time_point") , pairing = 'time_point' ) + ggtitle("PCA - filtered 10reads 3samples - VST")
+ggplotly(g)
+```
+
+Another issue to address is outliers : mice 26, 15, 23, 12. They do not particularly pop out in the QC report. We will be removing them
+
+
+### removing 26,15,23,12
+
+```{r}
+
+toKeep = !( str_detect( colnames(cts) , '_26_') | str_detect( colnames(cts) , '_15_') | str_detect( colnames(cts) , '_23_') | str_detect( colnames(cts) , '_12_') )
+
+cts_no_outlier = cts[ , toKeep  ]
+
+print( dim( cts_no_outlier  ) )
+
+coldata_no_outlier = coldata[ !(coldata$mouse %in% c(26,15,23,12)) ,]
+print( dim( coldata_no_outlier ) )
+
+```
+
+## 2. replicates non collapsed, removed "outliers"
+
+### 2.1. count data filtering
+
+Let's apply a filtering of at least 10 reads counted in at least a number of samples equivalent to the number of replicates : 3.
+
+```{r}
+
+totalNbGenes = nrow(cts_no_outlier)
+NbGenesNonEmpty = sum(apply(cts_no_outlier, 1, sum)>0)
+
+threshold = 10
+nbSample = 3
+filterOK <- function( row , t = threshold , n = nbSample ){ sum(row>=t)>=n }
+
+genesPassing = apply(cts_no_outlier, 1, filterOK)
+nbGenesPassing = sum(genesPassing)
+
+cts_filtered = cts_no_outlier[genesPassing,]
+
+print( paste( 'total number of genes' , totalNbGenes ))
+print( paste( 'number of genes with at least 1 read' , NbGenesNonEmpty ))
+print( paste( 'number of genes passing the filter' , nbGenesPassing ))
+
+dim(cts_filtered)
+#head(cts_filtered)
+
+```
+
+
+### 2.2. DESeq 
+
+```{r}
+
+coldata_no_outlier$genotype_time = as.factor( paste( coldata_no_outlier$genotype , coldata_no_outlier$time_point, sep='.') )
+
+# design should be a formula using the column of the info table. 
+# In order to benefit from the default settings of the package, 
+# 		you should put the variable of interest at the end of the formula 
+# 		and make sure the control level is the first level.
+RNAdata <- DESeqDataSetFromMatrix(countData = cts_filtered,
+                                       colData = coldata_no_outlier,
+                                       design = ~ replicate + genotype_time)
+```
+
+
+### PCA
+
+```{r}
+library(plotly)
+# variance stabilisation transform
+RNAdata_VST <- vst(RNAdata, blind=TRUE)
+
+```
+
+```{r}
+g = pairedPCAplot(RNAdata_VST, intgroup=c("genotype_time") , pairing = 'mouse' ) + ggtitle("PCA - filtered 10reads 3samples - VST")
+ggplotly(g)
+```
+
+The first axis (44%) seems related to genotype, while the second (19%) relates to time points, with the appearance of a trajectory (increase in axis 2 from T0 to T12, then decrease from T12 to T20 to come back "close" to T4/T0).
+
+```{r}
+getNtopPCA = function (object, ntop = 500) 
+{
+    rv <- rowVars(assay(object))
+    select <- order(rv, decreasing = TRUE)[seq_len(min(ntop, 
+        length(rv)))]
+    pca <- prcomp(t(assay(object)[select, ]))
+    return(pca) 
+}
+
+pca = getNtopPCA( RNAdata_VST )
+percentVar <- pca$sdev^2/sum(pca$sdev^2)
+
+plot(percentVar[1:10] , main='PCA' , xlab='PCA axis' , ylab="percent of variance")
+```
+
+```{r}
+a1=2
+a2=3
+pcaAxis = data.frame( pca$x )
+
+ggplot(data=pcaAxis, aes_string(x = paste0("PC",a1), y = paste0("PC",a2), color = coldata_no_outlier$time_point , pch= coldata_no_outlier$genotype)) + 
+        geom_point(size = 3) + xlab(paste0("PC",a1,": ", round(percentVar[a1] * 
+        100), "% variance")) + ylab(paste0("PC",a2,": ", round(percentVar[a2] * 
+        100), "% variance")) + coord_fixed() 
+```
+
+PC3 seems to differentiate T4,T8 ("morning") from T16,T20 ("afternoon").
+
+Together, PC2 and PC3 exhibit the so-called cycle.
+
+
+```{r}
+a1=2
+a2=4
+pcaAxis = data.frame( pca$x )
+
+ggplot(data=pcaAxis, aes_string(x = paste0("PC",a1), y = paste0("PC",a2), color = coldata_no_outlier$time_point , pch= coldata_no_outlier$genotype)) + 
+        geom_point(size = 3) + xlab(paste0("PC",a1,": ", round(percentVar[a1] * 
+        100), "% variance")) + ylab(paste0("PC",a2,": ", round(percentVar[a2] * 
+        100), "% variance")) + coord_fixed() 
+```
+It is not immediately obvious what PC4 relates to.
+
+PC1, 2, and 3 shall make a very nice 3D plot :
+```{r}
+
+fig <- plot_ly(pcaAxis, x = ~PC1, y = ~PC2, z = ~PC3, color = coldata_no_outlier$time_point , symbol= coldata_no_outlier$genotype , symbols=c('x','circle'))
+fig <- fig %>% add_markers()
+fig <- fig %>% layout(scene = list(xaxis = list(title = paste0("PC1: ", round(percentVar[1] * 100), "% variance")),
+                     yaxis = list(title = paste0("PC1: ", round(percentVar[2] * 100), "% variance")),
+                     zaxis = list(title = paste0("PC1: ", round(percentVar[3] * 100), "% variance"))))
+
+fig
+```
+
+
+### 2.3. plotting the counts of different marker genes / genes of interest
+
+potential marker genes :
+ * Bmal1 ENSMUSG00000055116
+ * RORα ENSMUSG00000032238
+ * RORb ENSMUSG00000036192
+ * Cry1 ENSMUSG00000020038
+ * Cry2 ENSMUSG00000068742
+
+```{r , fig.height=12}
+
+intGenes = c( 'Bmal1' ='ENSMUSG00000055116',
+              'RORα' = 'ENSMUSG00000032238',
+              'RORb' = 'ENSMUSG00000036192',
+              'Cry1' = 'ENSMUSG00000020038',
+              'Cry2' = 'ENSMUSG00000068742')
+ps = list()
+
+for(i in 1:length(intGenes)){
+  print(paste(i,intGenes[i], names(intGenes)[i]))
+
+  if( !( intGenes[i] %in% rownames( cts_filtered ) ) ){ next }
+  x = plotCounts(RNAdata, gene=intGenes[i], intgroup=c('time_point'), returnData=TRUE)
+
+  y = ggplot(x, aes(x=time_point, y=count , color = coldata_no_outlier$genotype)) + 
+  			geom_point(position=position_jitter(w=0.1,h=0)) + 
+  			scale_y_log10() +
+        ggtitle(names(intGenes)[i])
+  
+  ps[[names(intGenes)[i]]] = y#ps = c(ps , y)
+}
+
+grid.arrange( grobs=ps, nrow=length(ps) )
+
+```
+
+### 3. DE analysis 
+
+```{r}
+RNAdata <- DESeq(RNAdata) 
+
+```
+```{r}
+# checking for outliers
+par(mar=c(8,5,2,2))
+boxplot(log10(assays(RNAdata)[["cooks"]]), range=0, las=2,
+        main="Boxplot of Cook's distance - filtered 10reads 3samples ")
+```
+
+No samples appear to be systematically above the others.
+
+```{r}
+# check dispersion estimates
+plotDispEsts(RNAdata, main="dispersion estimates - filtered 10reads 3samples")
+```
+
+Seems fairly usual.
+
+```{r}
+resultsNames(RNAdata)
+```
+```{r}
+save(RNAdata , file='deseq2results.replicate_genotype_time.Rdata')
+load('deseq2results.replicate_genotype_time.Rdata')
+```
+Using a **FDRthreshold of 0.01**.
+
+
+### contrast 1 : effect of KO at different time points
+
+
+```{r}
+FDRthreshold = 0.01
+
+for( T in c(0,4,8,12,16,20)){
+
+
+res <- results(RNAdata, contrast=c("genotype_time", paste0("KO.T",T), paste0("WT.T",T)),alpha = FDRthreshold )
+print(summary(res))
+
+resNorm <- lfcShrink(RNAdata, res=res, type='ashr') 
+
+DESeq2::plotMA(resNorm, alpha = FDRthreshold,
+	       main=paste( "effect of ROR-alpha at time ", T , "\n- filtered 10reads 4samples"), 
+	       ylim=c(-0.5,0.5))
+
+
+#replacing NA p-values by 1s
+resNorm$padj <- ifelse(is.na(resNorm$padj), 1, resNorm$padj)
+
+orderedResNorm <- resNorm[ order( resNorm$padj ) , ]
+orderedResNorm$SYMBOL = entrezId[ rownames(orderedResNorm) , 'SYMBOL'  ] 
+write.table( orderedResNorm ,
+	             paste0(baseDir,"/",paste("RORalpha_KO_vs_WT",paste0("T",T),"filter_10reads_3samples","replicate.genotype_type","all","txt" , sep='.')))
+
+}
+```
+### cohesiveness of KO effect across time
+
+I will perform a simple exploration by counting the genes which are DE in different combinations of time points
+
+First upregulated genes
+```{r}
+
+deSets = data.frame( "geneId" = rownames(cts_filtered) )
+rownames( deSets ) = deSets$geneId
+
+for( T in c(0,4,8,12,16,20)){
+  
+	  res = read.table( paste0(baseDir,"/",
+	                           paste("RORalpha_KO_vs_WT",paste0("T",T),
+	                                 "filter_10reads_3samples",
+	                                 "replicate.genotype_type","all","txt" , sep='.') ), header=TRUE )
+    deSets[paste0("T",T)] = 0
+    sig = rownames(res)[ ( res$padj<0.01 )&(res$log2FoldChange>0)  ]
+    deSets[sig, paste0("T",T)] = 1
+}
+deSets = deSets[ , -1]
+
+
+print( colSums(deSets) )
+
+library(UpSetR)
+upset(deSets , nsets=6 , sets = c('T0','T4','T8','T12','T16','T20'), keep.order=TRUE,
+      mainbar.y.label = "KO.vs.WT - upregulated genes Intersections", sets.x.label = "time point", 
+      order.by='freq')
+```
+```{r}
+
+common = apply(deSets , 1 , sum) == 6
+
+write( rownames( deSets )[common] ,
+       paste0(baseDir,"/",
+	                           paste("RORalpha_KO_vs_WT","COMMON_ALL_TIME","UP",
+	                                 "filter_10reads_3samples",
+	                                 "replicate.genotype_type","txt" , sep='.') ) )
+
+onlyOne  = apply(deSets , 1 , sum) == 1
+for( T in c(0,4,8,12,16,20) ){
+  cName = paste0('T',T)
+  
+  m = ( deSets[cName] == 1  ) & onlyOne
+  write( rownames( deSets )[m] ,
+       paste0(baseDir,"/",
+	                           paste("RORalpha_KO_vs_WT",paste0("UNIQUE_",cName),"UP",
+	                                 "filter_10reads_3samples",
+	                                 "replicate.genotype_type","txt" , sep='.') ) )
+
+}
+
+
+```
+
+Now downregulated genes
+```{r}
+
+deSets = data.frame( "geneId" = rownames(cts_filtered) )
+rownames( deSets ) = deSets$geneId
+
+for( T in c(0,4,8,12,16,20)){
+  
+	  res = read.table( paste0(baseDir,"/",
+	                           paste("RORalpha_KO_vs_WT",paste0("T",T),
+	                                 "filter_10reads_3samples",
+	                                 "replicate.genotype_type","all","txt" , sep='.') ), header=TRUE )
+    deSets[paste0("T",T)] = 0
+    sig = rownames(res)[ ( res$padj<0.01 )&(res$log2FoldChange<0)  ]
+    deSets[sig, paste0("T",T)] = 1
+}
+deSets = deSets[ , -1]
+
+
+print( colSums(deSets) )
+
+library(UpSetR)
+upset(deSets , nsets=6 , sets = c('T0','T4','T8','T12','T16','T20'), keep.order=TRUE,
+      mainbar.y.label = "KO.vs.WT - down genes Intersections", sets.x.label = "time point", 
+      order.by='freq')
+```
+```{r}
+
+common = apply(deSets , 1 , sum) == 6
+
+write( rownames( deSets )[common] ,
+       paste0(baseDir,"/",
+	                           paste("RORalpha_KO_vs_WT","COMMON_ALL_TIME","DOWN",
+	                                 "filter_10reads_3samples",
+	                                 "replicate.genotype_type","txt" , sep='.') ) )
+
+onlyOne  = apply(deSets , 1 , sum) == 1
+for( T in c(0,4,8,12,16,20) ){
+  cName = paste0('T',T)
+  
+  m = ( deSets[cName] == 1  ) & onlyOne
+  write( rownames( deSets )[m] ,
+       paste0(baseDir,"/",
+	                           paste("RORalpha_KO_vs_WT",paste0("UNIQUE_",cName),"DOWN",
+	                                 "filter_10reads_3samples",
+	                                 "replicate.genotype_type","txt" , sep='.') ) )
+
+}
+
+
+```
+
+## 4. downstream analysis
+
+reference : http://yulab-smu.top/clusterProfiler-book/ , https://yulab-smu.top/biomedical-knowledge-mining-book/reactomepa.html
+
+```{r}
+library(clusterProfiler)
+library(ReactomePA)
+
+entrezId = bitr( rownames( cts_filtered ) , fromType="ENSEMBL", toType="ENTREZID", OrgDb="org.Mm.eg.db")
+  
+## problem -> n:n mapping from ensembl to  entrez
+## -> for now remove all duplicates on both sides
+nbefore=nrow(entrezId)
+entrezId = entrezId[!duplicated(entrezId$ENSEMBL),]
+entrezId = entrezId[!duplicated(entrezId$ENTREZID),]
+nafter=nrow(entrezId)
+  
+
+print(paste("removed",nbefore-nafter,"multiplicates"))
+print(paste( '   genes with a n Entrez id',  length( entrezId$ENTREZID ) , '/' , length( rownames( cts_filtered ) ) , '(' ,length( entrezId$ENTREZID ) / length( rownames( cts_filtered ) ) , ')' )  )
+
+rownames( entrezId ) = entrezId$ENSEMBL
+```
+
+
+```{r}
+##  the label_format argument does not work as intended...  I had to grab the function code from https://rdrr.io/bioc/enrichplot/src/R/dotplot.R
+## and correct it...
+myDotplot = function( object , x = "GeneRatio", color = "p.adjust", showCategory=10, split = NULL,font.size=12,title = "",orderBy="x",decreasing=TRUE,label_format = 30,size = "Count"){
+
+colorBy <-"p.adjust"
+df <- fortify(object, showCategory = showCategory, split=split)
+if (orderBy !=  'x' && !orderBy %in% colnames(df)) {
+        message('wrong orderBy parameter; set to default `orderBy = "x"`')
+        orderBy <- "x"
+    }
+if (orderBy == "x") {
+        df <- dplyr::mutate(df, x = eval(parse(text=x)))
+    }
+
+subLabel = function(s){
+  if( str_length(s)<label_format ){return(s)}
+  return( paste0(substr(s,1,label_format) , '...') ) }
+
+label_func <- function(s){
+  return( sapply(s ,subLabel, simplify=T) )}
+
+
+idx <- order(df[[orderBy]], decreasing = decreasing)
+df$Description <- factor(df$Description,
+                          levels=rev(unique(df$Description[idx])))
+ggplot(df, aes_string(x=x, y="Description", size=size, color=colorBy)) +
+        geom_point() +
+        scale_color_continuous(low="red", high="blue", name = color,
+            guide=guide_colorbar(reverse=TRUE)) +
+        scale_y_discrete(labels = label_func) +
+        ylab(NULL) + ggtitle(title) + #theme_dose(font.size) +
+        scale_size(range=c(3, 8))
+}
+```
+
+
+```{r}
+# underlying theory for the test : http://yulab-smu.top/clusterProfiler-book/chapter2.html#over-representation-analysis
+for( T in c(0,4,8,12,16,20) ){
+	  res = read.table( paste0(baseDir,"/",
+	                           paste("RORalpha_KO_vs_WT",paste0("T",T),
+	                                 "filter_10reads_3samples",
+	                                 "replicate.genotype_type","all","txt" , sep='.') ), header=TRUE )
+    deSets[paste0("T",T)] = 0
+    sig = rownames(res)[ ( res$padj<0.01 ) ]
+    
+    
+  sig_entrez = entrezId[ sig ,'ENTREZID']
+
+  n = length(sig_entrez)
+  m = length(sig_entrez) - sum(isNA(sig_entrez) )
+  print(paste( 'T',T , "- number of significant" , n ,"; number of mapped" , m , '(' ,round(100*m/n,2), '% )' ) )
+
+  eP <- enrichPathway(gene=sig_entrez, pvalueCutoff = 0.05, readable=TRUE , organism='mouse')
+  myDotplot(eP , showCategory=20, font.size=8, label_format=30 , title= paste("T",T ) )
+  ggsave( paste0(baseDir,"/",
+	                           paste("RORalpha_KO_vs_WT",paste0("T",T),
+	                                 "filter_10reads_3samples",
+	                                 "replicate.genotype_type","enrichedReactome ","png" , sep='.') ) )
+}
+```
+Looking at common and specific up/down regulated genes 
+```{r}
+
+for( DIRECTION in c("UP",'DOWN')){
+
+x = read.table( paste0(baseDir,"/",
+	                           paste("RORalpha_KO_vs_WT","COMMON_ALL_TIME",DIRECTION,
+	                                 "filter_10reads_3samples",
+	                                 "replicate.genotype_type","txt" , sep='.') ) )
+sig_entrez = entrezId[ x$V1 ,'ENTREZID']
+
+n = length(x$V1)
+m = length(x$V1) - sum(isNA(sig_entrez) )
+print(paste( 'common ',DIRECTION,'regulated' , "- number of significant" , n ,"; number of mapped" , m , '(' ,round(100*m/n,2), '% )' ) )
+eP <- enrichPathway(gene=sig_entrez, pvalueCutoff = 0.05, readable=TRUE , organism='mouse')
+myDotplot(eP , showCategory=20, font.size=8, label_format=30 , title= paste('common',DIRECTION ) )
+
+ggsave( paste0(baseDir,"/",
+	                           paste("RORalpha_KO_vs_WT","COMMON_ALL_TIME",DIRECTION,
+	                                 "filter_10reads_3samples",
+	                                 "replicate.genotype_type","enrichedReactome","png" , sep='.') ) )
+
+
+for( T in c(0,4,8,12,16,20) ){
+  
+  x= read.table( paste0(baseDir,"/",
+	                           paste("RORalpha_KO_vs_WT",paste0("UNIQUE_T",T),DIRECTION,
+	                                 "filter_10reads_3samples",
+	                                 "replicate.genotype_type","txt" , sep='.') ) )
+  sig_entrez = entrezId[ x$V1 ,'ENTREZID']
+
+  n = length(x$V1)
+  m = length(x$V1) - sum(isNA(sig_entrez) )
+  print(paste( 'T',T,DIRECTION,'regulated' , "- number of significant" , n ,"; number of mapped" , m , '(' ,round(100*m/n,2), '% )' ) )
+  eP <- enrichPathway(gene=sig_entrez, pvalueCutoff = 0.05, readable=TRUE , organism='mouse')
+  if( min( eP@result$p.adjust ) < 0.05 ){
+  myDotplot(eP , showCategory=20, font.size=8, label_format=30 , title= paste('T',T,'-',DIRECTION ) )
+
+  ggsave( paste0(baseDir,"/",
+	                           paste("RORalpha_KO_vs_WT",paste0("UNIQUE_T",T),DIRECTION,
+	                                 "filter_10reads_3samples",
+	                                 "replicate.genotype_type","enrichedReactome ","png" , sep='.') ) )
+  } else {
+    print('    no significantly enriched reactome pathway')
+  }  
+
+
+}
+}
+```

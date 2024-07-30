@@ -644,14 +644,14 @@ To this end, we provide links to each tool&rsquo;s website. </p>
 <p>FastQC is reasonably intelligent, and will try to recognise the file format and uncompress it if necessary (so no need to decompress manually).</p>
 <p>So, let&rsquo;s apply fastQC to the toy dataset. </p>
 <p><strong>Task:</strong> </p>
-<p>On the cluster, in the folder <code>day1</code>, create a new folder <code>mouseMT</code> and enter it.</p>
+<p>On the cluster, create a new folder <code>mouseMT</code> and enter it.</p>
 <div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>mouseMT
 <span class="nb">cd</span><span class="w"> </span>mouseMT
 </code></pre></div>
 <p>Then, create here a new text file name <code>010_s_fastqc.sh</code> (with <code>nano</code>, or on your local computer ), and paste the following content in it:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>A note on our choice of naming conventions. Each step is numbered: 010 for fastqc, 020 for mulqc, 030 fro trimming,&hellip;</p>
+<p>A note on our choice of naming conventions. Each step is numbered: 010 for fastqc, 020 for multiqc, 030 for trimming,&hellip;</p>
 <p>Sub-steps are then denoted for example 040 is mapping, and so 041 for indexing, 042 for mapping, 043 for QC of the mapping,&hellip;</p>
 <p>The number is followed by a caracter which depends on the type of file/folder:</p>
 <ul>
@@ -684,16 +684,27 @@ fastqc<span class="w"> </span>-o<span class="w"> </span>010_d_fastqc<span class=
 <p>You can also check that the <code>010_fastqc/</code> folder contains several html files:</p>
 <div class="highlight"><pre><span></span><code>ls<span class="w"> </span>010_d_fastqc/
 </code></pre></div>
-<p>output:
+<p><strong>output:</strong></p>
 <div class="highlight"><pre><span></span><code>sample_a1_fastqc.html<span class="w">  </span>sample_a2_fastqc.html<span class="w">  </span>sample_a3_fastqc.html<span class="w">  </span>sample_a4_fastqc.html<span class="w">  </span>sample_b1_fastqc.html<span class="w">  </span>sample_b2_fastqc.html<span class="w">  </span>sample_b3_fastqc.html<span class="w">  </span>sample_b4_fastqc.html
 sample_a1_fastqc.zip<span class="w">   </span>sample_a2_fastqc.zip<span class="w">   </span>sample_a3_fastqc.zip<span class="w">   </span>sample_a4_fastqc.zip<span class="w">   </span>sample_b1_fastqc.zip<span class="w">   </span>sample_b2_fastqc.zip<span class="w">   </span>sample_b3_fastqc.zip<span class="w">   </span>sample_b4_fastqc.zip
-</code></pre></div></p>
+</code></pre></div>
 <p>Unfortunately, we cannot consult the html files content directly on the cluster. </p>
 <p>We will look at one of these html report on the toy dataset, and one of the pre-computed report from one of our other datasets.</p>
 <ul>
-<li>repatriate one of the html report of the mouseMT dataset to your local computer, as well as the one you can find in:
-<code>/shared/data/Solutions/Liu2015/010_d_fastqc/SRR3180538_TAM1_1_fastqc.html</code></li>
-<li>Look at these two QC reports in a web browser. What are your conclusions ? Would you want to perform some operations on the reads, such as low-quality bases trimming, removal of adapters ?</li>
+<li>
+<p>repatriate one of the html report of the mouseMT dataset to your local computer, as well as the one you can find in:
+<code>/shared/data/Solutions/Liu2015/010_d_fastqc/SRR3180538_TAM1_1_fastqc.html</code>
+    <strong>OR</strong>
+    Download them:</p>
+<ul>
+<li><a class="md-button" href="../../assets/html/SRR3180535_EtOH1_1_fastqc.html"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M64 0C28.7 0 0 28.7 0 64v384c0 35.3 28.7 64 64 64h256c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zm192 0v128h128L256 0zM153 289l-31 31 31 31c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L71 337c-9.4-9.4-9.4-24.6 0-33.9l48-48c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9zm112-34 48 48c9.4 9.4 9.4 24.6 0 33.9l-48 48c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l31-31-31-31c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0z"/></svg></span> a fastQC report from the Ruhland 2016 data</a></li>
+<li><a class="md-button" href="../../assets/html/SRR1272187_1_fastqc.html"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M64 0C28.7 0 0 28.7 0 64v384c0 35.3 28.7 64 64 64h256c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zm192 0v128h128L256 0zM153 289l-31 31 31 31c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L71 337c-9.4-9.4-9.4-24.6 0-33.9l48-48c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9zm112-34 48 48c9.4 9.4 9.4 24.6 0 33.9l-48 48c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l31-31-31-31c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0z"/></svg></span> a fastQC report from the Liu 2015 data</a></li>
+<li><a class="md-button" href="../../assets/html/sample_a1_fastqc.html"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M64 0C28.7 0 0 28.7 0 64v384c0 35.3 28.7 64 64 64h256c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zm192 0v128h128L256 0zM153 289l-31 31 31 31c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L71 337c-9.4-9.4-9.4-24.6 0-33.9l48-48c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9zm112-34 48 48c9.4 9.4 9.4 24.6 0 33.9l-48 48c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l31-31-31-31c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0z"/></svg></span> a fastQC report from the mouseMT data</a></li>
+</ul>
+</li>
+<li>
+<p>Look at these QC reports in a web browser. What are your conclusions ? Would you want to perform some operations on the reads, such as low-quality bases trimming, removal of adapters ?</p>
+</li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Reminder</p>
@@ -831,6 +842,13 @@ fastqc<span class="w"> </span>-o<span class="w"> </span>010_d_fastqc/<span class
 <li>
 <p>Look at the generated html report. What are your conclusions ?</p>
 </li>
+<li>
+<p>Compare the report of the toy dataset with the following report for the Ruhland2016 and Liu2015 data:</p>
+<ul>
+<li><a class="md-button" href="../../assets/html/020_multiqc_Liu2015.html"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M64 0C28.7 0 0 28.7 0 64v384c0 35.3 28.7 64 64 64h256c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zm192 0v128h128L256 0zM153 289l-31 31 31 31c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L71 337c-9.4-9.4-9.4-24.6 0-33.9l48-48c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9zm112-34 48 48c9.4 9.4 9.4 24.6 0 33.9l-48 48c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l31-31-31-31c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0z"/></svg></span> Download the report</a></li>
+<li><a class="md-button" href="../../assets/html/020_multiqc_Ruhland2016.html"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M64 0C28.7 0 0 28.7 0 64v384c0 35.3 28.7 64 64 64h256c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zm192 0v128h128L256 0zM153 289l-31 31 31 31c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L71 337c-9.4-9.4-9.4-24.6 0-33.9l48-48c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9zm112-34 48 48c9.4 9.4 9.4 24.6 0 33.9l-48 48c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l31-31-31-31c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0z"/></svg></span> Download the report</a></li>
+</ul>
+</li>
 </ul>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
@@ -877,7 +895,7 @@ This is not the case here because this is a toy dataset with a very small number
 <details class="success">
 <summary>Interpretation of the report for the Liu2015 data.</summary>
 <p>We will interpret the report for the Liu2015 data.</p>
-<p><a class="md-button" href="../assets/html/020_multiqc_mouseLiu2015.html"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M0 64C0 28.7 28.7 0 64 0h160v128c0 17.7 14.3 32 32 32h128v144H176c-35.3 0-64 28.7-64 64v144H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0l128 128zM176 352h32c30.9 0 56 25.1 56 56s-25.1 56-56 56h-16v32c0 8.8-7.2 16-16 16s-16-7.2-16-16V368c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24h-16v48h16zm96-80h32c26.5 0 48 21.5 48 48v64c0 26.5-21.5 48-48 48h-32c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16v-64c0-8.8-7.2-16-16-16h-16v96h16zm80-112c0-8.8 7.2-16 16-16h48c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32v32h32c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32v48c0 8.8-7.2 16-16 16s-16-7.2-16-16V368z"/></svg></span> Download the report</a></p>
+<p><a class="md-button" href="../../assets/html/020_multiqc_Liu2015.html"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M64 0C28.7 0 0 28.7 0 64v384c0 35.3 28.7 64 64 64h256c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zm192 0v128h128L256 0zM153 289l-31 31 31 31c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L71 337c-9.4-9.4-9.4-24.6 0-33.9l48-48c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9zm112-34 48 48c9.4 9.4 9.4 24.6 0 33.9l-48 48c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l31-31-31-31c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0z"/></svg></span> Download the report</a></p>
 <p><img alt="per base sequence quality" src="../../assets/images/multiqc_liu2015/fastqc_per_base_sequence_quality_plot.png" /></p>
 <p>The PHRED quality of reads drop below 30 around base 75. All samples seem affected. One sample seems to have some quality drops at specific timepoints/positions.</p>
 <p><img alt="fastqc per sequence quality scores plot" src="../../assets/images/multiqc_liu2015/fastqc_per_sequence_quality_scores_plot.png" /></p>

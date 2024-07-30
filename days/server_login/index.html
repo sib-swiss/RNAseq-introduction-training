@@ -982,10 +982,12 @@ To check this, you need to have a look at the output file, <code>myOutput.o</cod
 <p>If everything worked, you will see the normal output of your script. 
 Otherwis, you will see some error messages.</p>
 <h3 id="specifying-resources-needed-to-slurm">Specifying resources needed to SLURM</h3>
-<p>When submitting the previous job, we did not specify our resource requirements to SLURM, which means that SLURM assigned it the default:
- * 1 hour
- * 1 CPU
- * 1 GB of RAM</p>
+<p>When submitting the previous job, we did not specify our resource requirements to SLURM, which means that SLURM assigned it the default:</p>
+<ul>
+<li>1 hour</li>
+<li>1 CPU</li>
+<li>1 GB of RAM</li>
+</ul>
 <p>Often, we will want something different from that, and so we will use options in order to specify what we need.</p>
 <p>For example:</p>
 <ul>

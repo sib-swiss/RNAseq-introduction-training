@@ -550,6 +550,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#mansingh-2024-correction" class="md-nav__link">
+    Mansingh 2024 - correction
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -717,6 +724,13 @@
           <li class="md-nav__item">
   <a href="#tuch-2010-edger-correction" class="md-nav__link">
     Tuch 2010 - EdgeR correction
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mansingh-2024-correction" class="md-nav__link">
+    Mansingh 2024 - correction
   </a>
   
 </li>
@@ -1266,11 +1280,29 @@ Up       1
 <li><a :=":" class="md-button" href="../../assets/txt/featureCounts_Liu2015.counts.txt" target="_blank"> <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M0 64C0 28.7 28.7 0 64 0h160v128c0 17.7 14.3 32 32 32h128v288c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0l128 128z"/></svg></span> Liu2015 count matrix</a></li>
 </ul>
 </li>
-<li><a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0009317">Tuch 2010</a> dataset<ul>
+<li>
+<p><a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0009317">Tuch 2010</a> dataset</p>
+<ul>
 <li>2 factors design : 3 patients (8, 33, and 51) each had 1 sample from tumor tissue (T) and normal tissue (N) sequenced. </li>
 <li>the goal is to find the difference between tumor and normal while taking the patient into account.</li>
 <li><code>/shared/data/Solutions/Tuch2010/Tuch_et_al_2010_counts.csv</code></li>
 <li><a :=":" class="md-button" href="../../assets/txt/Tuch_et_al_2010_counts.csv" target="_blank"> <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M0 64C0 28.7 28.7 0 64 0h160v128c0 17.7 14.3 32 32 32h128v288c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0l128 128z"/></svg></span> Tuch 2010 count matrix</a></li>
+</ul>
+</li>
+<li>
+<p><a href="https://physoc.onlinelibrary.wiley.com/doi/10.1113/JP285585">Mansingh 2024</a> dataset</p>
+<ul>
+<li>A complex design with 36 mice from two genotypes (KO,WT) and collected at 6 time points (T0,T4,T8,T12,T16,T20), with 3 technical replicate per mouse (108 samples in total)</li>
+<li>The goal is to investigate the effect of the genotype on the circadian cycle (represented with the different time points)</li>
+<li><code>/shared/data/Solutions/Mansingh2024/Mansingh2024_expression_matrix.txt</code></li>
+<li><a :=":" class="md-button" href="../../assets/txt/Mansingh2024_expression_matrix.txt" target="_blank"> <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M0 64C0 28.7 28.7 0 64 0h160v128c0 17.7 14.3 32 32 32h128v288c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0l128 128z"/></svg></span> Mansingh 2024 count matrix</a></li>
+<li>The mice ids should be understood as follow : <code>HL3YTBGX5_4_3__7_CTRL_ZT4</code> means:<ul>
+<li>replicate <code>HL3YTBGX5</code></li>
+<li>mouse <code>7</code></li>
+<li>genotype WT (<code>CTRL</code>)</li>
+<li>time point 4 (<code>ZT4</code>)</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1317,16 +1349,43 @@ Up       1
 <span class="nf">head</span><span class="p">(</span><span class="n">raw_counts</span><span class="p">);</span><span class="w"> </span><span class="nf">tail</span><span class="p">(</span><span class="n">raw_counts</span><span class="p">);</span><span class="w"> </span><span class="nf">dim</span><span class="p">(</span><span class="n">raw_counts</span><span class="p">)</span>
 <span class="nf">colSums</span><span class="p">(</span><span class="n">raw_counts</span><span class="p">)</span><span class="w"> </span><span class="c1"># total number of counted reads per sample</span>
 </code></pre></div>
+<p>output:</p>
+<div class="highlight"><pre><span></span><code>                       EtOH1.counts EtOH2.counts EtOH3.counts TAM1.counts TAM2.counts TAM3.counts
+ENSMUSG00000000001         6726         5150         5362        4867        5982        5527
+ENSMUSG00000000003            0            0            0           0           0           0
+ENSMUSG00000000028           84          162          127         130         260         136
+ENSMUSG00000000031          116         4890          153          81         113         239
+ENSMUSG00000000037           35           24           41          13          11          21
+ENSMUSG00000000049            4            5            2           4           4           5
+                   EtOH1.counts EtOH2.counts EtOH3.counts TAM1.counts TAM2.counts TAM3.counts
+ENSMUSG00000107387            0            0            0           0           0           0
+ENSMUSG00000107388           20           32           28          16           8          30
+ENSMUSG00000107389            0            0            1           0           0           0
+ENSMUSG00000107390            2            0            0           3           2           3
+ENSMUSG00000107391            0            0            0           0           0           0
+ENSMUSG00000107392            0            0            0           0           0           0
+[1] 46078     6
+</code></pre></div>
+<p>there are 46&lsquo;078 genes and 6 samples.</p>
 </details>
 <details class="success">
 <summary>preprocessing</summary>
-<div class="highlight"><pre><span></span><code><span class="c1">## telling DESeq2 what the experimental design was</span>
+<p><div class="highlight"><pre><span></span><code><span class="c1">## telling DESeq2 what the experimental design was</span>
 <span class="c1"># note: by default, the 1st level is considered to be the reference/control/WT/...</span>
 <span class="n">treatment</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="s">&quot;EtOH&quot;</span><span class="p">,</span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="s">&quot;TAM&quot;</span><span class="p">,</span><span class="m">3</span><span class="p">)),</span><span class="w"> </span><span class="n">levels</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;EtOH&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;TAM&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
 <span class="n">colData</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">treatment</span><span class="p">,</span><span class="w"> </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">colnames</span><span class="p">(</span><span class="n">raw_counts</span><span class="p">))</span>
 <span class="n">colData</span>
-
-<span class="c1">## creating the DESeq data object &amp; positing the model</span>
+</code></pre></div>
+output:
+<div class="highlight"><pre><span></span><code>             treatment
+EtOH1.counts      EtOH
+EtOH2.counts      EtOH
+EtOH3.counts      EtOH
+TAM1.counts        TAM
+TAM2.counts        TAM
+TAM3.counts        TAM
+</code></pre></div></p>
+<div class="highlight"><pre><span></span><code><span class="c1">## creating the DESeq data object &amp; positing the model</span>
 <span class="n">dds</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">DESeqDataSetFromMatrix</span><span class="p">(</span>
 <span class="w">  </span><span class="n">countData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">raw_counts</span><span class="p">,</span><span class="w"> </span><span class="n">colData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">colData</span><span class="p">,</span><span class="w"> </span>
 <span class="w">  </span><span class="n">design</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">treatment</span><span class="p">)</span>
@@ -1582,6 +1641,11 @@ FDRs show less correlation but their <strong>ranks</strong> are highly correlate
 </details>
 <h3 id="tuch-2010-edger-correction">Tuch 2010 - EdgeR correction</h3>
 <p>We refer you here to section 4.1 of <a href="https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf">edgeR&rsquo;s vignette</a>.</p>
+<h3 id="mansingh-2024-correction">Mansingh 2024 - correction</h3>
+<p>Here you can download more or less the script we used to analyze this data in the paper.</p>
+<p>You will see that the analysis is fairly complex, with exclusion of outliers, accounting for technical batch effect, &hellip;</p>
+<p>Also, this code covers enrichment too</p>
+<p><a :=":" class="md-button" href="../../assets/txt/Mansingh2024_DESeq2.Rmd" target="_blank"> <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M64 0C28.7 0 0 28.7 0 64v384c0 35.3 28.7 64 64 64h256c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zm192 0v128h128L256 0zM153 289l-31 31 31 31c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L71 337c-9.4-9.4-9.4-24.6 0-33.9l48-48c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9zm112-34 48 48c9.4 9.4 9.4 24.6 0 33.9l-48 48c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l31-31-31-31c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0z"/></svg></span> Mansingh 2024 analysis script</a></p>
 <h2 id="additional-importing-counts-from-salmon-with-tximport">Additional : importing counts from salmon with <code>tximport</code></h2>
 <p>The <code>tximport</code> R packages offers a fairly simple set of functions to get <strong>transcript-level</strong> expression quantification from salmon or kallisto into a differential <strong>gene</strong> expression analysis.</p>
 <p><strong>Task :</strong> import salmon transcript-level quantification in R in order to perform a DE analysis on it using either edgeR or DESeq2.
