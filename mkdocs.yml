@@ -2,7 +2,10 @@ site_name: Introduction to RNA-Seq - From quality control to pathway analysis
 
 nav:
     - Home: index.md
-    - Precourse preparations: precourse.md
+    - Precourse preparations: 
+        - prerequisites: precourse.md
+        - UNIX crash course: days/unix_crash.md
+        - R crash course: days/R_crash.md
     - Course schedule: course_schedule.md
     - Slides notes (draft): slides_notes.md
     - Cheatsheets: cheatsheets.md

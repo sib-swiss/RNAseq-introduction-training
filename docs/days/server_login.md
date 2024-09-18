@@ -1,19 +1,19 @@
 
-To conduct the practicals of this course, we will be using a dedicated High Performance Computing cluster. 
-This matches the reality of most NGS workflows, which cannot be completed in a reasonable time on a single machine. 
+To conduct the practicals of this course, we will be using a dedicated distant server with enough computing capabilities to handle RNAseq data amd where all the necessary software has been installed.
 
-To interact with this cluster, you will have to log in to a distant *head node*. From there you will be able to distribute your computational tasks to the cluster using a *job scheduler* called Slurm.
+This matches the reality of most NGS workflows, which cannot be completed in a reasonable time on a single laptop machine. 
 
-This page will cover our first contact with the distant cluster. 
+To interact with this server, you will have to connect and log in to it. We will do so through an Rstudio server, which, conveniently, 
+let's us start a UNIX terminal to launch bioinformatics tools, retrieve and send files to the server, and use R scripts to analyse our results.
+
+This page will cover our first contact with the distant server. 
 
 
 **You will learn to :**
 
- * understand a typical computer cluster architecture.
  * connect to the server.
- * use the command line to perform basic operations on the head node.
+ * use the command line to perform basic operations.
  * exchange files between the server and your own machine.
- * submit a job to the cluster.
 
 
 !!! note 
@@ -22,62 +22,19 @@ This page will cover our first contact with the distant cluster.
 
 
 
-## The computing cluster
-
-The computing cluster follows an architecture that enables several users to distribute computational tasks among several machines which share a number of resources, such as a common file system.
-
-![cluster_overview](../assets/images/cluster_overview.png)
-
-Users do not access each machine individually, but rather connect to a **head node**. From there, they can interact with the cluster using the **job scheduler** (here slurm).
-The job scheduler's role is to manage where and how to run the jobs of all users, such that waiting time is minimized and resource usage is shared and optimized.
-
 !!! Warning
-	Everyone is connected to the same head node. Do not perform compute-intensive tasks on it, or you will slow everyone down! 
+	Everyone is connected to the same server. There are a few guardrails in place that should prevent any one user from crashing the server or hogging all the resources, but no system is fully foolproof. Consequently, **before you launch a serious job, always take the time to test it on a smaller dataset** in order to estimate if the big job might be too big.
 
 
 ## Connect to the server
 
-Say you want to connect to cluster with address `xx.xx.xx.xx` and your login is `login`.
+Follow the teacher's instructions to get the rstudio server address, as well as you login and password
 
 
-!!! Warning 
-	If you are doing this course with a teacher, use the link, login and password provided before or during the course. 
-
-The first step will be to open a **terminal**, a software that provides a command-line interface to a computer.
-
-=== "Mac"
-    
-    Open a terminal, for instance with the application Xterm, or Xquartz.
-    <!-- Might confuse some who just read "Terminal" -->
-
-=== "Linux"
-    
-    Open a new terminal.
-
-=== "Windows"
-    
-    Open the application mobaXterm (or any ssh-enabling terminal application you prefer).
-
-    On mobaXterm, click on "Start a local Terminal".
-
----
-
-In the terminal, type the following command:
-
-```sh
-ssh login@xx.xx.xx.xx
-```
-
-When prompted for your password, type it and press Enter. 
-
-!!! note
-
-    There is no cursor or '●' character appearing while you type your password. This is normal. Deleting characters also works invisibly.
+## Start a terminal on the server
 
 
-After a few seconds, you should be logged into the *head node* and ready to begin.
-
-<!-- TODO : Would be nice to add a screenshot? -->
+![a view of Rstudio's terminal](../assets/images/rstudio_terminal.png)
 
 
 ## Using command line on the cluster
@@ -99,14 +56,13 @@ pwd
 When you start a session on a distant computer, you are placed in your `home` directory. So the cluster should return something like:
 
 ```
-/shared/home/<login>
+/home/<login>
 ```
 
 
 From then, we are going to do a little step-by-step practical to go through some of bash's most useful commands for this course.
 
 ### Creating a directory
-
 
 
 !!! example "practical"
@@ -127,15 +83,15 @@ From then, we are going to do a little step-by-step practical to go through some
     cd mouseMT
     ```
 
-The directory `/shared/data/` contains data and solutions for most practicals. 
+The directory `/data/` contains data and solutions for most practicals. 
 
 !!! example "practical"
 
-    List the content of the `/shared/data/` directory.
+    List the content of the `/data/` directory.
 
 ??? success "Answer"
     ```sh
-    ls /shared/data/
+    ls /data/
     ```
     
 !!! note
@@ -144,29 +100,22 @@ The directory `/shared/data/` contains data and solutions for most practicals.
 
 !!! example "practical"
 
-    Copy the script `010_s_fastqc.sh` from  `/shared/data/Solutions/mouseMT` into your current directory,
+    Copy the script `010_s_fastqc.sh` from  `/data/Solutions/mouseMT` into your current directory,
     and then print the content of this script to the screen.
 
 ??? success "Answer"
     ```sh
-    cp /shared/data/Solutions/mouseMT/010_s_fastqc.sh .
+    cp /data/Solutions/mouseMT/010_s_fastqc.sh .
     more 010_s_fastqc.sh
     ```
     output:
     ```
     #!/usr/bin/bash
-    #SBATCH --job-name=fastqc_mouseMT
-    #SBATCH --time=01:00:00
-    #SBATCH --cpus-per-task=1
-    #SBATCH --mem=1G
-    #SBATCH -o 010_l_fastqc_mouseMT.o
-    
-    ml fastqc
     
     # creating the output folder
     mkdir -p 010_d_fastqc/
     
-    fastqc -o 010_d_fastqc /shared/data/DATA/mouseMT/*.fastq
+    fastqc -o 010_d_fastqc /data/DATA/mouseMT/*.fastq
     ```
 
 We'll see what all this means soon.
@@ -174,69 +123,42 @@ We'll see what all this means soon.
 
 ### Creating and editing a file
 
-To edit files on the distant server, we will use the command line editor `nano`. It is far from the most complete or efficient one, but it can be found on most servers, and is arguably among the easiest to start with.
+To edit files on the distant server, we will use the Rstudio file editor. It is primarily designed for R script but it works very well for  other types of files. 
+
 
 !!! note
-	Alternatively, feel free to use any other CLI editor you prefer, such as `vi`.
+    Alternatively, we could use command line editor `nano`. It is far from the most complete or efficient one, but it can be found on most servers, and is arguably among the easiest command-line file editor to start with.
 
-To start editing a file named `test.txt`, type :
 
-```sh
-	nano test.txt
-```
+To start editing a file named `test.txt`, in Rstudio go to `File > New File > Text File`, or use the shortcut `Ctrl+Alt+Shift+N`
 
-You will be taken to the `nano` interface :
 
-![nano screenshot](../assets/images/nano_screenshot.png)
+![Rstudio screenshot](../assets/images/rstudio_new_file_screenshot.png)
 
-Type in your favorite movie quote, and then exit by pressing `Ctrl+x` (`command+x` on a Mac keyboard), and then `y` and `Enter` when prompted to save the modifications you just made.
+Type in your favorite movie quote, and then save it with `Ctrl+s`, give it an appropriate name, like `test.txt` for example
 
-You can check that your modifications were saved by typing
+You can check that your modifications were saved from the terminal by typing
 
 ```sh
 more test.txt
 ```
 
+!!! note
+    for the command above to work, your terminal needs to be in the same folder as the file. Take careful note of where you save your files, and where your terminal is running.
+
+
 ### Exchanging files with the server
 
-Whether you want to transfer some data to the cluster or retrieve the results of your latest computation, it is important to be able to exchange files with the distant server.
+Whether you want to transfer some data to the server or retrieve the results of your latest computation, it is important to be able to exchange files with the distant server.
 
 
-There exists several alternatives, depending on your platform and preferences.
+Fortunately, Rstudio provides an easy way to do this.
+
+![a view of Rstudio's interface for download and upload](../assets/images/rstudio_download.png)
 
 
-=== "filezilla"
-
-	There are nice and free software with graphical user interfaces, such as [filezilla](https://filezilla-project.org/), to help you manage exchanges with the distant server. Feel free to install and experiment with it during the break.
-	![filezilla_mainscreen](https://filezilla-project.org/images/screenshots/fz3_win_main.png)
-
-=== "mobaXterm"
-
-	If you are using mobaXterm, the left panel should provide a graphical SFTP browser in the left sidebar which allows you to browse and drag and drop files directly from/to the remote server.
-
-	![mobaxterm_leftpanel](https://mobaxterm.mobatek.net/img/moba/features/feature-sftp-browser.png)
-
-=== "command line"
-
-	We will use `scp`.
-
-	To copy a file from the server to your machine, use this syntax on a **terminal in your local machine** (open a new terminal if necessary).
-
-	```sh
-	scp <login>@<server-adress>:/path/to/file/on/server/file.txt /local/destination/
-	```
-
-	For example, to copy the file `test.txt` you just created in the folder `day1/`, to your current (local) working directory (NB:    here `~` will be interpreted as your home directory, this is a useful and time-saving shorthand):
-
-	```sh
-	scp login@xx.xx.xx.xx:~/day1/test.txt .
-	```	
-
-	To copy a file from your machine to the server:
-
-	```sh
-	scp /path/to/file/local/file.txt <login>@<server-adress>:/destination/on/server/
-	```
+!!! note
+    Alternatively, there exists several alternatives, from using the command line tool `scp` to graphical tools such as fileZilla.
 
 ---
 
@@ -283,12 +205,12 @@ Then, type this into the file:
 ## whatever is after # is not interpreted as code.
 
 # the echo command prints whatever text follows to the screen: 
-echo "looking at the size of the elements of /shared/data/"
+echo "looking at the size of the elements of /data/"
 
 sleep 15 # making the script wait for 15 seconds - this is just so we can see it later on. 
 
 # du : "disk usage", a command that returns the size of a folder structure.
-du -h -d 2 /shared/data/
+du -h -d 2 /data/
 ```
 
 The first line is not 100% necessary at this step, but it will be in the next part, so we might as well put it in now. It helps some software know that this file contains bash code. 
@@ -302,8 +224,56 @@ sh myScript.sh
 !!! warning
     Be sure to execute the script from the folder that it is in. Otherwise you would have to specify in which folder to find the script using its path.
 
-This should have printed some information about the size of `/shared/data/` subfolders to the screen.
+This should have printed some information about the size of `/data/` subfolders to the screen.
 
+
+## Activate the conda environment containing bioinformatics software
+
+As it stands, the terminal you are currently using does not have access to bioinformatics software:
+
+```sh 
+fastqc --help
+```
+
+results in the error : `Command 'fastqc' not found, ...`
+
+Indeed, bioinformatics tools are not installed by default on the server.
+
+Here, we have prepared the bioinformatics software in a [conda environment](https://conda.io/projects/conda/en/latest/user-guide/getting-started.html) (conda environments provide a useful way to manage software stacks across plateform).
+
+
+So, first we need to initialize conda:
+
+```sh
+conda init
+```
+Then, for the changes to take place we need to start a new terminal :
+
+![Rstudio : showing button to start a new terminal](../assets/images/rstudio_new_terminal.png)
+
+Once this is done, you can notice that now you terminal line starts with `(base)`. This is a sign that conda is activated and that you are currently using its default environment.
+
+So finally we can activate the environment containing tools, which is called `ngs-tools`:
+```sh
+conda activate ngs-tools
+```
+
+Now when you run the following command you should see the fastqc help:
+```sh 
+fastqc --help
+```
+
+
+
+# ANNEX : HPC clusters
+
+The following annex discuss HPC clusters, where you do not execute your compute-intensive job directly on the server you connect to, 
+but rather to submit jobs to a **scheduler** which then allocate them compute resources on dedicated compute nodes.
+
+Having to use such a cluster is quite common in bioinformatics given the size of most modern datasets.
+
+!!! note
+    in this annex we only discuss the SLURM scheduler. Other schedulers use different command lines and a different linguo (although many concepts are similar).
 
 ## Submitting jobs
 
@@ -420,10 +390,10 @@ For our example, it could look like this:
 #SBATCH -o test_log.o
 
 
-echo "looking at the size of the elements of /shared/data/"
+echo "looking at the size of the elements of /data/"
 sleep 15 # making the script wait for 15 seconds - this is just so we can see it later on. 
 # `du` is "disk usage", a command that returns the size of a folder structure.
-du -h -d 2 /shared/data/
+du -h -d 2 /data/
 
 ```
 
@@ -613,7 +583,7 @@ foo=123                # Initialize variable foo with 123
 echo $foo              # Print variable foo, sensitive to special characters
 echo ${foo}            # Another way to print variable foo, not sensitive to special characters
 
-OUTPUT=`wc -l du -h -d 2 /shared/data/` # puts the result of the command 
+OUTPUT=`wc -l du -h -d 2 /data/` # puts the result of the command 
                                         #   between `` in variable OUTPUT
 
 echo $OUTPUT           # print variable output

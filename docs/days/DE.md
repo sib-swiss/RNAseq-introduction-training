@@ -12,37 +12,24 @@ Once the reads have been mapped and counted, one can assess the differential exp
 [:fontawesome-solid-file-pdf: Download the presentation](../assets/pdf/RNA-Seq_06_DE.pdf){target=_blank : .md-button }
 
 [Rstudio website](https://www.rstudio.com/)
-<!-- Suggestion: RStudio reminders ??? Or link to some course or something? -->
-<!-- Perhaps this one? https://www.datacamp.com/tutorial/r-studio-tutorial -->
 
 [edgeR user's guide](https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf){target=_blank : .md-button }
 
 [DESeq2 vignette](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html){target=_blank : .md-button }
 
 
-## Connexion to the Rstudio server
-
-!!! note
-	
-	This step is intended only for users who attend the course with a teacher. Otherwise you will have to rely on your own installation of Rstudio.
-
-
-The analysis of the read count data will be done on an RStudio instance, using the R language and some relevant [Bioconductor](http://bioconductor.org/) libraries.
-
-As you start your session on the RStudio server, please make sure that you know where your data is situated with respect to your **working directory** (use `getwd()` and `setwd()` to respectively : know what your working directory is, and change it as necessary).
-
 
 
 ## Differential Expression Inference
 
-Let's analyze the `mouseMT` toy dataset.
+Let's analyze the `mouseMT` toy dataset together.
 
 
-To help you get started, here is the code to load the reads counts into R as a count matrix:
+First, here is the code to load the reads counts into R as a count matrix:
 
 
 ```r
-folder  = "/shared/data/Solutions/mouseMT/042_d_STAR_map_raw/"
+folder  = "/data/Solutions/mouseMT/042_d_STAR_map_raw/"
 
 # we skip the 4 first lines, which contains 
 # N_unmapped , N_multimapping , N_noFeature , N_ambiguous   
@@ -673,22 +660,22 @@ You may play with either of the following datasets:
 
  * Ruhland2016
  	* simple 1 factor design
- 	* `/shared/data/Solutions/Ruhland2016/countFiles/featureCounts_Ruhland2016.counts.txt`
+ 	* `/data/Solutions/Ruhland2016/countFiles/featureCounts_Ruhland2016.counts.txt`
  	* [ :fontawesome-solid-file: Ruhland2016 count matrix](../assets/txt/featureCounts_Ruhland2016.counts.txt){target=_blank : .md-button }
  * the Liu2015 dataset:
 	 * simple 1 factor design
-	 * `/shared/data/Solutions/Liu2015/countFiles/featureCounts_Liu2015.counts.txt`
+	 * `/data/Solutions/Liu2015/countFiles/featureCounts_Liu2015.counts.txt`
 	 * [ :fontawesome-solid-file: Liu2015 count matrix](../assets/txt/featureCounts_Liu2015.counts.txt){target=_blank : .md-button }
  * [Tuch 2010](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0009317) dataset
  	* 2 factors design : 3 patients (8, 33, and 51) each had 1 sample from tumor tissue (T) and normal tissue (N) sequenced. 
  	* the goal is to find the difference between tumor and normal while taking the patient into account.
- 	* `/shared/data/Solutions/Tuch2010/Tuch_et_al_2010_counts.csv`
+ 	* `/data/Solutions/Tuch2010/Tuch_et_al_2010_counts.csv`
 	* [ :fontawesome-solid-file: Tuch 2010 count matrix](../assets/txt/Tuch_et_al_2010_counts.csv){target=_blank : .md-button }
 
  * [Mansingh 2024](https://physoc.onlinelibrary.wiley.com/doi/10.1113/JP285585) dataset
  	* A complex design with 36 mice from two genotypes (KO,WT) and collected at 6 time points (T0,T4,T8,T12,T16,T20), with 3 technical replicate per mouse (108 samples in total)
  	* The goal is to investigate the effect of the genotype on the circadian cycle (represented with the different time points)
- 	* `/shared/data/Solutions/Mansingh2024/Mansingh2024_expression_matrix.txt`
+ 	* `/data/Solutions/Mansingh2024/Mansingh2024_expression_matrix.txt`
 	* [ :fontawesome-solid-file: Mansingh 2024 count matrix](../assets/txt/Mansingh2024_expression_matrix.txt){target=_blank : .md-button }
  	* The mice ids should be understood as follow : `HL3YTBGX5_4_3__7_CTRL_ZT4` means:
  		* replicate `HL3YTBGX5`
@@ -720,7 +707,7 @@ You may play with either of the following datasets:
 	
 	
 	# reading the counts files - adapt the file path to your situation
-	raw_counts <-read.table('/shared/data/Solutions/Ruhland2016/countFiles/featureCounts_Ruhland2016.counts.txt' , 
+	raw_counts <-read.table('/data/Solutions/Ruhland2016/countFiles/featureCounts_Ruhland2016.counts.txt' , 
 	                        skip=1 , sep="\t" , header=T)
 	
 	# setting up row names as ensembl gene ids
@@ -924,7 +911,7 @@ You may play with either of the following datasets:
 	library(ggplot2)
 
 	# reading the counts files - adapt the file path to your situation
-	raw_counts <- read.table('.../Ruhland2016_featureCount_result.counts' , 
+	raw_counts <- read.table('/data/Solutions/Ruhland2016/countFiles/featureCounts_Ruhland2016.counts.txt' , 
 	           skip=1 , sep="\t" , header=T)
 	
 	# setting up row names as ensembl gene ids
@@ -1145,5 +1132,5 @@ The `tximport` R packages offers a fairly simple set of functions to get **trans
 **Additional:** compare the results with the ones obtained from STAR-aligned reads.
 
  * The [tximport vignette](https://bioconductor.org/packages/release/bioc/vignettes/tximport/inst/doc/tximport.html) is a very good guide for this task.
- * If you have not computed them, you can find files with expression quantifications in : `/shared/data/Solutions/Liu2015/` and `/shared/data/Solutions/Ruhland2016/`
+ * If you have not computed them, you can find files with expression quantifications in `/data/Solutions/Ruhland2016/`
 
