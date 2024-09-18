@@ -63,7 +63,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#the-computing-cluster" class="md-skip">
+        <a href="#connect-to-the-server" class="md-skip">
           Skip to content
         </a>
       
@@ -220,10 +220,72 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          Precourse preparations
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Precourse preparations
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../precourse/" class="md-nav__link">
-        Precourse preparations
+        prerequisites
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unix_crash/" class="md-nav__link">
+        UNIX crash course
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../R_crash/" class="md-nav__link">
+        R crash course
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -354,15 +416,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-computing-cluster" class="md-nav__link">
-    The computing cluster
+  <a href="#connect-to-the-server" class="md-nav__link">
+    Connect to the server
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#connect-to-the-server" class="md-nav__link">
-    Connect to the server
+  <a href="#start-a-terminal-on-the-server" class="md-nav__link">
+    Start a terminal on the server
   </a>
   
 </li>
@@ -409,6 +471,21 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#activate-the-conda-environment-containing-bioinformatics-software" class="md-nav__link">
+    Activate the conda environment containing bioinformatics software
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#annex-hpc-clusters" class="md-nav__link">
+    ANNEX : HPC clusters
+  </a>
+  
+    <nav class="md-nav" aria-label="ANNEX : HPC clusters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#submitting-jobs" class="md-nav__link">
     Submitting jobs
   </a>
@@ -441,6 +518,11 @@
   <a href="#advanced-cluster-usage-job-array" class="md-nav__link">
     Advanced cluster usage : job array
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -594,15 +676,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-computing-cluster" class="md-nav__link">
-    The computing cluster
+  <a href="#connect-to-the-server" class="md-nav__link">
+    Connect to the server
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#connect-to-the-server" class="md-nav__link">
-    Connect to the server
+  <a href="#start-a-terminal-on-the-server" class="md-nav__link">
+    Start a terminal on the server
   </a>
   
 </li>
@@ -649,6 +731,21 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#activate-the-conda-environment-containing-bioinformatics-software" class="md-nav__link">
+    Activate the conda environment containing bioinformatics software
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#annex-hpc-clusters" class="md-nav__link">
+    ANNEX : HPC clusters
+  </a>
+  
+    <nav class="md-nav" aria-label="ANNEX : HPC clusters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#submitting-jobs" class="md-nav__link">
     Submitting jobs
   </a>
@@ -688,6 +785,11 @@
     </nav>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
     </ul>
   
@@ -707,68 +809,30 @@
   
 
 
-  <h1>Server login + unix fresh up</h1>
-
-<p>To conduct the practicals of this course, we will be using a dedicated High Performance Computing cluster. 
-This matches the reality of most NGS workflows, which cannot be completed in a reasonable time on a single machine. </p>
-<p>To interact with this cluster, you will have to log in to a distant <em>head node</em>. From there you will be able to distribute your computational tasks to the cluster using a <em>job scheduler</em> called Slurm.</p>
-<p>This page will cover our first contact with the distant cluster. </p>
+<p>To conduct the practicals of this course, we will be using a dedicated distant server with enough computing capabilities to handle RNAseq data amd where all the necessary software has been installed.</p>
+<p>This matches the reality of most NGS workflows, which cannot be completed in a reasonable time on a single laptop machine. </p>
+<p>To interact with this server, you will have to connect and log in to it. We will do so through an Rstudio server, which, conveniently, 
+let&rsquo;s us start a UNIX terminal to launch bioinformatics tools, retrieve and send files to the server, and use R scripts to analyse our results.</p>
+<p>This page will cover our first contact with the distant server. </p>
 <p><strong>You will learn to :</strong></p>
 <ul>
-<li>understand a typical computer cluster architecture.</li>
 <li>connect to the server.</li>
-<li>use the command line to perform basic operations on the head node.</li>
+<li>use the command line to perform basic operations.</li>
 <li>exchange files between the server and your own machine.</li>
-<li>submit a job to the cluster.</li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you are doing this course on your own, then the distant server provided within the course will not be available. 
 Feel free to ignore or adapt any of the following steps to your own situation.</p>
 </div>
-<h2 id="the-computing-cluster">The computing cluster</h2>
-<p>The computing cluster follows an architecture that enables several users to distribute computational tasks among several machines which share a number of resources, such as a common file system.</p>
-<p><img alt="cluster_overview" src="../../assets/images/cluster_overview.png" /></p>
-<p>Users do not access each machine individually, but rather connect to a <strong>head node</strong>. From there, they can interact with the cluster using the <strong>job scheduler</strong> (here slurm).
-The job scheduler&rsquo;s role is to manage where and how to run the jobs of all users, such that waiting time is minimized and resource usage is shared and optimized.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Everyone is connected to the same head node. Do not perform compute-intensive tasks on it, or you will slow everyone down! </p>
+<p>Everyone is connected to the same server. There are a few guardrails in place that should prevent any one user from crashing the server or hogging all the resources, but no system is fully foolproof. Consequently, <strong>before you launch a serious job, always take the time to test it on a smaller dataset</strong> in order to estimate if the big job might be too big.</p>
 </div>
 <h2 id="connect-to-the-server">Connect to the server</h2>
-<p>Say you want to connect to cluster with address <code>xx.xx.xx.xx</code> and your login is <code>login</code>.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>If you are doing this course with a teacher, use the link, login and password provided before or during the course. </p>
-</div>
-<p>The first step will be to open a <strong>terminal</strong>, a software that provides a command-line interface to a computer.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Mac</label><label for="__tabbed_1_2">Linux</label><label for="__tabbed_1_3">Windows</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<p>Open a terminal, for instance with the application Xterm, or Xquartz.
-<!-- Might confuse some who just read "Terminal" --></p>
-</div>
-<div class="tabbed-block">
-<p>Open a new terminal.</p>
-</div>
-<div class="tabbed-block">
-<p>Open the application mobaXterm (or any ssh-enabling terminal application you prefer).</p>
-<p>On mobaXterm, click on &ldquo;Start a local Terminal&rdquo;.</p>
-</div>
-</div>
-</div>
-<hr />
-<p>In the terminal, type the following command:</p>
-<div class="highlight"><pre><span></span><code>ssh<span class="w"> </span>login@xx.xx.xx.xx
-</code></pre></div>
-<p>When prompted for your password, type it and press Enter. </p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>There is no cursor or &lsquo;●&rsquo; character appearing while you type your password. This is normal. Deleting characters also works invisibly.</p>
-</div>
-<p>After a few seconds, you should be logged into the <em>head node</em> and ready to begin.</p>
-<!-- TODO : Would be nice to add a screenshot? -->
-
+<p>Follow the teacher&rsquo;s instructions to get the rstudio server address, as well as you login and password</p>
+<h2 id="start-a-terminal-on-the-server">Start a terminal on the server</h2>
+<p><img alt="a view of Rstudio's terminal" src="../assets/images/rstudio_terminal.png" /></p>
 <h2 id="using-command-line-on-the-cluster">Using command line on the cluster</h2>
 <p>Now that you are in the head node, it is time to get acquainted with your environment and to prepare the upcoming practicals. 
 We will also use this as a short reminder about the UNIX command line.</p>
@@ -778,7 +842,7 @@ We will also use this as a short reminder about the UNIX command line.</p>
 <div class="highlight"><pre><span></span><code><span class="nb">pwd</span>
 </code></pre></div>
 <p>When you start a session on a distant computer, you are placed in your <code>home</code> directory. So the cluster should return something like:</p>
-<div class="highlight"><pre><span></span><code>/shared/home/&lt;login&gt;
+<div class="highlight"><pre><span></span><code>/home/&lt;login&gt;
 </code></pre></div>
 <p>From then, we are going to do a little step-by-step practical to go through some of bash&rsquo;s most useful commands for this course.</p>
 <h3 id="creating-a-directory">Creating a directory</h3>
@@ -800,14 +864,14 @@ We will also use this as a short reminder about the UNIX command line.</p>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>mouseMT
 </code></pre></div>
 </details>
-<p>The directory <code>/shared/data/</code> contains data and solutions for most practicals. </p>
+<p>The directory <code>/data/</code> contains data and solutions for most practicals. </p>
 <div class="admonition example">
 <p class="admonition-title">practical</p>
-<p>List the content of the <code>/shared/data/</code> directory.</p>
+<p>List the content of the <code>/data/</code> directory.</p>
 </div>
 <details class="success">
 <summary>Answer</summary>
-<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>/shared/data/
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>/data/
 </code></pre></div>
 </details>
 <div class="admonition note">
@@ -816,72 +880,47 @@ We will also use this as a short reminder about the UNIX command line.</p>
 </div>
 <div class="admonition example">
 <p class="admonition-title">practical</p>
-<p>Copy the script <code>010_s_fastqc.sh</code> from  <code>/shared/data/Solutions/mouseMT</code> into your current directory,
+<p>Copy the script <code>010_s_fastqc.sh</code> from  <code>/data/Solutions/mouseMT</code> into your current directory,
 and then print the content of this script to the screen.</p>
 </div>
 <details class="success">
 <summary>Answer</summary>
-<p><div class="highlight"><pre><span></span><code>cp<span class="w"> </span>/shared/data/Solutions/mouseMT/010_s_fastqc.sh<span class="w"> </span>.
+<p><div class="highlight"><pre><span></span><code>cp<span class="w"> </span>/data/Solutions/mouseMT/010_s_fastqc.sh<span class="w"> </span>.
 more<span class="w"> </span>010_s_fastqc.sh
 </code></pre></div>
 output:
 <div class="highlight"><pre><span></span><code>#!/usr/bin/bash
-#SBATCH --job-name=fastqc_mouseMT
-#SBATCH --time=01:00:00
-#SBATCH --cpus-per-task=1
-#SBATCH --mem=1G
-#SBATCH -o 010_l_fastqc_mouseMT.o
-
-ml fastqc
 
 # creating the output folder
 mkdir -p 010_d_fastqc/
 
-fastqc -o 010_d_fastqc /shared/data/DATA/mouseMT/*.fastq
+fastqc -o 010_d_fastqc /data/DATA/mouseMT/*.fastq
 </code></pre></div></p>
 </details>
 <p>We&rsquo;ll see what all this means soon.</p>
 <h3 id="creating-and-editing-a-file">Creating and editing a file</h3>
-<p>To edit files on the distant server, we will use the command line editor <code>nano</code>. It is far from the most complete or efficient one, but it can be found on most servers, and is arguably among the easiest to start with.</p>
+<p>To edit files on the distant server, we will use the Rstudio file editor. It is primarily designed for R script but it works very well for  other types of files. </p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Alternatively, feel free to use any other CLI editor you prefer, such as <code>vi</code>.</p>
+<p>Alternatively, we could use command line editor <code>nano</code>. It is far from the most complete or efficient one, but it can be found on most servers, and is arguably among the easiest command-line file editor to start with.</p>
 </div>
-<p>To start editing a file named <code>test.txt</code>, type :</p>
-<div class="highlight"><pre><span></span><code><span class="w">    </span>nano<span class="w"> </span>test.txt
-</code></pre></div>
-<p>You will be taken to the <code>nano</code> interface :</p>
-<p><img alt="nano screenshot" src="../../assets/images/nano_screenshot.png" /></p>
-<p>Type in your favorite movie quote, and then exit by pressing <code>Ctrl+x</code> (<code>command+x</code> on a Mac keyboard), and then <code>y</code> and <code>Enter</code> when prompted to save the modifications you just made.</p>
-<p>You can check that your modifications were saved by typing</p>
+<p>To start editing a file named <code>test.txt</code>, in Rstudio go to <code>File &gt; New File &gt; Text File</code>, or use the shortcut <code>Ctrl+Alt+Shift+N</code></p>
+<p><img alt="Rstudio screenshot" src="../assets/images/rstudio_new_file_screenshot.png" /></p>
+<p>Type in your favorite movie quote, and then save it with <code>Ctrl+s</code>, give it an appropriate name, like <code>test.txt</code> for example</p>
+<p>You can check that your modifications were saved from the terminal by typing</p>
 <div class="highlight"><pre><span></span><code>more<span class="w"> </span>test.txt
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>for the command above to work, your terminal needs to be in the same folder as the file. Take careful note of where you save your files, and where your terminal is running.</p>
+</div>
 <h3 id="exchanging-files-with-the-server">Exchanging files with the server</h3>
-<p>Whether you want to transfer some data to the cluster or retrieve the results of your latest computation, it is important to be able to exchange files with the distant server.</p>
-<p>There exists several alternatives, depending on your platform and preferences.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">filezilla</label><label for="__tabbed_2_2">mobaXterm</label><label for="__tabbed_2_3">command line</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<p>There are nice and free software with graphical user interfaces, such as <a href="https://filezilla-project.org/">filezilla</a>, to help you manage exchanges with the distant server. Feel free to install and experiment with it during the break.
-<img alt="filezilla_mainscreen" src="https://filezilla-project.org/images/screenshots/fz3_win_main.png" /></p>
-</div>
-<div class="tabbed-block">
-<p>If you are using mobaXterm, the left panel should provide a graphical SFTP browser in the left sidebar which allows you to browse and drag and drop files directly from/to the remote server.</p>
-<p><img alt="mobaxterm_leftpanel" src="https://mobaxterm.mobatek.net/img/moba/features/feature-sftp-browser.png" /></p>
-</div>
-<div class="tabbed-block">
-<p>We will use <code>scp</code>.</p>
-<p>To copy a file from the server to your machine, use this syntax on a <strong>terminal in your local machine</strong> (open a new terminal if necessary).</p>
-<div class="highlight"><pre><span></span><code>scp<span class="w"> </span>&lt;login&gt;@&lt;server-adress&gt;:/path/to/file/on/server/file.txt<span class="w"> </span>/local/destination/
-</code></pre></div>
-<p>For example, to copy the file <code>test.txt</code> you just created in the folder <code>day1/</code>, to your current (local) working directory (NB:    here <code>~</code> will be interpreted as your home directory, this is a useful and time-saving shorthand):</p>
-<div class="highlight"><pre><span></span><code>scp<span class="w"> </span>login@xx.xx.xx.xx:~/day1/test.txt<span class="w"> </span>.
-</code></pre></div>
-<p>To copy a file from your machine to the server:</p>
-<div class="highlight"><pre><span></span><code>scp<span class="w"> </span>/path/to/file/local/file.txt<span class="w"> </span>&lt;login&gt;@&lt;server-adress&gt;:/destination/on/server/
-</code></pre></div>
-</div>
-</div>
+<p>Whether you want to transfer some data to the server or retrieve the results of your latest computation, it is important to be able to exchange files with the distant server.</p>
+<p>Fortunately, Rstudio provides an easy way to do this.</p>
+<p><img alt="a view of Rstudio's interface for download and upload" src="../assets/images/rstudio_download.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Alternatively, there exists several alternatives, from using the command line tool <code>scp</code> to graphical tools such as fileZilla.</p>
 </div>
 <hr />
 <div class="admonition example">
@@ -916,12 +955,12 @@ This is the most common way of dealing with our data on the server for simple op
 <span class="c1">## whatever is after # is not interpreted as code.</span>
 
 <span class="c1"># the echo command prints whatever text follows to the screen: </span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;looking at the size of the elements of /shared/data/&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;looking at the size of the elements of /data/&quot;</span>
 
 sleep<span class="w"> </span><span class="m">15</span><span class="w"> </span><span class="c1"># making the script wait for 15 seconds - this is just so we can see it later on. </span>
 
 <span class="c1"># du : &quot;disk usage&quot;, a command that returns the size of a folder structure.</span>
-du<span class="w"> </span>-h<span class="w"> </span>-d<span class="w"> </span><span class="m">2</span><span class="w"> </span>/shared/data/
+du<span class="w"> </span>-h<span class="w"> </span>-d<span class="w"> </span><span class="m">2</span><span class="w"> </span>/data/
 </code></pre></div>
 <p>The first line is not 100% necessary at this step, but it will be in the next part, so we might as well put it in now. It helps some software know that this file contains bash code. </p>
 <p>Then to execute the script, navigate <strong>in a terminal open on the server</strong> to the place where the script is, and execute the following command:</p>
@@ -931,7 +970,34 @@ du<span class="w"> </span>-h<span class="w"> </span>-d<span class="w"> </span><s
 <p class="admonition-title">Warning</p>
 <p>Be sure to execute the script from the folder that it is in. Otherwise you would have to specify in which folder to find the script using its path.</p>
 </div>
-<p>This should have printed some information about the size of <code>/shared/data/</code> subfolders to the screen.</p>
+<p>This should have printed some information about the size of <code>/data/</code> subfolders to the screen.</p>
+<h2 id="activate-the-conda-environment-containing-bioinformatics-software">Activate the conda environment containing bioinformatics software</h2>
+<p>As it stands, the terminal you are currently using does not have access to bioinformatics software:</p>
+<div class="highlight"><pre><span></span><code>fastqc<span class="w"> </span>--help
+</code></pre></div>
+<p>results in the error : <code>Command 'fastqc' not found, ...</code></p>
+<p>Indeed, bioinformatics tools are not installed by default on the server.</p>
+<p>Here, we have prepared the bioinformatics software in a <a href="https://conda.io/projects/conda/en/latest/user-guide/getting-started.html">conda environment</a> (conda environments provide a useful way to manage software stacks across plateform).</p>
+<p>So, first we need to initialize conda:</p>
+<p><div class="highlight"><pre><span></span><code>conda<span class="w"> </span>init
+</code></pre></div>
+Then, for the changes to take place we need to start a new terminal :</p>
+<p><img alt="Rstudio : showing button to start a new terminal" src="../assets/images/rstudio_new_terminal.png" /></p>
+<p>Once this is done, you can notice that now you terminal line starts with <code>(base)</code>. This is a sign that conda is activated and that you are currently using its default environment.</p>
+<p>So finally we can activate the environment containing tools, which is called <code>ngs-tools</code>:
+<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>activate<span class="w"> </span>ngs-tools
+</code></pre></div></p>
+<p>Now when you run the following command you should see the fastqc help:
+<div class="highlight"><pre><span></span><code>fastqc<span class="w"> </span>--help
+</code></pre></div></p>
+<h1 id="annex-hpc-clusters">ANNEX : HPC clusters</h1>
+<p>The following annex discuss HPC clusters, where you do not execute your compute-intensive job directly on the server you connect to, 
+but rather to submit jobs to a <strong>scheduler</strong> which then allocate them compute resources on dedicated compute nodes.</p>
+<p>Having to use such a cluster is quite common in bioinformatics given the size of most modern datasets.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>in this annex we only discuss the SLURM scheduler. Other schedulers use different command lines and a different linguo (although many concepts are similar).</p>
+</div>
 <h2 id="submitting-jobs">Submitting jobs</h2>
 <h3 id="submitting-a-simple-script">Submitting a simple script</h3>
 <p>Jobs can be submitted to the compute cluster using <strong>bash scripts</strong>, with an optional little preamble which tells the cluster about your computing resource requirements, and a few additional options.</p>
@@ -1006,10 +1072,10 @@ Otherwis, you will see some error messages.</p>
 <span class="c1">#SBATCH -o test_log.o</span>
 
 
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;looking at the size of the elements of /shared/data/&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;looking at the size of the elements of /data/&quot;</span>
 sleep<span class="w"> </span><span class="m">15</span><span class="w"> </span><span class="c1"># making the script wait for 15 seconds - this is just so we can see it later on. </span>
 <span class="c1"># `du` is &quot;disk usage&quot;, a command that returns the size of a folder structure.</span>
-du<span class="w"> </span>-h<span class="w"> </span>-d<span class="w"> </span><span class="m">2</span><span class="w"> </span>/shared/data/
+du<span class="w"> </span>-h<span class="w"> </span>-d<span class="w"> </span><span class="m">2</span><span class="w"> </span>/data/
 </code></pre></div>
 <p>I also added the following options :</p>
 <ul>
@@ -1148,7 +1214,7 @@ Each of these executions is called a <strong>task</strong>, and they are all the
 <span class="nb">echo</span><span class="w"> </span><span class="nv">$foo</span><span class="w">              </span><span class="c1"># Print variable foo, sensitive to special characters</span>
 <span class="nb">echo</span><span class="w"> </span><span class="si">${</span><span class="nv">foo</span><span class="si">}</span><span class="w">            </span><span class="c1"># Another way to print variable foo, not sensitive to special characters</span>
 
-<span class="nv">OUTPUT</span><span class="o">=</span><span class="sb">`</span>wc<span class="w"> </span>-l<span class="w"> </span>du<span class="w"> </span>-h<span class="w"> </span>-d<span class="w"> </span><span class="m">2</span><span class="w"> </span>/shared/data/<span class="sb">`</span><span class="w"> </span><span class="c1"># puts the result of the command </span>
+<span class="nv">OUTPUT</span><span class="o">=</span><span class="sb">`</span>wc<span class="w"> </span>-l<span class="w"> </span>du<span class="w"> </span>-h<span class="w"> </span>-d<span class="w"> </span><span class="m">2</span><span class="w"> </span>/data/<span class="sb">`</span><span class="w"> </span><span class="c1"># puts the result of the command </span>
 <span class="w">                                        </span><span class="c1">#   between `` in variable OUTPUT</span>
 
 <span class="nb">echo</span><span class="w"> </span><span class="nv">$OUTPUT</span><span class="w">           </span><span class="c1"># print variable output</span>

@@ -12,14 +12,14 @@
         <link rel="prev" href="..">
       
       
-        <link rel="next" href="../course_schedule/">
+        <link rel="next" href="../days/unix_crash/">
       
       <link rel="icon" href="../assets/images/SIB_logo.svg">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.18">
     
     
       
-        <title>Precourse preparations - Introduction to RNA-Seq - From quality control to pathway analysis</title>
+        <title>prerequisites - Introduction to RNA-Seq - From quality control to pathway analysis</title>
       
     
     
@@ -63,7 +63,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#precourse-preparations" class="md-skip">
+        <a href="#prerequisites" class="md-skip">
           Skip to content
         </a>
       
@@ -97,7 +97,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Precourse preparations
+              prerequisites
             
           </span>
         </div>
@@ -222,6 +222,35 @@
     
   
   
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          Precourse preparations
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Precourse preparations
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
     <li class="md-nav__item md-nav__item--active">
       
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
@@ -231,12 +260,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Precourse preparations
+          prerequisites
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Precourse preparations
+        prerequisites
       </a>
       
         
@@ -275,17 +304,45 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#software" class="md-nav__link">
-    Software
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
       
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../days/unix_crash/" class="md-nav__link">
+        UNIX crash course
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../days/R_crash/" class="md-nav__link">
+        R crash course
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -550,13 +607,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#software" class="md-nav__link">
-    Software
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -575,7 +625,7 @@
   
 
 
-<h1 id="precourse-preparations">Precourse preparations</h1>
+<h1 id="prerequisites">Prerequisites</h1>
 <p>On top of a thirst for knowledge, and a working Internet connection, here is what you will need for the course : </p>
 <h2 id="ngs">NGS</h2>
 <p>As announced in the <a href="https://www.sib.swiss/training/course/20220901_IRNAS">course registration webpage</a>,
@@ -583,21 +633,11 @@ we expect participants to already have a basic knowledge in Next Generation Sequ
 <h2 id="unix">UNIX</h2>
 <p>Practical knowledge of the UNIX command line is also required to be able to follow this course, given that that the tools used to process sequenced reads use this interface.</p>
 <p>If you are unsure about your capabilities or feel a bit rusty, we strongly recommend you spend some time practicing before the course : in our experience, the more comfortable you are with UNIX, the more you will be able to focus on the RNA-seq during the course, and the more you will gain from it.</p>
-<p>You may refer to the <a href="https://edu.sib.swiss/pluginfile.php/2878/mod_resource/content/4/couselab-html/content.html">SIB&rsquo;s UNIX e-learning module</a></p>
+<p>You may refer to the <a href="https://edu.sib.swiss/pluginfile.php/2878/mod_resource/content/4/couselab-html/content.html">SIB&rsquo;s UNIX e-learning module</a>,
+or follow our small <a href="../days/unix_crash/">UNIX crash course page</a></p>
 <h2 id="r">R</h2>
 <p>A basic knowledge of the <a href="https://www.r-project.org/">R language</a> is required to perform most analytical steps after reads have been mapped and quantified : differential gene expression, gene set enrichment, over-representation/pathway analysis.</p>
-<blockquote>
-<p>If you are not familiar with R, we recommend the <a href="https://github.com/sib-swiss/first-steps-with-R-training">SIB First Steps with R course</a>, or you can pick one among <a href="https://github.com/sib-swiss/training-collection#r">this list</a></p>
-</blockquote>
-<h2 id="software">Software</h2>
-<p>To replicate the technical condition of today&rsquo;s real-life data analysis, we will perform our computations on a distant HPC cluster.
-To access it: </p>
-<ul>
-<li>macOS / Linux : you can use your pre-installed terminal software.</li>
-<li>Windows : you should install a terminal which lets you do secure shell connections (ssh; for instance <a href="https://mobaxterm.mobatek.net/">mobaXterm</a>). </li>
-</ul>
-<p>Additionally, a graphical client for file transfer to and from the distant server can be useful. MobaXterm integrates this functionality, so if you use it there is no need for additional software. 
-Otherwise, we recommend <a href="https://filezilla-project.org/download.php?type=client">FileZilla</a>.</p>
+<p>If you are not familiar with R, you can follow our small <a href="../days/R_crash/">R crash course page</a>, but given the depth of the subject, we also recommend you attend a dedicated course, such as the <a href="https://github.com/sib-swiss/first-steps-with-R-training">SIB First Steps with R course</a>, or you can pick one from <a href="https://glittr.org/">glittr.org</a></p>
 <!-- Suggestion: should we have some practical notes re: the teaching location?
 Coffee/snakcs/toilets...? Or should this be external to the course website? -->
 

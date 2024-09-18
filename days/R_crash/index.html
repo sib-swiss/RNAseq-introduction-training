@@ -1,0 +1,1766 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../unix_crash/">
+      
+      
+        <link rel="next" href="../../course_schedule/">
+      
+      <link rel="icon" href="../../assets/images/SIB_logo.svg">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.18">
+    
+    
+      
+        <title>R crash course - Introduction to RNA-Seq - From quality control to pathway analysis</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.26e3688c.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#meet-rstudio" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Introduction to RNA-Seq - From quality control to pathway analysis" class="md-header__button md-logo" aria-label="Introduction to RNA-Seq - From quality control to pathway analysis" data-md-component="logo">
+      
+  <img src="../../assets/images/SIB_logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Introduction to RNA-Seq - From quality control to pathway analysis
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              R crash course
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/sib-swiss/RNAseq-introduction-training" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    sib-swiss/RNAseq-introduction-training
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Introduction to RNA-Seq - From quality control to pathway analysis" class="md-nav__button md-logo" aria-label="Introduction to RNA-Seq - From quality control to pathway analysis" data-md-component="logo">
+      
+  <img src="../../assets/images/SIB_logo.svg" alt="logo">
+
+    </a>
+    Introduction to RNA-Seq - From quality control to pathway analysis
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/sib-swiss/RNAseq-introduction-training" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    sib-swiss/RNAseq-introduction-training
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          Precourse preparations
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Precourse preparations
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../precourse/" class="md-nav__link">
+        prerequisites
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unix_crash/" class="md-nav__link">
+        UNIX crash course
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          R crash course
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        R crash course
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#meet-rstudio" class="md-nav__link">
+    meet Rstudio
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get-the-data" class="md-nav__link">
+    Get the data
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-basics-operators-variables-functions-vectors" class="md-nav__link">
+    The basics : operators, variables, functions, vectors
+  </a>
+  
+    <nav class="md-nav" aria-label="The basics : operators, variables, functions, vectors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variable" class="md-nav__link">
+    Variable
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function" class="md-nav__link">
+    Function
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vectors" class="md-nav__link">
+    Vectors
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-variables-vectors-and-functions" class="md-nav__link">
+    Exercise - variables, vectors and functions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reading-and-manipulating-tabular-data" class="md-nav__link">
+    Reading and manipulating tabular data
+  </a>
+  
+    <nav class="md-nav" aria-label="Reading and manipulating tabular data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#working-directory" class="md-nav__link">
+    Working directory
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-reading-and-manipulating" class="md-nav__link">
+    Basic reading and manipulating
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-basic-reading-and-manipulating" class="md-nav__link">
+    Exercise - basic reading and manipulating
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#more-on-reading-files" class="md-nav__link">
+    More on reading files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#selection" class="md-nav__link">
+    Selection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-selection" class="md-nav__link">
+    Exercise - Selection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writing-data-frame-to-files" class="md-nav__link">
+    Writing data frame to files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-new-columns" class="md-nav__link">
+    Creating new columns
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plotting-with-ggplot2" class="md-nav__link">
+    plotting with ggplot2
+  </a>
+  
+    <nav class="md-nav" aria-label="plotting with ggplot2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#detour-libraries" class="md-nav__link">
+    detour: libraries
+  </a>
+  
+    <nav class="md-nav" aria-label="detour: libraries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-a-library" class="md-nav__link">
+    installing a library
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loading-a-library" class="md-nav__link">
+    loading a library
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#first-steps-in-ggplot2" class="md-nav__link">
+    First steps in ggplot2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-a-simple-line" class="md-nav__link">
+    Exercise - a simple line
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-some-color" class="md-nav__link">
+    Adding some color
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changing-axis-labels-and-titles" class="md-nav__link">
+    changing axis labels and titles
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#more-plots-the-sky-is-the-limit" class="md-nav__link">
+    more plots - the sky is the limit
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recapitulative-exercise" class="md-nav__link">
+    Recapitulative exercise
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../course_schedule/" class="md-nav__link">
+        Course schedule
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides_notes/" class="md-nav__link">
+        Slides notes (draft)
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/" class="md-nav__link">
+        Cheatsheets
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          Day1
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Day1
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/" class="md-nav__link">
+        RNAseq - technologies and design
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../server_login/" class="md-nav__link">
+        Server login + unix fresh up
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quality_control/" class="md-nav__link">
+        Quality control
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../trimming/" class="md-nav__link">
+        Sequence trimming
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+          Day2
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Day2
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mapping/" class="md-nav__link">
+        Reads mapping
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DE/" class="md-nav__link">
+        Differential Expression Inference
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../enrichment/" class="md-nav__link">
+        Enrichment analysis
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#meet-rstudio" class="md-nav__link">
+    meet Rstudio
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get-the-data" class="md-nav__link">
+    Get the data
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-basics-operators-variables-functions-vectors" class="md-nav__link">
+    The basics : operators, variables, functions, vectors
+  </a>
+  
+    <nav class="md-nav" aria-label="The basics : operators, variables, functions, vectors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variable" class="md-nav__link">
+    Variable
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function" class="md-nav__link">
+    Function
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vectors" class="md-nav__link">
+    Vectors
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-variables-vectors-and-functions" class="md-nav__link">
+    Exercise - variables, vectors and functions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reading-and-manipulating-tabular-data" class="md-nav__link">
+    Reading and manipulating tabular data
+  </a>
+  
+    <nav class="md-nav" aria-label="Reading and manipulating tabular data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#working-directory" class="md-nav__link">
+    Working directory
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-reading-and-manipulating" class="md-nav__link">
+    Basic reading and manipulating
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-basic-reading-and-manipulating" class="md-nav__link">
+    Exercise - basic reading and manipulating
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#more-on-reading-files" class="md-nav__link">
+    More on reading files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#selection" class="md-nav__link">
+    Selection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-selection" class="md-nav__link">
+    Exercise - Selection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writing-data-frame-to-files" class="md-nav__link">
+    Writing data frame to files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-new-columns" class="md-nav__link">
+    Creating new columns
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plotting-with-ggplot2" class="md-nav__link">
+    plotting with ggplot2
+  </a>
+  
+    <nav class="md-nav" aria-label="plotting with ggplot2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#detour-libraries" class="md-nav__link">
+    detour: libraries
+  </a>
+  
+    <nav class="md-nav" aria-label="detour: libraries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-a-library" class="md-nav__link">
+    installing a library
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loading-a-library" class="md-nav__link">
+    loading a library
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#first-steps-in-ggplot2" class="md-nav__link">
+    First steps in ggplot2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-a-simple-line" class="md-nav__link">
+    Exercise - a simple line
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-some-color" class="md-nav__link">
+    Adding some color
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changing-axis-labels-and-titles" class="md-nav__link">
+    changing axis labels and titles
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#more-plots-the-sky-is-the-limit" class="md-nav__link">
+    more plots - the sky is the limit
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recapitulative-exercise" class="md-nav__link">
+    Recapitulative exercise
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+  <h1>R crash course</h1>
+
+<p>The goal of this crash-course is to get you acquainted with all the basic concepts and syntax of the R programming language.</p>
+<p>Mastering R is not something done in a single day, and so the goal is not to make you into R guru&rsquo;s, but to give you enough groundings so that,
+armed with a good cheatsheet and with a bit of patience, you should be able to understand what happens in the R codes used when conducting a differential expression or enrichment analysis.</p>
+<p>This crash course can be followed along either on a distant Rstudio server (the teacher will tell you how to connect there), or on your own machine.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you choose to follow along on your own machine, please <a href="https://posit.co/download/rstudio-desktop/">download and install Rstudio</a> <strong>before the course</strong>.</p>
+</div>
+<p><strong>You will learn to :</strong></p>
+<ul>
+<li>recognize the basic R elements (variables, functions, arguments,&hellip;)</li>
+<li>read data from csv/tsv files into R</li>
+<li>perform basic mathematical and statistical computations with R functions </li>
+<li>represent your data in (beautiful) plots</li>
+</ul>
+<p><strong>So, start your Rstudio (or connect to the Rstudio server), and let&rsquo;s dive into R.</strong></p>
+<h2 id="meet-rstudio">meet Rstudio</h2>
+<p>Once you have opened Rstudio you should see something a bit like this:</p>
+<p><img alt="a view of Rstudio" src="../assets/images/Rstudio_view.png" /></p>
+<p>Except in your case:</p>
+<ul>
+<li>the <strong>Editor</strong> (upper-left) will be absent (because you have not opened a file yet)</li>
+<li>the <strong>Environment</strong> (upper-right) will be empty </li>
+</ul>
+<p>Anyhow, the 4 panels respecttively let you access:</p>
+<ol>
+<li><strong>upper-left</strong> : Editor - see and edit file (mostly scripts)</li>
+<li><strong>lower-left</strong> : Console - things typed there will be interpreted as code (after you hit the <em>Enter</em> key)<ul>
+<li>Console : for R code</li>
+<li>Terminal : for UNIX command lines</li>
+</ul>
+</li>
+<li><strong>upper-right</strong> : Environment/History - you can review which variable exists at the moment and which commands you executed before there</li>
+<li><strong>lower-right</strong> : <ul>
+<li>Files - to see, navigate, and interact with your files</li>
+<li>Plots - to show the plots you will create</li>
+<li>Help - to display the help pages when you ask for them</li>
+</ul>
+</li>
+</ol>
+<h2 id="get-the-data">Get the data</h2>
+<p><a :=":" class="md-button" href="../assets/zip/R_crash_course_data.zip" target="_blank"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M64 0C28.7 0 0 28.7 0 64v384c0 35.3 28.7 64 64 64h256c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zm192 0v128h128L256 0zM96 48c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32c-8.8 0-16-7.2-16-16zm0 64c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32c-8.8 0-16-7.2-16-16zm0 64c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32c-8.8 0-16-7.2-16-16zm-6.3 71.8c3.7-14 16.4-23.8 30.9-23.8h14.8c14.5 0 27.2 9.7 30.9 23.8l23.5 88.2c1.4 5.4 2.1 10.9 2.1 16.4 0 35.2-28.8 63.7-64 63.7s-64-28.5-64-63.7c0-5.5.7-11.1 2.1-16.4l23.5-88.2zM112 336c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16h-32z"/></svg></span> Download the data</a></p>
+<ol>
+<li>Download the data above </li>
+<li>Move the data where you want to conduct the practicals (if you are on the server, follow the teacher&rsquo;s intructions)</li>
+<li><strong>unzip the data</strong> (otherwise you will not be able to access it)</li>
+</ol>
+<h2 id="the-basics-operators-variables-functions-vectors">The basics : operators, variables, functions, vectors</h2>
+<p>You can start typing some R code directly in the <strong>Console</strong>, and after you hit enter it will be interpreted as R code. </p>
+<p>Some command will display a result, and other won&rsquo;t (but they may have another effect like creating a new variable, or changing a variable&rsquo;s content)</p>
+<p>For example, typing:</p>
+<div class="highlight"><pre><span></span><code><span class="m">5+7</span>
+</code></pre></div>
+<p>gives:</p>
+<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="m">12</span>
+</code></pre></div>
+<p>whereas :
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">128.5</span>
+</code></pre></div>
+gives nothing, <strong>but</strong> a new variable <code>x</code> is now in your environment.</p>
+<h3 id="variable">Variable</h3>
+<p>Variables are generally <strong>containers for data</strong>. It can be simple data, like a single number, or more complex like a table or a set of DE results.</p>
+<ul>
+<li>variables are created when we <em>assign</em> them a value, either with the symbol <code>&lt;-</code> or <code>=</code></li>
+<li>
+<p>variables are identified by their name, which:</p>
+<ul>
+<li>cannot start with a number</li>
+<li>can contain the <code>.</code> or <code>_</code> special characters</li>
+</ul>
+</li>
+<li>
+<p>you can see the value of a variable by calling it&rsquo;s name in the console</p>
+</li>
+<li>variables values can be changed with assignment too</li>
+<li>deleting a variable is possible, but not so common</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>the assignment is always from right to left:</p>
+<ul>
+<li><code>x = 9</code> <strong>OK</strong></li>
+<li><code>9 = x</code> <strong>NOT OK</strong></li>
+</ul>
+</div>
+<p>Try it out:
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">128.5</span>
+<span class="n">x</span>
+
+<span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">-12</span>
+<span class="n">y</span>
+
+<span class="n">my.var2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">160</span>
+<span class="n">my.var2</span>
+</code></pre></div></p>
+<hr />
+<p>As we have seen we can use operators to perform simple operations</p>
+<ul>
+<li><code>+</code> : addition</li>
+<li><code>-</code> : subtraction</li>
+<li><code>*</code> : multiplication</li>
+<li><code>/</code> : division</li>
+<li><code>^</code> : power</li>
+<li><code>()</code> : parenthesis work exactly as in math</li>
+</ul>
+<p>You can use variables and numbers together.</p>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">y</span>
+
+<span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="o">^</span><span class="m">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">5</span><span class="p">)</span>
+<span class="n">z</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>the code above will work only when the variable contain <em>numerical</em> values. If they contain something else (like text for instance), then you will likely get an error.</p>
+</div>
+<h3 id="function">Function</h3>
+<p>Functions are <strong>bits of code packaged for easy use</strong>.</p>
+<p>Like variables, they have a name (actually, they are variables), and they can be <strong>called</strong>, meaning that we execute the code in the function, with the syntax </p>
+<div class="highlight"><pre><span></span><code>function_name( ... arguments ... )
+</code></pre></div>
+<p><strong>Arguments</strong> are variables that we give to the function to modify their behavior.</p>
+<p>Each function has their own arguments, sometimes none, often several, some mandatory, and some facultative.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># BTW if you start a line with a # then it is a &quot;comment&quot;: not interpreted by R as code</span>
+
+<span class="c1"># function that takes no argument:</span>
+<span class="nf">getwd</span><span class="p">()</span>
+
+<span class="c1"># function that takes 1 argument:</span>
+<span class="nf">abs</span><span class="p">(</span><span class="m">-11</span><span class="p">)</span>
+<span class="nf">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nf">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># when there is more than 1 argument they are separated by comma</span>
+<span class="nf">min</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">)</span>
+
+<span class="c1"># some arguments are facultative and can be declared by name</span>
+<span class="nf">log</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w">  </span><span class="p">)</span>
+<span class="nf">log</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">base</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div>
+<p>You don&rsquo;t have to guess which argument a function expect: use <code>?function_name</code> to look up its documentation.</p>
+<div class="highlight"><pre><span></span><code><span class="o">?</span><span class="n">sqrt</span>
+</code></pre></div>
+<h3 id="vectors">Vectors</h3>
+<p>Variables can contain any sort of data (or functions), and one of the most common is the vector,
+which is a list of elements of the same <strong>type</strong> (numbers, text, &hellip; more on that later).</p>
+<div class="highlight"><pre><span></span><code><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w"> </span><span class="m">12</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="m">15</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="m">137</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="p">)</span>
+<span class="n">y</span>
+</code></pre></div>
+<p>You can do operation and call functions with numbers seamlessly:</p>
+<div class="highlight"><pre><span></span><code><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">10</span>
+
+<span class="nf">log</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+
+<span class="nf">log</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">x</span><span class="o">^</span><span class="m">2</span>
+
+
+<span class="c1"># many function actually expect a vector as argument</span>
+<span class="nf">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+<span class="nf">median</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</code></pre></div>
+<p>A single element of a vector can be accessed with <code>[]</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="n">y</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="c1"># 1st element</span>
+
+<span class="n">y</span><span class="p">[</span><span class="m">3</span><span class="p">]</span><span class="w"> </span><span class="c1"># 3rd element</span>
+
+
+<span class="n">y</span><span class="p">[</span><span class="m">100</span><span class="p">]</span><span class="w"> </span><span class="c1"># 100th element -&gt; does not exist -&gt; you get NA = Not Acquired</span>
+</code></pre></div>
+<p>A vector <strong>type</strong> determine its behavior. </p>
+<p>You can learn it with the <code>class</code> function:</p>
+<div class="highlight"><pre><span></span><code><span class="nf">class</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+
+<span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;conditionA&#39;</span><span class="p">,</span><span class="s">&quot;conditionB&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1"># character vector; NB: &#39; &#39; or &quot; &quot; are both valid</span>
+<span class="nf">class</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+
+<span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span><span class="kc">FALSE</span><span class="p">,</span><span class="kc">TRUE</span><span class="p">,</span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="c1"># boolean vector ; NB: all character needs to be UPPERCASE here</span>
+<span class="nf">class</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</code></pre></div>
+<p>We will mostly play with numeric vectors, but it is important to know about the rest.</p>
+<p>If you try to apply a function for numeric to a character vector you may get an <strong>error</strong>.</p>
+<div class="highlight"><pre><span></span><code><span class="nf">log</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</code></pre></div>
+<p style="color:red;">Error in log(a) : non-numeric argument to mathematical function</p>
+
+<p>Whenever you encounter an error, take to time to read it as it is often informative.</p>
+<h3 id="exercise-variables-vectors-and-functions">Exercise - variables, vectors and functions</h3>
+<ul>
+<li>create a vector named vector1 containing the numbers 2984, 4682, 1932 ,45 ,12,135</li>
+<li>compute the sum of all elements in your vector using the <code>sum()</code> function</li>
+<li>create a new vector named vector2 containing the elements of vector1 divided by the sum you just obtained</li>
+</ul>
+<details class="success">
+<summary>Solution</summary>
+<div class="highlight"><pre><span></span><code><span class="n">vector1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w"> </span><span class="m">2984</span><span class="p">,</span><span class="w"> </span><span class="m">4682</span><span class="p">,</span><span class="w"> </span><span class="m">1932</span><span class="w"> </span><span class="p">,</span><span class="m">45</span><span class="w"> </span><span class="p">,</span><span class="m">12</span><span class="p">,</span><span class="m">135</span><span class="w"> </span><span class="p">)</span>
+
+<span class="n">vector1.sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="w"> </span><span class="n">vector1</span><span class="w"> </span><span class="p">)</span>
+<span class="n">vector1.sum</span>
+
+<span class="n">vector2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vector1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">vector1.sum</span>
+<span class="n">vector2</span>
+</code></pre></div>
+</details>
+<h2 id="reading-and-manipulating-tabular-data">Reading and manipulating tabular data</h2>
+<h3 id="working-directory">Working directory</h3>
+<p>This is when things become a bit more complex.</p>
+<p>You code is executing from someplace in your computer (often by default it will be your &ldquo;home&rdquo; directory), we call this the <strong>working directory</strong>.</p>
+<p>Use <code>getwd()</code> to learn what it is:</p>
+<p><div class="highlight"><pre><span></span><code><span class="nf">getwd</span><span class="p">()</span>
+</code></pre></div>
+<code>[1] "/home/wandrille"</code></p>
+<p>Then imagine you have a csv file named <code>iris.csv</code>, somewhere in the computer.</p>
+<p>If it is in the same folder as my working directory, then I can read the file directly my something like
+<div class="highlight"><pre><span></span><code><span class="nf">read.csv</span><span class="p">(</span><span class="s">&quot;iris.csv&quot;</span><span class="p">)</span>
+</code></pre></div></p>
+<p>Otherwise if it is let&rsquo;s say in <code>/home/wandrille/R_crash_course_data/</code>.
+You can see that the beginning here is the same, so, <em>relative</em> to my working directory the file is in subfolder <code>R_crash_course_data/</code>.</p>
+<p>Then we need to use:
+<div class="highlight"><pre><span></span><code><span class="nf">read.csv</span><span class="p">(</span><span class="s">&quot;R_crash_course_data/iris.csv&quot;</span><span class="p">)</span>
+</code></pre></div></p>
+<p>If you have made a typo in the file name or pointed to the wrong folder, you will get an error like:</p>
+<p style="color:red;">
+Error in file(file, "rt") : cannot open the connection <br>
+In addition: Warning message: <br>
+In file(file, "rt") : <br>
+  cannot open file 'iris.csv': No such file or directory <br>
+</p>
+<p>Which is a very common error.</p>
+<h3 id="basic-reading-and-manipulating">Basic reading and manipulating</h3>
+<p>You can read a simple csv file, with a header line to give column names, with the command:</p>
+<div class="highlight"><pre><span></span><code><span class="nf">read.csv</span><span class="p">(</span><span class="s">&quot;R_crash_course_data/iris.csv&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>But this prints the file content on the screen, what you usually want is to store it in a variable:</p>
+<div class="highlight"><pre><span></span><code><span class="n">iris</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;iris.csv&#39;</span><span class="p">)</span>
+<span class="n">iris</span>
+</code></pre></div>
+<p><code>iris</code> is an object of class <code>data.frame</code>, whic contains tabular data.</p>
+<p>A data frame is like a collection of vectors, where each vector forms a column;
+they are a very common variable type for any form of tabular data.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># show the first few lines of the data frame</span>
+<span class="nf">head</span><span class="p">(</span><span class="w"> </span><span class="n">iris</span><span class="w"> </span><span class="p">)</span>
+
+<span class="c1"># show the size of the data frame</span>
+<span class="nf">dim</span><span class="p">(</span><span class="w"> </span><span class="n">iris</span><span class="w"> </span><span class="p">)</span>
+
+<span class="c1"># show the column names of the data frame</span>
+<span class="nf">names</span><span class="p">(</span><span class="w"> </span><span class="n">iris</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div>
+<p>We can access columns individually:
+<div class="highlight"><pre><span></span><code><span class="c1">## access a single column, the result is a vector</span>
+<span class="n">iris</span><span class="o">$</span><span class="n">Sepal.Length</span>
+
+<span class="c1">## access a single column, but the result is a data frame with 1 column</span>
+<span class="n">iris</span><span class="p">[</span><span class="s">&#39;Sepal.Length&#39;</span><span class="p">]</span>
+</code></pre></div></p>
+<p>We can apply the functions we have seen before to individual columns, as well as several more which can be applied to the whole dataframe at once.</p>
+<p><div class="highlight"><pre><span></span><code><span class="nf">mean</span><span class="p">(</span><span class="w"> </span><span class="n">iris</span><span class="o">$</span><span class="n">Sepal.Length</span><span class="w"> </span><span class="p">)</span>
+
+<span class="nf">summary</span><span class="p">(</span><span class="w"> </span><span class="n">iris</span><span class="o">$</span><span class="n">Sepal.Length</span><span class="w"> </span><span class="p">)</span>
+
+<span class="nf">summary</span><span class="p">(</span><span class="n">iris</span><span class="p">)</span>
+</code></pre></div>
+Notice the last column, <code>Species</code>, which is a character vector and does not have a very useful summary.</p>
+<p>This can sometimes cause further problems, for instance:</p>
+<div class="highlight"><pre><span></span><code><span class="nf">colMeans</span><span class="p">(</span><span class="n">iris</span><span class="p">)</span>
+</code></pre></div>
+<p style="color:red;">Error in colMeans(iris) : 'x' must be numeric</p>
+
+<p>This can be resolved by making a copy of the data frame with the numeric columns only
+<div class="highlight"><pre><span></span><code><span class="n">iris_numerical</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iris</span><span class="p">[</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;Sepal.Length&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Sepal.Width&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Petal.Length&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Petal.Width&quot;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">]</span>
+<span class="n">iris_numerical</span>
+
+<span class="nf">colMeans</span><span class="p">(</span><span class="n">iris_numerical</span><span class="p">)</span>
+<span class="nf">rowMeans</span><span class="p">(</span><span class="n">iris_numerical</span><span class="p">)</span>
+</code></pre></div></p>
+<hr />
+<p>As we are starting to accumulate a lot of code, it would be a good moment to start a <strong>script</strong>.</p>
+<p>A script is simply a text file containing R commands.</p>
+<p>To create one, use <code>Ctrl+Alt+Shift+N</code>, or go to <code>Flie &gt; New File &gt; R script</code>.</p>
+<p>This will open a new file on the top-left section of Rstudio, where you can write some code.</p>
+<div class="admonition note">
+<p class="admonition-title">Important reminder</p>
+<p>remember to save your file, and to save often</p>
+</div>
+<p>The code you write in the script can be send to the console using <code>Ctrl+Enter</code> or clicking on the run button:</p>
+<p><img alt="image of rstudio run button" src="../assets/images/rstudio_run.png" /></p>
+<h3 id="exercise-basic-reading-and-manipulating">Exercise - basic reading and manipulating</h3>
+<ul>
+<li>read the csv file &ldquo;diamonds.csv&rdquo; in a dataframe</li>
+<li>what are the name of the columns of this dataframe?</li>
+<li>use the median function to compute the median carat in this data (<code>carat</code> column)</li>
+<li>use summary to get the minimum and maximum price </li>
+</ul>
+<details class="success">
+<summary>Solution</summary>
+<div class="highlight"><pre><span></span><code><span class="n">diamonds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;diamonds.csv&#39;</span><span class="p">)</span>
+<span class="nf">colnames</span><span class="p">(</span><span class="n">diamonds</span><span class="p">)</span>
+<span class="nf">median</span><span class="p">(</span><span class="w"> </span><span class="n">diamonds</span><span class="o">$</span><span class="n">carat</span><span class="w"> </span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="w"> </span><span class="n">diamonds</span><span class="o">$</span><span class="n">price</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div>
+</details>
+<h3 id="more-on-reading-files">More on reading files</h3>
+<p>When the file you want to read in the in the current working directory you have to specify to R where it can find the file:
+<div class="highlight"><pre><span></span><code><span class="n">diamonds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;data/diamonds.csv&#39;</span><span class="p">)</span>
+</code></pre></div></p>
+<p>Some files are not in csv format:
+<div class="highlight"><pre><span></span><code><span class="n">diamonds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;data/diamonds.tsv&#39;</span><span class="p">)</span>
+<span class="nf">head</span><span class="p">(</span><span class="w"> </span><span class="n">diamonds</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>            carat.cut.color.clarity.depth.table.price.x.y.z
+1      0.23\tIdeal\tE\tSI2\t61.5\t55\t326\t3.95\t3.98\t2.43
+2    0.21\tPremium\tE\tSI1\t59.8\t61\t326\t3.89\t3.84\t2.31
+3       0.23\tGood\tE\tVS1\t56.9\t65\t327\t4.05\t4.07\t2.31
+4     0.29\tPremium\tI\tVS2\t62.4\t58\t334\t4.2\t4.23\t2.63
+5       0.31\tGood\tJ\tSI2\t63.3\t58\t335\t4.34\t4.35\t2.75
+6 0.24\tVery Good\tJ\tVVS2\t62.8\t57\t336\t3.94\t3.96\t2.48
+</code></pre></div></p>
+<p>Then, we need to use an appropriate function. 
+<div class="highlight"><pre><span></span><code><span class="c1"># read.table is a very modular function to read most tables in a text file</span>
+<span class="n">diamonds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">read.table</span><span class="p">(</span><span class="s">&#39;data/diamonds.tsv&#39;</span><span class="p">)</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">diamonds</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>     V1      V2    V3      V4    V5    V6    V7   V8   V9  V10
+1 carat     cut color clarity depth table price    x    y    z
+2  0.23   Ideal     E     SI2  61.5    55   326 3.95 3.98 2.43
+3  0.21 Premium     E     SI1  59.8    61   326 3.89 3.84 2.31
+4  0.23    Good     E     VS1  56.9    65   327 4.05 4.07 2.31
+5  0.29 Premium     I     VS2  62.4    58   334  4.2 4.23 2.63
+6  0.31    Good     J     SI2  63.3    58   335 4.34 4.35 2.75
+</code></pre></div></p>
+<p><div class="highlight"><pre><span></span><code><span class="c1"># by default, read.table does not treat the first line as a header</span>
+<span class="c1"># we set the argument header to TRUE to change this behavior</span>
+<span class="n">diamonds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">read.table</span><span class="p">(</span><span class="s">&#39;data/diamonds.tsv&#39;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">diamonds</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>  carat       cut color clarity depth table price    x    y    z
+1  0.23     Ideal     E     SI2  61.5    55   326 3.95 3.98 2.43
+2  0.21   Premium     E     SI1  59.8    61   326 3.89 3.84 2.31
+3  0.23      Good     E     VS1  56.9    65   327 4.05 4.07 2.31
+4  0.29   Premium     I     VS2  62.4    58   334 4.20 4.23 2.63
+5  0.31      Good     J     SI2  63.3    58   335 4.34 4.35 2.75
+6  0.24 Very Good     J    VVS2  62.8    57   336 3.94 3.96 2.48
+</code></pre></div></p>
+<p>You can learn more in the documentation of <code>read.table</code>
+<div class="highlight"><pre><span></span><code><span class="o">?</span><span class="n">read.table</span>
+</code></pre></div></p>
+<p>Arguably, the main arguments are:</p>
+<ul>
+<li><code>sep</code> : separator between fields</li>
+<li><code>header</code> : does the first line contain column names?</li>
+<li><code>row.names</code> : set to 1 to have the first column interpreted as row names. Useful when reading expression matrices.</li>
+</ul>
+<h3 id="selection">Selection</h3>
+<p>Some columns contain text data (<code>character</code>)
+<div class="highlight"><pre><span></span><code><span class="n">iris</span><span class="o">$</span><span class="n">Species</span>
+</code></pre></div></p>
+<p>We can get a &ldquo;summary&rdquo; with the <code>table</code> function:
+<div class="highlight"><pre><span></span><code><span class="nf">table</span><span class="p">(</span><span class="w"> </span><span class="n">iris</span><span class="o">$</span><span class="n">Species</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div></p>
+<p>We can use a <strong>comparison operator</strong> to test conditions on data.
+These comparisons are the basis for <strong>selecting parts of our data</strong>.</p>
+<p>The main comparison operators are:</p>
+<ul>
+<li><code>==</code> : tests equality</li>
+<li><code>&lt;</code> or <code>&gt;</code> : under or above</li>
+<li><code>&lt;=</code> : under or equal</li>
+<li><code>&gt;=</code> : above or equal</li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><span class="m">5</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">10</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>FALSE
+</code></pre></div>
+Indeed 5 is not greater than 10</p>
+<p>In practise, here is what we do:
+<div class="highlight"><pre><span></span><code><span class="n">iris</span><span class="o">$</span><span class="n">Species</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&#39;setosa&#39;</span>
+
+<span class="n">iris</span><span class="o">$</span><span class="n">Petal.Length</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">5</span>
+</code></pre></div></p>
+<p>Both of these commands give a vector of booleans values (FALSE/TRUE).
+These vector can be given to the <code>[]</code> operator which will select the elements which are <code>TRUE</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="n">iris</span><span class="o">$</span><span class="n">Species</span><span class="p">[</span><span class="w"> </span><span class="n">iris</span><span class="o">$</span><span class="n">Species</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&#39;setosa&#39;</span><span class="w"> </span><span class="p">]</span>
+</code></pre></div>
+<p>Petal lengths of the <code>Iris setosa</code> samples:
+<div class="highlight"><pre><span></span><code><span class="n">iris</span><span class="o">$</span><span class="n">Petal.Length</span><span class="p">[</span><span class="w"> </span><span class="n">iris</span><span class="o">$</span><span class="n">Species</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&#39;setosa&#39;</span><span class="w"> </span><span class="p">]</span>
+</code></pre></div></p>
+<p>We can do the same for data frames.
+ Because data frames are 2D tables (with rows and columns), the syntaxt is a bit different:
+<code>dataframe[ selected_rows , selected_columns ]</code></p>
+<p>If selected rows or columns is left empty, then all elements are selected.</p>
+<div class="highlight"><pre><span></span><code><span class="n">iris</span><span class="p">[</span><span class="w"> </span><span class="n">iris</span><span class="o">$</span><span class="n">Species</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&#39;setosa&#39;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">]</span>
+
+<span class="n">iris</span><span class="p">[</span><span class="w"> </span><span class="n">iris</span><span class="o">$</span><span class="n">Species</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&#39;setosa&#39;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Petal.Length&#39;</span><span class="w"> </span><span class="p">]</span>
+</code></pre></div>
+<p>With this, we can use these selection to make further computations, such as computing the mean petal length for different species:</p>
+<div class="highlight"><pre><span></span><code><span class="nf">mean</span><span class="p">(</span><span class="w"> </span><span class="n">iris</span><span class="p">[</span><span class="w"> </span><span class="n">iris</span><span class="o">$</span><span class="n">Species</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&#39;setosa&#39;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Petal.Length&#39;</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">)</span>
+<span class="nf">mean</span><span class="p">(</span><span class="w"> </span><span class="n">iris</span><span class="p">[</span><span class="w"> </span><span class="n">iris</span><span class="o">$</span><span class="n">Species</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&#39;virginica&#39;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Petal.Length&#39;</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div>
+<p>Finally, in some case we want to combine some filters.
+This can be done with :</p>
+<ul>
+<li><code>&amp;</code> : <strong>and</strong> - select elements that satisfy both filters</li>
+<li><code>|</code> : <strong>or</strong> - select elements that satisfy either of the two filters</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1"># iris of the setosa species AND with a petal length above 1.5</span>
+<span class="n">iris</span><span class="p">[</span><span class="w"> </span><span class="n">iris</span><span class="o">$</span><span class="n">Species</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&#39;setosa&#39;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">iris</span><span class="o">$</span><span class="n">Petal.Length</span><span class="o">&gt;</span><span class="m">1.5</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">]</span>
+</code></pre></div>
+<h3 id="exercise-selection">Exercise - Selection</h3>
+<ol>
+<li>read the csv file &ldquo;DEresults.csv&rdquo; in a dataframe</li>
+<li>how many elements have a significant adjusted p-value (column <code>padj</code>)?</li>
+<li>how many elements have an absolute value of <code>log2FoldChange &gt; 1</code>?</li>
+<li>how many elements have a significant adjusted p-value (column <code>padj</code>) and a positive <code>log2FoldChange</code>?</li>
+</ol>
+<details class="success">
+<summary>Solution</summary>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. reading the file</span>
+<span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">read.csv</span><span class="p">(</span><span class="w"> </span><span class="s">&#39;DEresults.csv&#39;</span><span class="w"> </span><span class="p">)</span>
+
+<span class="c1"># 2. selecting significant adjusted p-value</span>
+<span class="nf">table</span><span class="p">(</span><span class="w"> </span><span class="n">df</span><span class="o">$</span><span class="n">padj</span><span class="w">  </span><span class="o">&lt;</span><span class="w"> </span><span class="m">0.05</span><span class="w"> </span><span class="p">)</span>
+
+<span class="c1"># 3. selecting absolute values of log2 Fold-Change above 1</span>
+<span class="nf">table</span><span class="p">(</span><span class="w"> </span><span class="nf">abs</span><span class="p">(</span><span class="w"> </span><span class="n">df</span><span class="o">$</span><span class="n">log2FoldChange</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">)</span>
+
+<span class="c1"># OR alternatively</span>
+<span class="nf">table</span><span class="p">(</span><span class="w"> </span><span class="n">df</span><span class="o">$</span><span class="n">log2FoldChange</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">df</span><span class="o">$</span><span class="n">log2FoldChange</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">-1</span><span class="w"> </span><span class="p">)</span>
+
+<span class="c1"># 4. significant adjusted p-value and positive log2 Fold-Change</span>
+<span class="nf">table</span><span class="p">(</span><span class="w"> </span><span class="n">df</span><span class="o">$</span><span class="n">log2FoldChange</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">df</span><span class="o">$</span><span class="n">padj</span><span class="w">  </span><span class="o">&lt;</span><span class="w"> </span><span class="m">0.05</span><span class="w"> </span><span class="p">)</span>
+
+<span class="c1"># OR alternatively we can get a two by two table</span>
+<span class="nf">table</span><span class="p">(</span><span class="w"> </span><span class="n">df</span><span class="o">$</span><span class="n">padj</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">0.05</span><span class="w">  </span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="o">$</span><span class="n">log2FoldChange</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div>
+</details>
+<h3 id="writing-data-frame-to-files">Writing data frame to files</h3>
+<p>Let&rsquo;s create a new data frame from the <code>Iris virginica</code> only :</p>
+<div class="highlight"><pre><span></span><code><span class="n">virginica_iris</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iris</span><span class="p">[</span><span class="w"> </span><span class="n">iris</span><span class="o">$</span><span class="n">Species</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&#39;virginica&#39;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">]</span>
+<span class="nf">head</span><span class="p">(</span><span class="w"> </span><span class="n">virginica_iris</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div>
+<p>Then we write it with <code>write.csv</code>:
+<div class="highlight"><pre><span></span><code><span class="nf">write.csv</span><span class="p">(</span><span class="w"> </span><span class="n">virginica_iris</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&#39;virginica.csv&#39;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div></p>
+<p><code>write.table</code> exists as well, and generally they have the same arguments as <code>read.csv</code> and <code>read.table</code>.</p>
+<h3 id="creating-new-columns">Creating new columns</h3>
+<p>By dividing the sepal width by the sepal height, we get a ratio for each sample:
+<div class="highlight"><pre><span></span><code><span class="n">iris</span><span class="o">$</span><span class="n">Sepal.Width</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">iris</span><span class="o">$</span><span class="n">Sepal.Height</span>
+</code></pre></div></p>
+<p>We can set it as a new column in the data frame simple by doing an assignment to a column:</p>
+<div class="highlight"><pre><span></span><code><span class="n">iris</span><span class="o">$</span><span class="n">ratio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iris</span><span class="o">$</span><span class="n">Sepal.Length</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">iris</span><span class="o">$</span><span class="n">Sepal.Width</span>
+<span class="nf">head</span><span class="p">(</span><span class="w"> </span><span class="n">iris</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div>
+<h2 id="plotting-with-ggplot2">plotting with ggplot2</h2>
+<p>There exists several ways of creating plots in R, but arguably the most common is the ggplot2 library.</p>
+<h3 id="detour-libraries">detour: libraries</h3>
+<p>A <strong>library</strong> is a set of external functions, variables, &hellip; which have been packaged together.</p>
+<p>Because there are thousands of these libraries,
+they are not installed by default when you first install R, 
+and they are not loaded in your R session.</p>
+<p>So to use them you need to :</p>
+<ol>
+<li>ensure they are installed (you need to install them only once)</li>
+<li>load them in your session (you need to do this for each R session you start)</li>
+</ol>
+<h4 id="installing-a-library">installing a library</h4>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Rstudio instance on the server should have all the libraries you will need already installed, so there is no need for you to perform these installations there.</p>
+</div>
+<p>For our purpose R libraries can be found in two main repositories:
+ * <a href="https://cran.r-project.org/">CRAN</a> : generalist repository
+    * install with <code>install.packages("package_name")</code>
+ * <a href="https://www.bioconductor.org/">Bioconductor</a> : specialised in bioinformatics libraries
+    * install with <code>BiocManager::install("package_name")</code>
+    * <code>BiocManager</code> itself may need to be installed from CRAN with <code>install.packages("BiocManager")</code></p>
+<p>In RNAseq analysis yt is common to mix libraries from both sources ( our package for plotting or doing a PCA comes from CRAN, and our package that retrieves genome annotation is from Bioconductor).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>note the quotes around the library name when calling <code>install.packages</code> or <code>BiocManager::install</code></p>
+</div>
+<h4 id="loading-a-library">loading a library</h4>
+<p>Irrespective of the repository the library came from, once it is installed in your R session you can load it with :</p>
+<div class="highlight"><pre><span></span><code><span class="c1">#loading ggplot2</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>note the <strong>absence</strong> of quotes around the library name when calling <code>library</code></p>
+</div>
+<h3 id="first-steps-in-ggplot2">First steps in ggplot2</h3>
+<p>We want to represent the relationship between petal length and petal width.</p>
+<p>The basic call to ggplot2 is made with the <code>ggplot</code> function, which typically takes to arguments:</p>
+<ul>
+<li>a dataframe containing the data we want to represent</li>
+<li>an <em>aesthetic</em> : a call to the <code>aes</code> function defines which elements of the data we want to map to graphical elements (x-axis, y-axis, color, &hellip;)</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nf">ggplot</span><span class="p">(</span><span class="w"> </span><span class="n">iris</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Petal.Length</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Petal.Width</span><span class="p">)</span><span class="w">  </span><span class="p">)</span>
+</code></pre></div>
+<p>At this stage, we have a graphical window, with axes defines and all, but we need to <strong>add</strong> graphical element on top of it.</p>
+<p>This is done by saving the plot in a variable, and then adding (with <code>+</code>) the results of ggplot2 functions to it.</p>
+<div class="highlight"><pre><span></span><code><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">ggplot</span><span class="p">(</span><span class="w"> </span><span class="n">iris</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Petal.Length</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Petal.Width</span><span class="p">)</span><span class="w">  </span><span class="p">)</span>
+<span class="n">p</span>
+</code></pre></div>
+<p><code>geom_...</code> functions usually add <em>geometric objects</em> : line, points, bars, &hellip; 
+<div class="highlight"><pre><span></span><code><span class="c1"># geom_point() set up point</span>
+<span class="n">p</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">geom_point</span><span class="p">()</span>
+</code></pre></div></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># p is unchanged</span>
+<span class="n">p</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># p is changed</span>
+<span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">geom_point</span><span class="p">()</span>
+<span class="n">p</span>
+</code></pre></div>
+<h3 id="exercise-a-simple-line">Exercise - a simple line</h3>
+<p>Copy-paste and run the following line:
+<div class="highlight"><pre><span></span><code><span class="n">df2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="m">100</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="nf">sin</span><span class="p">((</span><span class="m">1</span><span class="o">:</span><span class="m">100</span><span class="p">)</span><span class="o">*</span><span class="m">0.1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="m">100</span><span class="p">)</span><span class="o">*</span><span class="m">0.1</span><span class="p">)</span>
+</code></pre></div>
+It creates a <code>data.frame</code> with two columns.</p>
+<p>Using ggplot, create a plot of this data with <code>time</code> as x-axis and <code>value</code> as y-axis.</p>
+<ol>
+<li>make a scatter plot with : <code>geom_point()</code> </li>
+<li>make a line plot with : <code>geom_line()</code> </li>
+<li>use both <code>geom_point()</code> and <code>geom_line()</code></li>
+</ol>
+<details class="success">
+<summary>Solution</summary>
+<div class="highlight"><pre><span></span><code><span class="n">df2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="m">100</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="nf">sin</span><span class="p">((</span><span class="m">1</span><span class="o">:</span><span class="m">100</span><span class="p">)</span><span class="o">*</span><span class="m">0.1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="m">100</span><span class="p">)</span><span class="o">*</span><span class="m">0.1</span><span class="p">)</span>
+
+<span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">ggplot</span><span class="p">(</span><span class="n">df2</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">time</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">value</span><span class="p">))</span>
+
+<span class="c1">#1.</span>
+<span class="n">p</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">geom_point</span><span class="p">()</span>
+<span class="c1">#2.</span>
+<span class="n">p</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">geom_line</span><span class="p">()</span>
+<span class="c1">#3.</span>
+<span class="n">p</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">geom_line</span><span class="p">()</span>
+</code></pre></div>
+</details>
+<h3 id="adding-some-color">Adding some color</h3>
+<p>Adding color can be as simple a specifying which column to map to color in <code>aes()</code></p>
+<div class="highlight"><pre><span></span><code><span class="c1">## categorical color</span>
+<span class="n">p1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">ggplot</span><span class="p">(</span><span class="w"> </span><span class="n">iris</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Petal.Length</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Petal.Width</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Species</span><span class="p">)</span><span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">geom_point</span><span class="p">()</span>
+<span class="n">p1</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1">## continuous color</span>
+<span class="n">p2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">ggplot</span><span class="p">(</span><span class="w"> </span><span class="n">iris</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Petal.Length</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Petal.Width</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Sepal.Length</span><span class="p">)</span><span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">geom_point</span><span class="p">()</span>
+<span class="n">p2</span>
+</code></pre></div>
+<p>Of course, we often want to change the default color scheme:</p>
+<div class="highlight"><pre><span></span><code><span class="n">p1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">scale_color_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;#69b3a2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;purple&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;black&quot;</span><span class="p">))</span>
+<span class="n">p1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">scale_color_brewer</span><span class="p">(</span><span class="n">palette</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Spectral&quot;</span><span class="p">)</span>
+
+<span class="n">p2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">scale_color_gradient</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">high</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>These are just a couple of example, you can read more in this <a href="http://www.sthda.com/english/wiki/ggplot2-colors-how-to-change-colors-automatically-and-manually">nice guide on ggplot2 colors</a></p>
+<p>Rather than point colors, you can also change the general theme of the plot:
+<div class="highlight"><pre><span></span><code><span class="n">p1</span>
+<span class="n">p1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">theme_dark</span><span class="p">()</span>
+<span class="n">p1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">theme_minimal</span><span class="p">()</span>
+</code></pre></div></p>
+<p><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">More on themes</a></p>
+<h3 id="changing-axis-labels-and-titles">changing axis labels and titles</h3>
+<div class="highlight"><pre><span></span><code><span class="n">p1</span>
+<span class="n">p1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">xlab</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;petal length (cm)&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">ylab</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;petal width (cm)&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">ggtitle</span><span class="p">(</span><span class="s">&#39;Petal measurements of some iris&#39;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="more-plots-the-sky-is-the-limit">more plots - the sky is the limit</h3>
+<div class="highlight"><pre><span></span><code><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">ggplot</span><span class="p">(</span><span class="w"> </span><span class="n">iris</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Species</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Petal.Length</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="c1"># violin plot</span>
+<span class="n">p</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">geom_violin</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">geom_jitter</span><span class="p">()</span>
+
+<span class="c1"># box plot</span>
+<span class="n">p</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">geom_boxplot</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">geom_jitter</span><span class="p">()</span>
+
+<span class="c1"># histogram plot</span>
+<span class="nf">ggplot</span><span class="p">(</span><span class="w"> </span><span class="n">iris</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Petal.Length</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">geom_histogram</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># getting some data for a line plot</span>
+<span class="n">df2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">supp</span><span class="o">=</span><span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;VC&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;OJ&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">each</span><span class="o">=</span><span class="m">3</span><span class="p">),</span>
+<span class="w">                  </span><span class="n">dose</span><span class="o">=</span><span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;D0.5&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;D1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;D2&quot;</span><span class="p">),</span><span class="m">2</span><span class="p">),</span>
+<span class="w">                  </span><span class="n">len</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">6.8</span><span class="p">,</span><span class="w"> </span><span class="m">15</span><span class="p">,</span><span class="w"> </span><span class="m">33</span><span class="p">,</span><span class="w"> </span><span class="m">4.2</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">29.5</span><span class="p">))</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">df2</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># line plot with different lines are done with the group aesthetic</span>
+<span class="nf">ggplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df2</span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">dose</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="n">len</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="o">=</span><span class="n">supp</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_line</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">linetype</span><span class="o">=</span><span class="n">supp</span><span class="p">))</span><span class="o">+</span><span class="w"> </span><span class="c1"># locally mapping supp to the linetype aesthetic</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span>
+</code></pre></div>
+<ul>
+<li><a href="https://ggplot2.tidyverse.org/reference/">ggplot2 reference</a></li>
+<li><a href="https://r-graph-gallery.com/">r-graph-gallery</a></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When plotting, you will quickly realize that <strong>one could spend an eternity tuning</strong> this or that about the graphical element to make them look just the way they want. </p>
+<p>If you do not want to lose too much time with it, my advice is that most of the time during your analysis you just want to look at data and it does not need to look perfect,
+and figures often change a lot before the final version of the manuscript.</p>
+<p>So during the analysis itself, I would keep the tuning to a minimum as the <strong>default themes usually make a good job</strong>; and I would invest more time getting pretty pictures only once we have decided on precise figures or slides.</p>
+</div>
+<h2 id="recapitulative-exercise">Recapitulative exercise</h2>
+<p>We are going, step-by-step, to build a <a href="https://en.wikipedia.org/wiki/Volcano_plot_(statistics)">volcano plot</a> out of Differential expression data we used in the previous exercise</p>
+<ol>
+<li>read the csv file &ldquo;DEresults.csv&rdquo; in a dataframe</li>
+</ol>
+<details class="success">
+<summary>Solution</summary>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">read.csv</span><span class="p">(</span><span class="w"> </span><span class="s">&#39;DEresults.csv&#39;</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div>
+</details>
+<ol start="2">
+<li>create a scatter plot with the logFoldChange as x, and the adjusted p-value (padj) as y</li>
+</ol>
+<details class="success">
+<summary>Solution</summary>
+<div class="highlight"><pre><span></span><code><span class="nf">ggplot</span><span class="p">(</span><span class="n">df</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">log2FoldChange</span><span class="w"> </span><span class="p">,</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">padj</span><span class="w"> </span><span class="p">)</span><span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="nf">geom_point</span><span class="p">()</span>
+</code></pre></div>
+</details>
+<ol start="3">
+<li>update this plot using the function : scale_y_log10() . what happens?</li>
+</ol>
+<details class="success">
+<summary>Solution</summary>
+<div class="highlight"><pre><span></span><code><span class="nf">ggplot</span><span class="p">(</span><span class="n">df</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">log2FoldChange</span><span class="w"> </span><span class="p">,</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">padj</span><span class="w"> </span><span class="p">)</span><span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">scale_y_log10</span><span class="p">()</span>
+</code></pre></div>
+</details>
+<p>Next we want to color points in grey if they are not significant, and in black if they are.
+for this we are going to create a new column in the data frame which contains TRUE or FALSE depending on whether the gene significant and then we will use this column to color the points</p>
+<ol start="4">
+<li>create a column in your data frame which is TRUE when the adjusted p-value is below 0.01 and the absolute log2FoldChange is above 1</li>
+</ol>
+<details class="success">
+<summary>Solution</summary>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="o">$</span><span class="n">signif</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="o">$</span><span class="n">padj</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">0.01</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="nf">abs</span><span class="p">(</span><span class="w"> </span><span class="n">df</span><span class="o">$</span><span class="n">log2FoldChange</span><span class="w"> </span><span class="p">)</span><span class="w">  </span><span class="o">&gt;</span><span class="w"> </span><span class="m">1</span>
+</code></pre></div>
+</details>
+<ol start="5">
+<li>color the points in your volcano plot according to this new column</li>
+</ol>
+<details class="success">
+<summary>Solution</summary>
+<div class="highlight"><pre><span></span><code><span class="n">volcano</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">ggplot</span><span class="p">(</span><span class="n">df</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">log2FoldChange</span><span class="w"> </span><span class="p">,</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">padj</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">signif</span><span class="w"> </span><span class="p">)</span><span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">scale_y_log10</span><span class="p">()</span>
+<span class="n">volcano</span>
+</code></pre></div>
+</details>
+<ol start="6">
+<li>change the colors so that non-significant point are in grey and significant in black (or anything pleasant to you)</li>
+</ol>
+<details class="success">
+<summary>Solution</summary>
+<div class="highlight"><pre><span></span><code><span class="n">volcano</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">ggplot</span><span class="p">(</span><span class="n">df</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">log2FoldChange</span><span class="w"> </span><span class="p">,</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">padj</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">signif</span><span class="w"> </span><span class="p">)</span><span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">scale_y_log10</span><span class="p">()</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_color_manual</span><span class="p">(</span><span class="w"> </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;grey&#39;</span><span class="p">,</span><span class="s">&#39;black&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="n">volcano</span>
+</code></pre></div>
+</details>
+<p>Next we would like to add vertical and horizontal lines to show the thrsholds we have applied on the adjusted p-value and log2FoldChange</p>
+<ol start="7">
+<li>search the internet on how to add horizontal lines in ggplot, and then add dashed horizontal and vertical lines at padj=0.01, log2Folchange=1 and log2FoldChange=-1</li>
+</ol>
+<details class="success">
+<summary>Solution</summary>
+<div class="highlight"><pre><span></span><code><span class="n">volcano</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">geom_hline</span><span class="p">(</span><span class="w"> </span><span class="n">yintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.01</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">linetype</span><span class="o">=</span><span class="s">&#39;dashed&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>
+<span class="w">    </span><span class="nf">geom_vline</span><span class="p">(</span><span class="w"> </span><span class="n">xintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">linetype</span><span class="o">=</span><span class="s">&#39;dashed&#39;</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div>
+</details>
+<p><strong>extra question</strong></p>
+<ol start="8">
+<li>try to find a way to add to the volcano plot the gene name (column SYMBOL) of genes with an absolute logFoldChange &gt; 5</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There are several way of doing this and it is not that immediate, take your time, experiment, search the web).</p>
+</div>
+<details class="success">
+<summary>Solution - part 1</summary>
+<div class="highlight"><pre><span></span><code><span class="c1"># creating a new column that will have empty text for all genes except the ones which satisfy our condition</span>
+<span class="n">df</span><span class="o">$</span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="n">df</span><span class="o">$</span><span class="n">label</span><span class="p">[</span><span class="w"> </span><span class="nf">abs</span><span class="p">(</span><span class="w"> </span><span class="n">df</span><span class="o">$</span><span class="n">log2FoldChange</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">[</span><span class="w"> </span><span class="nf">abs</span><span class="p">(</span><span class="w"> </span><span class="n">df</span><span class="o">$</span><span class="n">log2FoldChange</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&#39;SYMBOL&#39;</span><span class="w"> </span><span class="p">]</span>
+</code></pre></div>
+</details>
+<details class="success">
+<summary>Solution - part 2</summary>
+<div class="highlight"><pre><span></span><code><span class="nf">ggplot</span><span class="p">(</span><span class="n">df</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">log2FoldChange</span><span class="w"> </span><span class="p">,</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">padj</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">signif</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">label</span><span class="p">)</span><span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">scale_y_log10</span><span class="p">()</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_color_manual</span><span class="p">(</span><span class="w"> </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;grey&#39;</span><span class="p">,</span><span class="s">&#39;black&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_hline</span><span class="p">(</span><span class="w"> </span><span class="n">yintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.01</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">linetype</span><span class="o">=</span><span class="s">&#39;dashed&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_vline</span><span class="p">(</span><span class="w"> </span><span class="n">xintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">linetype</span><span class="o">=</span><span class="s">&#39;dashed&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_text</span><span class="p">(</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div>
+</details>
+<details class="success">
+<summary>Alternative solution</summary>
+<p><a href="http://www.sthda.com/english/wiki/ggplot2-texts-add-text-annotations-to-a-graph-in-r-software">inspiration source</a>
+<div class="highlight"><pre><span></span><code><span class="c1"># install.packages(&quot;ggrepel&quot;)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">ggrepel</span><span class="p">)</span>
+<span class="nf">ggplot</span><span class="p">(</span><span class="n">df</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">log2FoldChange</span><span class="w"> </span><span class="p">,</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">padj</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">signif</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">label</span><span class="p">)</span><span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">scale_y_log10</span><span class="p">()</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_color_manual</span><span class="p">(</span><span class="w"> </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;grey&#39;</span><span class="p">,</span><span class="s">&#39;black&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_hline</span><span class="p">(</span><span class="w"> </span><span class="n">yintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.01</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">linetype</span><span class="o">=</span><span class="s">&#39;dashed&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_vline</span><span class="p">(</span><span class="w"> </span><span class="n">xintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">linetype</span><span class="o">=</span><span class="s">&#39;dashed&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_label_repel</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="o">$</span><span class="n">label</span><span class="w"> </span><span class="p">))</span>
+
+
+<span class="c1"># another technique, giving only a subset of the data to the function which ad the labels</span>
+<span class="nf">ggplot</span><span class="p">(</span><span class="n">df</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">log2FoldChange</span><span class="w"> </span><span class="p">,</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">padj</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">signif</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">label</span><span class="p">)</span><span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">scale_y_log10</span><span class="p">()</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_color_manual</span><span class="p">(</span><span class="w"> </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;grey&#39;</span><span class="p">,</span><span class="s">&#39;black&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_hline</span><span class="p">(</span><span class="w"> </span><span class="n">yintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.01</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">linetype</span><span class="o">=</span><span class="s">&#39;dashed&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_vline</span><span class="p">(</span><span class="w"> </span><span class="n">xintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">linetype</span><span class="o">=</span><span class="s">&#39;dashed&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_text_repel</span><span class="p">(</span>
+<span class="w">       </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">subset</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="nf">abs</span><span class="p">(</span><span class="w"> </span><span class="n">log2FoldChange</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="p">),</span>
+<span class="w">       </span><span class="nf">aes</span><span class="p">(</span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SYMBOL</span><span class="p">))</span>
+</code></pre></div></p>
+</details>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.220ee61c.min.js"></script>
+      
+    
+  </body>
+</html>

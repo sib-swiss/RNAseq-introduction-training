@@ -220,10 +220,72 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          Precourse preparations
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Precourse preparations
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../precourse/" class="md-nav__link">
-        Precourse preparations
+        prerequisites
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unix_crash/" class="md-nav__link">
+        UNIX crash course
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../R_crash/" class="md-nav__link">
+        R crash course
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -479,20 +541,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#additional-mapping-reads-from-ruhland2016-on-the-reference" class="md-nav__link">
-    ADDITIONAL Mapping reads from Ruhland2016 on the reference
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#additionnal-star-2-pass" class="md-nav__link">
-    ADDITIONNAL : STAR 2-Pass
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -609,20 +657,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#additional-mapping-reads-from-ruhland2016-on-the-reference" class="md-nav__link">
-    ADDITIONAL Mapping reads from Ruhland2016 on the reference
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#additionnal-star-2-pass" class="md-nav__link">
-    ADDITIONNAL : STAR 2-Pass
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -670,9 +704,8 @@ you can grab the reference genome data from the <a href="https://www.ensembl.org
 <p>Take note of the genome sequence and annotation versions, you will need this in your paper&rsquo;s methods section!</p>
 <p><strong>Task :</strong> Using STAR, build a genome index for the mouse mitochondrial chromosome.</p>
 <ul>
-<li>.fasta and .gtf files are in : <code>/shared/data/DATA/Mouse_MT_genome/</code>.</li>
+<li>.fasta and .gtf files are in : <code>/data/DATA/Mouse_MT_genome/</code>.</li>
 <li>create the index in the folder <code>041_d_STAR_mouseMT_reference</code></li>
-<li>the module name for this aligner is <code>star</code>.</li>
 <li>this job should require less than 4Gb and 10min to run. </li>
 </ul>
 <div class="admonition info">
@@ -698,17 +731,11 @@ you can grab the reference genome data from the <a href="https://www.ensembl.org
 <details class="success">
 <summary>STAR indexing script</summary>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
-<span class="c1">#SBATCH --job-name=star-build</span>
-<span class="c1">#SBATCH --time=00:30:00</span>
-<span class="c1">#SBATCH --cpus-per-task=2</span>
-<span class="c1">#SBATCH --mem=3G</span>
-<span class="c1">#SBATCH -o 041_l_star_index.o</span>
+<span class="c1"># indexing the mouse mitochondrial genome</span>
 
+<span class="nv">G_FASTA</span><span class="o">=</span>/data/DATA/Mouse_MT_genome/Mus_musculus.GRCm39.dna.chromosome.MT.fa
+<span class="nv">G_GTF</span><span class="o">=</span>/data/DATA/Mouse_MT_genome/Mus_musculus.GRCm39.MT.gtf
 
-<span class="nv">G_FASTA</span><span class="o">=</span>/shared/data/DATA/Mouse_MT_genome/Mus_musculus.GRCm39.dna.chromosome.MT.fa
-<span class="nv">G_GTF</span><span class="o">=</span>/shared/data/DATA/Mouse_MT_genome/Mus_musculus.GRCm39.MT.gtf
-
-ml<span class="w"> </span>star
 
 mkdir<span class="w"> </span>-p<span class="w"> </span>041_d_STAR_mouseMT_reference
 
@@ -720,7 +747,7 @@ STAR<span class="w"> </span>--runMode<span class="w"> </span>genomeGenerate<span
 <span class="w">     </span>--genomeSAindexNbases<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="se">\</span>
 <span class="w">     </span>--sjdbOverhang<span class="w"> </span><span class="m">99</span><span class="w"> </span>
 </code></pre></div>
-<p>It can be found on the cluster at <code>/shared/data/Solutions/mouseMT/041_s_star_index.sh</code></p>
+<p>It can be found on the server at <code>/data/Solutions/mouseMT/041_s_star_index.sh</code></p>
 </details>
 <p><strong>Extra task :</strong> Determine how you would add an additional feature to your reference, for example for a novel transcript not described by the standard reference.</p>
 <details class="success">
@@ -735,13 +762,13 @@ STAR<span class="w"> </span>--runMode<span class="w"> </span>genomeGenerate<span
 <h2 id="mapping-reads-onto-the-reference">Mapping reads onto the reference</h2>
 <p><strong>Task :</strong> Using STAR, align the raw FASTQ files of the mouseMT dataset against the mouse mitochondrial reference you just created.</p>
 <ul>
-<li>if were not able to complete the previous task, you can use the index in <code>/shared/data/Solutions/mouseMT/041_d_STAR_mouseMT_reference</code> .</li>
+<li>if were not able to complete the previous task, you can use the index in <code>/data/Solutions/mouseMT/041_d_STAR_mouseMT_reference</code> .</li>
 <li>search the STAR manual for the option to output a BAM file sorted by coordinate.</li>
 <li>search the STAR manual for the option to output a geneCounts file.</li>
 <li>put the results in folder <code>042_d_STAR_map_raw/</code> .</li>
 </ul>
-<div class="admonition info">
-<p class="admonition-title">STAR basic parameters for mapping</p>
+<details class="success">
+<summary>STAR basic parameters for mapping</summary>
 <p>Taken again from the manual:</p>
 <ul>
 <li><code>--genomeDir &lt;/path/to/genomeDir&gt;</code> : folder where you have put the genome index</li>
@@ -749,7 +776,7 @@ STAR<span class="w"> </span>--runMode<span class="w"> </span>genomeGenerate<span
 <li><code>--runThreadN &lt;NumberOfThreads&gt;</code>: number of threads to run on.</li>
 <li><code>--outFileNamePrefix  &lt;prefix&gt;</code> : prefix of the output files, typically something like <code>output_directory/sampleName</code> . </li>
 </ul>
-</div>
+</details>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Take the time to read the parts of the <a href="https://raw.githubusercontent.com/alexdobin/STAR/master/doc/STARmanual.pdf">STAR manual</a> which concern you: a bit of planning ahead can save you a lot of time-consuming/headache-inducing trial-and-error on your script.</p>
@@ -771,32 +798,27 @@ sample_b2
 sample_b3
 sample_b4
 </code></pre></div>
-it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/sampleNames.txt</code></p>
+it can also be found in the server at <code>/data/Solutions/mouseMT/sampleNames.txt</code></p>
 <p>Then for our script:</p>
 <p><div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
-<span class="c1">#SBATCH --job-name=star-aln</span>
-<span class="c1">#SBATCH --time=00:10:00</span>
-<span class="c1">#SBATCH --cpus-per-task=2</span>
-<span class="c1">#SBATCH --mem=1G</span>
-<span class="c1">#SBATCH -o 042_l_STAR_map_raw.%a.o</span>
-<span class="c1">#SBATCH --array 1-8%8</span>
+<span class="c1"># aligning mouseMT reads with STAR</span>
 
-ml<span class="w"> </span>star
 
 mkdir<span class="w"> </span>-p<span class="w"> </span>042_d_STAR_map_raw
 
-<span class="nv">SAMPLE</span><span class="o">=</span><span class="sb">`</span>sed<span class="w"> </span>-n<span class="w"> </span><span class="si">${</span><span class="nv">SLURM_ARRAY_TASK_ID</span><span class="si">}</span>p<span class="w"> </span>sampleNames.txt<span class="sb">`</span>
+<span class="k">for</span><span class="w"> </span>SAMPLE<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="sb">`</span>cat<span class="w"> </span>sampleNames.txt<span class="sb">`</span>
+<span class="k">do</span>
+<span class="w"> </span><span class="nv">FASTQ_NAME</span><span class="o">=</span>/data/DATA/mouseMT/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.fastq
 
-<span class="nv">FASTQ_NAME</span><span class="o">=</span>/shared/data/DATA/mouseMT/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.fastq
-
-STAR<span class="w"> </span>--runThreadN<span class="w"> </span><span class="m">4</span><span class="w"> </span>--genomeDir<span class="w"> </span>041_d_STAR_mouseMT_reference<span class="w"> </span><span class="se">\</span>
-<span class="w">              </span>--outSAMtype<span class="w"> </span>BAM<span class="w"> </span>SortedByCoordinate<span class="w"> </span><span class="se">\</span>
-<span class="w">              </span>--outFileNamePrefix<span class="w">  </span>042_d_STAR_map_raw/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.<span class="w"> </span><span class="se">\</span>
-<span class="w">              </span>--quantMode<span class="w"> </span>GeneCounts<span class="w"> </span><span class="se">\</span>
-<span class="w">              </span>--readFilesIn<span class="w"> </span><span class="nv">$FASTQ_NAME</span>
+<span class="w"> </span>STAR<span class="w"> </span>--runThreadN<span class="w"> </span><span class="m">4</span><span class="w"> </span>--genomeDir<span class="w"> </span>041_d_STAR_mouseMT_reference<span class="w"> </span><span class="se">\</span>
+<span class="w">               </span>--outSAMtype<span class="w"> </span>BAM<span class="w"> </span>SortedByCoordinate<span class="w"> </span><span class="se">\</span>
+<span class="w">               </span>--outFileNamePrefix<span class="w">  </span>042_d_STAR_map_raw/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.<span class="w"> </span><span class="se">\</span>
+<span class="w">               </span>--quantMode<span class="w"> </span>GeneCounts<span class="w"> </span><span class="se">\</span>
+<span class="w">               </span>--readFilesIn<span class="w"> </span><span class="nv">$FASTQ_NAME</span>
+<span class="k">done</span>
 </code></pre></div>
-it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/042_s_STAR_map_raw.sh</code></p>
-<p>and its results can be found at <code>/shared/data/Solutions/mouseMT/042_d_STAR_map_raw/</code></p>
+it can also be found in the server at <code>/data/Solutions/mouseMT/042_s_STAR_map_raw.sh</code></p>
+<p>and its results can be found at <code>/data/Solutions/mouseMT/042_d_STAR_map_raw/</code></p>
 <p>The options of STAR are :</p>
 <ul>
 <li><code>--runThreadN 4</code> : 4 threads to go faster.</li>
@@ -818,15 +840,11 @@ it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/042_
 <details class="success">
 <summary>script and answers</summary>
 <p><div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
-<span class="c1">#SBATCH --job-name=map-multiqc</span>
-<span class="c1">#SBATCH --time=00:30:00</span>
-<span class="c1">#SBATCH --cpus-per-task=1</span>
-<span class="c1">#SBATCH --mem=1G</span>
-<span class="c1">#SBATCH -o 043_l_multiqc_map_raw.o</span>
+<span class="c1"># multiqc on the mapping results</span>
 
 multiqc<span class="w"> </span>-n<span class="w"> </span>043_r_multiqc_mouseMT_mapped_raw.html<span class="w"> </span>-f<span class="w"> </span>--title<span class="w"> </span>mapped_raw<span class="w"> </span>042_d_STAR_map_raw/
 </code></pre></div>
-it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/043_s_multiqc_map_raw.sh</code></p>
+it can also be found in the server at <code>/data/Solutions/mouseMT/043_s_multiqc_map_raw.sh</code></p>
 <p><a :=":" class="md-button" href="../../assets/html/043_multiqc_mouseMT_mapped_raw.html" target="_blank"> Download the report </a></p>
 </details>
 <h2 id="comparison-of-mapping-the-trimmed-reads">Comparison of mapping the trimmed reads</h2>
@@ -836,38 +854,31 @@ it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/043_
 <details class="note">
 <summary>For the curious: scripts for the mapping of trimmed reads</summary>
 <p><div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
-<span class="c1">#SBATCH --job-name=star-aln</span>
-<span class="c1">#SBATCH --time=00:10:00</span>
-<span class="c1">#SBATCH --cpus-per-task=2</span>
-<span class="c1">#SBATCH --mem=1G</span>
-<span class="c1">#SBATCH -o 044_l_STAR_map_trimmed.%a.o</span>
-<span class="c1">#SBATCH --array 1-8%8</span>
+<span class="c1"># mapping trimmed mouseMT reads</span>
 
-ml<span class="w"> </span>star
+
 
 mkdir<span class="w"> </span>-p<span class="w"> </span>044_d_STAR_map_trimmed
 
-<span class="nv">SAMPLE</span><span class="o">=</span><span class="sb">`</span>sed<span class="w"> </span>-n<span class="w"> </span><span class="si">${</span><span class="nv">SLURM_ARRAY_TASK_ID</span><span class="si">}</span>p<span class="w"> </span>sampleNames.txt<span class="sb">`</span>
+<span class="k">for</span><span class="w"> </span>SAMPLE<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="sb">`</span>cat<span class="w"> </span>sampleNames.txt<span class="sb">`</span>
+<span class="k">do</span>
 
-<span class="nv">FASTQ_NAME</span><span class="o">=</span>030_d_trim/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.trimmed.fastq
+<span class="w"> </span><span class="nv">FASTQ_NAME</span><span class="o">=</span>030_d_trim/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.trimmed.fastq
 
-STAR<span class="w"> </span>--runThreadN<span class="w"> </span><span class="m">4</span><span class="w"> </span>--genomeDir<span class="w"> </span>041_d_STAR_mouseMT_reference<span class="w"> </span><span class="se">\</span>
-<span class="w">                 </span>--outSAMtype<span class="w"> </span>BAM<span class="w"> </span>SortedByCoordinate<span class="w"> </span><span class="se">\</span>
-<span class="w">                 </span>--outFileNamePrefix<span class="w">  </span>044_d_STAR_map_trimmed/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>_trimmed.<span class="w"> </span><span class="se">\</span>
-<span class="w">                 </span>--quantMode<span class="w"> </span>GeneCounts<span class="w"> </span><span class="se">\</span>
-<span class="w">                 </span>--readFilesIn<span class="w"> </span><span class="nv">$FASTQ_NAME</span>
+<span class="w"> </span>STAR<span class="w"> </span>--runThreadN<span class="w"> </span><span class="m">4</span><span class="w"> </span>--genomeDir<span class="w"> </span>041_d_STAR_mouseMT_reference<span class="w"> </span><span class="se">\</span>
+<span class="w">                  </span>--outSAMtype<span class="w"> </span>BAM<span class="w"> </span>SortedByCoordinate<span class="w"> </span><span class="se">\</span>
+<span class="w">                  </span>--outFileNamePrefix<span class="w">  </span>044_d_STAR_map_trimmed/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>_trimmed.<span class="w"> </span><span class="se">\</span>
+<span class="w">                  </span>--quantMode<span class="w"> </span>GeneCounts<span class="w"> </span><span class="se">\</span>
+<span class="w">                  </span>--readFilesIn<span class="w"> </span><span class="nv">$FASTQ_NAME</span>
+<span class="k">done</span>
 </code></pre></div>
-it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/044_s_STAR_map_trimmed.sh</code></p>
+it can also be found in the server at <code>/data/Solutions/mouseMT/044_s_STAR_map_trimmed.sh</code></p>
 <p><div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
-<span class="c1">#SBATCH --job-name=map-trim-multiqc</span>
-<span class="c1">#SBATCH --time=00:30:00</span>
-<span class="c1">#SBATCH --cpus-per-task=1</span>
-<span class="c1">#SBATCH --mem=1G</span>
-<span class="c1">#SBATCH -o 045_l_multiqc_mouseMT_mapped_trimmed.o</span>
+<span class="c1"># multiqc of the mapped trimmed read</span>
 
 multiqc<span class="w"> </span>-n<span class="w"> </span>045_r_multiqc_mouseMT_mapped_trimmed.html<span class="w"> </span>-f<span class="w"> </span>--title<span class="w"> </span>mapped_trimmed<span class="w"> </span>044_d_STAR_map_trimmed/
 </code></pre></div>
-it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/045_s_multiqc_mouseMT_mapped_trimmed.sh</code></p>
+it can also be found in the server at <code>/data/Solutions/mouseMT/045_s_multiqc_mouseMT_mapped_trimmed.sh</code></p>
 </details>
 <h2 id="qc-report-of-mapping-for-the-liu2015-and-ruhland2016-dataset">QC report of mapping for the Liu2015 and Ruhland2016 dataset</h2>
 <p><strong>Liu2015</strong></p>
@@ -884,138 +895,38 @@ it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/045_
 <p><strong>Task :</strong> run salmon to quantify the expression of either the Ruhland or Liu dataset. </p>
 <ul>
 <li>Use the tool documentation to craft your command line.</li>
-<li>precomputed indices can be found in <code>/shared/data/DATA/Mouse_salmon_index</code> and <code>/shared/data/DATA/Human_salmon_index</code>.</li>
+<li>precomputed indices can be found in <code>/data/DATA/Mouse_salmon_index</code> and <code>/data/DATA/Human_salmon_index</code>.</li>
 </ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Please check with the teacher before you launch these tasks, because they require intensive resources (~6G of RAM and 40 minutes per fastq file).</p>
+</div>
 <details class="success">
 <summary>script</summary>
 <p><div class="highlight"><pre><span></span><code>#!/usr/bin/bash
-#SBATCH --job-name=salmonRuhland
-#SBATCH --time=01:00:00
-#SBATCH --cpus-per-task=8
-#SBATCH --mem=30G
-#SBATCH -o 033_l_salmon_ruhland2016.%a.o
-#SBATCH --array 1-6%1
+# pseudo alignment of the Ruhland2016 reads with salmon
 
-ml salmon
 
-dataDIR=/shared/data/DATA/Ruhland2016
+dataDIR=/data/DATA/Ruhland2016
 
 sourceFILE=Ruhland2016.fastqFiles.txt
 
-fastqFILE=`sed -n ${SLURM_ARRAY_TASK_ID}p $sourceFILE`
 
-genomeDIR=/shared/data/DATA/Mouse_salmon_index
+genomeDIR=/data/DATA/Mouse_salmon_index
 
+for fastqFILE in `cat $sourceFILE`
+do
 outDIR=033_d_salmon_Ruhland2016_${fastqFILE%.*}
 
-mkdir -p $outDIR
+ mkdir -p $outDIR
 
-salmon quant -i $genomeDIR -l A \
-            -r $dataDIR/$fastqFILE \
-            -p 8 --validateMappings --gcBias --seqBias \
-            -o $outDIR
+ salmon quant -i $genomeDIR -l A \
+              -r $dataDIR/$fastqFILE \
+              -p 4 --validateMappings --gcBias --seqBias \
+              -o $outDIR
+done
 </code></pre></div>
-it can also be found in the cluster at <code>/shared/data/Solutions/Ruhland2016/033_s_salmon_Ruhland2016.sh</code></p>
-</details>
-<h2 id="additional-mapping-reads-from-ruhland2016-on-the-reference">ADDITIONAL Mapping reads from Ruhland2016 on the reference</h2>
-<p><strong>Task :</strong> Using STAR, align the raw FASTQ files of the Ruhland2016 dataset against thed mouse mitochondrial reference you just created</p>
-<ul>
-<li>Mapping reads and generating a sorted BAM from one of the Ruhland2016 et al. FASTQ files should take about 20 minutes.</li>
-<li>Use the full indexed genome at <code>/shared/data/DATA/Mouse_STAR_index/</code>, rather than the one we just made.</li>
-<li><strong>IMPORTANT</strong>: use the following option in your STAR command: <code>--outTmpDir /tmp/${SLURM_JOB_USER}_${SLURM_JOB_ID}/</code>. You can use the manual to look up what this option does. The slurm variables ensure a distinct directory is created in <code>/tmp/</code> for each user and for each job.</li>
-</ul>
-<details class="success">
-<summary>STAR mapping script of the Ruhland2016 data</summary>
-<p>The following sets up an array of tasks to align all samples.</p>
-<p>Source file : <code>Ruhland2016.fastqFiles.txt</code> :</p>
-<div class="highlight"><pre><span></span><code>SRR3180535_EtOH1_1.fastq.gz
-SRR3180536_EtOH2_1.fastq.gz
-SRR3180537_EtOH3_1.fastq.gz
-SRR3180538_TAM1_1.fastq.gz
-SRR3180539_TAM2_1.fastq.gz
-SRR3180540_TAM3_1.fastq.gz
-</code></pre></div>
-<p>sbatch script :</p>
-<p><div class="highlight"><pre><span></span><code>#!/usr/bin/bash
-#SBATCH --job-name=star-aln-Ruhland2016
-#SBATCH --time=01:00:00
-#SBATCH --cpus-per-task=8
-#SBATCH --mem=30G
-#SBATCH -o 031_l_STAR_aln_Ruhland2016.%a.o
-#SBATCH --array 1-1%1
-
-
-ml star
-outDIR=031_d_STAR_aln_Ruhland2016
-
-mkdir -p $outDIR
-
-dataDIR=/shared/data/DATA/Ruhland2016
-
-sourceFILE=Ruhland2016.fastqFiles.txt
-
-fastqFILE=`sed -n ${SLURM_ARRAY_TASK_ID}p $sourceFILE`
-
-genomeDIR=/shared/data/DATA/Mouse_STAR_index
-
-STAR --runThreadN 8 --genomeDir $genomeDIR \
-              --outSAMtype BAM SortedByCoordinate --outReadsUnmapped Fastx \
-              --outFileNamePrefix $outDIR/$fastqFILE \
-              --quantMode GeneCounts \
-              --readFilesIn $dataDIR/$fastqFILE --readFilesCommand zcat \
-</code></pre></div>
-it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/031_s_STAR_aln_Ruhland2016.sh</code></p>
-<p>The options of STAR are :</p>
-<ul>
-<li><strong>&ndash;runThreadN 8 </strong> : 8 threads to go faster.</li>
-<li><strong>&ndash;genomeDir $genomeDIR</strong> : path of the genome to map to.</li>
-<li><strong>&ndash;outSAMtype BAM SortedByCoordinate </strong> : output a coordinate-sorted BAM file.</li>
-<li><strong>&ndash;outReadsUnmapped Fastx</strong> : output the non-mapping reads (in case we want to analyse them).</li>
-<li><strong>&ndash;outFileNamePrefix $outDIR/$fastqFILE</strong> : prefix of output files.</li>
-<li><strong>&ndash;quantMode GeneCounts</strong> : will create a file with counts of reads per gene.</li>
-<li><strong>&ndash;readFilesIn $dataDIR/$fastqFILE </strong> : input read file.</li>
-<li><strong>&ndash;readFilesCommand zcat</strong> : command to unzip the input file.</li>
-</ul>
-</details>
-<h2 id="additionnal-star-2-pass">ADDITIONNAL : STAR 2-Pass</h2>
-<p>Genome annotations are incomplete, particularly for complex eukaryotes : there are many as-of-yet unannotated splice junctions.</p>
-<p>The first pass of STAR can create a splice junction database, containing both known and novel junctions.
-This splice junction database can, in turn, be used to guide an improved second round of alignment, using a command like:</p>
-<div class="highlight"><pre><span></span><code>STAR<span class="w"> </span>&lt;1st<span class="w"> </span>round<span class="w"> </span>options&gt;<span class="w"> </span>--sjdbFileChrStartEnd<span class="w"> </span>sample_SJ.out.tab
-</code></pre></div>
-<p><strong>Task :</strong> run STAR in this STAR-2pass mode on the same sample as before and evaluate the results.</p>
-<details class="success">
-<summary>script</summary>
-<p><div class="highlight"><pre><span></span><code>#!/usr/bin/bash
-#SBATCH --job-name=star-aln2-Ruhland2016
-#SBATCH --time=01:00:00
-#SBATCH --cpus-per-task=8
-#SBATCH --mem=30G
-#SBATCH -o 032_l_STAR_2PASS_Ruhland2016.%a.o
-#SBATCH --array 1-1%1
-
-ml star
-
-outDIR=032_d_STAR_Ruhland2016
-
-mkdir -p $outDIR
-
-dataDIR=/shared/data/DATA/Ruhland2016
-
-sourceFILE=Ruhland2016.fastqFiles.txt
-
-fastqFILE=`sed -n ${SLURM_ARRAY_TASK_ID}p $sourceFILE`
-
-genomeDIR=/shared/data/DATA/Mouse_STAR_index
-
-STAR --runThreadN 8 --genomeDir $genomeDIR \
-                  --outSAMtype BAM SortedByCoordinate \
-                  --outFileNamePrefix $outDIR/$fastqFILE.2Pass. \
-                  --outReadsUnmapped Fastx --quantMode GeneCounts \
-                  --sjdbFileChrStartEnd $outDIR/${fastqFILE}SJ.out.tab \
-                  --readFilesIn $dataDIR/$fastqFILE --readFilesCommand zcat \
-</code></pre></div>
-it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/032_s_STAR_2PASS_Ruhland2016.sh</code></p>
+it can also be found in the server at <code>/data/Solutions/Ruhland2016/033_s_salmon_Ruhland2016.sh</code></p>
 </details>
 <!--
 ## ADDITIONNAL : Assessing read coverage for biases

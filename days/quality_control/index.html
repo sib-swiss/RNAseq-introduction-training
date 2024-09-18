@@ -220,10 +220,72 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          Precourse preparations
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Precourse preparations
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../precourse/" class="md-nav__link">
-        Precourse preparations
+        prerequisites
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unix_crash/" class="md-nav__link">
+        UNIX crash course
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../R_crash/" class="md-nav__link">
+        R crash course
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -599,7 +661,7 @@
 <p>Although we aim to present tools as stable as possible, software evolve and their precise interface can change with time.
 We strongly recommend you consult each command&rsquo;s help page or manual before launching them.
 To this end, we provide links to each tool&rsquo;s website. </p>
-<p>This can also be useful to you if you are following this course without access to a compute cluster and have to install these tools on your machine.</p>
+<p>This can also be useful to you if you are following this course without access to a compute server and have to install these tools on your machine.</p>
 </div>
 <h2 id="material">Material</h2>
 <p><a :=":" class="md-button" href="../../assets/pdf/RNA-Seq_02_QualityControl.pdf" target="_blank"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M0 64C0 28.7 28.7 0 64 0h160v128c0 17.7 14.3 32 32 32h128v144H176c-35.3 0-64 28.7-64 64v144H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0l128 128zM176 352h32c30.9 0 56 25.1 56 56s-25.1 56-56 56h-16v32c0 8.8-7.2 16-16 16s-16-7.2-16-16V368c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24h-16v48h16zm96-80h32c26.5 0 48 21.5 48 48v64c0 26.5-21.5 48-48 48h-32c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16v-64c0-8.8-7.2-16-16-16h-16v96h16zm80-112c0-8.8 7.2-16 16-16h48c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32v32h32c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32v48c0 8.8-7.2 16-16 16s-16-7.2-16-16V368z"/></svg></span> Download the presentation</a></p>
@@ -613,7 +675,7 @@ To this end, we provide links to each tool&rsquo;s website. </p>
 <ul>
 <li>8 samples : 4 in group A and 4 in group B</li>
 <li>single-end, 100bp reads</li>
-<li>on the cluster: <code>/shared/data/DATA/mouseMT/</code></li>
+<li>on the server: <code>/data/DATA/mouseMT/</code></li>
 <li><a class="md-button" href="../../assets/zip/toy_dataset_fastq.zip"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M64 0C28.7 0 0 28.7 0 64v384c0 35.3 28.7 64 64 64h256c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zm192 0v128h128L256 0zM96 48c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32c-8.8 0-16-7.2-16-16zm0 64c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32c-8.8 0-16-7.2-16-16zm0 64c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32c-8.8 0-16-7.2-16-16zm-6.3 71.8c3.7-14 16.4-23.8 30.9-23.8h14.8c14.5 0 27.2 9.7 30.9 23.8l23.5 88.2c1.4 5.4 2.1 10.9 2.1 16.4 0 35.2-28.8 63.7-64 63.7s-64-28.5-64-63.7c0-5.5.7-11.1 2.1-16.4l23.5-88.2zM112 336c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16h-32z"/></svg></span> fastq-files</a></li>
 </ul>
 </li>
@@ -623,7 +685,7 @@ To this end, we provide links to each tool&rsquo;s website. </p>
 <li>Gene Expression Omnibus id: <a href="https://www.ncbi.nlm.nih.gov/bioproject/?term=GSE57345">GSE57345</a></li>
 <li>Samples of <em>Homo sapiens</em> heart left ventricles : 3 with heart failure, 3 without</li>
 <li>paired-end, 100bp reads</li>
-<li>on the cluster: <code>/shared/data/DATA/Liu2015/</code></li>
+<li>on the server: <code>/data/DATA/Liu2015/</code></li>
 </ul>
 </li>
 <li>
@@ -632,7 +694,7 @@ To this end, we provide links to each tool&rsquo;s website. </p>
 <li>Gene Expression Omnibus id: <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE78128">GSE78128</a></li>
 <li>Samples of <em>Mus musculus</em> skin fibroblasts : 3 non-senescent (EtOH), 3 senescent (TAM)</li>
 <li>single-end, 50bp reads</li>
-<li>on the cluster: <code>/shared/data/DATA/Ruhland2016/</code></li>
+<li>on the server: <code>/data/DATA/Ruhland2016/</code></li>
 </ul>
 </li>
 </ul>
@@ -644,7 +706,7 @@ To this end, we provide links to each tool&rsquo;s website. </p>
 <p>FastQC is reasonably intelligent, and will try to recognise the file format and uncompress it if necessary (so no need to decompress manually).</p>
 <p>So, let&rsquo;s apply fastQC to the toy dataset. </p>
 <p><strong>Task:</strong> </p>
-<p>On the cluster, create a new folder <code>mouseMT</code> and enter it.</p>
+<p>On the server, create a new folder <code>mouseMT</code> and enter it.</p>
 <div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>mouseMT
 <span class="nb">cd</span><span class="w"> </span>mouseMT
 </code></pre></div>
@@ -662,23 +724,17 @@ To this end, we provide links to each tool&rsquo;s website. </p>
 </ul>
 </div>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
-<span class="c1">#SBATCH --job-name=fastqc_mouseMT</span>
-<span class="c1">#SBATCH --time=01:00:00</span>
-<span class="c1">#SBATCH --cpus-per-task=1</span>
-<span class="c1">#SBATCH --mem=1G</span>
-<span class="c1">#SBATCH -o 010_l_fastqc_mouseMT.o</span>
-
-ml<span class="w"> </span>fastqc
+<span class="c1"># script to perform the QC of the mouseMT fastq files</span>
 
 <span class="c1"># creating the output folder</span>
 mkdir<span class="w"> </span>-p<span class="w"> </span>010_d_fastqc/
 
-fastqc<span class="w"> </span>-o<span class="w"> </span>010_d_fastqc<span class="w"> </span>/shared/data/DATA/mouseMT/*.fastq
+fastqc<span class="w"> </span>-o<span class="w"> </span>010_d_fastqc<span class="w"> </span>/data/DATA/mouseMT/*.fastq
 </code></pre></div>
-<p>Save it, and then submit it to the cluster:</p>
-<div class="highlight"><pre><span></span><code>sbatch<span class="w"> </span>010_s_fastqc.sh
+<p>Save it, and then submit it to the server:</p>
+<div class="highlight"><pre><span></span><code>sh<span class="w"> </span>010_s_fastqc.sh<span class="w"> </span>&gt;<span class="w"> </span>fastqc_mouseMT.o<span class="w"> </span><span class="p">&amp;</span>
 </code></pre></div>
-<p>Monitor it with <code>squeue</code>. It should take around 15 to 30 seconds in total.</p>
+<p>It should take around 15 to 30 seconds in total.</p>
 <p>Once it has run, look at the content of the job output file, <code>fastqc_mouseMT.o</code>.</p>
 <p>Check that all analysis were complete and that there were no error.</p>
 <p>You can also check that the <code>010_fastqc/</code> folder contains several html files:</p>
@@ -688,12 +744,12 @@ fastqc<span class="w"> </span>-o<span class="w"> </span>010_d_fastqc<span class=
 <div class="highlight"><pre><span></span><code>sample_a1_fastqc.html<span class="w">  </span>sample_a2_fastqc.html<span class="w">  </span>sample_a3_fastqc.html<span class="w">  </span>sample_a4_fastqc.html<span class="w">  </span>sample_b1_fastqc.html<span class="w">  </span>sample_b2_fastqc.html<span class="w">  </span>sample_b3_fastqc.html<span class="w">  </span>sample_b4_fastqc.html
 sample_a1_fastqc.zip<span class="w">   </span>sample_a2_fastqc.zip<span class="w">   </span>sample_a3_fastqc.zip<span class="w">   </span>sample_a4_fastqc.zip<span class="w">   </span>sample_b1_fastqc.zip<span class="w">   </span>sample_b2_fastqc.zip<span class="w">   </span>sample_b3_fastqc.zip<span class="w">   </span>sample_b4_fastqc.zip
 </code></pre></div>
-<p>Unfortunately, we cannot consult the html files content directly on the cluster. </p>
+<p>Unfortunately, we cannot consult the html files content directly on the server. </p>
 <p>We will look at one of these html report on the toy dataset, and one of the pre-computed report from one of our other datasets.</p>
 <ul>
 <li>
 <p>repatriate one of the html report of the mouseMT dataset to your local computer, as well as the one you can find in:
-<code>/shared/data/Solutions/Liu2015/010_d_fastqc/SRR3180538_TAM1_1_fastqc.html</code>
+<code>/data/Solutions/Liu2015/010_d_fastqc/SRR3180538_TAM1_1_fastqc.html</code>
     <strong>OR</strong>
     Download them:</p>
 <ul>
@@ -708,11 +764,11 @@ sample_a1_fastqc.zip<span class="w">   </span>sample_a2_fastqc.zip<span class="w
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Reminder</p>
-<p>to get the data from the distant server to your machine, you may use an SFTP client (FileZilla, mobaXterm), or the command line tool from your machine :   <code>scp login@xx.xx.xx:~/path/to/file.txt .</code></p>
+<p>to get the data from the distant server to your machine, you can use the Rstudio file tab on the bottom right.</p>
 </div>
 <p><strong>Extra Task:</strong> </p>
 <ul>
-<li>Write one or more slurm-compatible sbatch scripts in your home directory that run FastQC analysis on each FASTQ file from the Liu2015 and Ruhland216 datasets. These are accessible at : <code>/shared/data/DATA/Liu2015/</code> and <code>/shared/data/DATA/Ruhland2016/</code>. </li>
+<li>Write one or more scripts in your home directory that run FastQC analysis on each FASTQ file from the Liu2015 and Ruhland216 datasets. These are accessible at : <code>/data/DATA/Liu2015/</code> and <code>/data/DATA/Ruhland2016/</code>. </li>
 </ul>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -724,85 +780,33 @@ sample_a1_fastqc.zip<span class="w">   </span>sample_a2_fastqc.zip<span class="w
 <li>FastQC RAM requirements : 1Gb is more than enough.</li>
 <li>FastQC time requirements : ~ 5min / read file.</li>
 <li>try to make sure FastQC outputs all reports in the same directory, this will save time for the next step ;-).</li>
-<li>in your script, don&rsquo;t forget to load fastqc : <code>ml fastqc</code>.</li>
 <li>there is no need to copy the read files to your home directory (in fact, it is good practice not to: it would create data redundancy, and we won&rsquo;t have enough space left on the disk anyway&hellip;).</li>
 </ul>
 </div>
 <details class="success">
-<summary>Liu2015 FastQC sbatch script</summary>
+<summary>Liu2015 FastQC script</summary>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
-<span class="c1">#SBATCH --job-name=fastqc_liu2015</span>
-<span class="c1">#SBATCH --time=01:00:00</span>
-<span class="c1">#SBATCH --cpus-per-task=1</span>
-<span class="c1">#SBATCH --mem=1G</span>
-<span class="c1">#SBATCH -o 010_l_fastqc_Liu2015.o</span>
-
-ml<span class="w"> </span>fastqc
+<span class="c1"># bash script to perform QC on the Liu2015 fastq files</span>
 
 <span class="c1"># creating the output folder</span>
 mkdir<span class="w"> </span>-p<span class="w"> </span>010_d_fastqc/
 
-fastqc<span class="w"> </span>-o<span class="w"> </span>010_d_fastqc<span class="w"> </span>/shared/data/DATA/Liu2015/*.fastq.gz
+fastqc<span class="w"> </span>-o<span class="w"> </span>010_d_fastqc<span class="w"> </span>/data/DATA/Liu2015/*.fastq.gz
 </code></pre></div>
-<p>on the cluster, this script is also in <code>/shared/data/Solutions/Liu2015/010_s_fastqc.sh</code></p>
+<p>on the server, this script is also in <code>/data/Solutions/Liu2015/010_s_fastqc.sh</code></p>
 <p>This script runs fastqc on each of the .fastq.gz files, sequentially.
-Note that alternatively, you could have one sbatch script per sample.
-On a simple and relatively fast task such as this one, it is not too problematic.
-However, on more computationally-intensive tasks such as mapping, treating each file in separate script is better, because you can submit all scripts at once, and they will then run in parallel, whereas if they are all treated in the same script like here, the samples would be handled sequentially and the overall job would take much longer to finish.</p>
-<p><strong>BUT</strong>, the actual recommended approach is to use SLURM arrays, which let you have a single script, but have different jobs execute in parallel. Below, we show how to do this.</p>
+Note that alternatively, you could have one script per sample.</p>
 </details>
 <details class="success">
-<summary>Ruhland2016 FastQC sbatch script</summary>
+<summary>Ruhland2016 FastQC script</summary>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
-<span class="c1">#SBATCH --job-name=fastqc_Ruhland2016</span>
-<span class="c1">#SBATCH --time=00:30:00</span>
-<span class="c1">#SBATCH --cpus-per-task=1</span>
-<span class="c1">#SBATCH --mem=1G</span>
-<span class="c1">#SBATCH -o 010_l_fastqc_Ruhland2016.o</span>
-
-ml<span class="w"> </span>fastqc
+<span class="c1"># bash script to perform QC on the Ruhland2016 fastq files</span>
 
 mkdir<span class="w"> </span>-p<span class="w"> </span>010_d_fastqc/
 
-fastqc<span class="w"> </span>-o<span class="w"> </span>010_d_fastqc<span class="w"> </span>/shared/data/DATA/Ruhland2016/*.fastq.gz
+fastqc<span class="w"> </span>-o<span class="w"> </span>010_d_fastqc<span class="w"> </span>/data/DATA/Ruhland2016/*.fastq.gz
 </code></pre></div>
-<p>on the cluster, this script is also in <code>/shared/data/Solutions/Ruhland2016/010_s_fastqc.sh</code></p>
-</details>
-<details class="success">
-<summary>Alternative sbatch script using array job</summary>
-<p>Here is a solution where all files from a same dataset can be processed in parallel (recommended) by using slurm array jobs.</p>
-<p>First, have a file named <code>Ruhland2016.fastqFiles.txt</code> containing the sample fastq file names :</p>
-<div class="highlight"><pre><span></span><code>SRR3180535_EtOH1_1.fastq.gz
-SRR3180536_EtOH2_1.fastq.gz
-SRR3180537_EtOH3_1.fastq.gz
-SRR3180538_TAM1_1.fastq.gz
-SRR3180539_TAM2_1.fastq.gz
-SRR3180540_TAM3_1.fastq.gz
-</code></pre></div>
-<p>Then, in the same folder, you can create this sbatch script :</p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
-<span class="c1">#SBATCH --job-name=fastqc_array_Ruhland2016</span>
-<span class="c1">#SBATCH --time=00:30:00</span>
-<span class="c1">#SBATCH --cpus-per-task=1</span>
-<span class="c1">#SBATCH --mem=1G</span>
-<span class="c1">#SBATCH -o 010_l_fastqc_Ruhland2016.%a.o</span>
-<span class="c1">#SBATCH -e 010_l_fastqc_Ruhland2016.%a.e</span>
-<span class="c1">#SBATCH --array 1-6%6</span>
-
-ml<span class="w"> </span>fastqc
-
-<span class="nv">dataDir</span><span class="o">=</span>/shared/data/DATA/Ruhland2016
-
-<span class="nv">sourceFILE</span><span class="o">=</span>Ruhland2016.fastqFiles.txt
-
-<span class="c1">## retrieving 1 filename from Ruhland2016.fastqFiles.txt</span>
-<span class="nv">fastqFILE</span><span class="o">=</span><span class="sb">`</span>sed<span class="w"> </span>-n<span class="w"> </span><span class="si">${</span><span class="nv">SLURM_ARRAY_TASK_ID</span><span class="si">}</span>p<span class="w"> </span><span class="nv">$sourceFILE</span><span class="sb">`</span>
-
-mkdir<span class="w"> </span>-p<span class="w"> </span>010_d_fastqc/
-fastqc<span class="w"> </span>-o<span class="w"> </span>010_d_fastqc/<span class="w"> </span><span class="nv">$dataDir</span>/<span class="nv">$fastqFILE</span>
-</code></pre></div>
-<p>When submitted with <code>sbatch</code>, this script will spawn 6 tasks in parallel, each with a different value of <code>${SLURM_ARRAY_TASK_ID}</code>.</p>
-<p>This is the recommended option : this allows you to launch all your job in parallel with a single script.</p>
+<p>on the server, this script is also in <code>/data/Solutions/Ruhland2016/010_s_fastqc.sh</code></p>
 </details>
 <details class="success">
 <summary>Interpretation of a report</summary>
@@ -810,9 +814,9 @@ fastqc<span class="w"> </span>-o<span class="w"> </span>010_d_fastqc/<span class
 <p>We also refer you to this <a href="https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon/lessons/qc_fastqc_assessment.html">nice interpertation guide</a></p>
 <p>Pre-computed reports can be found in :</p>
 <ul>
-<li><code>/shared/data/Solutions/Ruhland2016/010_d_fastqc/</code></li>
-<li><code>/shared/data/Solutions/Liu2015/010_d_fastqc/</code></li>
-<li><code>/shared/data/Solutions/mouseMT/010_d_fastqc/</code></li>
+<li><code>/data/Solutions/Ruhland2016/010_d_fastqc/</code></li>
+<li><code>/data/Solutions/Liu2015/010_d_fastqc/</code></li>
+<li><code>/data/Solutions/mouseMT/010_d_fastqc/</code></li>
 </ul>
 </details>
 <h2 id="multiqc-grouping-multiple-reports">MultiQC : grouping multiple reports</h2>
@@ -832,10 +836,10 @@ fastqc<span class="w"> </span>-o<span class="w"> </span>010_d_fastqc/<span class
 <p><strong>Task:</strong> </p>
 <ul>
 <li>
-<p>Write an sbatch script to run MultiQC for the toy dataset.</p>
+<p>Write a script to run MultiQC for the toy dataset.</p>
 <p>To follow the naming convention we started with, you can use the following names:</p>
 <ul>
-<li>sbatch script: <code>020_s_multiqc.sh</code> </li>
+<li>script: <code>020_s_multiqc.sh</code> </li>
 <li>output report: <code>020_r_multiqc_mouseMT.html</code></li>
 </ul>
 </li>
@@ -855,22 +859,17 @@ fastqc<span class="w"> </span>-o<span class="w"> </span>010_d_fastqc/<span class
 <ul>
 <li>MultiQC RAM requirements : 1Gb should be more than enough.</li>
 <li>MultiQC time requirements : ~ 1min / read file.</li>
-<li>Exceptionally, there is no need to load multiqc as a module (it is not part of ComputeCanada and we installed it directly on the cluster, on other clusters it may not be the same).</li>
 <li>Use <code>multiqc --help</code> to check the different options</li>
 </ul>
 </div>
 <details class="success">
-<summary>mouseMT MultiQC sbatch script</summary>
+<summary>mouseMT MultiQC script</summary>
 <p><div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
-<span class="c1">#SBATCH --job-name=multiqc_mouseMT</span>
-<span class="c1">#SBATCH --time=00:30:00</span>
-<span class="c1">#SBATCH --cpus-per-task=1</span>
-<span class="c1">#SBATCH --mem=1G</span>
-<span class="c1">#SBATCH -o 020_l_multiqc_mouseMT.o</span>
+<span class="c1"># multiQC to group QC reports of the mouseMT fastq files</span>
 
 multiqc<span class="w"> </span>-n<span class="w"> </span>020_r_multiqc_mouseMT.html<span class="w"> </span>-f<span class="w"> </span>--title<span class="w"> </span>raw_fastq<span class="w"> </span>010_d_fastqc/
 </code></pre></div>
-On the cluster, this script is also in <code>/shared/data/Solutions/mouseMT/020_s_multiqc.sh</code></p>
+On the server, this script is also in <code>/data/Solutions/mouseMT/020_s_multiqc.sh</code></p>
 <p><a class="md-button" href="../../assets/html/020_multiqc_mouseMT.html"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M0 64C0 28.7 28.7 0 64 0h160v128c0 17.7 14.3 32 32 32h128v144H176c-35.3 0-64 28.7-64 64v144H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0l128 128zM176 352h32c30.9 0 56 25.1 56 56s-25.1 56-56 56h-16v32c0 8.8-7.2 16-16 16s-16-7.2-16-16V368c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24h-16v48h16zm96-80h32c26.5 0 48 21.5 48 48v64c0 26.5-21.5 48-48 48h-32c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16v-64c0-8.8-7.2-16-16-16h-16v96h16zm80-112c0-8.8 7.2-16 16-16h48c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32v32h32c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32v48c0 8.8-7.2 16-16 16s-16-7.2-16-16V368z"/></svg></span> Download the results of this script</a></p>
 </details>
 <details class="success">
@@ -919,36 +918,28 @@ However here we are in the context of RNA-seq : some transcripts are present in 
 </ul>
 </details>
 <p><strong>extra Task</strong></p>
-<p>Write and execute sbatch scripts to run a MultiQC for the Liu2015 and the Ruhland2016 datasets.</p>
+<p>Write and execute scripts to run a MultiQC for the Liu2015 and the Ruhland2016 datasets.</p>
 <details class="success">
-<summary>MultiQC sbatch script for Ruhland2016</summary>
+<summary>MultiQC script for Ruhland2016</summary>
 <p>This script fetches the report from the <code>Solutions/</code> folder.</p>
 <p>You may adapt it to point to your own results if you want.</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
-<span class="c1">#SBATCH --job-name=multiqc_Ruhland2016</span>
-<span class="c1">#SBATCH --time=00:30:00</span>
-<span class="c1">#SBATCH --cpus-per-task=1</span>
-<span class="c1">#SBATCH --mem=1G</span>
-<span class="c1">#SBATCH -o 020_l_multiqc_Ruhland2016.o</span>
+<span class="c1"># multiQC  of Ruhland2016 fastq files</span>
 
-multiqc<span class="w"> </span>-f<span class="w"> </span>020_r_multiqc_Ruhland2016.html<span class="w"> </span>010_d_fastqc/
+multiqc<span class="w"> </span>-n<span class="w"> </span>020_r_multiqc_Ruhland2016.html<span class="w"> </span>-f<span class="w"> </span>--title<span class="w"> </span>raw_fastq<span class="w"> </span>/data/Solutions/Ruhland2016/010_d_fastqc/
 </code></pre></div>
+<p>On the server, this script is also in <code>/data/Solutions/Ruhland2016/020_s_multiqc.sh</code></p>
 </details>
-<p>On the cluster, this script is also in <code>/shared/data/Solutions/Ruhland2016/020_s_multiqc.sh</code></p>
 <details class="success">
-<summary>MultiQC sbatch script for Liu2015</summary>
+<summary>MultiQC script for Liu2015</summary>
 <p>This script fetches the report from the <code>Solutions/</code> folder.</p>
 <p>You may adapt it to point to your own results if you want.</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
-<span class="c1">#SBATCH --job-name=multiqc_Liu2015</span>
-<span class="c1">#SBATCH --time=00:30:00</span>
-<span class="c1">#SBATCH --cpus-per-task=1</span>
-<span class="c1">#SBATCH --mem=1G</span>
-<span class="c1">#SBATCH -o 020_l_multiqc_Liu2015.o</span>
+<span class="c1"># multiQC  of Liu2015 fastq files</span>
 
-multiqc<span class="w"> </span>-f<span class="w"> </span>020_r_multiqc_Liu2015.html<span class="w"> </span>010_d_fastqc/
+multiqc<span class="w"> </span>-n<span class="w"> </span>020_r_multiqc_Liu2015.html<span class="w"> </span>-f<span class="w"> </span>--title<span class="w"> </span>raw_fastq<span class="w"> </span>/data/Solutions/Liu2015/010_d_fastqc/
 </code></pre></div>
-<p>On the cluster, this script is also in <code>/shared/data/Solutions/Liu2015/020_s_multiqc.sh</code></p>
+<p>On the server, this script is also in <code>/data/Solutions/Liu2015/020_s_multiqc.sh</code></p>
 </details>
 <h2 id="extra-retrieving-published-datasets">EXTRA : retrieving published datasets</h2>
 <div class="admonition note">

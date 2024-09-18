@@ -1,0 +1,1342 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../precourse/">
+      
+      
+        <link rel="next" href="../R_crash/">
+      
+      <link rel="icon" href="../../assets/images/SIB_logo.svg">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.18">
+    
+    
+      
+        <title>UNIX crash course - Introduction to RNA-Seq - From quality control to pathway analysis</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.26e3688c.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#start-a-terminal-in-rstudio" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Introduction to RNA-Seq - From quality control to pathway analysis" class="md-header__button md-logo" aria-label="Introduction to RNA-Seq - From quality control to pathway analysis" data-md-component="logo">
+      
+  <img src="../../assets/images/SIB_logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Introduction to RNA-Seq - From quality control to pathway analysis
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              UNIX crash course
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/sib-swiss/RNAseq-introduction-training" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    sib-swiss/RNAseq-introduction-training
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Introduction to RNA-Seq - From quality control to pathway analysis" class="md-nav__button md-logo" aria-label="Introduction to RNA-Seq - From quality control to pathway analysis" data-md-component="logo">
+      
+  <img src="../../assets/images/SIB_logo.svg" alt="logo">
+
+    </a>
+    Introduction to RNA-Seq - From quality control to pathway analysis
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/sib-swiss/RNAseq-introduction-training" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    sib-swiss/RNAseq-introduction-training
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          Precourse preparations
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Precourse preparations
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../precourse/" class="md-nav__link">
+        prerequisites
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          UNIX crash course
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        UNIX crash course
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#start-a-terminal-in-rstudio" class="md-nav__link">
+    start a terminal in Rstudio
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filesystem-navigation" class="md-nav__link">
+    filesystem navigation
+  </a>
+  
+    <nav class="md-nav" aria-label="filesystem navigation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pwd" class="md-nav__link">
+    pwd
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ls" class="md-nav__link">
+    ls
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cd" class="md-nav__link">
+    cd
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#moving-files-around" class="md-nav__link">
+    moving files around
+  </a>
+  
+    <nav class="md-nav" aria-label="moving files around">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mkdir" class="md-nav__link">
+    mkdir
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cp" class="md-nav__link">
+    cp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mv" class="md-nav__link">
+    mv
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rm" class="md-nav__link">
+    rm
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wildcard-character-the-of-the-show" class="md-nav__link">
+    wildcard character : the * of the show
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-basic-file-system-manipulation" class="md-nav__link">
+    exercise : basic file system manipulation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#looking-at-file-content" class="md-nav__link">
+    looking at file content
+  </a>
+  
+    <nav class="md-nav" aria-label="looking at file content">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#head-tail" class="md-nav__link">
+    head / tail
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#more" class="md-nav__link">
+    more
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wc" class="md-nav__link">
+    wc
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-lookoing-at-files" class="md-nav__link">
+    exercise : lookoing at files
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get-help" class="md-nav__link">
+    get --help
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-but-useful-stuff" class="md-nav__link">
+    advanced but useful stuff
+  </a>
+  
+    <nav class="md-nav" aria-label="advanced but useful stuff">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#output-redirection" class="md-nav__link">
+    output redirection : &gt;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emergency-exit-ctrlc" class="md-nav__link">
+    emergency exit : Ctrl+C
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#background-job" class="md-nav__link">
+    background job : &amp;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variables" class="md-nav__link">
+    variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loop" class="md-nav__link">
+    loop
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../R_crash/" class="md-nav__link">
+        R crash course
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../course_schedule/" class="md-nav__link">
+        Course schedule
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides_notes/" class="md-nav__link">
+        Slides notes (draft)
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/" class="md-nav__link">
+        Cheatsheets
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          Day1
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Day1
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/" class="md-nav__link">
+        RNAseq - technologies and design
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../server_login/" class="md-nav__link">
+        Server login + unix fresh up
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quality_control/" class="md-nav__link">
+        Quality control
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../trimming/" class="md-nav__link">
+        Sequence trimming
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+          Day2
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Day2
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mapping/" class="md-nav__link">
+        Reads mapping
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DE/" class="md-nav__link">
+        Differential Expression Inference
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../enrichment/" class="md-nav__link">
+        Enrichment analysis
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#start-a-terminal-in-rstudio" class="md-nav__link">
+    start a terminal in Rstudio
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filesystem-navigation" class="md-nav__link">
+    filesystem navigation
+  </a>
+  
+    <nav class="md-nav" aria-label="filesystem navigation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pwd" class="md-nav__link">
+    pwd
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ls" class="md-nav__link">
+    ls
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cd" class="md-nav__link">
+    cd
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#moving-files-around" class="md-nav__link">
+    moving files around
+  </a>
+  
+    <nav class="md-nav" aria-label="moving files around">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mkdir" class="md-nav__link">
+    mkdir
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cp" class="md-nav__link">
+    cp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mv" class="md-nav__link">
+    mv
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rm" class="md-nav__link">
+    rm
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wildcard-character-the-of-the-show" class="md-nav__link">
+    wildcard character : the * of the show
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-basic-file-system-manipulation" class="md-nav__link">
+    exercise : basic file system manipulation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#looking-at-file-content" class="md-nav__link">
+    looking at file content
+  </a>
+  
+    <nav class="md-nav" aria-label="looking at file content">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#head-tail" class="md-nav__link">
+    head / tail
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#more" class="md-nav__link">
+    more
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wc" class="md-nav__link">
+    wc
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-lookoing-at-files" class="md-nav__link">
+    exercise : lookoing at files
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get-help" class="md-nav__link">
+    get --help
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-but-useful-stuff" class="md-nav__link">
+    advanced but useful stuff
+  </a>
+  
+    <nav class="md-nav" aria-label="advanced but useful stuff">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#output-redirection" class="md-nav__link">
+    output redirection : &gt;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emergency-exit-ctrlc" class="md-nav__link">
+    emergency exit : Ctrl+C
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#background-job" class="md-nav__link">
+    background job : &amp;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variables" class="md-nav__link">
+    variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loop" class="md-nav__link">
+    loop
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+  <h1>UNIX crash course</h1>
+
+<p>The goal of this crash-course is to get you acquainted with some the basic concepts and commands of the UNIX command line.</p>
+<p>Mastering it is not something done in a single day, and so the goal is not to make you into sysadmins, but to give you enough groundings so that,
+armed with a good cheatsheet and with a bit of patience, you should be able to run the commands needed to perform a differential expression or enrichment analysis and then be able to interact with your result files.</p>
+<p>This crash course is made to be followed along either on a distant Rstudio server (the teacher will tell you how to connect there)</p>
+<p><strong>You will learn to :</strong></p>
+<ul>
+<li>navigate the filesystem using common unix commands</li>
+<li>look at text files and manipulate them </li>
+<li>use command line tools options</li>
+<li>redirect command line tools output to files</li>
+</ul>
+<h2 id="start-a-terminal-in-rstudio">start a terminal in Rstudio</h2>
+<p><img alt="a view of Rstudio's terminal" src="../assets/images/rstudio_terminal.png" /></p>
+<h2 id="filesystem-navigation">filesystem navigation</h2>
+<p>type commands and then press enter to execute them</p>
+<h3 id="pwd">pwd</h3>
+<p><code>pwd</code> = <strong>p</strong>rint <strong>w</strong>orking <strong>d</strong>irectory : tells you were the ternminal is in the filesystem<br />
+<div class="highlight"><pre><span></span><code><span class="nb">pwd</span>
+</code></pre></div></p>
+<h3 id="ls">ls</h3>
+<p><code>ls</code> = <strong>l</strong>i<strong>s</strong>t : list the content of the working directory
+<div class="highlight"><pre><span></span><code>ls
+</code></pre></div></p>
+<p><strong>Giving arguments to command - 1 :</strong> some commands take arguments (very much like function in R).</p>
+<p>Arguments are given separated by <strong>spaces</strong>.</p>
+<p>For example, <code>ls</code> can take an argument corresponding the name of a directory, in which case it will list the content of that directory rather than the current working directory:</p>
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>R_crash_course_data
+</code></pre></div>
+<h3 id="cd">cd</h3>
+<p><code>cd</code> = <strong>c</strong>hange <strong>d</strong>irectory : moves the current working directory to the folder given as argument
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>R_crash_course_data
+
+<span class="nb">pwd</span><span class="w"> </span><span class="c1"># check the new working directory</span>
+</code></pre></div></p>
+<p>.. is a shortcut for &ldquo;parent directory&rdquo;
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>..<span class="w"> </span>
+</code></pre></div></p>
+<p>. is a shortcut for &ldquo;current directory&rdquo;
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>.<span class="w"> </span><span class="c1"># we move to the current directory, so we stay in place</span>
+</code></pre></div></p>
+<p>cd without argument will take you back to your home directory
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span>
+</code></pre></div></p>
+<p>You can move through multiple folders in one go
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>R_crash_course_data/data/
+</code></pre></div></p>
+<p><strong>Giving arguments to command - 2 :</strong></p>
+<p>Some arguments are given by name, in which case they start with <code>-</code> (one letter argument) or <code>--</code> (more than one letter argument).</p>
+<p>Also some arguments require a value, but some are just &ldquo;flags&rdquo; to merely need to be added to the command line to take effect:</p>
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>--color<span class="o">=</span>auto
+
+ls<span class="w"> </span>-l
+</code></pre></div>
+<p>One can combine multiple one-letter argument with the same <code>-</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">ls</span><span class="w"> </span><span class="o">-</span><span class="n">l</span><span class="w"> </span><span class="o">-</span><span class="n">h</span><span class="w"> </span>
+
+<span class="c1">##equivalent to</span>
+<span class="n">ls</span><span class="w"> </span><span class="o">-</span><span class="n">lh</span><span class="w"> </span>
+</code></pre></div>
+<p>So in the end you may have a command line looking like </p>
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>-lh<span class="w"> </span>--color<span class="o">=</span>auto<span class="w"> </span>
+</code></pre></div>
+<p>Its output looks like:
+<div class="highlight"><pre><span></span><code>total 5.3M
+-rw-rw-r-- 1 wandrille wandrille 2.7M Aug 15 13:22 diamonds.csv
+-rw-rw-r-- 1 wandrille wandrille 2.7M Aug 15 13:22 diamonds.tsv
+-rw-rw-r-- 1 wandrille wandrille 1.4K Aug 15 13:22 virginica.csv
+</code></pre></div></p>
+<ul>
+<li>The first line tells you to total size of the files in the folder (but it does not account for sub-folders)</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>file permissions</th>
+<th># of links</th>
+<th>owner</th>
+<th>group</th>
+<th>size</th>
+<th>last modification</th>
+<th>filename</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-rw-rw-r&ndash;</td>
+<td>1</td>
+<td>wandrille</td>
+<td>wandrille</td>
+<td>2.7M</td>
+<td>Aug   15 13:22</td>
+<td>diamonds.csv</td>
+</tr>
+</tbody>
+</table>
+<p>File permission are <strong>r</strong>ead <strong>w</strong>rite e<strong>x</strong>ecute</p>
+<table>
+<thead>
+<tr>
+<th>directory?</th>
+<th>owner permissions</th>
+<th>group permissions</th>
+<th>others permission</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-</td>
+<td>rw-</td>
+<td>rw-</td>
+<td>r&ndash;</td>
+</tr>
+<tr>
+<td>not a directory</td>
+<td>can read and write</td>
+<td>can read and write</td>
+<td>can read only</td>
+</tr>
+</tbody>
+</table>
+<h2 id="moving-files-around">moving files around</h2>
+<p>First let&rsquo;s move back to our home folder
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span>
+</code></pre></div></p>
+<h3 id="mkdir">mkdir</h3>
+<p><code>mkdir</code> = <strong>m</strong>a<strong>k</strong>e <strong>dir</strong>ectory : creates a directory
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>unix_exercise
+
+ls<span class="w"> </span>-lh<span class="w"> </span><span class="c1"># to check that the directory was created</span>
+</code></pre></div></p>
+<h3 id="cp">cp</h3>
+<p><code>cp</code> = <strong>c</strong>o<strong>p</strong>y : copies a file to a given location
+<div class="highlight"><pre><span></span><code>cp<span class="w"> </span>R_crash_course_data/iris.csv<span class="w"> </span>.<span class="w">  </span><span class="c1"># copying the iris.csv file to the current directory</span>
+
+ls<span class="w"> </span>-lh<span class="w"> </span>--color<span class="o">=</span>auto<span class="w">  </span><span class="c1"># checking the result</span>
+</code></pre></div></p>
+<p>Entire folder can be recursively copied, but you need to add the <code>-r</code> flag
+<div class="highlight"><pre><span></span><code><span class="w"> </span>cp<span class="w"> </span>R_crash_course_data/data/<span class="w"> </span>unix_exercise/<span class="w"> </span><span class="c1">#trying to copy the data/ folder to unix_exercise/</span>
+</code></pre></div>
+gives the error:
+<div class="highlight"><pre><span></span><code>cp: -r not specified; omitting directory &#39;R_crash_course_data/data/&#39;
+</code></pre></div></p>
+<div class="highlight"><pre><span></span><code>cp<span class="w"> </span>-r<span class="w"> </span>R_crash_course_data/data/<span class="w"> </span>unix_exercise/
+
+ls<span class="w"> </span>-Rlh<span class="w"> </span>--color<span class="o">=</span>auto<span class="w">  </span>unix_exercise<span class="w"> </span><span class="c1">## checking the result; -R makes a recursive ls</span>
+</code></pre></div>
+<h3 id="mv">mv</h3>
+<p><code>mv</code> = <strong>m</strong>o<strong>v</strong>e : moves file to a given location
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span><span class="c1"># check that iris.csv is here</span>
+
+mv<span class="w"> </span>iris.csv<span class="w"> </span>unix_exercise<span class="w"> </span><span class="c1"># move iris.csv to the unix_exercise/ folder</span>
+
+ls<span class="w"> </span><span class="c1"># check that iris.csv is not here anymore</span>
+ls<span class="w"> </span>unix_exercise<span class="w"> </span><span class="c1"># check that iris.csv is in unix_exercise/</span>
+</code></pre></div></p>
+<p>it can also be used to change the name of a file or folder
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>unix_exercise
+
+mv<span class="w"> </span>iris.csv<span class="w"> </span>IRIS.csv
+ls
+</code></pre></div></p>
+<h3 id="rm">rm</h3>
+<p><code>rm</code> = <strong>r</strong>e<strong>m</strong>ove : removes files or folder </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>there is no recycle bin, or trash bin, or whatever.
+<strong>Any deletion is final.</strong></p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>I repeat: <strong>any deletion is final.</strong></p>
+</div>
+<p>let&rsquo;s create a copy of IRIS.csv to delete it:
+<div class="highlight"><pre><span></span><code>cp<span class="w"> </span>IRIS.csv<span class="w"> </span>iris_copy.csv
+ls<span class="w"> </span>
+</code></pre></div></p>
+<div class="highlight"><pre><span></span><code>rm<span class="w"> </span>IRIS.csv
+</code></pre></div>
+<p>folder&rsquo;s can be deleted with the -r option
+<div class="highlight"><pre><span></span><code>rm -r data
+</code></pre></div></p>
+<h3 id="wildcard-character-the-of-the-show">wildcard character : the * of the show</h3>
+<p><code>*</code> is the wildcard character, which can subtitute itself to any number of characters.</p>
+<p>we use it to craft powerful <strong>regular expressions</strong> that let us apply commands to selected files based on their names:</p>
+<p><div class="highlight"><pre><span></span><code><span class="c1"># copy all files in ../R_crash_course_data/data/ to the current working directory</span>
+cp<span class="w"> </span>../R_crash_course_data/data/*<span class="w"> </span>.
+
+ls
+</code></pre></div>
+<code>diamonds.csv  diamonds.tsv  iris_copy.csv  virginica.csv</code></p>
+<p>here the <code>*</code> substituted itself for all possibles file names.</p>
+<p>Where it shine is that it can be combined with other characters:</p>
+<div class="highlight"><pre><span></span><code>ls -l *.csv ## all csv files
+
+ls -l diamonds.* ## all files starting with diamonds
+</code></pre></div>
+<h2 id="exercise-basic-file-system-manipulation">exercise : basic file system manipulation</h2>
+<ol>
+<li>change your working directory back to your home directory</li>
+<li>create a folder named <code>unix_exercise2</code></li>
+<li>look at the files in a folder named <code>/data/DATA/mouseMT</code>. What is the size of each file? Do you have permission to write there?</li>
+<li>copy all sample_a files from <code>/data/DATA/mouseMT</code> to <code>unix_exercise2</code></li>
+<li>look at the files you just copied: do you have write permission with them now?</li>
+</ol>
+<h2 id="looking-at-file-content">looking at file content</h2>
+<p>Let&rsquo;s move to the <code>unix_exercise</code> folder
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span><span class="c1"># to your home directory first</span>
+<span class="nb">cd</span><span class="w"> </span>unix_exercise<span class="w"> </span>
+</code></pre></div></p>
+<h3 id="head-tail">head / tail</h3>
+<p><code>head</code> shows you the first 10 lines of a file
+<div class="highlight"><pre><span></span><code>head<span class="w"> </span>diamonds.csv
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>&quot;carat&quot;,&quot;cut&quot;,&quot;color&quot;,&quot;clarity&quot;,&quot;depth&quot;,&quot;table&quot;,&quot;price&quot;,&quot;x&quot;,&quot;y&quot;,&quot;z&quot;
+0.23,&quot;Ideal&quot;,&quot;E&quot;,&quot;SI2&quot;,61.5,55,326,3.95,3.98,2.43
+0.21,&quot;Premium&quot;,&quot;E&quot;,&quot;SI1&quot;,59.8,61,326,3.89,3.84,2.31
+0.23,&quot;Good&quot;,&quot;E&quot;,&quot;VS1&quot;,56.9,65,327,4.05,4.07,2.31
+0.29,&quot;Premium&quot;,&quot;I&quot;,&quot;VS2&quot;,62.4,58,334,4.2,4.23,2.63
+0.31,&quot;Good&quot;,&quot;J&quot;,&quot;SI2&quot;,63.3,58,335,4.34,4.35,2.75
+0.24,&quot;Very Good&quot;,&quot;J&quot;,&quot;VVS2&quot;,62.8,57,336,3.94,3.96,2.48
+0.24,&quot;Very Good&quot;,&quot;I&quot;,&quot;VVS1&quot;,62.3,57,336,3.95,3.98,2.47
+0.26,&quot;Very Good&quot;,&quot;H&quot;,&quot;SI1&quot;,61.9,55,337,4.07,4.11,2.53
+0.22,&quot;Fair&quot;,&quot;E&quot;,&quot;VS2&quot;,65.1,61,337,3.87,3.78,2.49
+</code></pre></div></p>
+<p>with <code>-n</code> you can specify the number of lines to show
+<div class="highlight"><pre><span></span><code>head<span class="w"> </span>-n<span class="w"> </span><span class="m">3</span><span class="w"> </span>diamonds.csv
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>&quot;carat&quot;,&quot;cut&quot;,&quot;color&quot;,&quot;clarity&quot;,&quot;depth&quot;,&quot;table&quot;,&quot;price&quot;,&quot;x&quot;,&quot;y&quot;,&quot;z&quot;
+0.23,&quot;Ideal&quot;,&quot;E&quot;,&quot;SI2&quot;,61.5,55,326,3.95,3.98,2.43
+0.21,&quot;Premium&quot;,&quot;E&quot;,&quot;SI1&quot;,59.8,61,326,3.89,3.84,2.31
+</code></pre></div></p>
+<p><code>tail</code> shows you the last lines of a file:
+<div class="highlight"><pre><span></span><code>tail<span class="w"> </span>-n<span class="w"> </span><span class="m">3</span><span class="w"> </span>diamonds.csv
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>0.7,&quot;Very Good&quot;,&quot;D&quot;,&quot;SI1&quot;,62.8,60,2757,5.66,5.68,3.56
+0.86,&quot;Premium&quot;,&quot;H&quot;,&quot;SI2&quot;,61,58,2757,6.15,6.12,3.74
+0.75,&quot;Ideal&quot;,&quot;D&quot;,&quot;SI2&quot;,62.2,55,2757,5.83,5.87,3.64
+</code></pre></div></p>
+<h3 id="more">more</h3>
+<p><code>more</code> prints a file content in the terminal.
+When the file is large it prints a page, and you can press
+ * <code>enter</code> : print one more line
+ * <code>space</code> : print one more page
+ * <code>q</code> : stop printing</p>
+<div class="highlight"><pre><span></span><code>more<span class="w"> </span>diamonds.csv
+</code></pre></div>
+<h3 id="wc">wc</h3>
+<p>wc = <strong>w</strong>ord <strong>c</strong>ount : counts the number of lines, words, and characters in a file</p>
+<p><div class="highlight"><pre><span></span><code>wc diamonds.csv
+</code></pre></div>
+result: <code>53941   66023 2772143 diamonds.csv</code></p>
+<p>We use it most often with option <code>-l</code> to get just the number of lines:
+<div class="highlight"><pre><span></span><code>wc -l iris_copy.csv
+</code></pre></div>
+result: 
+<code>151 iris_copy.csv</code></p>
+<h2 id="exercise-lookoing-at-files">exercise : lookoing at files</h2>
+<ol>
+<li>look at the first and last lines of <code>/data/DATA/mouseMT/sample_a1.fastq</code></li>
+<li>we have the logs of a Quality Control tool in file <code>/data/Solutions/Liu2015/010_l_fastqc_Liu2015.o</code>. Look at its content with more or less : does it look like all files where processed OK?</li>
+<li>how many lines are in each of the fastq files <code>/data/DATA/mouseMT/</code> (hint: use * to make your life easier)</li>
+</ol>
+<h2 id="get-help">get &ndash;help</h2>
+<p>Of course, you cannot guess all commands arguments. </p>
+<p>You can consult the <strong>man</strong>ual page of some command with <code>man</code>, but not all tools have one&hellip;</p>
+<p>Instead, in general you can get a list of arguments with <code>--help</code> (or sometimes <code>-h</code>)</p>
+<div class="highlight"><pre><span></span><code>ls --help
+</code></pre></div>
+<h2 id="advanced-but-useful-stuff">advanced but useful stuff</h2>
+<h3 id="output-redirection">output redirection : &gt;</h3>
+<p><code>&gt;</code> let&rsquo;s you make it so that all standard output (but not error messages) of a command go to a file you specify</p>
+<p>This is very useful when you call a tool whose logs you would like to keep (the logs of many bioinformatics tools can be input files for other tools).</p>
+<div class="highlight"><pre><span></span><code>wc -l /data/DATA/mouseMT/*.fastq &gt; mouseMT.file_sizes.txt
+
+more mouseMT.file_sizes.txt
+</code></pre></div>
+<h3 id="emergency-exit-ctrlc">emergency exit : Ctrl+C</h3>
+<p>Sometimes you will launch a job, which may take a while and you will realize, with horror, that you made a mistake and this is not what you wanted to do!</p>
+<p><code>Ctrl+C</code> stops the execution of whatever command is curently running.</p>
+<p>For example, the following command counts number of lines in big files, which takes a while.
+Let it run for a couple of seconds and then stop it with <code>Ctrl+C</code>
+<div class="highlight"><pre><span></span><code>wc<span class="w"> </span>-l<span class="w"> </span>/data/DATA/Liu2015/*
+</code></pre></div></p>
+<h3 id="background-job">background job : &amp;</h3>
+<p>Ooften you want to launch a job which you know will take a while, but you&rsquo;d like to be able to continue working while it runs. </p>
+<p>By adding <code>&amp;</code> at the end of the command line the job will be executed in the background. </p>
+<div class="highlight"><pre><span></span><code>wc<span class="w"> </span>-l<span class="w"> </span>/data/DATA/Liu2015/*<span class="w"> </span>&gt;<span class="w"> </span>Liu2015.file_sizes.txt<span class="w"> </span><span class="p">&amp;</span>
+</code></pre></div>
+<p>You can use <code>top</code> or <code>ps -u</code> to see your job running (with <code>top</code>, type <code>q</code> to exit).</p>
+<p>When the command is finished you will get in your terminal something like:</p>
+<div class="highlight"><pre><span></span><code><span class="o">[</span><span class="m">1</span><span class="o">]</span>+<span class="w">  </span>Done<span class="w">                    </span>wc<span class="w"> </span>-l<span class="w"> </span>/data/DATA/Liu2015/*<span class="w"> </span>&gt;<span class="w"> </span>Liu2015.file_sizes.txt
+</code></pre></div>
+<h3 id="variables">variables</h3>
+<p>As in R, is it possible to store data in a variable.</p>
+<p>It is mostly useful to help us manipulate file names more easily.</p>
+<p>They are declared with <code>=</code> , but you have to be careful: use no spaces </p>
+<div class="highlight"><pre><span></span><code>INPUT_FOLDER=/data/DATA/mouseMT
+</code></pre></div>
+<p>then you can use them with ${variable_name}:</p>
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span><span class="si">${</span><span class="nv">INPUT_FOLDER</span><span class="si">}</span>/*
+
+ls<span class="w"> </span><span class="si">${</span><span class="nv">INPUT_FOLDER</span><span class="si">}</span>/sample_a*
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You will notice most of my bash variable are UPPERCASE. It is not mandatory but I find it a useful convention.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>instead of <code>${INPUT_FOLDER}</code>, we could write $INPUT_FOLDER but it is a bit more prone to mixup when integrating the variable content within other character, so beware.</p>
+</div>
+<h3 id="loop">loop</h3>
+<p>Loops let us &ldquo;easily&rdquo; deploy the same command while changing 1 variable.</p>
+<p>This is very useful to deploy a bioinformatic tool on many input files in a tidy way.</p>
+<p>For example, imagine we want to deploy a command separately on the mouseMT fatsq files of sample a, and of sample b, it could look something like:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># I use wc -l as my command here</span>
+
+wc<span class="w"> </span>-l<span class="w"> </span>/data/DATA/mouseMT/sample_a*.fastq<span class="w"> </span>&gt;<span class="w"> </span>mouseMT.a.file_sizes.txt
+
+wc<span class="w"> </span>-l<span class="w"> </span>/data/DATA/mouseMT/sample_b*.fastq<span class="w"> </span>&gt;<span class="w"> </span>mouseMT.b.file_sizes.txt
+</code></pre></div>
+<p>That works, but imagine that you have more than a handful of options and it becomes tedious.</p>
+<p>Additionnally, speaking from experience it is easy to make small typos that will riun your day here (eg, adapting the input file names, but not the output file name )</p>
+<p>A for loop in bash looks like:</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span>VAR<span class="w"> </span><span class="k">in</span><span class="w"> </span>a<span class="w"> </span>b
+<span class="k">do</span><span class="w"> </span><span class="c1"># done starts the loop block</span>
+
+<span class="w"> </span><span class="c1">## some command, which will be repeated, ${VAR} will have a different value each time</span>
+<span class="w"> </span>wc<span class="w"> </span>-l<span class="w"> </span>/data/DATA/mouseMT/sample_<span class="si">${</span><span class="nv">VAR</span><span class="si">}</span>*.fastq<span class="w"> </span>&gt;<span class="w"> </span>mouseMT.<span class="si">${</span><span class="nv">VAR</span><span class="si">}</span>.file_sizes.txt
+
+<span class="k">done</span><span class="w"> </span><span class="c1"># done finishes the loop block</span>
+</code></pre></div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.220ee61c.min.js"></script>
+      
+    
+  </body>
+</html>
