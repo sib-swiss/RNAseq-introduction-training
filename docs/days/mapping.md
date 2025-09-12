@@ -43,7 +43,7 @@ We will be using the Ensembl references, with their accompanying GTF annotations
 
  * .fasta and .gtf files are in : `/shared/data/DATA/Mouse_MT_genome/`.
  * create the index in the folder `041_d_STAR_mouseMT_reference`
- * the module name for this aligner is `star`.
+ * the module name for this aligner is `STAR`.
  * this job should require less than 4Gb and 10min to run. 
 
 !!! info "STAR basic parameter for genome index generation"

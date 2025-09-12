@@ -171,7 +171,7 @@ We will look at one of these html report on the toy dataset, and one of the pre-
      * FastQC RAM requirements : 1Gb is more than enough.
      * FastQC time requirements : ~ 5min / read file.
      * try to make sure FastQC outputs all reports in the same directory, this will save time for the next step ;-).
-     * in your script, don't forget to load fastqc : `ml fastqc`.
+     * in your script, don't forget to load fastqc : `ml FastQC`.
      * there is no need to copy the read files to your home directory (in fact, it is good practice not to: it would create data redundancy, and we won't have enough space left on the disk anyway...).
 
 

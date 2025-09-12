@@ -119,7 +119,7 @@ slides 4-8:
      * right : samples from a random binomial with and without a library size factor applied
  * slide 5: most of the expression is taken by very few genes + a lot of genes have 0 reads  (plots: data from 100 samples from the [Gtex V8 dataset](https://gtexportal.org/home/datasets) )
  * slide 6: small number of samples. 10k simulations of negative binomial draws
- * slide 7-9 : [xkcd.com/882](xkcd.com/882)
+ * slide 7-9 : [xkcd.com/882](https://xkcd.com/882/)
  * slide 10-11 : input
  * slide 12-14 : very good [blog post on RPKM and TPM](https://www.rna-seqblog.com/rpkm-fpkm-and-tpm-clearly-explained/)
  * slide 15: filtering: 
@@ -127,23 +127,22 @@ slides 4-8:
      * [DESeq2 filtering](http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#indfilt)
      * egdeR filtering: section 2.7 of [edgeR doc](https://www.bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf)
 
-slide 16 : [source](https://pubmed.ncbi.nlm.nih.gov/22988256/)
+ * slide 16 : [source](https://pubmed.ncbi.nlm.nih.gov/22988256/)
 
-    * TC: Total count (CPM) - UQ: Upper Quartile - Med: median - Q: quantile
-    * top left: coef of variation in housekeeping genes in H. sapiens data
-    * top right: average false-positive rate over 10 independent datasets simulated with varying proportions of differentially expressed genes (from 0% to 30% for each normalization method). 
-    * bottom:
-        * distribution: distribution inter samples look the same
-        * Intra-variance: intra group variance 
-        * Housekeeping : coef of variation in 30 housekeeping genes, which are presumed to be similarly expressed across conditions
-        * clustering: similarity of DE genes with other methods
-        * false positive rate : see above
+     * TC: Total count (CPM) - UQ: Upper Quartile - Med: median - Q: quantile
+     * top left: coef of variation in housekeeping genes in H. sapiens data
+     * top right: average false-positive rate over 10 independent datasets simulated with varying proportions of differentially expressed genes (from 0% to 30% for each normalization method). 
+     * bottom:
+         * distribution: distribution inter samples look the same
+         * Intra-variance: intra group variance 
+         * Housekeeping : coef of variation in 30 housekeeping genes, which are presumed to be similarly expressed across conditions
+         * clustering: similarity of DE genes with other methods
+         * false positive rate : see above
 
 slide 17: normalization
 
-From this [biostar post](https://www.biostars.org/p/284775/)
-
-EdgeR: Trimmed Mean of M-values (TMM):
+ * From this [biostar post](https://www.biostars.org/p/284775/)
+ * EdgeR: Trimmed Mean of M-values (TMM):
 
 > Based on the hypothesis that most genes are not DE. 
 >
@@ -153,26 +152,22 @@ EdgeR: Trimmed Mean of M-values (TMM):
 > According to the hypothesis of low DE, this TMM should be close to 1. If it is not, its value provides an estimate of the correction factor that must be applied to the library sizes (and not the raw counts) in order to fulfill the hypothesis. 
 > [source: https://www.ncbi.nlm.nih.gov/pubmed/22988256]
 
-DESeq2
+ * DESeq2
 
 > DESeq:  is based on the hypothesis that most genes are not DE. 
->
->        the median of the ratio, for each gene, of its read count over its geometric mean across all lanes. 
->
->        The underlying idea is that non-DE genes should have similar read counts across samples, leading to a ratio of 1. 
->
->        Assuming most genes are not DE, the median of this ratio for the lane provides an estimate of the correction factor that should be applied to all read counts of this lane to fulfill the hypothesis. 
->
+>   the median of the ratio, for each gene, of its read count over its geometric mean across all lanes. 
+>   The underlying idea is that non-DE genes should have similar read counts across samples, leading to a ratio of 1. 
+>   Assuming most genes are not DE, the median of this ratio for the lane provides an estimate of the correction factor that should be applied to all read counts of this lane to fulfill the hypothesis. 
 >            [source: https://www.ncbi.nlm.nih.gov/pubmed/22988256]
 
 
 
 slide 19: NB model
 
-    * [image source](https://doi.org/10.1186/gb-2010-11-10-r106)
-    * orange line is the fit w(q)
-    * purple line show the variance implied by the Poisson distribution 
-    * dashed orange line is the variance estimate used by edgeR. 
+ * [image source](https://doi.org/10.1186/gb-2010-11-10-r106)
+ * orange line is the fit w(q)
+ * purple line show the variance implied by the Poisson distribution 
+ * dashed orange line is the variance estimate used by edgeR. 
 
 
 ## 06 Enrichment

@@ -59,7 +59,7 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
  * Conduct a soft trimming on the mouseMT data
 
      - name the output folder : `030_d_trim/`.
-     - when you do `ml trimmomatic`, you will receive a little message which tells you how to launch the software.
+     - when you do `ml Trimmomatic`, you will receive a little message which tells you how to launch the software.
      - Adapter sequences can be found in `/shared/data/DATA/adapters/TruSeq3-PE.fa` ([adapter sequence source](https://github.com/usadellab/Trimmomatic/tree/main/adapters)).
      - unlike fastqc, you will have to launch trimmomatic for each sample separately
      - to facilitate QC afterward, add the following at the end of your trimmomatic command (substituting `<sample name>`):
@@ -72,7 +72,7 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
 	trimmomatic is a Java-based program, and thus must be run by passing its .jar file to the Java interpreter:
 
 	```{sh}
-	ml 	Trimmomatic
+	ml Trimmomatic
 	java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar
 	```
 
