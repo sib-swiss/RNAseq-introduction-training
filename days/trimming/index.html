@@ -752,7 +752,7 @@ In fact, <strong>trimming can be detrimental</strong> to the number of successfu
 <p>Conduct a soft trimming on the mouseMT data</p>
 <ul>
 <li>name the output folder : <code>030_d_trim/</code>.</li>
-<li>when you do <code>ml trimmomatic</code>, you will receive a little message which tells you how to launch the software.</li>
+<li>when you do <code>ml Trimmomatic</code>, you will receive a little message which tells you how to launch the software.</li>
 <li>Adapter sequences can be found in <code>/shared/data/DATA/adapters/TruSeq3-PE.fa</code> (<a href="https://github.com/usadellab/Trimmomatic/tree/main/adapters">adapter sequence source</a>).</li>
 <li>unlike fastqc, you will have to launch trimmomatic for each sample separately</li>
 <li>to facilitate QC afterward, add the following at the end of your trimmomatic command (substituting <code>&lt;sample name&gt;</code>):
@@ -764,7 +764,7 @@ In fact, <strong>trimming can be detrimental</strong> to the number of successfu
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>trimmomatic is a Java-based program, and thus must be run by passing its .jar file to the Java interpreter:</p>
-<div class="highlight"><pre><span></span><code>ml  Trimmomatic
+<div class="highlight"><pre><span></span><code>ml Trimmomatic
 java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar
 </code></pre></div>
 </div>
