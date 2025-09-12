@@ -1020,7 +1020,8 @@ output:
 #SBATCH --mem=1G
 #SBATCH -o 010_l_fastqc_mouseMT.o
 
-ml fastqc
+enable-software-stack-eessi
+ml FastQC
 
 # creating the output folder
 mkdir -p 010_d_fastqc/
@@ -1226,7 +1227,10 @@ du<span class="w"> </span>-h<span class="w"> </span>-d<span class="w"> </span><s
 <summary>Answer</summary>
 <p>Many toolsets have dependencies toward different, sometimes incompatible libraries. Packaging each tool independently and loading them separately circumvents this, as you only load what you need, and you can always unload a toolset if you need to load another, incompatible, toolset.</p>
 </details>
-<p>Modules are managed with the <code>module</code> command.</p>
+<p>To begin using modules, we first need to enable a software stack. In our case, we will be using the <a href="https://www.eessi.io/">EESSI</a>, an open-source project dedicated to provide a scientific software stack which can be deployed on HPC structures and personal computers alike.</p>
+<p>To enable EESSI, run the following command (NB: this command will need to be in our sbatch scripts too):</p>
+<p><code>enable-software-stack-eessi</code></p>
+<p>Once this is done, the <code>module</code> command is made available.</p>
 <p>Basic commands are :</p>
 <ul>
 <li><code>module list</code> : lists currently loaded modules</li>
@@ -1251,7 +1255,7 @@ The following modules match your search criteria: &quot;fastqc&quot;
 -------------------------------------------------------------------------------------------------------------------------------------
 
 
-  fastqc: fastqc/0.11.5, fastqc/0.11.8, fastqc/0.11.9 
+  FastQC: FastQC/0.11.5, FastQC/0.11.8, FastQC/0.11.9 
     FastQC is a quality control application for high throughput sequence data. It reads in sequence data in a variety of formats and
     can either provide an interactive application to review the results of several different QC checks, or create an HTML based
     report which can be integrated into a pipeline. - Homepage: http://www.bioinformatics.babraham.ac.uk/projects/fastqc/
@@ -1274,14 +1278,10 @@ must specify the version if there is more than one version:
 <p>This tells us that a module name <code>fastqc</code> exists. It has different versions available (0.11.5,0.11.8,0.11.9). 
 The default is the rightmost one, which works well for us.</p>
 <p>So, if we load this module before executing fastqc:
-<div class="highlight"><pre><span></span><code>ml<span class="w"> </span>fastqc<span class="w"> </span><span class="c1"># shortcut for &quot;module load fastqc&quot;</span>
+<div class="highlight"><pre><span></span><code>ml<span class="w"> </span>FastQC<span class="w"> </span><span class="c1"># shortcut for &quot;module load fastqc&quot;</span>
 fastqc<span class="w"> </span>--help
 </code></pre></div>
 Now you should not have any error, and you should see the help test of <code>fastqc</code></p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Our module provider is ComputeCanada, which has a lot of <a href="https://docs.alliancecan.ca/wiki/Available_software">available software</a>. To avoid storing all these on our cluster, each time a new module is loaded, it is fetched first from the Compute Canada servers, so sometimes it can take a bit of time to load a module for the first time.</p>
-</div>
 <h3 id="advanced-cluster-usage-job-array">Advanced cluster usage : job array</h3>
 <p>Often, we have to repeat a similar analysis on a number of files, or for a number of different parameters.
 Rather than writing each sbatch script individually, we can rely on <strong>job arrays</strong> to facilitate our task.</p>

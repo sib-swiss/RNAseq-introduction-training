@@ -884,7 +884,8 @@ you can grab the reference genome data from the <a href="https://www.ensembl.org
 <span class="nv">G_FASTA</span><span class="o">=</span>/shared/data/DATA/Mouse_MT_genome/Mus_musculus.GRCm39.dna.chromosome.MT.fa
 <span class="nv">G_GTF</span><span class="o">=</span>/shared/data/DATA/Mouse_MT_genome/Mus_musculus.GRCm39.MT.gtf
 
-ml<span class="w"> </span>star
+enable-software-stack-eessi
+ml<span class="w"> </span>STAR
 
 mkdir<span class="w"> </span>-p<span class="w"> </span>041_d_STAR_mouseMT_reference
 
@@ -957,7 +958,8 @@ it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/samp
 <span class="c1">#SBATCH -o 042_l_STAR_map_raw.%a.o</span>
 <span class="c1">#SBATCH --array 1-8%8</span>
 
-ml<span class="w"> </span>star
+enable-software-stack-eessi
+ml<span class="w"> </span>STAR
 
 mkdir<span class="w"> </span>-p<span class="w"> </span>042_d_STAR_map_raw
 
@@ -1000,6 +1002,9 @@ it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/042_
 <span class="c1">#SBATCH --mem=1G</span>
 <span class="c1">#SBATCH -o 043_l_multiqc_map_raw.o</span>
 
+enable-software-stack-eessi
+ml<span class="w"> </span>MultiQC
+
 multiqc<span class="w"> </span>-n<span class="w"> </span>043_r_multiqc_mouseMT_mapped_raw.html<span class="w"> </span>-f<span class="w"> </span>--title<span class="w"> </span>mapped_raw<span class="w"> </span>042_d_STAR_map_raw/
 </code></pre></div>
 it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/043_s_multiqc_map_raw.sh</code></p>
@@ -1019,7 +1024,8 @@ it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/043_
 <span class="c1">#SBATCH -o 044_l_STAR_map_trimmed.%a.o</span>
 <span class="c1">#SBATCH --array 1-8%8</span>
 
-ml<span class="w"> </span>star
+enable-software-stack-eessi
+ml<span class="w"> </span>STAR
 
 mkdir<span class="w"> </span>-p<span class="w"> </span>044_d_STAR_map_trimmed
 
@@ -1040,6 +1046,9 @@ it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/044_
 <span class="c1">#SBATCH --cpus-per-task=1</span>
 <span class="c1">#SBATCH --mem=1G</span>
 <span class="c1">#SBATCH -o 045_l_multiqc_mouseMT_mapped_trimmed.o</span>
+
+enable-software-stack-eessi
+ml<span class="w"> </span>MultiQC
 
 multiqc<span class="w"> </span>-n<span class="w"> </span>045_r_multiqc_mouseMT_mapped_trimmed.html<span class="w"> </span>-f<span class="w"> </span>--title<span class="w"> </span>mapped_trimmed<span class="w"> </span>044_d_STAR_map_trimmed/
 </code></pre></div>
@@ -1072,7 +1081,8 @@ it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/045_
 #SBATCH -o 033_l_salmon_ruhland2016.%a.o
 #SBATCH --array 1-6%1
 
-ml salmon
+enable-software-stack-eessi
+ml Salmon
 
 dataDIR=/shared/data/DATA/Ruhland2016
 
@@ -1120,8 +1130,8 @@ SRR3180540_TAM3_1.fastq.gz
 #SBATCH -o 031_l_STAR_aln_Ruhland2016.%a.o
 #SBATCH --array 1-1%1
 
-
-ml star
+enable-software-stack-eessi
+ml STAR
 outDIR=031_d_STAR_aln_Ruhland2016
 
 mkdir -p $outDIR
@@ -1170,7 +1180,8 @@ This splice junction database can, in turn, be used to guide an improved second 
 #SBATCH -o 032_l_STAR_2PASS_Ruhland2016.%a.o
 #SBATCH --array 1-1%1
 
-ml star
+enable-software-stack-eessi
+ml STAR
 
 outDIR=032_d_STAR_Ruhland2016
 

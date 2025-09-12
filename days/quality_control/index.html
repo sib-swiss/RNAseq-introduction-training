@@ -828,7 +828,8 @@ To this end, we provide links to each tool&rsquo;s website. </p>
 <span class="c1">#SBATCH --mem=1G</span>
 <span class="c1">#SBATCH -o 010_l_fastqc_mouseMT.o</span>
 
-ml<span class="w"> </span>fastqc
+enable-software-stack-eessi
+ml<span class="w"> </span>FastQC
 
 <span class="c1"># creating the output folder</span>
 mkdir<span class="w"> </span>-p<span class="w"> </span>010_d_fastqc/
@@ -897,7 +898,8 @@ sample_a1_fastqc.zip<span class="w">   </span>sample_a2_fastqc.zip<span class="w
 <span class="c1">#SBATCH --mem=1G</span>
 <span class="c1">#SBATCH -o 010_l_fastqc_Liu2015.o</span>
 
-ml<span class="w"> </span>fastqc
+enable-software-stack-eessi
+ml<span class="w"> </span>FastQC
 
 <span class="c1"># creating the output folder</span>
 mkdir<span class="w"> </span>-p<span class="w"> </span>010_d_fastqc/
@@ -920,7 +922,8 @@ However, on more computationally-intensive tasks such as mapping, treating each 
 <span class="c1">#SBATCH --mem=1G</span>
 <span class="c1">#SBATCH -o 010_l_fastqc_Ruhland2016.o</span>
 
-ml<span class="w"> </span>fastqc
+enable-software-stack-eessi
+ml<span class="w"> </span>FastQC
 
 mkdir<span class="w"> </span>-p<span class="w"> </span>010_d_fastqc/
 
@@ -949,7 +952,8 @@ SRR3180540_TAM3_1.fastq.gz
 <span class="c1">#SBATCH -e 010_l_fastqc_Ruhland2016.%a.e</span>
 <span class="c1">#SBATCH --array 1-6%6</span>
 
-ml<span class="w"> </span>fastqc
+enable-software-stack-eessi
+ml<span class="w"> </span>FastQC
 
 <span class="nv">dataDir</span><span class="o">=</span>/shared/data/DATA/Ruhland2016
 
@@ -1015,7 +1019,7 @@ fastqc<span class="w"> </span>-o<span class="w"> </span>010_d_fastqc/<span class
 <ul>
 <li>MultiQC RAM requirements : 1Gb should be more than enough.</li>
 <li>MultiQC time requirements : ~ 1min / read file.</li>
-<li>Exceptionally, there is no need to load multiqc as a module (it is not part of ComputeCanada and we installed it directly on the cluster, on other clusters it may not be the same).</li>
+<li>remember to first load multiqc with <code>ml MultiQC</code></li>
 <li>Use <code>multiqc --help</code> to check the different options</li>
 </ul>
 </div>
@@ -1027,6 +1031,9 @@ fastqc<span class="w"> </span>-o<span class="w"> </span>010_d_fastqc/<span class
 <span class="c1">#SBATCH --cpus-per-task=1</span>
 <span class="c1">#SBATCH --mem=1G</span>
 <span class="c1">#SBATCH -o 020_l_multiqc_mouseMT.o</span>
+
+enable-software-stack-eessi
+ml<span class="w"> </span>MultiQC
 
 multiqc<span class="w"> </span>-n<span class="w"> </span>020_r_multiqc_mouseMT.html<span class="w"> </span>-f<span class="w"> </span>--title<span class="w"> </span>raw_fastq<span class="w"> </span>010_d_fastqc/
 </code></pre></div>
@@ -1091,6 +1098,9 @@ However here we are in the context of RNA-seq : some transcripts are present in 
 <span class="c1">#SBATCH --mem=1G</span>
 <span class="c1">#SBATCH -o 020_l_multiqc_Ruhland2016.o</span>
 
+enable-software-stack-eessi
+ml<span class="w"> </span>MultiQC
+
 multiqc<span class="w"> </span>-f<span class="w"> </span>020_r_multiqc_Ruhland2016.html<span class="w"> </span>010_d_fastqc/
 </code></pre></div>
 </details>
@@ -1105,6 +1115,9 @@ multiqc<span class="w"> </span>-f<span class="w"> </span>020_r_multiqc_Ruhland20
 <span class="c1">#SBATCH --cpus-per-task=1</span>
 <span class="c1">#SBATCH --mem=1G</span>
 <span class="c1">#SBATCH -o 020_l_multiqc_Liu2015.o</span>
+
+enable-software-stack-eessi
+ml<span class="w"> </span>MultiQC
 
 multiqc<span class="w"> </span>-f<span class="w"> </span>020_r_multiqc_Liu2015.html<span class="w"> </span>010_d_fastqc/
 </code></pre></div>
