@@ -14,8 +14,9 @@
       
         <link rel="next" href="../quality_control/">
       
+      
       <link rel="icon" href="../../assets/images/SIB_logo.svg">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.18">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.19">
     
     
       
@@ -23,11 +24,14 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.26e3688c.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
       
       
 
+
     
+    
+      
     
     
       
@@ -41,7 +45,7 @@
     
       <link rel="stylesheet" href="../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -54,16 +58,13 @@
     <body dir="ltr">
   
     
-    
-      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
-    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
         
-        <a href="#connect-to-the-server" class="md-skip">
+        <a href="#the-computing-cluster" class="md-skip">
           Skip to content
         </a>
       
@@ -85,7 +86,8 @@
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
@@ -105,29 +107,38 @@
     </div>
     
     
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
-      <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-      </label>
-      <div class="md-search" data-md-component="search" role="dialog">
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
         
         <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
       </nav>
       
     </form>
     <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
             Initializing search
@@ -138,13 +149,14 @@
     </div>
   </div>
 </div>
+      
     
     
       <div class="md-header__source">
         <a href="https://github.com/sib-swiss/RNAseq-introduction-training" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     sib-swiss/RNAseq-introduction-training
@@ -174,6 +186,7 @@
                     
 
 
+
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Introduction to RNA-Seq - From quality control to pathway analysis" class="md-nav__button md-logo" aria-label="Introduction to RNA-Seq - From quality control to pathway analysis" data-md-component="logo">
@@ -188,7 +201,7 @@
       <a href="https://github.com/sib-swiss/RNAseq-introduction-training" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     sib-swiss/RNAseq-introduction-training
@@ -200,14 +213,21 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../.." class="md-nav__link">
-        Home
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
       </a>
     </li>
   
@@ -215,91 +235,43 @@
     
       
       
-      
-
   
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-      
-      
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
-      
-      
-      
-        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
-          Precourse preparations
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_2">
-          <span class="md-nav__icon md-icon"></span>
-          Precourse preparations
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
   
   
   
     <li class="md-nav__item">
       <a href="../../precourse/" class="md-nav__link">
-        prerequisites
-      </a>
-    </li>
+        
+  
+  
+  <span class="md-ellipsis">
+    Precourse preparations
+    
+  </span>
   
 
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../unix_crash/" class="md-nav__link">
-        UNIX crash course
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../R_crash/" class="md-nav__link">
-        R crash course
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
     </li>
   
 
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../course_schedule/" class="md-nav__link">
-        Course schedule
+        
+  
+  
+  <span class="md-ellipsis">
+    Course schedule
+    
+  </span>
+  
+
       </a>
     </li>
   
@@ -307,14 +279,21 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../slides_notes/" class="md-nav__link">
-        Slides notes (draft)
+        
+  
+  
+  <span class="md-ellipsis">
+    Slides notes (draft)
+    
+  </span>
+  
+
       </a>
     </li>
   
@@ -322,14 +301,21 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../cheatsheets/" class="md-nav__link">
-        Cheatsheets
+        
+  
+  
+  <span class="md-ellipsis">
+    Cheatsheets
+    
+  </span>
+  
+
       </a>
     </li>
   
@@ -337,54 +323,73 @@
     
       
       
-      
-
   
   
     
   
   
+  
+    
+    
+    
+    
     
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
-      
-      
-      
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
-      
-      
-      
-        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
-          Day1
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
-        <label class="md-nav__title" for="__nav_6">
-          <span class="md-nav__icon md-icon"></span>
-          Day1
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
           
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Day1
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Day1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../design/" class="md-nav__link">
-        RNAseq - technologies and design
+        
+  
+  
+  <span class="md-ellipsis">
+    RNAseq - technologies and design
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
   
   
     
+  
   
   
     <li class="md-nav__item md-nav__item--active">
@@ -394,12 +399,28 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Server login + unix fresh up
+          
+  
+  
+  <span class="md-ellipsis">
+    Server login + unix fresh up
+    
+  </span>
+  
+
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Server login + unix fresh up
+        
+  
+  
+  <span class="md-ellipsis">
+    Server login + unix fresh up
+    
+  </span>
+  
+
       </a>
       
         
@@ -416,22 +437,28 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#connect-to-the-server" class="md-nav__link">
-    Connect to the server
+  <a href="#the-computing-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      The computing cluster
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#start-a-terminal-on-the-server" class="md-nav__link">
-    Start a terminal on the server
+  <a href="#connect-to-the-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Connect to the server
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#using-command-line-on-the-cluster" class="md-nav__link">
-    Using command line on the cluster
+    <span class="md-ellipsis">
+      Using command line on the cluster
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Using command line on the cluster">
@@ -439,21 +466,27 @@
         
           <li class="md-nav__item">
   <a href="#creating-a-directory" class="md-nav__link">
-    Creating a directory
+    <span class="md-ellipsis">
+      Creating a directory
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#creating-and-editing-a-file" class="md-nav__link">
-    Creating and editing a file
+    <span class="md-ellipsis">
+      Creating and editing a file
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#exchanging-files-with-the-server" class="md-nav__link">
-    Exchanging files with the server
+    <span class="md-ellipsis">
+      Exchanging files with the server
+    </span>
   </a>
   
 </li>
@@ -465,29 +498,18 @@
       
         <li class="md-nav__item">
   <a href="#bash-scripts" class="md-nav__link">
-    bash scripts
+    <span class="md-ellipsis">
+      bash scripts
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#activate-the-conda-environment-containing-bioinformatics-software" class="md-nav__link">
-    Activate the conda environment containing bioinformatics software
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#annex-hpc-clusters" class="md-nav__link">
-    ANNEX : HPC clusters
-  </a>
-  
-    <nav class="md-nav" aria-label="ANNEX : HPC clusters">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#submitting-jobs" class="md-nav__link">
-    Submitting jobs
+    <span class="md-ellipsis">
+      Submitting jobs
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Submitting jobs">
@@ -495,34 +517,37 @@
         
           <li class="md-nav__item">
   <a href="#submitting-a-simple-script" class="md-nav__link">
-    Submitting a simple script
+    <span class="md-ellipsis">
+      Submitting a simple script
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#specifying-resources-needed-to-slurm" class="md-nav__link">
-    Specifying resources needed to SLURM
+    <span class="md-ellipsis">
+      Specifying resources needed to SLURM
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#advanced-cluster-usage-loading-modules" class="md-nav__link">
-    Advanced cluster usage : loading modules
+    <span class="md-ellipsis">
+      Advanced cluster usage : loading modules
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#advanced-cluster-usage-job-array" class="md-nav__link">
-    Advanced cluster usage : job array
+    <span class="md-ellipsis">
+      Advanced cluster usage : job array
+    </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -538,115 +563,171 @@
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../quality_control/" class="md-nav__link">
-        Quality control
+        
+  
+  
+  <span class="md-ellipsis">
+    Quality control
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../trimming/" class="md-nav__link">
-        Sequence trimming
+        
+  
+  
+  <span class="md-ellipsis">
+    Sequence trimming
+    
+  </span>
+  
+
       </a>
     </li>
   
 
+              
             
-          
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      
     </li>
   
 
     
       
       
-      
-
+  
   
   
   
     
+    
+    
+    
+    
     <li class="md-nav__item md-nav__item--nested">
       
-      
-      
-      
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
-      
-      
-      
-        <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
-          Day2
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_7">
-          <span class="md-nav__icon md-icon"></span>
-          Day2
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
           
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Day2
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Day2
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../mapping/" class="md-nav__link">
-        Reads mapping
+        
+  
+  
+  <span class="md-ellipsis">
+    Reads mapping
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../DE/" class="md-nav__link">
-        Differential Expression Inference
+        
+  
+  
+  <span class="md-ellipsis">
+    Differential Expression Inference
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../enrichment/" class="md-nav__link">
-        Enrichment analysis
+        
+  
+  
+  <span class="md-ellipsis">
+    Enrichment analysis
+    
+  </span>
+  
+
       </a>
     </li>
   
 
+              
             
-          
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -676,22 +757,28 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#connect-to-the-server" class="md-nav__link">
-    Connect to the server
+  <a href="#the-computing-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      The computing cluster
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#start-a-terminal-on-the-server" class="md-nav__link">
-    Start a terminal on the server
+  <a href="#connect-to-the-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Connect to the server
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#using-command-line-on-the-cluster" class="md-nav__link">
-    Using command line on the cluster
+    <span class="md-ellipsis">
+      Using command line on the cluster
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Using command line on the cluster">
@@ -699,21 +786,27 @@
         
           <li class="md-nav__item">
   <a href="#creating-a-directory" class="md-nav__link">
-    Creating a directory
+    <span class="md-ellipsis">
+      Creating a directory
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#creating-and-editing-a-file" class="md-nav__link">
-    Creating and editing a file
+    <span class="md-ellipsis">
+      Creating and editing a file
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#exchanging-files-with-the-server" class="md-nav__link">
-    Exchanging files with the server
+    <span class="md-ellipsis">
+      Exchanging files with the server
+    </span>
   </a>
   
 </li>
@@ -725,29 +818,18 @@
       
         <li class="md-nav__item">
   <a href="#bash-scripts" class="md-nav__link">
-    bash scripts
+    <span class="md-ellipsis">
+      bash scripts
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#activate-the-conda-environment-containing-bioinformatics-software" class="md-nav__link">
-    Activate the conda environment containing bioinformatics software
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#annex-hpc-clusters" class="md-nav__link">
-    ANNEX : HPC clusters
-  </a>
-  
-    <nav class="md-nav" aria-label="ANNEX : HPC clusters">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#submitting-jobs" class="md-nav__link">
-    Submitting jobs
+    <span class="md-ellipsis">
+      Submitting jobs
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Submitting jobs">
@@ -755,34 +837,37 @@
         
           <li class="md-nav__item">
   <a href="#submitting-a-simple-script" class="md-nav__link">
-    Submitting a simple script
+    <span class="md-ellipsis">
+      Submitting a simple script
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#specifying-resources-needed-to-slurm" class="md-nav__link">
-    Specifying resources needed to SLURM
+    <span class="md-ellipsis">
+      Specifying resources needed to SLURM
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#advanced-cluster-usage-loading-modules" class="md-nav__link">
-    Advanced cluster usage : loading modules
+    <span class="md-ellipsis">
+      Advanced cluster usage : loading modules
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#advanced-cluster-usage-job-array" class="md-nav__link">
-    Advanced cluster usage : job array
+    <span class="md-ellipsis">
+      Advanced cluster usage : job array
+    </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -805,34 +890,73 @@
                 
                   
 
+
   
   
 
 
-<p>To conduct the practicals of this course, we will be using a dedicated distant server with enough computing capabilities to handle RNAseq data amd where all the necessary software has been installed.</p>
-<p>This matches the reality of most NGS workflows, which cannot be completed in a reasonable time on a single laptop machine. </p>
-<p>To interact with this server, you will have to connect and log in to it. We will do so through an Rstudio server, which, conveniently, 
-let&rsquo;s us start a UNIX terminal to launch bioinformatics tools, retrieve and send files to the server, and use R scripts to analyse our results.</p>
-<p>This page will cover our first contact with the distant server. </p>
+  <h1>Server login + unix fresh up</h1>
+
+<p>To conduct the practicals of this course, we will be using a dedicated High Performance Computing cluster. 
+This matches the reality of most NGS workflows, which cannot be completed in a reasonable time on a single machine. </p>
+<p>To interact with this cluster, you will have to log in to a distant <em>head node</em>. From there you will be able to distribute your computational tasks to the cluster using a <em>job scheduler</em> called Slurm.</p>
+<p>This page will cover our first contact with the distant cluster. </p>
 <p><strong>You will learn to :</strong></p>
 <ul>
+<li>understand a typical computer cluster architecture.</li>
 <li>connect to the server.</li>
-<li>use the command line to perform basic operations.</li>
+<li>use the command line to perform basic operations on the head node.</li>
 <li>exchange files between the server and your own machine.</li>
+<li>submit a job to the cluster.</li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you are doing this course on your own, then the distant server provided within the course will not be available. 
 Feel free to ignore or adapt any of the following steps to your own situation.</p>
 </div>
+<h2 id="the-computing-cluster">The computing cluster</h2>
+<p>The computing cluster follows an architecture that enables several users to distribute computational tasks among several machines which share a number of resources, such as a common file system.</p>
+<p><img alt="cluster_overview" src="../../assets/images/cluster_overview.png" /></p>
+<p>Users do not access each machine individually, but rather connect to a <strong>head node</strong>. From there, they can interact with the cluster using the <strong>job scheduler</strong> (here slurm).
+The job scheduler&rsquo;s role is to manage where and how to run the jobs of all users, such that waiting time is minimized and resource usage is shared and optimized.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Everyone is connected to the same server. There are a few guardrails in place that should prevent any one user from crashing the server or hogging all the resources, but no system is fully foolproof. Consequently, <strong>before you launch a serious job, always take the time to test it on a smaller dataset</strong> in order to estimate if the big job might be too big.</p>
+<p>Everyone is connected to the same head node. Do not perform compute-intensive tasks on it, or you will slow everyone down! </p>
 </div>
 <h2 id="connect-to-the-server">Connect to the server</h2>
-<p>Follow the teacher&rsquo;s instructions to get the rstudio server address, as well as you login and password</p>
-<h2 id="start-a-terminal-on-the-server">Start a terminal on the server</h2>
-<p><img alt="a view of Rstudio's terminal" src="../../assets/images/rstudio_terminal.png" /></p>
+<p>Say you want to connect to cluster with address <code>xx.xx.xx.xx</code> and your login is <code>login</code>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you are doing this course with a teacher, use the link, login and password provided before or during the course. </p>
+</div>
+<p>The first step will be to open a <strong>terminal</strong>, a software that provides a command-line interface to a computer.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Mac</label><label for="__tabbed_1_2">Linux</label><label for="__tabbed_1_3">Windows</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>Open a terminal, for instance with the application Xterm, or Xquartz.
+<!-- Might confuse some who just read "Terminal" --></p>
+</div>
+<div class="tabbed-block">
+<p>Open a new terminal.</p>
+</div>
+<div class="tabbed-block">
+<p>Open the application mobaXterm (or any ssh-enabling terminal application you prefer).</p>
+<p>On mobaXterm, click on &ldquo;Start a local Terminal&rdquo;.</p>
+</div>
+</div>
+</div>
+<hr />
+<p>In the terminal, type the following command:</p>
+<div class="highlight"><pre><span></span><code>ssh<span class="w"> </span>login@xx.xx.xx.xx
+</code></pre></div>
+<p>When prompted for your password, type it and press Enter. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There is no cursor or &lsquo;●&rsquo; character appearing while you type your password. This is normal. Deleting characters also works invisibly.</p>
+</div>
+<p>After a few seconds, you should be logged into the <em>head node</em> and ready to begin.</p>
+<!-- TODO : Would be nice to add a screenshot? -->
+
 <h2 id="using-command-line-on-the-cluster">Using command line on the cluster</h2>
 <p>Now that you are in the head node, it is time to get acquainted with your environment and to prepare the upcoming practicals. 
 We will also use this as a short reminder about the UNIX command line.</p>
@@ -842,7 +966,7 @@ We will also use this as a short reminder about the UNIX command line.</p>
 <div class="highlight"><pre><span></span><code><span class="nb">pwd</span>
 </code></pre></div>
 <p>When you start a session on a distant computer, you are placed in your <code>home</code> directory. So the cluster should return something like:</p>
-<div class="highlight"><pre><span></span><code>/home/&lt;login&gt;
+<div class="highlight"><pre><span></span><code>/shared/home/&lt;login&gt;
 </code></pre></div>
 <p>From then, we are going to do a little step-by-step practical to go through some of bash&rsquo;s most useful commands for this course.</p>
 <h3 id="creating-a-directory">Creating a directory</h3>
@@ -864,14 +988,14 @@ We will also use this as a short reminder about the UNIX command line.</p>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>mouseMT
 </code></pre></div>
 </details>
-<p>The directory <code>/data/</code> contains data and solutions for most practicals. </p>
+<p>The directory <code>/shared/data/</code> contains data and solutions for most practicals. </p>
 <div class="admonition example">
 <p class="admonition-title">practical</p>
-<p>List the content of the <code>/data/</code> directory.</p>
+<p>List the content of the <code>/shared/data/</code> directory.</p>
 </div>
 <details class="success">
 <summary>Answer</summary>
-<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>/data/
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>/shared/data/
 </code></pre></div>
 </details>
 <div class="admonition note">
@@ -880,47 +1004,72 @@ We will also use this as a short reminder about the UNIX command line.</p>
 </div>
 <div class="admonition example">
 <p class="admonition-title">practical</p>
-<p>Copy the script <code>010_s_fastqc.sh</code> from  <code>/data/Solutions/mouseMT</code> into your current directory,
+<p>Copy the script <code>010_s_fastqc.sh</code> from  <code>/shared/data/Solutions/mouseMT</code> into your current directory,
 and then print the content of this script to the screen.</p>
 </div>
 <details class="success">
 <summary>Answer</summary>
-<p><div class="highlight"><pre><span></span><code>cp<span class="w"> </span>/data/Solutions/mouseMT/010_s_fastqc.sh<span class="w"> </span>.
+<p><div class="highlight"><pre><span></span><code>cp<span class="w"> </span>/shared/data/Solutions/mouseMT/010_s_fastqc.sh<span class="w"> </span>.
 more<span class="w"> </span>010_s_fastqc.sh
 </code></pre></div>
 output:
 <div class="highlight"><pre><span></span><code>#!/usr/bin/bash
+#SBATCH --job-name=fastqc_mouseMT
+#SBATCH --time=01:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=1G
+#SBATCH -o 010_l_fastqc_mouseMT.o
+
+ml fastqc
 
 # creating the output folder
 mkdir -p 010_d_fastqc/
 
-fastqc -o 010_d_fastqc /data/DATA/mouseMT/*.fastq
+fastqc -o 010_d_fastqc /shared/data/DATA/mouseMT/*.fastq
 </code></pre></div></p>
 </details>
 <p>We&rsquo;ll see what all this means soon.</p>
 <h3 id="creating-and-editing-a-file">Creating and editing a file</h3>
-<p>To edit files on the distant server, we will use the Rstudio file editor. It is primarily designed for R script but it works very well for  other types of files. </p>
+<p>To edit files on the distant server, we will use the command line editor <code>nano</code>. It is far from the most complete or efficient one, but it can be found on most servers, and is arguably among the easiest to start with.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Alternatively, we could use command line editor <code>nano</code>. It is far from the most complete or efficient one, but it can be found on most servers, and is arguably among the easiest command-line file editor to start with.</p>
+<p>Alternatively, feel free to use any other CLI editor you prefer, such as <code>vi</code>.</p>
 </div>
-<p>To start editing a file named <code>test.txt</code>, in Rstudio go to <code>File &gt; New File &gt; Text File</code>, or use the shortcut <code>Ctrl+Alt+Shift+N</code></p>
-<p><img alt="Rstudio screenshot" src="../../assets/images/rstudio_new_file_screenshot.png" /></p>
-<p>Type in your favorite movie quote, and then save it with <code>Ctrl+s</code>, give it an appropriate name, like <code>test.txt</code> for example</p>
-<p>You can check that your modifications were saved from the terminal by typing</p>
+<p>To start editing a file named <code>test.txt</code>, type :</p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span>nano<span class="w"> </span>test.txt
+</code></pre></div>
+<p>You will be taken to the <code>nano</code> interface :</p>
+<p><img alt="nano screenshot" src="../../assets/images/nano_screenshot.png" /></p>
+<p>Type in your favorite movie quote, and then exit by pressing <code>Ctrl+x</code> (<code>command+x</code> on a Mac keyboard), and then <code>y</code> and <code>Enter</code> when prompted to save the modifications you just made.</p>
+<p>You can check that your modifications were saved by typing</p>
 <div class="highlight"><pre><span></span><code>more<span class="w"> </span>test.txt
 </code></pre></div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>for the command above to work, your terminal needs to be in the same folder as the file. Take careful note of where you save your files, and where your terminal is running.</p>
-</div>
 <h3 id="exchanging-files-with-the-server">Exchanging files with the server</h3>
-<p>Whether you want to transfer some data to the server or retrieve the results of your latest computation, it is important to be able to exchange files with the distant server.</p>
-<p>Fortunately, Rstudio provides an easy way to do this.</p>
-<p><img alt="a view of Rstudio's interface for download and upload" src="../../assets/images/rstudio_download.png" /></p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Alternatively, there exists several alternatives, from using the command line tool <code>scp</code> to graphical tools such as fileZilla.</p>
+<p>Whether you want to transfer some data to the cluster or retrieve the results of your latest computation, it is important to be able to exchange files with the distant server.</p>
+<p>There exists several alternatives, depending on your platform and preferences.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">filezilla</label><label for="__tabbed_2_2">mobaXterm</label><label for="__tabbed_2_3">command line</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>There are nice and free software with graphical user interfaces, such as <a href="https://filezilla-project.org/">filezilla</a>, to help you manage exchanges with the distant server. Feel free to install and experiment with it during the break.
+<img alt="filezilla_mainscreen" src="https://filezilla-project.org/images/screenshots/fz3_win_main.png" /></p>
+</div>
+<div class="tabbed-block">
+<p>If you are using mobaXterm, the left panel should provide a graphical SFTP browser in the left sidebar which allows you to browse and drag and drop files directly from/to the remote server.</p>
+<p><img alt="mobaxterm_leftpanel" src="https://mobaxterm.mobatek.net/img/moba/features/feature-sftp-browser.png" /></p>
+</div>
+<div class="tabbed-block">
+<p>We will use <code>scp</code>.</p>
+<p>To copy a file from the server to your machine, use this syntax on a <strong>terminal in your local machine</strong> (open a new terminal if necessary).</p>
+<div class="highlight"><pre><span></span><code>scp<span class="w"> </span>&lt;login&gt;@&lt;server-adress&gt;:/path/to/file/on/server/file.txt<span class="w"> </span>/local/destination/
+</code></pre></div>
+<p>For example, to copy the file <code>test.txt</code> you just created in the folder <code>day1/</code>, to your current (local) working directory (NB:    here <code>~</code> will be interpreted as your home directory, this is a useful and time-saving shorthand):</p>
+<div class="highlight"><pre><span></span><code>scp<span class="w"> </span>login@xx.xx.xx.xx:~/day1/test.txt<span class="w"> </span>.
+</code></pre></div>
+<p>To copy a file from your machine to the server:</p>
+<div class="highlight"><pre><span></span><code>scp<span class="w"> </span>/path/to/file/local/file.txt<span class="w"> </span>&lt;login&gt;@&lt;server-adress&gt;:/destination/on/server/
+</code></pre></div>
+</div>
+</div>
 </div>
 <hr />
 <div class="admonition example">
@@ -955,12 +1104,12 @@ This is the most common way of dealing with our data on the server for simple op
 <span class="c1">## whatever is after # is not interpreted as code.</span>
 
 <span class="c1"># the echo command prints whatever text follows to the screen: </span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;looking at the size of the elements of /data/&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;looking at the size of the elements of /shared/data/&quot;</span>
 
 sleep<span class="w"> </span><span class="m">15</span><span class="w"> </span><span class="c1"># making the script wait for 15 seconds - this is just so we can see it later on. </span>
 
 <span class="c1"># du : &quot;disk usage&quot;, a command that returns the size of a folder structure.</span>
-du<span class="w"> </span>-h<span class="w"> </span>-d<span class="w"> </span><span class="m">2</span><span class="w"> </span>/data/
+du<span class="w"> </span>-h<span class="w"> </span>-d<span class="w"> </span><span class="m">2</span><span class="w"> </span>/shared/data/
 </code></pre></div>
 <p>The first line is not 100% necessary at this step, but it will be in the next part, so we might as well put it in now. It helps some software know that this file contains bash code. </p>
 <p>Then to execute the script, navigate <strong>in a terminal open on the server</strong> to the place where the script is, and execute the following command:</p>
@@ -970,34 +1119,7 @@ du<span class="w"> </span>-h<span class="w"> </span>-d<span class="w"> </span><s
 <p class="admonition-title">Warning</p>
 <p>Be sure to execute the script from the folder that it is in. Otherwise you would have to specify in which folder to find the script using its path.</p>
 </div>
-<p>This should have printed some information about the size of <code>/data/</code> subfolders to the screen.</p>
-<h2 id="activate-the-conda-environment-containing-bioinformatics-software">Activate the conda environment containing bioinformatics software</h2>
-<p>As it stands, the terminal you are currently using does not have access to bioinformatics software:</p>
-<div class="highlight"><pre><span></span><code>fastqc<span class="w"> </span>--help
-</code></pre></div>
-<p>results in the error : <code>Command 'fastqc' not found, ...</code></p>
-<p>Indeed, bioinformatics tools are not installed by default on the server.</p>
-<p>Here, we have prepared the bioinformatics software in a <a href="https://conda.io/projects/conda/en/latest/user-guide/getting-started.html">conda environment</a> (conda environments provide a useful way to manage software stacks across plateform).</p>
-<p>So, first we need to initialize conda:</p>
-<p><div class="highlight"><pre><span></span><code>conda<span class="w"> </span>init
-</code></pre></div>
-Then, for the changes to take place we need to start a new terminal :</p>
-<p><img alt="Rstudio : showing button to start a new terminal" src="../../assets/images/rstudio_new_terminal.png" /></p>
-<p>Once this is done, you can notice that now you terminal line starts with <code>(base)</code>. This is a sign that conda is activated and that you are currently using its default environment.</p>
-<p>So finally we can activate the environment containing tools, which is called <code>ngs-tools</code>:
-<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>activate<span class="w"> </span>ngs-tools
-</code></pre></div></p>
-<p>Now when you run the following command you should see the fastqc help:
-<div class="highlight"><pre><span></span><code>fastqc<span class="w"> </span>--help
-</code></pre></div></p>
-<h1 id="annex-hpc-clusters">ANNEX : HPC clusters</h1>
-<p>The following annex discuss HPC clusters, where you do not execute your compute-intensive job directly on the server you connect to, 
-but rather to submit jobs to a <strong>scheduler</strong> which then allocate them compute resources on dedicated compute nodes.</p>
-<p>Having to use such a cluster is quite common in bioinformatics given the size of most modern datasets.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>in this annex we only discuss the SLURM scheduler. Other schedulers use different command lines and a different linguo (although many concepts are similar).</p>
-</div>
+<p>This should have printed some information about the size of <code>/shared/data/</code> subfolders to the screen.</p>
 <h2 id="submitting-jobs">Submitting jobs</h2>
 <h3 id="submitting-a-simple-script">Submitting a simple script</h3>
 <p>Jobs can be submitted to the compute cluster using <strong>bash scripts</strong>, with an optional little preamble which tells the cluster about your computing resource requirements, and a few additional options.</p>
@@ -1072,10 +1194,10 @@ Otherwis, you will see some error messages.</p>
 <span class="c1">#SBATCH -o test_log.o</span>
 
 
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;looking at the size of the elements of /data/&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;looking at the size of the elements of /shared/data/&quot;</span>
 sleep<span class="w"> </span><span class="m">15</span><span class="w"> </span><span class="c1"># making the script wait for 15 seconds - this is just so we can see it later on. </span>
 <span class="c1"># `du` is &quot;disk usage&quot;, a command that returns the size of a folder structure.</span>
-du<span class="w"> </span>-h<span class="w"> </span>-d<span class="w"> </span><span class="m">2</span><span class="w"> </span>/data/
+du<span class="w"> </span>-h<span class="w"> </span>-d<span class="w"> </span><span class="m">2</span><span class="w"> </span>/shared/data/
 </code></pre></div>
 <p>I also added the following options :</p>
 <ul>
@@ -1214,7 +1336,7 @@ Each of these executions is called a <strong>task</strong>, and they are all the
 <span class="nb">echo</span><span class="w"> </span><span class="nv">$foo</span><span class="w">              </span><span class="c1"># Print variable foo, sensitive to special characters</span>
 <span class="nb">echo</span><span class="w"> </span><span class="si">${</span><span class="nv">foo</span><span class="si">}</span><span class="w">            </span><span class="c1"># Another way to print variable foo, not sensitive to special characters</span>
 
-<span class="nv">OUTPUT</span><span class="o">=</span><span class="sb">`</span>wc<span class="w"> </span>-l<span class="w"> </span>du<span class="w"> </span>-h<span class="w"> </span>-d<span class="w"> </span><span class="m">2</span><span class="w"> </span>/data/<span class="sb">`</span><span class="w"> </span><span class="c1"># puts the result of the command </span>
+<span class="nv">OUTPUT</span><span class="o">=</span><span class="sb">`</span>wc<span class="w"> </span>-l<span class="w"> </span>du<span class="w"> </span>-h<span class="w"> </span>-d<span class="w"> </span><span class="m">2</span><span class="w"> </span>/shared/data/<span class="sb">`</span><span class="w"> </span><span class="c1"># puts the result of the command </span>
 <span class="w">                                        </span><span class="c1">#   between `` in variable OUTPUT</span>
 
 <span class="nb">echo</span><span class="w"> </span><span class="nv">$OUTPUT</span><span class="w">           </span><span class="c1"># print variable output</span>
@@ -1229,11 +1351,19 @@ Each of these executions is called a <strong>task</strong>, and they are all the
 
 
 
+
+
+
+
+
+
+
                 
               </article>
             </div>
           
           
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
       </main>
@@ -1261,10 +1391,13 @@ Each of these executions is called a <strong>task</strong>, and they are all the
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.220ee61c.min.js"></script>
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.92b07e13.min.js"></script>
       
     
   </body>
