@@ -161,7 +161,8 @@ The directory `/shared/data/` contains data and solutions for most practicals.
     #SBATCH --mem=1G
     #SBATCH -o 010_l_fastqc_mouseMT.o
     
-    ml fastqc
+    enable-software-stack-eessi
+    ml FastQC
     
     # creating the output folder
     mkdir -p 010_d_fastqc/
@@ -466,7 +467,14 @@ However, by default, these are not loaded, and you have to explicitly load the m
 	Many toolsets have dependencies toward different, sometimes incompatible libraries. Packaging each tool independently and loading them separately circumvents this, as you only load what you need, and you can always unload a toolset if you need to load another, incompatible, toolset.
 
 
-Modules are managed with the `module` command.
+To begin using modules, we first need to enable a software stack. In our case, we will be using the [EESSI](https://www.eessi.io/), an open-source project dedicated to provide a scientific software stack which can be deployed on HPC structures and personal computers alike.
+
+To enable EESSI, run the following command (NB: this command will need to be in our sbatch scripts too):
+
+`enable-software-stack-eessi`
+
+
+Once this is done, the `module` command is made available.
 
 Basic commands are :
 
@@ -499,7 +507,7 @@ The following modules match your search criteria: "fastqc"
 -------------------------------------------------------------------------------------------------------------------------------------
 
 
-  fastqc: fastqc/0.11.5, fastqc/0.11.8, fastqc/0.11.9 
+  FastQC: FastQC/0.11.5, FastQC/0.11.8, FastQC/0.11.9 
     FastQC is a quality control application for high throughput sequence data. It reads in sequence data in a variety of formats and
     can either provide an interactive application to review the results of several different QC checks, or create an HTML based
     report which can be integrated into a pipeline. - Homepage: http://www.bioinformatics.babraham.ac.uk/projects/fastqc/
@@ -525,15 +533,10 @@ The default is the rightmost one, which works well for us.
 
 So, if we load this module before executing fastqc:
 ```sh
-ml fastqc # shortcut for "module load fastqc"
+ml FastQC # shortcut for "module load fastqc"
 fastqc --help
 ```
 Now you should not have any error, and you should see the help test of `fastqc`
-
-
-!!! note
-    Our module provider is ComputeCanada, which has a lot of [available software](https://docs.alliancecan.ca/wiki/Available_software). To avoid storing all these on our cluster, each time a new module is loaded, it is fetched first from the Compute Canada servers, so sometimes it can take a bit of time to load a module for the first time.
-
 
 
 

@@ -81,7 +81,8 @@ We will be using the Ensembl references, with their accompanying GTF annotations
 	G_FASTA=/shared/data/DATA/Mouse_MT_genome/Mus_musculus.GRCm39.dna.chromosome.MT.fa
 	G_GTF=/shared/data/DATA/Mouse_MT_genome/Mus_musculus.GRCm39.MT.gtf
 	
-	ml star
+	enable-software-stack-eessi
+	ml STAR
 
 	mkdir -p 041_d_STAR_mouseMT_reference
 	
@@ -174,7 +175,8 @@ We will be using the Ensembl references, with their accompanying GTF annotations
 	#SBATCH -o 042_l_STAR_map_raw.%a.o
 	#SBATCH --array 1-8%8
 
-	ml star
+	enable-software-stack-eessi
+	ml STAR
 
 	mkdir -p 042_d_STAR_map_raw
 
@@ -226,6 +228,9 @@ You can call MultiQC on the STAR output folder to gather a report on the individ
 	#SBATCH --mem=1G
 	#SBATCH -o 043_l_multiqc_map_raw.o
 	
+	enable-software-stack-eessi
+	ml MultiQC
+
 	multiqc -n 043_r_multiqc_mouseMT_mapped_raw.html -f --title mapped_raw 042_d_STAR_map_raw/
 	```
 	it can also be found in the cluster at `/shared/data/Solutions/mouseMT/043_s_multiqc_map_raw.sh`
@@ -256,7 +261,8 @@ We will spare you the mapping of the trimmed reads, and let you directly downloa
 	#SBATCH -o 044_l_STAR_map_trimmed.%a.o
 	#SBATCH --array 1-8%8
 	
-	ml star
+	enable-software-stack-eessi
+	ml STAR
 	
 	mkdir -p 044_d_STAR_map_trimmed
 	
@@ -281,6 +287,9 @@ We will spare you the mapping of the trimmed reads, and let you directly downloa
 	#SBATCH --mem=1G
 	#SBATCH -o 045_l_multiqc_mouseMT_mapped_trimmed.o
 	
+	enable-software-stack-eessi
+	ml MultiQC
+
 	multiqc -n 045_r_multiqc_mouseMT_mapped_trimmed.html -f --title mapped_trimmed 044_d_STAR_map_trimmed/
 	```
 	it can also be found in the cluster at `/shared/data/Solutions/mouseMT/045_s_multiqc_mouseMT_mapped_trimmed.sh`
@@ -331,7 +340,8 @@ We refer you to the tool's documentation in order to see [how the reference inde
 	#SBATCH -o 033_l_salmon_ruhland2016.%a.o
 	#SBATCH --array 1-6%1
 
-	ml salmon
+	enable-software-stack-eessi
+	ml Salmon
 	
 	dataDIR=/shared/data/DATA/Ruhland2016
 	
@@ -389,8 +399,8 @@ We refer you to the tool's documentation in order to see [how the reference inde
 	#SBATCH -o 031_l_STAR_aln_Ruhland2016.%a.o
 	#SBATCH --array 1-1%1
 
-
-	ml star
+	enable-software-stack-eessi
+	ml STAR
 	outDIR=031_d_STAR_aln_Ruhland2016
 
 	mkdir -p $outDIR
@@ -451,7 +461,8 @@ STAR <1st round options> --sjdbFileChrStartEnd sample_SJ.out.tab
 	#SBATCH -o 032_l_STAR_2PASS_Ruhland2016.%a.o
 	#SBATCH --array 1-1%1
 
-	ml star
+	enable-software-stack-eessi
+	ml STAR
 
 	outDIR=032_d_STAR_Ruhland2016
 	

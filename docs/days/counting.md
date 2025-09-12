@@ -52,7 +52,8 @@ For more details on the algorithm behavior (with multi/overlapping reads for ins
 	inFOLDER=/shared/data/Solutions/Ruhland2016/STAR_Ruhland2016
 	outFOLDER=featureCOUNT_Ruhland2016
 	
-	ml subread
+	enable-software-stack-eessi
+	ml Subread
 
 	mkdir -p $outFOLDER
 

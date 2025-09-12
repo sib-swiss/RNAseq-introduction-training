@@ -100,7 +100,8 @@ Then, create here a new text file name `010_s_fastqc.sh` (with `nano`, or on you
 #SBATCH --mem=1G
 #SBATCH -o 010_l_fastqc_mouseMT.o
 
-ml fastqc
+enable-software-stack-eessi
+ml FastQC
 
 # creating the output folder
 mkdir -p 010_d_fastqc/
@@ -185,7 +186,8 @@ We will look at one of these html report on the toy dataset, and one of the pre-
 	#SBATCH --mem=1G
 	#SBATCH -o 010_l_fastqc_Liu2015.o
 
-	ml fastqc
+	enable-software-stack-eessi
+	ml FastQC
 
 	# creating the output folder
 	mkdir -p 010_d_fastqc/
@@ -214,7 +216,8 @@ We will look at one of these html report on the toy dataset, and one of the pre-
 	#SBATCH --mem=1G
 	#SBATCH -o 010_l_fastqc_Ruhland2016.o
 
-	ml fastqc
+	enable-software-stack-eessi
+	ml FastQC
 
 	mkdir -p 010_d_fastqc/
 
@@ -251,7 +254,8 @@ We will look at one of these html report on the toy dataset, and one of the pre-
 	#SBATCH -e 010_l_fastqc_Ruhland2016.%a.e
 	#SBATCH --array 1-6%6
 
-	ml fastqc
+	enable-software-stack-eessi
+	ml FastQC
 
 	dataDir=/shared/data/DATA/Ruhland2016
 	
@@ -323,7 +327,7 @@ There are many additional parameters which let you customize your report. Use `m
 !!! info
      * MultiQC RAM requirements : 1Gb should be more than enough.
      * MultiQC time requirements : ~ 1min / read file.
-     * Exceptionally, there is no need to load multiqc as a module (it is not part of ComputeCanada and we installed it directly on the cluster, on other clusters it may not be the same).
+     * remember to first load multiqc with `ml MultiQC`
      * Use `multiqc --help` to check the different options
 
 
@@ -337,6 +341,9 @@ There are many additional parameters which let you customize your report. Use `m
 	#SBATCH --mem=1G
 	#SBATCH -o 020_l_multiqc_mouseMT.o
 	
+	enable-software-stack-eessi
+	ml MultiQC
+
 	multiqc -n 020_r_multiqc_mouseMT.html -f --title raw_fastq 010_d_fastqc/
 	```
 	On the cluster, this script is also in `/shared/data/Solutions/mouseMT/020_s_multiqc.sh`
@@ -441,6 +448,9 @@ Write and execute sbatch scripts to run a MultiQC for the Liu2015 and the Ruhlan
 	#SBATCH --mem=1G
 	#SBATCH -o 020_l_multiqc_Ruhland2016.o
 	
+	enable-software-stack-eessi
+	ml MultiQC
+
 	multiqc -f 020_r_multiqc_Ruhland2016.html 010_d_fastqc/
 	```
   On the cluster, this script is also in `/shared/data/Solutions/Ruhland2016/020_s_multiqc.sh`
@@ -459,6 +469,9 @@ Write and execute sbatch scripts to run a MultiQC for the Liu2015 and the Ruhlan
 	#SBATCH --cpus-per-task=1
 	#SBATCH --mem=1G
 	#SBATCH -o 020_l_multiqc_Liu2015.o
+	
+	enable-software-stack-eessi
+	ml MultiQC
 	
 	multiqc -f 020_r_multiqc_Liu2015.html 010_d_fastqc/
 	```

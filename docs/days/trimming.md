@@ -72,7 +72,7 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
 	trimmomatic is a Java-based program, and thus must be run by passing its .jar file to the Java interpreter:
 
 	```{sh}
-	ml 	trimmomatic
+	ml 	Trimmomatic
 	java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar
 	```
 
@@ -99,7 +99,8 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
     #SBATCH --mem=1G
     #SBATCH -o 030_l_trim_mouseMT.o
 
-    ml  trimmomatic
+	enable-software-stack-eessi
+    ml Trimmomatic
 
     ## creating output folder, in case it does not exists
     mkdir -p 030_d_trim
@@ -189,7 +190,8 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
 	#SBATCH -o 030_l_trim_mouseMT.%a.o
 	#SBATCH --array=1-8%8
 	
-	ml  trimmomatic
+	enable-software-stack-eessi
+	ml Trimmomatic
 	
 	## creating output folder, in case it does not exists
 	mkdir -p 030_d_trim
@@ -223,11 +225,12 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
 #SBATCH --mem=1G
 #SBATCH -o 032_l_multiqc_trimmed.o
 
-ml fastqc
+enable-software-stack-eessi
+ml FastQC
 ## fastQC on trimmed fastq files
 fastqc 030_d_trim/*.fastq -o 030_d_trim
 
-
+ml MultiQC
 ## multiqc on the fastQC reports AND the trimmomatic logs
 multiqc -n 032_r_multiqc_mouseMT_trimmed.html -f --title trimmed_fastq 030_d_trim/
 ```
