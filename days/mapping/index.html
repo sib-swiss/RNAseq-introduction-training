@@ -884,6 +884,7 @@ you can grab the reference genome data from the <a href="https://www.ensembl.org
 <span class="nv">G_FASTA</span><span class="o">=</span>/shared/data/DATA/Mouse_MT_genome/Mus_musculus.GRCm39.dna.chromosome.MT.fa
 <span class="nv">G_GTF</span><span class="o">=</span>/shared/data/DATA/Mouse_MT_genome/Mus_musculus.GRCm39.MT.gtf
 
+<span class="nb">source</span><span class="w"> </span>/etc/profile.d/soft_stacks.sh
 enable-software-stack-eessi
 ml<span class="w"> </span>STAR
 
@@ -958,6 +959,7 @@ it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/samp
 <span class="c1">#SBATCH -o 042_l_STAR_map_raw.%a.o</span>
 <span class="c1">#SBATCH --array 1-8%8</span>
 
+<span class="nb">source</span><span class="w"> </span>/etc/profile.d/soft_stacks.sh
 enable-software-stack-eessi
 ml<span class="w"> </span>STAR
 
@@ -1002,6 +1004,7 @@ it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/042_
 <span class="c1">#SBATCH --mem=1G</span>
 <span class="c1">#SBATCH -o 043_l_multiqc_map_raw.o</span>
 
+<span class="nb">source</span><span class="w"> </span>/etc/profile.d/soft_stacks.sh
 enable-software-stack-eessi
 ml<span class="w"> </span>MultiQC
 
@@ -1024,6 +1027,7 @@ it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/043_
 <span class="c1">#SBATCH -o 044_l_STAR_map_trimmed.%a.o</span>
 <span class="c1">#SBATCH --array 1-8%8</span>
 
+<span class="nb">source</span><span class="w"> </span>/etc/profile.d/soft_stacks.sh
 enable-software-stack-eessi
 ml<span class="w"> </span>STAR
 
@@ -1047,6 +1051,7 @@ it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/044_
 <span class="c1">#SBATCH --mem=1G</span>
 <span class="c1">#SBATCH -o 045_l_multiqc_mouseMT_mapped_trimmed.o</span>
 
+<span class="nb">source</span><span class="w"> </span>/etc/profile.d/soft_stacks.sh
 enable-software-stack-eessi
 ml<span class="w"> </span>MultiQC
 
@@ -1073,6 +1078,15 @@ it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/045_
 </ul>
 <details class="success">
 <summary>script</summary>
+<p>Source file : <code>Ruhland2016.fastqFiles.txt</code> :</p>
+<div class="highlight"><pre><span></span><code>SRR3180535_EtOH1_1.fastq.gz
+SRR3180536_EtOH2_1.fastq.gz
+SRR3180537_EtOH3_1.fastq.gz
+SRR3180538_TAM1_1.fastq.gz
+SRR3180539_TAM2_1.fastq.gz
+SRR3180540_TAM3_1.fastq.gz
+</code></pre></div>
+<p>sbatch script :</p>
 <p><div class="highlight"><pre><span></span><code>#!/usr/bin/bash
 #SBATCH --job-name=salmonRuhland
 #SBATCH --time=01:00:00
@@ -1081,6 +1095,7 @@ it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/045_
 #SBATCH -o 033_l_salmon_ruhland2016.%a.o
 #SBATCH --array 1-6%1
 
+source /etc/profile.d/soft_stacks.sh
 enable-software-stack-eessi
 ml Salmon
 
@@ -1130,6 +1145,7 @@ SRR3180540_TAM3_1.fastq.gz
 #SBATCH -o 031_l_STAR_aln_Ruhland2016.%a.o
 #SBATCH --array 1-1%1
 
+source /etc/profile.d/soft_stacks.sh
 enable-software-stack-eessi
 ml STAR
 outDIR=031_d_STAR_aln_Ruhland2016

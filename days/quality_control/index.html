@@ -828,8 +828,9 @@ To this end, we provide links to each tool&rsquo;s website. </p>
 <span class="c1">#SBATCH --mem=1G</span>
 <span class="c1">#SBATCH -o 010_l_fastqc_mouseMT.o</span>
 
-enable-software-stack-eessi
-ml<span class="w"> </span>FastQC
+<span class="nb">source</span><span class="w"> </span>/etc/profile.d/soft_stacks.sh<span class="w">  </span><span class="c1"># makes it possible to enable software stacks</span>
+enable-software-stack-eessi<span class="w">           </span><span class="c1"># enable the EESSI software stack (with module)</span>
+ml<span class="w"> </span>FastQC<span class="w">                             </span><span class="c1"># load the fastqc module</span>
 
 <span class="c1"># creating the output folder</span>
 mkdir<span class="w"> </span>-p<span class="w"> </span>010_d_fastqc/
@@ -898,6 +899,7 @@ sample_a1_fastqc.zip<span class="w">   </span>sample_a2_fastqc.zip<span class="w
 <span class="c1">#SBATCH --mem=1G</span>
 <span class="c1">#SBATCH -o 010_l_fastqc_Liu2015.o</span>
 
+<span class="nb">source</span><span class="w"> </span>/etc/profile.d/soft_stacks.sh
 enable-software-stack-eessi
 ml<span class="w"> </span>FastQC
 
@@ -922,6 +924,7 @@ However, on more computationally-intensive tasks such as mapping, treating each 
 <span class="c1">#SBATCH --mem=1G</span>
 <span class="c1">#SBATCH -o 010_l_fastqc_Ruhland2016.o</span>
 
+<span class="nb">source</span><span class="w"> </span>/etc/profile.d/soft_stacks.sh
 enable-software-stack-eessi
 ml<span class="w"> </span>FastQC
 
@@ -952,6 +955,7 @@ SRR3180540_TAM3_1.fastq.gz
 <span class="c1">#SBATCH -e 010_l_fastqc_Ruhland2016.%a.e</span>
 <span class="c1">#SBATCH --array 1-6%6</span>
 
+<span class="nb">source</span><span class="w"> </span>/etc/profile.d/soft_stacks.sh
 enable-software-stack-eessi
 ml<span class="w"> </span>FastQC
 
@@ -1032,6 +1036,7 @@ fastqc<span class="w"> </span>-o<span class="w"> </span>010_d_fastqc/<span class
 <span class="c1">#SBATCH --mem=1G</span>
 <span class="c1">#SBATCH -o 020_l_multiqc_mouseMT.o</span>
 
+<span class="nb">source</span><span class="w"> </span>/etc/profile.d/soft_stacks.sh
 enable-software-stack-eessi
 ml<span class="w"> </span>MultiQC
 
@@ -1098,6 +1103,7 @@ However here we are in the context of RNA-seq : some transcripts are present in 
 <span class="c1">#SBATCH --mem=1G</span>
 <span class="c1">#SBATCH -o 020_l_multiqc_Ruhland2016.o</span>
 
+<span class="nb">source</span><span class="w"> </span>/etc/profile.d/soft_stacks.sh
 enable-software-stack-eessi
 ml<span class="w"> </span>MultiQC
 
@@ -1116,6 +1122,7 @@ multiqc<span class="w"> </span>-f<span class="w"> </span>020_r_multiqc_Ruhland20
 <span class="c1">#SBATCH --mem=1G</span>
 <span class="c1">#SBATCH -o 020_l_multiqc_Liu2015.o</span>
 
+<span class="nb">source</span><span class="w"> </span>/etc/profile.d/soft_stacks.sh
 enable-software-stack-eessi
 ml<span class="w"> </span>MultiQC
 

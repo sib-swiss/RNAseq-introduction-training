@@ -761,13 +761,16 @@ In fact, <strong>trimming can be detrimental</strong> to the number of successfu
 </ul>
 </li>
 </ul>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>trimmomatic is a Java-based program, and thus must be run by passing its .jar file to the Java interpreter:</p>
-<div class="highlight"><pre><span></span><code>ml Trimmomatic
+<!-- 
+!!! warning
+
+    trimmomatic is a Java-based program, and thus must be run by passing its .jar file to the Java interpreter:
+
+    <div class="highlight"><pre><span></span><code>ml Trimmomatic
 java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar
 </code></pre></div>
-</div>
+-->
+
 <details class="success">
 <summary>trimmomatics sbatch script</summary>
 <p>We chose the following option:</p>
@@ -788,6 +791,7 @@ java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar
 <span class="c1">#SBATCH --mem=1G</span>
 <span class="c1">#SBATCH -o 030_l_trim_mouseMT.o</span>
 
+<span class="nb">source</span><span class="w"> </span>/etc/profile.d/soft_stacks.sh
 enable-software-stack-eessi
 ml<span class="w"> </span>Trimmomatic
 
@@ -872,6 +876,7 @@ it can also be found in the cluster at <code>/shared/data/Solutions/mouseMT/samp
 #SBATCH -o 030_l_trim_mouseMT.%a.o
 #SBATCH --array=1-8%8
 
+source /etc/profile.d/soft_stacks.sh
 enable-software-stack-eessi
 ml Trimmomatic
 
@@ -903,6 +908,7 @@ On the cluster, this script is also in  <code>/shared/data/Solutions/mouseMT/030
 <span class="c1">#SBATCH --mem=1G</span>
 <span class="c1">#SBATCH -o 032_l_multiqc_trimmed.o</span>
 
+<span class="nb">source</span><span class="w"> </span>/etc/profile.d/soft_stacks.sh
 enable-software-stack-eessi
 ml<span class="w"> </span>FastQC
 <span class="c1">## fastQC on trimmed fastq files</span>

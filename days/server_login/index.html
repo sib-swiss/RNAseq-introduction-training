@@ -1020,6 +1020,7 @@ output:
 #SBATCH --mem=1G
 #SBATCH -o 010_l_fastqc_mouseMT.o
 
+source /etc/profile.d/soft_stacks.sh
 enable-software-stack-eessi
 ml FastQC
 
