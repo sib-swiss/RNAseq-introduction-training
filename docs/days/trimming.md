@@ -66,7 +66,7 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
 		 		`2> 030_trim/trim_out.<sample name>.log`
 		 		This will send part of the output of trimmomatic to a file in the same folder as the trimmed reads, which multiQC will be able to use afterward.
 
-
+<!-- 
 !!! warning
 
 	trimmomatic is a Java-based program, and thus must be run by passing its .jar file to the Java interpreter:
@@ -75,7 +75,7 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
 	ml Trimmomatic
 	java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar
 	```
-
+-->
 
 ??? success "trimmomatics sbatch script"
 
@@ -99,6 +99,7 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
     #SBATCH --mem=1G
     #SBATCH -o 030_l_trim_mouseMT.o
 
+	source /etc/profile.d/soft_stacks.sh
 	enable-software-stack-eessi
     ml Trimmomatic
 
@@ -190,6 +191,7 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
 	#SBATCH -o 030_l_trim_mouseMT.%a.o
 	#SBATCH --array=1-8%8
 	
+	source /etc/profile.d/soft_stacks.sh
 	enable-software-stack-eessi
 	ml Trimmomatic
 	
@@ -225,6 +227,7 @@ The [trimmomatic website](http://www.usadellab.org/cms/?page=trimmomatic) gives 
 #SBATCH --mem=1G
 #SBATCH -o 032_l_multiqc_trimmed.o
 
+source /etc/profile.d/soft_stacks.sh
 enable-software-stack-eessi
 ml FastQC
 ## fastQC on trimmed fastq files

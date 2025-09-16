@@ -161,6 +161,7 @@ The directory `/shared/data/` contains data and solutions for most practicals.
     #SBATCH --mem=1G
     #SBATCH -o 010_l_fastqc_mouseMT.o
     
+    source /etc/profile.d/soft_stacks.sh
     enable-software-stack-eessi
     ml FastQC
     

@@ -81,6 +81,7 @@ We will be using the Ensembl references, with their accompanying GTF annotations
 	G_FASTA=/shared/data/DATA/Mouse_MT_genome/Mus_musculus.GRCm39.dna.chromosome.MT.fa
 	G_GTF=/shared/data/DATA/Mouse_MT_genome/Mus_musculus.GRCm39.MT.gtf
 	
+	source /etc/profile.d/soft_stacks.sh
 	enable-software-stack-eessi
 	ml STAR
 
@@ -175,6 +176,7 @@ We will be using the Ensembl references, with their accompanying GTF annotations
 	#SBATCH -o 042_l_STAR_map_raw.%a.o
 	#SBATCH --array 1-8%8
 
+	source /etc/profile.d/soft_stacks.sh
 	enable-software-stack-eessi
 	ml STAR
 
@@ -228,6 +230,7 @@ You can call MultiQC on the STAR output folder to gather a report on the individ
 	#SBATCH --mem=1G
 	#SBATCH -o 043_l_multiqc_map_raw.o
 	
+	source /etc/profile.d/soft_stacks.sh
 	enable-software-stack-eessi
 	ml MultiQC
 
@@ -261,6 +264,7 @@ We will spare you the mapping of the trimmed reads, and let you directly downloa
 	#SBATCH -o 044_l_STAR_map_trimmed.%a.o
 	#SBATCH --array 1-8%8
 	
+	source /etc/profile.d/soft_stacks.sh
 	enable-software-stack-eessi
 	ml STAR
 	
@@ -287,6 +291,7 @@ We will spare you the mapping of the trimmed reads, and let you directly downloa
 	#SBATCH --mem=1G
 	#SBATCH -o 045_l_multiqc_mouseMT_mapped_trimmed.o
 	
+	source /etc/profile.d/soft_stacks.sh
 	enable-software-stack-eessi
 	ml MultiQC
 
@@ -331,6 +336,19 @@ We refer you to the tool's documentation in order to see [how the reference inde
 
 ??? success "script"
 
+	Source file : `Ruhland2016.fastqFiles.txt` :
+
+	```
+	SRR3180535_EtOH1_1.fastq.gz
+	SRR3180536_EtOH2_1.fastq.gz
+	SRR3180537_EtOH3_1.fastq.gz
+	SRR3180538_TAM1_1.fastq.gz
+	SRR3180539_TAM2_1.fastq.gz
+	SRR3180540_TAM3_1.fastq.gz
+	```
+
+	sbatch script :
+	
 	```
 	#!/usr/bin/bash
 	#SBATCH --job-name=salmonRuhland
@@ -340,6 +358,7 @@ We refer you to the tool's documentation in order to see [how the reference inde
 	#SBATCH -o 033_l_salmon_ruhland2016.%a.o
 	#SBATCH --array 1-6%1
 
+	source /etc/profile.d/soft_stacks.sh
 	enable-software-stack-eessi
 	ml Salmon
 	
@@ -399,6 +418,7 @@ We refer you to the tool's documentation in order to see [how the reference inde
 	#SBATCH -o 031_l_STAR_aln_Ruhland2016.%a.o
 	#SBATCH --array 1-1%1
 
+	source /etc/profile.d/soft_stacks.sh
 	enable-software-stack-eessi
 	ml STAR
 	outDIR=031_d_STAR_aln_Ruhland2016

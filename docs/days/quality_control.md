@@ -100,8 +100,9 @@ Then, create here a new text file name `010_s_fastqc.sh` (with `nano`, or on you
 #SBATCH --mem=1G
 #SBATCH -o 010_l_fastqc_mouseMT.o
 
-enable-software-stack-eessi
-ml FastQC
+source /etc/profile.d/soft_stacks.sh  # makes it possible to enable software stacks
+enable-software-stack-eessi           # enable the EESSI software stack (with module)
+ml FastQC                             # load the fastqc module
 
 # creating the output folder
 mkdir -p 010_d_fastqc/
@@ -186,6 +187,7 @@ We will look at one of these html report on the toy dataset, and one of the pre-
 	#SBATCH --mem=1G
 	#SBATCH -o 010_l_fastqc_Liu2015.o
 
+	source /etc/profile.d/soft_stacks.sh
 	enable-software-stack-eessi
 	ml FastQC
 
@@ -216,6 +218,7 @@ We will look at one of these html report on the toy dataset, and one of the pre-
 	#SBATCH --mem=1G
 	#SBATCH -o 010_l_fastqc_Ruhland2016.o
 
+	source /etc/profile.d/soft_stacks.sh
 	enable-software-stack-eessi
 	ml FastQC
 
@@ -254,6 +257,7 @@ We will look at one of these html report on the toy dataset, and one of the pre-
 	#SBATCH -e 010_l_fastqc_Ruhland2016.%a.e
 	#SBATCH --array 1-6%6
 
+	source /etc/profile.d/soft_stacks.sh
 	enable-software-stack-eessi
 	ml FastQC
 
@@ -341,6 +345,7 @@ There are many additional parameters which let you customize your report. Use `m
 	#SBATCH --mem=1G
 	#SBATCH -o 020_l_multiqc_mouseMT.o
 	
+	source /etc/profile.d/soft_stacks.sh
 	enable-software-stack-eessi
 	ml MultiQC
 
@@ -448,6 +453,7 @@ Write and execute sbatch scripts to run a MultiQC for the Liu2015 and the Ruhlan
 	#SBATCH --mem=1G
 	#SBATCH -o 020_l_multiqc_Ruhland2016.o
 	
+	source /etc/profile.d/soft_stacks.sh
 	enable-software-stack-eessi
 	ml MultiQC
 
@@ -470,6 +476,7 @@ Write and execute sbatch scripts to run a MultiQC for the Liu2015 and the Ruhlan
 	#SBATCH --mem=1G
 	#SBATCH -o 020_l_multiqc_Liu2015.o
 	
+	source /etc/profile.d/soft_stacks.sh
 	enable-software-stack-eessi
 	ml MultiQC
 	
