@@ -1,4 +1,5 @@
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8369162.svg)](https://doi.org/10.5281/zenodo.8369162)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17223307.svg)](https://doi.org/10.5281/zenodo.17223307)
+
 
 
 # RNAseq-introduction-training
@@ -47,5 +48,6 @@ https://sib-swiss.github.io/RNAseq-introduction-training
 
 You can cite this course material using  :
 
-Alex SMITH, & Wandrille Duchemin. (2023, September 22). sib-swiss/RNAseq-introduction-training: September 2023 course. Zenodo. [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8369162.svg)](https://doi.org/10.5281/zenodo.8369162)
+
+Duchemin, W., & Carlevaro-Fita, J. (2025, September 25). sib-swiss: RNAseq-introduction-training: September 2025 course. Zenodo. [doi:10.5281/zenodo.17223307](https://doi.org/10.5281/zenodo.17223307)
 
