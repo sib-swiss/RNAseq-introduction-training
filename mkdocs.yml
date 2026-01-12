@@ -28,7 +28,6 @@ theme:
   name: material
   logo: assets/images/SIB_logo.svg
   favicon: assets/images/SIB_logo.svg
-  custom_dir: overrides
 
 extra_css:
   - stylesheets/extra.css
