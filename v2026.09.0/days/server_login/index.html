@@ -1,0 +1,1608 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../design/">
+      
+      
+        <link rel="next" href="../quality_control/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/SIB_logo.svg">
+      <meta name="generator" content="zensical-0.0.33">
+    
+    
+      
+        <title>Server login - Introduction to RNA-Seq - From quality control to pathway analysis</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.53a7feaf.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,a=__md_scope)=>JSON.parse(t.getItem(a.pathname+"."+e)),__md_set=(e,t,a=localStorage,_=__md_scope)=>{try{a.setItem(_.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-label="Navigation"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#the-computing-cluster" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Introduction to RNA-Seq - From quality control to pathway analysis" class="md-header__button md-logo" aria-label="Introduction to RNA-Seq - From quality control to pathway analysis" data-md-component="logo">
+      
+  <img src="../../assets/images/SIB_logo.svg" alt="Introduction to RNA-Seq - From quality control to pathway analysis">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer" aria-label="Navigation">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Introduction to RNA-Seq - From quality control to pathway analysis
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Server login
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search" aria-label="Search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Search">
+  <button type="button" class="md-search__button">
+    Search
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+        <a href="https://github.com/sib-swiss/RNAseq-introduction-training" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    sib-swiss/RNAseq-introduction-training
+  </div>
+</a>
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Introduction to RNA-Seq - From quality control to pathway analysis" class="md-nav__button md-logo" aria-label="Introduction to RNA-Seq - From quality control to pathway analysis" data-md-component="logo">
+      
+  <img src="../../assets/images/SIB_logo.svg" alt="Introduction to RNA-Seq - From quality control to pathway analysis">
+
+    </a>
+    Introduction to RNA-Seq - From quality control to pathway analysis
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/sib-swiss/RNAseq-introduction-training" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    sib-swiss/RNAseq-introduction-training
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../precourse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Precourse preparations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../course_schedule/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course schedule
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides_notes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Slides notes (draft)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cheatsheets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day1
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Day1
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNAseq - technologies and design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Server login + unix fresh up
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Server login + unix fresh up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-computing-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The computing cluster
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connect-to-the-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connect to the server
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-command-line-on-the-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using command line on the cluster
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using command line on the cluster">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a directory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-and-editing-a-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating and editing a file
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exchanging-files-with-the-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exchanging files with the server
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bash-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bash scripts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#submitting-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Submitting jobs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Submitting jobs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#submitting-a-simple-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Submitting a simple script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specifying-resources-needed-to-slurm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Specifying resources needed to SLURM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-cluster-usage-loading-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced cluster usage : loading modules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-cluster-usage-job-array" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced cluster usage : job array
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quality_control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quality control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../trimming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sequence trimming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Day2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reads mapping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Differential Expression Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../enrichment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enrichment analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-computing-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The computing cluster
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connect-to-the-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connect to the server
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-command-line-on-the-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using command line on the cluster
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using command line on the cluster">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a directory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-and-editing-a-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating and editing a file
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exchanging-files-with-the-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exchanging files with the server
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bash-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bash scripts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#submitting-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Submitting jobs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Submitting jobs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#submitting-a-simple-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Submitting a simple script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specifying-resources-needed-to-slurm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Specifying resources needed to SLURM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-cluster-usage-loading-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced cluster usage : loading modules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-cluster-usage-job-array" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced cluster usage : job array
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+  
+
+
+  <h1 id="__skip">Server login</h1>
+
+<p>To conduct the practicals of this course, we will be using a dedicated High Performance Computing cluster. 
+This matches the reality of most NGS workflows, which cannot be completed in a reasonable time on a single machine. </p>
+<p>To interact with this cluster, you will have to log in to a distant <em>head node</em>. From there you will be able to distribute your computational tasks to the cluster using a <em>job scheduler</em> called Slurm.</p>
+<p>This page will cover our first contact with the distant cluster. </p>
+<p><strong>You will learn to :</strong></p>
+<ul>
+<li>understand a typical computer cluster architecture.</li>
+<li>connect to the server.</li>
+<li>use the command line to perform basic operations on the head node.</li>
+<li>exchange files between the server and your own machine.</li>
+<li>submit a job to the cluster.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are doing this course on your own, then the distant server provided within the course will not be available. 
+Feel free to ignore or adapt any of the following steps to your own situation.</p>
+</div>
+<h2 id="the-computing-cluster">The computing cluster</h2>
+<p>The computing cluster follows an architecture that enables several users to distribute computational tasks among several machines which share a number of resources, such as a common file system.</p>
+<p><img alt="cluster_overview" src="../../assets/images/cluster_overview.png" /></p>
+<p>Users do not access each machine individually, but rather connect to a <strong>head node</strong>. From there, they can interact with the cluster using the <strong>job scheduler</strong> (here slurm).
+The job scheduler&rsquo;s role is to manage where and how to run the jobs of all users, such that waiting time is minimized and resource usage is shared and optimized.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Everyone is connected to the same head node. Do not perform compute-intensive tasks on it, or you will slow everyone down! </p>
+</div>
+<h2 id="connect-to-the-server">Connect to the server</h2>
+<p>Say you want to connect to cluster with address <code>xx.xx.xx.xx</code> and your login is <code>login</code>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you are doing this course with a teacher, use the link, login and password provided before or during the course. </p>
+</div>
+<p>The first step will be to open a <strong>terminal</strong>, a software that provides a command-line interface to a computer.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Mac</label><label for="__tabbed_1_2">Linux</label><label for="__tabbed_1_3">Windows</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>Open a terminal, for instance with the application Xterm, or Xquartz.
+<!-- Might confuse some who just read "Terminal" --></p>
+</div>
+<div class="tabbed-block">
+<p>Open a new terminal.</p>
+</div>
+<div class="tabbed-block">
+<p>Open the application mobaXterm (or any ssh-enabling terminal application you prefer).</p>
+<p>On mobaXterm, click on &ldquo;Start a local Terminal&rdquo;.</p>
+</div>
+</div>
+</div>
+<hr />
+<p>In the terminal, type the following command:</p>
+<div class="highlight"><pre><span></span><code>ssh<span class="w"> </span>login@xx.xx.xx.xx
+</code></pre></div>
+<p>When prompted for your password, type it and press Enter. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There is no cursor or &lsquo;●&rsquo; character appearing while you type your password. This is normal. Deleting characters also works invisibly.</p>
+</div>
+<p>After a few seconds, you should be logged into the <em>head node</em> and ready to begin.</p>
+<!-- TODO : Would be nice to add a screenshot? -->
+
+<h2 id="using-command-line-on-the-cluster">Using command line on the cluster</h2>
+<p>Now that you are in the head node, it is time to get acquainted with your environment and to prepare the upcoming practicals. 
+We will also use this as a short reminder about the UNIX command line.</p>
+<p>Commands are issued using a shell command language. The one on our server is called bash. You can refer to this nice <a href="https://cheatography.com/deleted-124743/cheat-sheets/linux-basic-commands/">Linux Command Line Cheat Sheet</a> (page 1 in particular) for reviewing common commands.</p>
+<hr />
+<p>At any time, you can get the file system location (folder/directory) your terminal is currently in, by typing the &ldquo;print working directory&rdquo; command:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">pwd</span>
+</code></pre></div>
+<p>When you start a session on a distant computer, you are placed in your <code>home</code> directory. So the cluster should return something like:</p>
+<div class="highlight"><pre><span></span><code>/shared/home/&lt;login&gt;
+</code></pre></div>
+<p>From then, we are going to do a little step-by-step practical to go through some of bash&rsquo;s most useful commands for this course.</p>
+<h3 id="creating-a-directory">Creating a directory</h3>
+<div class="admonition example">
+<p class="admonition-title">practical</p>
+<p>Use the command line to create a repository called <code>mouseMT</code> where you will put all materials relating to the analysis of the mouseMT dataset.</p>
+</div>
+<details class="success">
+<summary>Answer</summary>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>mouseMT
+</code></pre></div>
+</details>
+<div class="admonition example">
+<p class="admonition-title">practical</p>
+<p>Move your terminal&rsquo;s connection to that directory.</p>
+</div>
+<details class="success">
+<summary>Answer</summary>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>mouseMT
+</code></pre></div>
+</details>
+<p>The directory <code>/shared/data/</code> contains data and solutions for most practicals. </p>
+<div class="admonition example">
+<p class="admonition-title">practical</p>
+<p>List the content of the <code>/shared/data/</code> directory.</p>
+</div>
+<details class="success">
+<summary>Answer</summary>
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>/shared/data/
+</code></pre></div>
+</details>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You don&rsquo;t need to move to that directory to list its contents!</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">practical</p>
+<p>Copy the script <code>010_s_fastqc.sh</code> from  <code>/shared/data/Solutions/mouseMT</code> into your current directory,
+and then print the content of this script to the screen.</p>
+</div>
+<details class="success">
+<summary>Answer</summary>
+<p><div class="highlight"><pre><span></span><code>cp<span class="w"> </span>/shared/data/Solutions/mouseMT/010_s_fastqc.sh<span class="w"> </span>.
+more<span class="w"> </span>010_s_fastqc.sh
+</code></pre></div>
+output:
+<div class="highlight"><pre><span></span><code>#!/usr/bin/bash
+#SBATCH --job-name=fastqc_mouseMT
+#SBATCH --time=01:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=1G
+#SBATCH -o 010_l_fastqc_mouseMT.o
+
+source /etc/profile.d/soft_stacks.sh
+enable-software-stack-eessi
+ml FastQC
+
+# creating the output folder
+mkdir -p 010_d_fastqc/
+
+fastqc -o 010_d_fastqc /shared/data/DATA/mouseMT/*.fastq
+</code></pre></div></p>
+</details>
+<p>We&rsquo;ll see what all this means soon.</p>
+<h3 id="creating-and-editing-a-file">Creating and editing a file</h3>
+<p>To edit files on the distant server, we will use the command line editor <code>nano</code>. It is far from the most complete or efficient one, but it can be found on most servers, and is arguably among the easiest to start with.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Alternatively, feel free to use any other CLI editor you prefer, such as <code>vi</code>.</p>
+</div>
+<p>To start editing a file named <code>test.txt</code>, type :</p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span>nano<span class="w"> </span>test.txt
+</code></pre></div>
+<p>You will be taken to the <code>nano</code> interface :</p>
+<p><img alt="nano screenshot" src="../../assets/images/nano_screenshot.png" /></p>
+<p>Type in your favorite movie quote, and then exit by pressing <code>Ctrl+x</code> (<code>command+x</code> on a Mac keyboard), and then <code>y</code> and <code>Enter</code> when prompted to save the modifications you just made.</p>
+<p>You can check that your modifications were saved by typing</p>
+<div class="highlight"><pre><span></span><code>more<span class="w"> </span>test.txt
+</code></pre></div>
+<h3 id="exchanging-files-with-the-server">Exchanging files with the server</h3>
+<p>Whether you want to transfer some data to the cluster or retrieve the results of your latest computation, it is important to be able to exchange files with the distant server.</p>
+<p>There exists several alternatives, depending on your platform and preferences.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">filezilla</label><label for="__tabbed_2_2">mobaXterm</label><label for="__tabbed_2_3">command line</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>There are nice and free software with graphical user interfaces, such as <a href="https://filezilla-project.org/">filezilla</a>, to help you manage exchanges with the distant server. Feel free to install and experiment with it during the break.
+<img alt="filezilla_mainscreen" src="https://filezilla-project.org/images/screenshots/fz3_win_main.png" /></p>
+</div>
+<div class="tabbed-block">
+<p>If you are using mobaXterm, the left panel should provide a graphical SFTP browser in the left sidebar which allows you to browse and drag and drop files directly from/to the remote server.</p>
+<p><img alt="mobaxterm_leftpanel" src="https://mobaxterm.mobatek.net/img/moba/features/feature-sftp-browser.png" /></p>
+</div>
+<div class="tabbed-block">
+<p>We will use <code>scp</code>.</p>
+<p>To copy a file from the server to your machine, use this syntax on a <strong>terminal in your local machine</strong> (open a new terminal if necessary).</p>
+<div class="highlight"><pre><span></span><code>scp<span class="w"> </span>&lt;login&gt;@&lt;server-adress&gt;:/path/to/file/on/server/file.txt<span class="w"> </span>/local/destination/
+</code></pre></div>
+<p>For example, to copy the file <code>test.txt</code> you just created in the folder <code>day1/</code>, to your current (local) working directory (NB:    here <code>~</code> will be interpreted as your home directory, this is a useful and time-saving shorthand):</p>
+<div class="highlight"><pre><span></span><code>scp<span class="w"> </span>login@xx.xx.xx.xx:~/day1/test.txt<span class="w"> </span>.
+</code></pre></div>
+<p>To copy a file from your machine to the server:</p>
+<div class="highlight"><pre><span></span><code>scp<span class="w"> </span>/path/to/file/local/file.txt<span class="w"> </span>&lt;login&gt;@&lt;server-adress&gt;:/destination/on/server/
+</code></pre></div>
+</div>
+</div>
+</div>
+<hr />
+<div class="admonition example">
+<p class="admonition-title">practical</p>
+<p>Retrieve the file <code>test.txt</code>, which you created in the previous practicals, from the distant server to your local machine. </p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">practical</p>
+<p>Create a text file on your local computer (using wordpad on windows, Text Edit on Mac, or gedit on linux). Save that file, and then send it to the distant server.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>For <strong>Windows users</strong>, if you edit files on your computer before sending them to the server, you will likely see strange character at the end of the file lines.</p>
+<p>This is because Windows ends line with &ldquo;\r\n&rdquo; while Unix uses just &ldquo;\n&rdquo;. This can be solved using the <code>dos2unix</code> command line tool:</p>
+<p><code>dos2unix &lt;filename&gt;</code></p>
+</div>
+<h2 id="bash-scripts">bash scripts</h2>
+<p>So far we have been executing bash commands in the interactive shell.
+This is the most common way of dealing with our data on the server for simple operations.</p>
+<p>However, when you have to do some more complex tasks, such as what we will be doing with our RNA-seq data, you will want to use scripts. These are just normal text files which contain bash commands.</p>
+<p>Scripts :</p>
+<ul>
+<li>keep a written trace of your analysis, so they enhance its reproducibility. </li>
+<li>make it easier to correct something in an analysis (you don&rsquo;t have to retype the whole command, just change the part that is wrong).</li>
+<li>often necessary when we want to submit big computing jobs to the cluster.</li>
+</ul>
+<p>Create a new text file named <code>myScript.sh</code> on the server (you can use nano or create it on your local machine and later transfer it to the server). </p>
+<p>Then, type this into the file:</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash    </span>
+
+<span class="c1">## this is a comment, here to document this script</span>
+<span class="c1">## whatever is after # is not interpreted as code.</span>
+
+<span class="c1"># the echo command prints whatever text follows to the screen: </span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;looking at the size of the elements of /shared/data/&quot;</span>
+
+sleep<span class="w"> </span><span class="m">15</span><span class="w"> </span><span class="c1"># making the script wait for 15 seconds - this is just so we can see it later on. </span>
+
+<span class="c1"># du : &quot;disk usage&quot;, a command that returns the size of a folder structure.</span>
+du<span class="w"> </span>-h<span class="w"> </span>-d<span class="w"> </span><span class="m">2</span><span class="w"> </span>/shared/data/
+</code></pre></div>
+<p>The first line is not 100% necessary at this step, but it will be in the next part, so we might as well put it in now. It helps some software know that this file contains bash code. </p>
+<p>Then to execute the script, navigate <strong>in a terminal open on the server</strong> to the place where the script is, and execute the following command:</p>
+<div class="highlight"><pre><span></span><code>sh<span class="w"> </span>myScript.sh
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Be sure to execute the script from the folder that it is in. Otherwise you would have to specify in which folder to find the script using its path.</p>
+</div>
+<p>This should have printed some information about the size of <code>/shared/data/</code> subfolders to the screen.</p>
+<h2 id="submitting-jobs">Submitting jobs</h2>
+<h3 id="submitting-a-simple-script">Submitting a simple script</h3>
+<p>Jobs can be submitted to the compute cluster using <strong>bash scripts</strong>, with an optional little preamble which tells the cluster about your computing resource requirements, and a few additional options.</p>
+<p>Each time a user submits a job to the cluster, SLURM checks how much resources they asked for, with respect to the amount available right now in the cluster and how much resources are allowed for that user. </p>
+<p>If there are enough resources available, then it will launch the job on one or several of its worker nodes. If not, then it will wait for the required resources to become available, and then launch the job.</p>
+<p>To start with, you can have a look at what is happening right now in the cluster with the command:</p>
+<div class="highlight"><pre><span></span><code>squeue
+</code></pre></div>
+<p>On the small course server, there should not be much (if anything), but on a normal cluster you would see something like:</p>
+<div class="highlight"><pre><span></span><code>JOBID<span class="w">     </span>PARTITION<span class="w">           </span>NAME<span class="w">                </span>USER<span class="w">      </span>STATE<span class="w">     </span>TIME<span class="w">        </span>TIME_LIMIT<span class="w">  </span>QOS<span class="w">       </span>NODELIST<span class="o">(</span>REASON<span class="o">)</span>
+<span class="m">48175517</span><span class="w">  </span>a100<span class="w">                </span>cryocare<span class="w">            </span>user1<span class="w">     </span>PENDING<span class="w">   </span><span class="m">0</span>:00<span class="w">        </span><span class="m">6</span>:00:00<span class="w">     </span>gpu6hours<span class="w"> </span><span class="o">(</span>None<span class="o">)</span><span class="w">                                  </span>
+<span class="m">48168955</span><span class="w">  </span>a100<span class="w">                </span>ecoli_pool2<span class="w">         </span>user2<span class="w">     </span>RUNNING<span class="w">   </span><span class="m">4</span>:09:18<span class="w">     </span><span class="m">6</span>:00:00<span class="w">     </span>6hours<span class="w">    </span>sgi77<span class="w">                                   </span>
+<span class="m">47806032</span><span class="w">  </span>a100<span class="w">                </span>GAN_final<span class="w">           </span>user3<span class="w">     </span>RUNNING<span class="w">   </span><span class="m">4</span>-04:10:20<span class="w">  </span><span class="m">13</span>-20:00:00<span class="w"> </span>projects<span class="w">  </span>sgi64<span class="w">                                   </span>
+<span class="m">47975434</span><span class="w">  </span>a100<span class="w">                </span>GAN_256_8192<span class="w">        </span>user3<span class="w">     </span>RUNNING<span class="w">   </span><span class="m">1</span>-18:21:39<span class="w">  </span><span class="m">7</span>-00:00:00<span class="w">  </span>1week<span class="w">     </span>sgi71<span class="w">                                   </span>
+<span class="m">48174629</span><span class="w">  </span>a100<span class="w">                </span>x-35780_y20062<span class="w">      </span>user4<span class="w">     </span>RUNNING<span class="w">   </span><span class="m">13</span>:36<span class="w">       </span><span class="m">7</span>:00:00<span class="w">     </span>gpu1day<span class="w">   </span>sgi74<span class="w">                                   </span>
+</code></pre></div>
+<p>The columns correspond to :</p>
+<ul>
+<li>JOBID : the job id, which is the number that SLURM uses to identify any job</li>
+<li>PARTITION : which part of the cluster is that job executing at</li>
+<li>NAME : the name of the job</li>
+<li>USER : which user submitted the job</li>
+<li>STATE : whether the job is currently <code>RUNNING</code>, <code>PENDING</code>, <code>COMPLETED</code>, <code>FAILED</code></li>
+<li>TIME : how long has this job been running for</li>
+<li>TIME_LIMIT : how long will the job be allowed to run</li>
+<li>QOS : which queue of the cluster does the job belong to. Queues are a way to organize jobs in different categories of resource usage.</li>
+<li>NODELIST(REASON) : which worker node(s) is the job running on.</li>
+</ul>
+<p>You can look up more info on <a href="https://curc.readthedocs.io/en/latest/running-jobs/squeue-status-codes.html">squeue documentation</a>.</p>
+<p>Now, you will you will want to execute your <code>myScript.sh</code> script as a job on the cluster.</p>
+<p>This can be done with the <code>sbatch</code> command.</p>
+<p>The script can stay the same (for now), but there is an important aspect of <code>sbatch</code> we want to handle: the <strong>script will not be executing in our terminal directly, but on a worker node</strong>.</p>
+<p>That means that there is no screen to print to. So, in order to still be able to view the output of the script, SLURM will write the printed output into a file which we will be able to read when the job is finished (with <code>more</code> or <code>less</code>).
+By default, SLURM will name this file something like <code>slurm-&lt;jobid&gt;.out</code>, which is not very informative to us; so, instead of keeping the default, we will give our own output file name to <code>sbatch</code> with the option <code>-o</code>. For example, I will name it <code>myOutput.o</code>.</p>
+<p>In the terminal, navigate to where you have you <code>myScript.sh</code> file on the distant server and type</p>
+<div class="highlight"><pre><span></span><code>sbatch<span class="w"> </span>-o<span class="w"> </span>myOutput.o<span class="w">  </span>myScript.sh
+</code></pre></div>
+<p>You should see an output like:</p>
+<div class="highlight"><pre><span></span><code>sbatch: Submitted batch job 41
+</code></pre></div>
+<p>Letting you know that your job has the jobid 41 (surely yours will be different).</p>
+<p>Directly after this, quickly type:</p>
+<div class="highlight"><pre><span></span><code>squeue
+</code></pre></div>
+<p>If you were fast enough, then you will see your script <code>PENDING</code> or <code>RUNNING</code>.</p>
+<p>If not, then that means that your script has finished running. You do not know yet if it succeeded or failed.
+To check this, you need to have a look at the output file, <code>myOutput.o</code> in our case.</p>
+<p>If everything worked, you will see the normal output of your script. 
+Otherwis, you will see some error messages.</p>
+<h3 id="specifying-resources-needed-to-slurm">Specifying resources needed to SLURM</h3>
+<p>When submitting the previous job, we did not specify our resource requirements to SLURM, which means that SLURM assigned it the default:</p>
+<ul>
+<li>1 hour</li>
+<li>1 CPU</li>
+<li>1 GB of RAM</li>
+</ul>
+<p>Often, we will want something different from that, and so we will use options in order to specify what we need.</p>
+<p>For example:</p>
+<ul>
+<li><code>--time=00:30:00</code> : time reserved for the job : 30min. </li>
+<li><code>--mem=2G</code> : memory for the job: 2GB</li>
+<li><code>--cpus-per-task=4</code> : 4 CPUs for the job </li>
+</ul>
+<p>Your <code>sbatch</code> command line will quickly grow to be long and unwieldy. It can also be difficult to remember exactly how much RAM and time we need for each script.</p>
+<p>To address this, SLURM provides a fairly simple way to add this information to the scripts themselves, by adding lines starting with <code>#SBATCH</code> after the first line.</p>
+<p>For our example, it could look like this:</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
+<span class="c1">#SBATCH --job-name=test</span>
+<span class="c1">#SBATCH --time=00:30:00</span>
+<span class="c1">#SBATCH --cpus-per-task=4</span>
+<span class="c1">#SBATCH --mem=2G</span>
+<span class="c1">#SBATCH -o test_log.o</span>
+
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;looking at the size of the elements of /shared/data/&quot;</span>
+sleep<span class="w"> </span><span class="m">15</span><span class="w"> </span><span class="c1"># making the script wait for 15 seconds - this is just so we can see it later on. </span>
+<span class="c1"># `du` is &quot;disk usage&quot;, a command that returns the size of a folder structure.</span>
+du<span class="w"> </span>-h<span class="w"> </span>-d<span class="w"> </span><span class="m">2</span><span class="w"> </span>/shared/data/
+</code></pre></div>
+<p>I also added the following options :</p>
+<ul>
+<li><code>#SBATCH --job-name=test</code> : the job name</li>
+<li><code>#SBATCH -o test_log.o</code> : file to write output or error messages</li>
+</ul>
+<p>We would then submit the script with a simple <code>sbatch myScript.sh</code> without additional options.</p>
+<div class="admonition example practical">
+<p class="admonition-title">Example</p>
+<p>Create a new file named <code>mySbatchScript.sh</code>, copy the code above into it, save, then submit this file to the job scheduler using the following command :</p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span>sbatch<span class="w"> </span>mySbatchScript.sh
+</code></pre></div>
+<p>Use the command <code>squeue</code> to monitor the jobs submitted to the cluster. </p>
+<p>Check the output of your job in the output file <code>test_log.o</code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When there are a lot of jobs, <code>squeue -u &lt;username&gt;</code> will limit the list to those of the specified user.</p>
+</div>
+<h3 id="advanced-cluster-usage-loading-modules">Advanced cluster usage : loading modules</h3>
+<p>During our various analyses, we will call upon numerous software.</p>
+<p>Fortunately, in most cases we do not have to install each of these ourselves onto the cluster : they have already been packaged, prepared and made available to you or your code. <!-- Thank your sys admins!--></p>
+<p>However, by default, these are not loaded, and you have to explicitly load the module containing the software you want in your script (or in the interactive shell session).</p>
+<p><strong>Question:</strong> Why aren&rsquo;t all the modules already pre-loaded ?</p>
+<details class="success">
+<summary>Answer</summary>
+<p>Many toolsets have dependencies toward different, sometimes incompatible libraries. Packaging each tool independently and loading them separately circumvents this, as you only load what you need, and you can always unload a toolset if you need to load another, incompatible, toolset.</p>
+</details>
+<p>To begin using modules, we first need to enable a software stack. In our case, we will be using the <a href="https://www.eessi.io/">EESSI</a>, an open-source project dedicated to provide a scientific software stack which can be deployed on HPC structures and personal computers alike.</p>
+<p>To enable EESSI, run the following command (NB: this command will need to be in our sbatch scripts too):</p>
+<p><code>enable-software-stack-eessi</code></p>
+<p>Once this is done, the <code>module</code> command is made available.</p>
+<p>Basic commands are :</p>
+<ul>
+<li><code>module list</code> : lists currently loaded modules</li>
+<li><code>module load &lt;modulename&gt;</code> alias <code>ml &lt;modulename&gt;</code> : loads module <code>&lt;modulename&gt;</code></li>
+<li><code>module unload &lt;modulename&gt;</code>  : unloads module <code>&lt;modulename&gt;</code></li>
+<li><code>module purge</code> : unloads all loaded modules</li>
+<li><code>module avail</code> : lists all modules available for loading</li>
+<li><code>module keyword &lt;KW&gt;</code> : lists all modules available for loading which contains <code>&lt;KW&gt;</code></li>
+</ul>
+<p>Try it for yourself: soon, we will need the fastqc software. </p>
+<p>If we type in the terminal:
+<div class="highlight"><pre><span></span><code>fastqc<span class="w"> </span>--help
+</code></pre></div>
+this should give you an error, telling you there is no such command.</p>
+<p>We will try to find a module containing our desired software using <code>module keyword</code></p>
+<div class="highlight"><pre><span></span><code>module<span class="w"> </span>keyword<span class="w"> </span>fastqc
+</code></pre></div>
+<p>which will output:
+<div class="highlight"><pre><span></span><code>-------------------------------------------------------------------------------------------------------------------------------------
+
+The following modules match your search criteria: &quot;fastqc&quot;
+-------------------------------------------------------------------------------------------------------------------------------------
+
+
+  FastQC: FastQC/0.11.5, FastQC/0.11.8, FastQC/0.11.9 
+    FastQC is a quality control application for high throughput sequence data. It reads in sequence data in a variety of formats and
+    can either provide an interactive application to review the results of several different QC checks, or create an HTML based
+    report which can be integrated into a pipeline. - Homepage: http://www.bioinformatics.babraham.ac.uk/projects/fastqc/
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+To learn more about a package execute:
+
+   $ module spider Foo
+
+where &quot;Foo&quot; is the name of a module.
+
+To find detailed information about a particular package you
+must specify the version if there is more than one version:
+
+   $ module spider Foo/11.1
+
+-------------------------------------------------------------------------------------------------------------------------------------
+</code></pre></div></p>
+<p>This tells us that a module name <code>fastqc</code> exists. It has different versions available (0.11.5,0.11.8,0.11.9). 
+The default is the rightmost one, which works well for us.</p>
+<p>So, if we load this module before executing fastqc:
+<div class="highlight"><pre><span></span><code>ml<span class="w"> </span>FastQC<span class="w"> </span><span class="c1"># shortcut for &quot;module load fastqc&quot;</span>
+fastqc<span class="w"> </span>--help
+</code></pre></div>
+Now you should not have any error, and you should see the help test of <code>fastqc</code></p>
+<h3 id="advanced-cluster-usage-job-array">Advanced cluster usage : job array</h3>
+<p>Often, we have to repeat a similar analysis on a number of files, or for a number of different parameters.
+Rather than writing each sbatch script individually, we can rely on <strong>job arrays</strong> to facilitate our task.</p>
+<p>The idea is to have a single script which will execute itself several times.
+Each of these executions is called a <strong>task</strong>, and they are all the same, save for one variable which whose value changes from 1 to the number of tasks in the array.</p>
+<p>We typically use this variable, named <code>$SLURM_ARRAY_TASK_ID</code> to fetch different lines of a file containing information on the different tasks we want to run (in general, different input file names).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In bash, we use variables to store information, such as a file name or parameter value.</p>
+<p>Variables can be created with a statement such as:</p>
+<p><code>myVar=10</code></p>
+<p>where variable <code>myVar</code> now stores the value 10.</p>
+<p>The variable content can then be accessed with:</p>
+<p><code>${myVar}</code></p>
+<p>You do not really need more to understand what follows, but if you are curious, you can consult <a href="https://ryanstutorials.net/bash-scripting-tutorial/bash-variables.php#setting">this small tutorial</a>.</p>
+</div>
+<hr />
+<p>Say you want to execute a command, on 10 files (for example, map the reads of 10 samples).</p>
+<p>You first create a file containing the name of your files (one per line); let&rsquo;s call it <code>readFiles.txt</code>.</p>
+<p>Then, you write an sbatch array job script:</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
+<span class="c1">#SBATCH --job-name=test_array</span>
+<span class="c1">#SBATCH --time=00:30:00</span>
+<span class="c1">#SBATCH --cpus-per-task=1</span>
+<span class="c1">#SBATCH --mem=1G</span>
+<span class="c1">#SBATCH -o test_array_log.%a.o</span>
+<span class="c1">#SBATCH --array 1-10%5</span>
+
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;job array id&quot;</span><span class="w"> </span><span class="nv">$SLURM_ARRAY_TASK_ID</span>
+
+<span class="c1"># sed -n &lt;X&gt;p &lt;file&gt; : retrieve line &lt;X&gt; of file</span>
+<span class="c1"># so the next line grabs the file name corresponding to our job array task id and stores it in the variable ReadFileName </span>
+<span class="nv">ReadFileName</span><span class="o">=</span><span class="sb">`</span>sed<span class="w"> </span>-n<span class="w"> </span><span class="si">${</span><span class="nv">SLURM_ARRAY_TASK_ID</span><span class="si">}</span>p<span class="w"> </span>readFiles.txt<span class="sb">`</span>
+
+<span class="c1"># here we would put the mapping command or whatever</span>
+<span class="nb">echo</span><span class="w"> </span><span class="nv">$ReadFileName</span>
+</code></pre></div>
+<p>Some things have changed compared to the previous sbatch script :</p>
+<ul>
+<li><code>#SBATCH --array 1-10%5</code> : will spawn independent tasks with IDs from 1 to 10, and will manage them so that at most 5 run at the same time.</li>
+<li><code>#SBATCH -o test_array_log.%a.o</code> : the <code>%a</code> will take the value of the array task ID. So we will have 1 log file per task (so 10 files).</li>
+<li><code>$SLURM_ARRAY_TASK_ID</code> : changes value between the different tasks. This is what we use to execute the same script on different files (using <code>sed -n ${SLURM_ARRAY_TASK_ID}p</code>)</li>
+</ul>
+<p>Furthermore, this script uses the concept of bash variable.</p>
+<p>Many things could be said on that, but I will keep it simple with this little demo code:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">foo</span><span class="o">=</span><span class="m">123</span><span class="w">                </span><span class="c1"># Initialize variable foo with 123</span>
+<span class="w">                       </span><span class="c1">#   !warning! it will not work if you put spaces in there</span>
+
+<span class="c1"># we can then access this variable content by putting a $ sign in front of it:</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="nv">$foo</span><span class="w">              </span><span class="c1"># Print variable foo, sensitive to special characters</span>
+<span class="nb">echo</span><span class="w"> </span><span class="si">${</span><span class="nv">foo</span><span class="si">}</span><span class="w">            </span><span class="c1"># Another way to print variable foo, not sensitive to special characters</span>
+
+<span class="nv">OUTPUT</span><span class="o">=</span><span class="sb">`</span>wc<span class="w"> </span>-l<span class="w"> </span>du<span class="w"> </span>-h<span class="w"> </span>-d<span class="w"> </span><span class="m">2</span><span class="w"> </span>/shared/data/<span class="sb">`</span><span class="w"> </span><span class="c1"># puts the result of the command </span>
+<span class="w">                                        </span><span class="c1">#   between `` in variable OUTPUT</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="nv">$OUTPUT</span><span class="w">           </span><span class="c1"># print variable output</span>
+</code></pre></div>
+<p>So now, this should help you understand the trick we use in the array script:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">ReadFileName</span><span class="o">=</span><span class="sb">`</span>sed<span class="w"> </span>-n<span class="w"> </span><span class="si">${</span><span class="nv">SLURM_ARRAY_TASK_ID</span><span class="si">}</span>p<span class="w"> </span>readFiles.txt<span class="sb">`</span>
+</code></pre></div>
+<p>Where, for example for task 3, <code>${SLURM_ARRAY_TASK_ID}</code> is equal to 3.</p>
+<p>We feed this to <code>sed</code>, so that it grabs the 3rd line of <code>readFiles.txt</code>, and we put that value into the <code>ReadFileName</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+  
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our trainig material and whether users find what they're searching for. With your consent, you're helping us to make our training material better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="github" checked>
+      <span class="task-list-indicator"></span>
+      GitHub
+    </label>
+  </li>
+
+      
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="matomo" checked>
+      <span class="task-list-indicator"></span>
+      Matomo Analytics
+    </label>
+  </li>
+
+      
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":[],"search":"../../assets/javascripts/workers/search.e2d2d235.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.63456bd9.min.js"></script>
+      
+        <script src="../../javascripts/consent.js"></script>
+      
+    
+  </body>
+</html>
